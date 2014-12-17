@@ -1,0 +1,16 @@
+{
+  "name": "base9",
+  "version": "1.0.0",
+  "homepage": "https://github.com/base9/base9",
+  "authors": [
+    "Brian Scoles <brianscoles@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
