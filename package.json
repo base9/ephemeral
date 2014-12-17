@@ -1,0 +1,19 @@
+{
+  "name": "base9",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/base9/base9"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/base9/base9/issues"
+  },
+  "homepage": "https://github.com/base9/base9"
+}
