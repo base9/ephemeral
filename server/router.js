@@ -2,6 +2,7 @@ var express = require('express');
 var eventRouter = require('./api/event');
 
 module.exports = function ( app ) {
+  // router
   app.use('/api/events', eventRouter);
 
   // static
