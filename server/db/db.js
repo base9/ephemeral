@@ -97,15 +97,5 @@ db.schema.hasTable('locations').then(function (exists) {
   }
 });
 
-/*
-table ratings:
-  created_by: (foreign key to users);
-  pin_id: (foreign key to pin);
-  created_at:
-  text:
-
-table photos:
-
-
 
   
