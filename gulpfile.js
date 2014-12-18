@@ -4,7 +4,7 @@ var gulp = require('gulp'),
     livereload = require('gulp-livereload');
 
 gulp.task('sass', function () {
-  gulp.src('./client/assets/*.scss')
+  gulp.src('./client/styles/*.scss')
     .pipe(sass())
     .pipe(gulp.dest('./client/assets'));
 });
