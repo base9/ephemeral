@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/base9/base9/issues"
   },
-  "homepage": "https://github.com/base9/base9"
+  "homepage": "https://github.com/base9/base9",
+  "devDependencies": {
+    "gulp": "^3.8.10",
+    "gulp-livereload": "^3.0.2",
+    "gulp-sass": "^1.2.4",
+    "gulp-util": "^3.0.1"
+  }
 }
