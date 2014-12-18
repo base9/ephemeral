@@ -1,7 +1,8 @@
-var eventRouter = require('./api/events');
+var express = require('express');
+var eventRouter = require('./api/event');
 
 module.exports = function ( app ) {
-  app.use(eventRouter);
+  app.use('/api/events', eventRouter);
 
   // static
   app.use(express.static(__dirname + '/../client'));
