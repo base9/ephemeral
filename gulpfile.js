@@ -21,8 +21,8 @@ gulp.task('watch', function() {
   // Watch any files in dist/, reload on change
   livereload.listen();
   gulp.watch(['client/**/*']).on('change', livereload.changed);
-
 });
+
 
 
 gulp.task('default', ['sass', 'server', 'watch'], function (){
@@ -30,3 +30,6 @@ gulp.task('default', ['sass', 'server', 'watch'], function (){
 });
 
 
+// server tasks
+  // gulp nodemon integration
+  // linter integration
