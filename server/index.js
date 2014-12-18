@@ -2,7 +2,7 @@
 var express = require('express');
 
 // file dependencies
-// var config = require('./config');
+var config = require('./config');
 var router = require('./router');
 
 var app = express();
