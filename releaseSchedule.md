@@ -1,14 +1,14 @@
 
->>>>> VERSION  1.0 >>>>> Release date:   12/20/14 (Saturday) *-*-* MVP *-*-*
+### VERSION  1.0 .... Release date:   12/20/14 (Saturday) **MVP**
 
-- [ ] Basic app infrastructure, press release
-- [ ] Express server that serves static file (index.html) 
-- [ ] GET route that returns a hardcoded object describing 5 places
-- [ ] Client application that places those 5 places on a rendered map
-- [ ] Client application works in browsers and Ionic
+- [X] Basic app infrastructure, press release
+- [X] Express server that serves static file (index.html) 
+- [ ] GET route that returns a hardcoded object describing 2 places
+- [ ] Client application that places those 2 places on a rendered map
+- [X] Client application works in browsers and Ionic
 
 
->>>>> VERSION  1.1 >>>>> Release date:   1/2/14 (Friday)
+### VERSION  1.1 .... Release date:   1/2/14 (Friday)
 
 - [ ] Deployed server 
 - [ ] Persistent DB (mySQL)
@@ -18,14 +18,14 @@
 - [ ] User login / authentication
 
 
->>>>> VERSION  1.2 >>>>> Release date:   1/9/14 (Friday)
+### VERSION  1.2 .... Release date:   1/9/14 (Friday)
 
 - [ ] Server analytics suite (on independent server)
 - [ ] Location-based search
 - [ ] Search filters
 - [ ] Links to Yelp/GMaps business profiles
 
->>>>> VERSION  1.3 >>>>> Release date:   1/16/14 (Friday) *-*-* FINAL *-*-*
+### VERSION  1.3 .... Release date:   1/16/14 (Friday) **FINAL**
 
 - [ ] Recommendation engine
 - [ ] Email listener/parser API
@@ -33,7 +33,7 @@
 - [ ] Server-side scaling and DB optimization
 
 
->>>>> ITERATIVE IMPROVEMENTS
+### ITERATIVE IMPROVEMENTS
 
 - [ ] UI: look, feel, and options
 - [ ] server efficiency
@@ -42,4 +42,13 @@
 - [ ] maintainable code
 
 
-Presentation: 1/20/14 (Tuesday)
+## Presentation: 1/20/14 (Tuesday)
+
+
+## Random notes for features, improvements, etc
+
+- mailbot that parses messages and adds events to maps
+- trip reports that follow a users GPS signatures and generates a history path of their travel
+- graph database for recommending related destinations
+- enable "moving pins" for parades, bar crawls, etc.  tether event location to a phone's GPS position.
+
