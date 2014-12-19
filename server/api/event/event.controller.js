@@ -5,7 +5,9 @@ var seed = require('./event.seed.js');
 //hardcoded to return all events right now.
 //just as a simple test
 controller.index = function(req, res) {
-  models.Event.fetchAll().then(function (collection) {
+  models.Event.fetchAll({
+      withRelated: ['user']
+    }).then(function (collection) {
     res.json(collection.toJSON());
   });
 };
