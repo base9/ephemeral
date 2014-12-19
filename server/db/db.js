@@ -4,6 +4,7 @@ var knex = require('knex');
 var path = require('path');
 var bookshelf = require('bookshelf');
 
+
 var db = knex({
   client: 'sqlite3',
   connection: {
@@ -19,7 +20,7 @@ var db = knex({
 db.schema.hasTable('users').then(function (exists) {
   if (!exists) {
     db.schema.createTable('users', function (user) {
-      user.increments('pinId').primary();
+      user.increments('eventId').primary();
       user.timestamps();
       user.string('email', 40);
       user.string('name', 255);
@@ -33,24 +34,24 @@ db.schema.hasTable('users').then(function (exists) {
   }
 });
 
-db.schema.hasTable('pins').then(function (exists) {
+db.schema.hasTable('events').then(function (exists) {
   if (!exists) {
-    db.schema.createTable('pins', function (pin) {
-      pin.increments('pinId').primary();
-      pin.integer('creator').unsigned().references('users.id');
-      pin.timestamps();
-      pin.integer('location').unsigned().references('locations.id')
-      pin.string('latitude', 40);  //temporary - replace w/ location object
-      pin.string('longitude', 40); //temporary - replace w/ location object
-      pin.string('title', 255);
-      pin.timestamp('startTime', 255);
-      pin.timestamp('endTime', 255);
-      pin.timestamp('revealTime', 255);
-      pin.timestamp('hideTime', 255);
-      pin.string('info', 1000);
-      pin.integer('photoId').unsigned().references('photos.id');
+    db.schema.createTable('events', function (evnt) {
+      evnt.increments('eventId').primary();
+      evnt.integer('creator').unsigned().references('users.id');
+      evnt.timestamps();
+      evnt.integer('location').unsigned().references('locations.id')
+      evnt.string('latitude', 40);  //temporary - replace w/ location object
+      evnt.string('longitude', 40); //temporary - replace w/ location object
+      evnt.string('title', 255);
+      evnt.timestamp('startTime', 255);
+      evnt.timestamp('endTime', 255);
+      evnt.timestamp('revealTime', 255);
+      evnt.timestamp('hideTime', 255);
+      evnt.string('info', 1000);
+      evnt.integer('photoId').unsigned().references('photos.id');
     }).then(function (){
-      console.log('Created table: pins');
+      console.log('Created table: events');
     });
   }
 });
@@ -61,7 +62,7 @@ db.schema.hasTable('ratings').then(function (exists) {
     db.schema.createTable('ratings', function (rating) {
       rating.increments('ratingId').primary();
       rating.integer('creator').unsigned().references('users.id');
-      rating.integer('pin').unsigned().references('pins.id');
+      rating.integer('event').unsigned().references('events.id');
       rating.timestamps();
       rating.integer('score');
       rating.string('comment', 1000);
@@ -77,7 +78,7 @@ db.schema.hasTable('photos').then(function (exists) {
     db.schema.createTable('photos', function (photo) {
       photo.increments('id').primary();
       photo.integer('creator').unsigned().references('users.id');
-      photo.integer('pin').unsigned().references('pins.id');
+      photo.integer('event').unsigned().references('events.id');
       photo.timestamps();
       photo.string('filename');
     }).then(function (){

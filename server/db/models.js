@@ -14,13 +14,13 @@ var Rating = db.Model.extend({
   user: function() {
     return this.belongsTo(User, 'userId');
   } , 
-  pin: function() {
-    return this.belongsTo(Pin, 'pinId');
+  event: function() {
+    return this.belongsTo(Event, 'eventId');
   }
 });
 
-var Pin = db.Model.extend({
-  tableName: 'pins',
+var Event = db.Model.extend({
+  tableName: 'events',
   hasTimestamps: true,
   user: function() {
     return this.belongsTo(User, 'userId');
@@ -39,8 +39,8 @@ var User = db.Model.extend({
   position: function() {
     return this.hasOne(Position, 'positionId')
   }, 
-  pin: function() {
-    return this.hasMany(Pin, 'pinId');
+  event: function() {
+    return this.hasMany(Event, 'eventId');
   },
   photo: function() {
     return this.hasOne(Photo, 'photoId');
@@ -53,8 +53,8 @@ var Photo = db.Model.extend({
   creator: function() {
     return this.belongsTo(User, 'userId');
   },  
-  pin: function() {
-    return this.belongsTo(Pin, 'pinId');
+  event: function() {
+    return this.belongsTo(Event, 'eventId');
   }
 });
 
@@ -62,7 +62,7 @@ var Photo = db.Model.extend({
 module.exports = {
   Position: Position, 
   User: User,
-  Pin: Pin,
+  Event: Event,
   Photo: Photo,
   Rating: Rating,
 };
