@@ -5,3 +5,5 @@ bower_components/*
 node_modules/*
 
 client/assets/**/*
+
+db.sqlite
