@@ -1,17 +1,21 @@
 var gulp = require('gulp'),
     gutil = require('gulp-util'),
     sass = require('gulp-sass'),
-    livereload = require('gulp-livereload');
+    livereload = require('gulp-livereload'),
+    nodemon = require('gulp-nodemon'),
+    jshint = require('gulp-jshint');
+
+var paths = {
+  sass: './client/styles/*.scss',
+  cssRoot: './client/assets',
+  server: './server.js',
+  client: 'client/**/*'
+}
 
 gulp.task('sass', function () {
-  gulp.src('./client/styles/*.scss')
+  gulp.src(paths.sass)
     .pipe(sass())
-    .pipe(gulp.dest('./client/assets'));
-});
-
-gulp.task('server', function() {
-  var server = require('./server.js');
-  console.log("gulp has initiated server.")
+    .pipe(gulp.dest(paths.cssRoot));
 });
 
 gulp.task('watch', function() {
@@ -20,16 +24,28 @@ gulp.task('watch', function() {
 
   // Watch any files in dist/, reload on change
   livereload.listen();
-  gulp.watch(['client/**/*']).on('change', livereload.changed);
+  gulp.watch([paths.client]).on('change', livereload.changed);
 });
 
+// TODO: watch out for dev mode vs prod mode
+// FIXME
+gulp.task('lint', function() {
+  return gulp.src(paths.js)
+    .pipe(jshint())
+})
 
+gulp.task('express', function() {
+  nodemon({
+    script: paths.server,
+  })
 
-gulp.task('default', ['sass', 'server', 'watch'], function (){
+  // .on('change', ['lint'])
+  .on('restart', function() {
+    console.log('restarted server');
+  })
+})
+
+gulp.task('default', ['sass', 'watch', 'express'], function (){
 
 });
 
-
-// server tasks
-  // gulp nodemon integration
-  // linter integration
