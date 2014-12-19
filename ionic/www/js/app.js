@@ -67,11 +67,6 @@ var app = angular.module('starter', ['ionic'])
   var markers = [];
   // Create the search box and link it to the UI element.
   //Location in the HTML to where the search box will be placed
-  var input = (document.getElementById('pac-input'));
-  //Positions the search box to the top left corner
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-  var searchBox = new google.maps.places.SearchBox(input);
-
   //Listens to changes when user submits in a location
   google.maps.event.addListener(searchBox, 'places_changed', function() {
     //Returns the query selected by the user, or null if no places have been found
