@@ -1,0 +1,34 @@
+Endpoints
+
+
+___Req___                                    ___Res___
+//get homepage
+  GET /                                      index.html
+
+//get pins      
+  GET /api/pins/:params
+  {lat, long, zoom level, filters}           [{pin1},{pin2},{pin3}]
+
+
+//get one pin's info
+  GET /api/pins/:pinId                       {id, lat, lng, ratings, comments, photos, startTime, endTime}
+  {pinId}
+
+
+//add an event                               201 OK
+  POST /api/pins
+  {lat,long,title,description, startTime,EndTime}
+
+//update an event                            201 OK
+  POST /api/pins/:id
+  {id, fields to update}
+
+
+//log in                                     issue session token
+  GET /auth something something
+
+//sign up                                    201 OK
+  POST /auth something something
+
+
+

@@ -3,9 +3,9 @@
 
 - [X] Basic app infrastructure, press release
 - [X] Express server that serves static file (index.html) 
-- [ ] GET route that returns a hardcoded object describing 5 places
-- [ ] Client application that places those 5 places on a rendered map
-- [ ] Client application works in browsers and Ionic
+- [ ] GET route that returns a hardcoded object describing 2 places
+- [ ] Client application that places those 2 places on a rendered map
+- [X] Client application works in browsers and Ionic
 
 
 ### VERSION  1.1 .... Release date:   1/2/14 (Friday)

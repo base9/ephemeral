@@ -3,6 +3,8 @@
 var knex = require('knex');
 var path = require('path');
 
+console.log("in DB.js");
+
 var db = knex({
   client: 'sqlite3',
   connection: {
@@ -97,5 +99,5 @@ db.schema.hasTable('locations').then(function (exists) {
   }
 });
 
-
+console.log("done with db.js");
   
