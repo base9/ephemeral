@@ -19,6 +19,12 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); 
 }
 
+/*.geoLocate {
+  position: absolute;
+  bottom: 50px;
+  left: 15px;
+}*/
+
 #pac-input {
   background-color: #fff;
   padding: 0 11px 0 13px;
