@@ -6,5 +6,6 @@ module.exports = function ( app ) {
   app.use('/api/events', eventRouter);
 
   // static
-  app.use(express.static(__dirname + '/../client'));
+  // app.use(express.static(__dirname + '/../client'));
+  app.use(express.static(__dirname + '/../ionic/www'));
 }
