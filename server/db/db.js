@@ -2,8 +2,7 @@
 
 var knex = require('knex');
 var path = require('path');
-
-console.log("in DB.js");
+var bookshelf = require('bookshelf');
 
 var db = knex({
   client: 'sqlite3',
@@ -20,7 +19,7 @@ var db = knex({
 db.schema.hasTable('users').then(function (exists) {
   if (!exists) {
     db.schema.createTable('users', function (user) {
-      user.increments('id').primary();
+      user.increments('pinId').primary();
       user.timestamps();
       user.string('email', 40);
       user.string('name', 255);
@@ -37,10 +36,12 @@ db.schema.hasTable('users').then(function (exists) {
 db.schema.hasTable('pins').then(function (exists) {
   if (!exists) {
     db.schema.createTable('pins', function (pin) {
-      pin.increments('id').primary();
+      pin.increments('pinId').primary();
       pin.integer('creator').unsigned().references('users.id');
       pin.timestamps();
       pin.integer('location').unsigned().references('locations.id')
+      pin.string('latitude', 40);  //temporary - replace w/ location object
+      pin.string('longitude', 40); //temporary - replace w/ location object
       pin.string('title', 255);
       pin.timestamp('startTime', 255);
       pin.timestamp('endTime', 255);
@@ -58,12 +59,12 @@ db.schema.hasTable('pins').then(function (exists) {
 db.schema.hasTable('ratings').then(function (exists) {
   if (!exists) {
     db.schema.createTable('ratings', function (rating) {
-      rating.increments('id').primary();
+      rating.increments('ratingId').primary();
       rating.integer('creator').unsigned().references('users.id');
       rating.integer('pin').unsigned().references('pins.id');
       rating.timestamps();
       rating.integer('score');
-      pin.string('comment', 1000);
+      rating.string('comment', 1000);
     }).then(function (){
       console.log('Created table: ratings');
     });
@@ -86,18 +87,19 @@ db.schema.hasTable('photos').then(function (exists) {
 });
 
 //for location
-db.schema.hasTable('locations').then(function (exists) {
+db.schema.hasTable('positions').then(function (exists) {
   if (!exists) {
-    db.schema.createTable('locations', function (location) {
-      location.increments('id').primary();
+    db.schema.createTable('positions', function (location) {
+      location.increments('positionId').primary();
       location.string('lat',40);
       location.integer('lng',40);
       location.timestamps();
     }).then(function (){
-      console.log('Created table: locations');
+      console.log('Created table: positions');
     });
   }
 });
 
-console.log("done with db.js");
+
+module.exports = bookshelf(db);
   
