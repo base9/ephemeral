@@ -19,20 +19,20 @@ var Rating = db.Model.extend({
   }
 });
 
-var Event = db.Model.extend({
-  tableName: 'events',
-  hasTimestamps: true,
-  user: function() {
-    console.log("models.js line 26");
-    return this.belongsTo(User);
-  }, 
-  location: function() {
-    return this.hasOne(Position)
-  },
-  rating: function() {
-    return this.hasMany(Rating)
-  }
-});
+// var Event = db.Model.extend({
+//   tableName: 'events',
+//   hasTimestamps: true,
+//   user: function() {
+//     console.log("models.js line 26");
+//     return this.belongsTo(User);
+//   }, 
+//   location: function() {
+//     return this.hasOne(Position)
+//   },
+//   rating: function() {
+//     return this.hasMany(Rating)
+//   }
+// });
 
 var User = db.Model.extend({
   tableName: 'users',
@@ -63,7 +63,7 @@ var Photo = db.Model.extend({
 module.exports = {
   Position: Position, 
   User: User,
-  Event: Event,
+  // Event: Event,
   Photo: Photo,
   Rating: Rating,
 };
