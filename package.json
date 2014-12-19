@@ -27,9 +27,10 @@
   },
   "dependencies": {
     "body-parser": "^1.10.0",
+    "bookshelf": "^0.7.9",
     "express": "^4.10.6",
-    "morgan": "^1.5.0",
     "knex": "^0.7.3",
-    "path": "^0.4.9"
+    "morgan": "^1.5.0",
+    "sqlite3": "^3.0.4"
   }
 }
