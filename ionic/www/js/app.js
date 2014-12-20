@@ -82,6 +82,7 @@ var app = angular.module('starter', ['ionic'])
     
     // expose searchBox
     searchObj.searchBox = searchBox;
+    window.searchBox = searchBox;
   }
 
   return searchObj;
@@ -89,9 +90,34 @@ var app = angular.module('starter', ['ionic'])
 
 .factory('MarkerFactory', function() {
   var markerObj = {};
+  var markers = [];
 
   markerObj.placeMarker = function(places) {
-
+    // remove all existing markers
+    markers = [];
+    var bounds = new google.maps.LatLngBounds();
+    // create new markers for all places
+    for (var i = 0; i < places.length; i++) {
+      var place = places[i];
+      var image = {
+        url: place.icon,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(25, 25)
+      };
+      markers.push(new google.maps.Marker({
+        map: map,
+        title: place.name,
+        icon: image,
+        position: place.geometry.location
+      }));
+      bounds.extend(place.geometry.location);
+      console.log("shit happens here", markers);
+    }
+    map.fitBounds(bounds);
+    // debugger;
+    map.setZoom(12);
   }
 
   return markerObj;
@@ -105,15 +131,14 @@ var app = angular.module('starter', ['ionic'])
   SearchBox.initialize();
 
   this.goToPlace = function () {
-    console.log('asdf')
+
     var places = SearchBox.searchBox.getPlaces();
-    console.log(places)
     if (places.length) {
-      Marker.placeMarker(places)
+      Marker.placeMarker(places);
     }
   }
 
-  google.maps.event.addListener(SearchBox.searchBox, 'places_changed', function() {console.log('asdf')})
+  google.maps.event.addListener(SearchBox.searchBox, 'places_changed', this.goToPlace)
 
 //   var markers = [];
 
@@ -134,13 +159,13 @@ var app = angular.module('starter', ['ionic'])
 //     // For each place, get the icon, place name, and location.
 //     var bounds = new google.maps.LatLngBounds();
 //     for (var i = 0, place; place = places[i]; i++) {
-//       var image = {
-//         url: place.icon,
-//         size: new google.maps.Size(71, 71),
-//         origin: new google.maps.Point(0, 0),
-//         anchor: new google.maps.Point(17, 34),
-//         scaledSize: new google.maps.Size(25, 25)
-//       };
+      // var image = {
+      //   url: place.icon,
+      //   size: new google.maps.Size(71, 71),
+      //   origin: new google.maps.Point(0, 0),
+      //   anchor: new google.maps.Point(17, 34),
+      //   scaledSize: new google.maps.Size(25, 25)
+      // };
 //       console.log("INFO: ", image);
 
 //       // Create a marker for each place
