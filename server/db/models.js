@@ -1,7 +1,9 @@
 // MODELS: this provides an api for the server to talk to the database
 
 var db = require('./db.js');
+var bookshelf = require('bookshelf');
 
+db = bookshelf(db);
 
 var Position = db.Model.extend({
   tableName: 'positions',
