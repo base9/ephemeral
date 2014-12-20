@@ -1,34 +1,39 @@
 Endpoints
 
 
-___Req___                                    ___Res___
-//get homepage
-  GET /                                      index.html
+__Status__     ___Req___                                    ___Res___
 
-//get events      
-  GET /api/events/:params
-  {lat, long, zoom level, filters}           [{pin1},{pin2},{pin3}]
+[X]            GET /                                      index.html
 
-
-//get one pin's info
-  GET /api/events/:pinId                       {id, lat, lng, ratings, comments, photos, startTime, endTime}
-  {pinId}
+                
+[ ]            GET /api/events/local
+               {lat, long, zoom level, filters}          [{event1},{event2},{event3}]
 
 
-//add an event                               201 OK
-  POST /api/events
-  {lat,long,title,description, startTime,EndTime}
+[X]            GET /api/events/:id                       {event}
+[X]            GET /api/events/                          [{event1},{event2},{event3}]
+[X]            GET /api/photos/:id                       {photo}
+[X]            GET /api/photos/                          [{photo1},{photo2}]
+[X]            GET /api/users/:id                        {user}
+[X]            GET /api/users/                           [{user1},{user2}]
+[X]            GET /api/ratings/:id                      {rating}
+[X]            GET /api/ratings/                         [{rating1},{rating2}]
 
-//update an event                            201 OK
-  POST /api/events/:id
-  {id, fields to update}
+                                       
+[ ]            POST /api/events                           201 OK
+               {lat,long,title,description, startTime,EndTime}
+
+[ ]            POST /api/events/:id                       201 OK
+               {id, fields to update}
 
 
-//log in                                     issue session token
-  GET /auth something something
 
-//sign up                                    201 OK
-  POST /auth something something
+
+            //log in                                     issue session token
+[ ]            GET /auth something something
+
+            //sign up                                    201 OK
+[ ]            POST /auth something something
 
 
 
