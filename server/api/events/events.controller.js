@@ -21,3 +21,18 @@ controller.getOne = function(req, res) {
       }
   });
 };
+
+controller.addOne = function(req, res) {
+  var newEvent = new Event({});
+  //.save();
+  console.log(newEvent);
+
+
+  //.then(function(){
+    console.log('added new event.');
+    res.status(201).end();
+  //}
+  // });
+};
+
+
