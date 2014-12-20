@@ -20,7 +20,7 @@ __Status__     ___Req___                                    ___Res___
 [X]            GET /api/ratings/                         [{rating1},{rating2}]
 
                                        
-[ ]            POST /api/events                           201 OK
+[X]            POST /api/events                           201 OK
                {lat,long,title,description, startTime,EndTime}
 
 [ ]            POST /api/events/:id                       201 OK
