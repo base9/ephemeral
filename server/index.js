@@ -13,9 +13,9 @@ config.express(app);
 // use router for app
 router(app);
 
-var port = 9000;
-app.listen(port);
-console.log('app listening on localhost:' + port);
+
+app.listen(process.env.PORT || 9000)
+console.log('app listening on localhost:' + 9000);
 
 // expose app 
 module.exports = app;
