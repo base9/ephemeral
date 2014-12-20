@@ -8,7 +8,6 @@ db.schema.hasTable('events').then(function (exists) {
     db.schema.createTable('events', function (evnt) {
       evnt.increments('id').primary();
       evnt.integer('user_id').unsigned().references('users.id');
-      evnt.timestamps();
       evnt.string('lat', 40);  
       evnt.string('lng', 40);
       evnt.string('title', 255);
@@ -17,6 +16,7 @@ db.schema.hasTable('events').then(function (exists) {
       evnt.timestamp('revealTime', 255);
       evnt.string('info', 1000);
       evnt.integer('photo_id').unsigned().references('photos.id');
+      evnt.timestamps();
     }).then(function (){
       console.log('Created table: events');
     });
