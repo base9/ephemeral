@@ -29,20 +29,28 @@ angular.module('starter')
       // };
 
       markers.push(new google.maps.Marker({
-        // FIXME: map is global 
         map: map,
-        title: place.name,
+        // title: place.name,
         // icon: image,
-        position: place.geometry.location
+        position: place
       }));
 
-      bounds.extend(place.geometry.location);
+      bounds.extend(place);
     }
     map.fitBounds(bounds);
 
-    if (places.length === 1) {
-      map.setZoom(12);
+    if (places.length) {
+      map.setZoom(14);
     }
+  }
+
+  markerObj.addListener = function(marker) {
+    for (var i = 0; i < markers.length; i++) {
+      var marker = markers[i];
+      google.maps.event.addListener(marker, 'click', function() {
+        console.log("LISTENING TO MARKER: ", marker);
+      });
+    };
   }
 
   return markerObj;
