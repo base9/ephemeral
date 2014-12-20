@@ -1,4 +1,3 @@
-var models = require('../../db/models.js');
 var Event = require('./event.model.js');
 
 setTimeout(function(){
