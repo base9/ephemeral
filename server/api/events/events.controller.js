@@ -28,8 +28,21 @@ controller.addOne = function(req, res) {
   .then(function(){
     console.log('added new event: ' + req.body.title);
     res.status(201).end();
-  }
-  );
+  });
 };
 
-
+controller.getLocal = function(req, res) {
+  Event.query(function(qb){
+    qb.whereBetween('lat', [req.query.lat1,req.query.lat2]);
+    qb.whereBetween('lng', [req.query.lng1,req.query.lng2]);
+  })
+  .fetchAll({
+     withRelated: ['user','rating']
+  }).then(function (event) {
+    if(event){
+      res.json(event);
+    } else {
+      res.status(404).end();
+    }
+  });
+};

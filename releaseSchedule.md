@@ -3,7 +3,7 @@
 
 - [X] Basic app infrastructure, press release
 - [X] Express server that serves static file (index.html) 
-- [ ] GET route that returns a hardcoded object describing 2 places
+- [X] GET route that returns a hardcoded object describing 2 places
 - [ ] Client application that places those 2 places on a rendered map
 - [X] Client application works in browsers and Ionic
 
