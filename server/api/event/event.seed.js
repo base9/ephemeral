@@ -2,8 +2,8 @@ var Event = require('./event.model.js');
 
 setTimeout(function(){
 
-  Event.where({title:'SantaCon'}).fetch().then(function (event) {
-    if(!event){
+  Event.where({title:'SantaCon'}).fetch().then(function (evnt) {
+    if(!evnt){
       var newEvent = new Event({
         title: 'SantaCon',
         lat: 37.784541,  
@@ -15,8 +15,8 @@ setTimeout(function(){
     }
   });
 
-  Event.where({title:'Free Bagels at 8pm'}).fetch().then(function (event) {
-    if(!event){
+  Event.where({title:'Free Bagels at 8pm'}).fetch().then(function (evnt) {
+    if(!evnt){
       var newEvent = new Event({
           title: 'Free Bagels at 8pm',
           lat: 37.793190, 

@@ -6,7 +6,7 @@ var seed = require('./event.seed.js');
 //just as a simple test
 controller.index = function(req, res) {
   Event.fetchAll({
-      withRelated: ['user']
+      withRelated: ['user','rating']
     }).then(function (collection) {
     res.json(collection.toJSON());
   });

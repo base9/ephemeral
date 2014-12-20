@@ -1,5 +1,6 @@
 var db = require('../../db/db.js');
-var User = require('../user/user.model.js');  //this path is temporary
+var User = require('../user/user.model.js');
+var Rating = require('../rating/rating.model.js');
 var bookshelf = require('bookshelf');
 
 db.schema.hasTable('events').then(function (exists) {
