@@ -36,19 +36,19 @@ var Rating = db.Model.extend({
 //   }
 // });
 
-var User = db.Model.extend({
-  tableName: 'users',
-  hasTimestamps: true,
-  position: function() {
-    return this.hasOne(Position)
-  }, 
-  event: function() {
-    return this.hasMany(Event);
-  },
-  photo: function() {
-    return this.hasOne(Photo);
-  }
-});
+// var User = db.Model.extend({
+//   tableName: 'users',
+//   hasTimestamps: true,
+//   position: function() {
+//     return this.hasOne(Position)
+//   }, 
+//   event: function() {
+//     return this.hasMany(Event);
+//   },
+//   photo: function() {
+//     return this.hasOne(Photo);
+//   }
+// });
 
 var Photo = db.Model.extend({
   tableName: 'photos',
@@ -64,7 +64,7 @@ var Photo = db.Model.extend({
 
 module.exports = {
   Position: Position, 
-  User: User,
+  // User: User,
   // Event: Event,
   Photo: Photo,
   Rating: Rating,

@@ -3,18 +3,6 @@ var Event = require('./event.model.js');
 
 setTimeout(function(){
 
-  models.User.where({name:'Steve Erwin'}).fetch().then(function (user) {
-    if(!user){
-      var newUser = new models.User({
-        name: 'Steve Erwin',
-        email: 'steve@outbackadventures.com',
-        bio: 'global explorer and animal lover',
-      })
-      .save();
-      console.log('added dummy user "Steve Erwin"');
-    }
-  });
-
   Event.where({title:'SantaCon'}).fetch().then(function (event) {
     if(!event){
       var newEvent = new Event({

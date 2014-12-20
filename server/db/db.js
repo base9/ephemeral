@@ -16,22 +16,22 @@ var db = knex({
   }
 });
 
-db.schema.hasTable('users').then(function (exists) {
-  if (!exists) {
-    db.schema.createTable('users', function (user) {
-      user.increments('id').primary();
-      user.timestamps();
-      user.string('email', 40);
-      user.string('name', 255);
-      user.string('pwd', 255);
-      user.string('bio', 1000);
-      //user.integer('location').unsigned().references('locations.id')
-      user.integer('photo_id').unsigned().references('photos.id');
-    }).then(function (){
-      console.log('Created table: users');
-    });
-  }
-});
+// db.schema.hasTable('users').then(function (exists) {
+//   if (!exists) {
+//     db.schema.createTable('users', function (user) {
+//       user.increments('id').primary();
+//       user.timestamps();
+//       user.string('email', 40);
+//       user.string('name', 255);
+//       user.string('pwd', 255);
+//       user.string('bio', 1000);
+//       //user.integer('location').unsigned().references('locations.id')
+//       user.integer('photo_id').unsigned().references('photos.id');
+//     }).then(function (){
+//       console.log('Created table: users');
+//     });
+//   }
+// });
 
 // db.schema.hasTable('events').then(function (exists) {
 //   if (!exists) {

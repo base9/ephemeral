@@ -1,5 +1,5 @@
 var db = require('../../db/db.js');
-var User = require('../../db/models.js').User;  //this path is temporary
+var User = require('../user/user.model.js');  //this path is temporary
 var bookshelf = require('bookshelf');
 
 db.schema.hasTable('events').then(function (exists) {
@@ -22,9 +22,7 @@ db.schema.hasTable('events').then(function (exists) {
   }
 });
 
-var bookshelfDB = bookshelf(db);
-
-var Event = bookshelfDB.Model.extend({
+var Event = bookshelf(db).Model.extend({
   tableName: 'events',
   hasTimestamps: true,
   user: function() {
