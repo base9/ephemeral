@@ -1,4 +1,6 @@
 var db = require('../../db/db.js');
+var User = require('../user/user.model.js');
+var Event = require('../event/event.model.js');
 var bookshelf = require('bookshelf');
 
 db.schema.hasTable('ratings').then(function (exists) {
@@ -8,7 +10,7 @@ db.schema.hasTable('ratings').then(function (exists) {
       rating.integer('user_id').unsigned().references('users.id');
       rating.integer('event_id').unsigned().references('events.id');
       rating.timestamps();
-      rating.integer('score');
+      rating.integer('stars');
       rating.string('comment', 1000);
     }).then(function (){
       console.log('Created table: ratings');

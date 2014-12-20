@@ -30,10 +30,10 @@ var Event = bookshelf(db).Model.extend({
     return this.belongsTo(User);
   }, 
   location: function() {
-    return this.hasOne(Position)
+    return this.hasOne(Position);
   },
   rating: function() {
-    return this.hasMany(Rating)
+    return this.hasMany(Rating);
   }
 });
 
