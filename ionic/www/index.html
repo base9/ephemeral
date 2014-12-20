@@ -27,14 +27,12 @@
       <!-- <ion-header-bar class="bar-stable"> -->
         <!-- <h1 class="title">Ionic Blank Starter</h1> -->
       <!-- </ion-header-bar> -->
-      <ion-content ng-controller="MapController">
-        <button class="geoLocate" ng-click="geoLocate()">HERE!</button>
+      <ion-content ng-controller="MapController as MapCtrl">
         <input type="text" id="pac-input" class="controls"/>
         <div id="map" data-tap-disabled="true">
         </div>
       </ion-content>
     </ion-pane>
-    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBnemtHaxtZyoxOU0NYEPXNxJwIhG0DeCE&sensor=true"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBnemtHaxtZyoxOU0NYEPXNxJwIhG0DeCE&sensor=true&v=3.exp&libraries=places"></script>
   </body>
 </html>
