@@ -1,4 +1,4 @@
-var controller = require('./rating.controller');
+var controller = require('./photos.controller');
 var router = require('express').Router();
 
 router.get('/:id', controller.getOne);

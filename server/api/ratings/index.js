@@ -1,8 +1,9 @@
-var controller = require('./event.controller');
+var controller = require('./ratings.controller');
 var router = require('express').Router();
+
+router.get('/:id', controller.getOne);
 
 router.get('/', controller.getAll);
 
-router.get('/:id', controller.getOne);
 
 module.exports = router;

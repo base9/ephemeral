@@ -1,6 +1,6 @@
 var db = require('../../db/db.js');
 var bookshelf = require('bookshelf');
-var Event = require('../event/event.model.js');
+var Event = require('../events/events.model.js');
 //add photo and position
 
 db.schema.hasTable('users').then(function (exists) {

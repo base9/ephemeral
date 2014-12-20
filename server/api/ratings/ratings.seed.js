@@ -1,4 +1,4 @@
-var Rating = require('./rating.model.js');
+var Rating = require('./ratings.model.js');
 
 setTimeout(function(){
   

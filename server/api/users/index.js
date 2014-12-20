@@ -1,4 +1,4 @@
-var controller = require('./user.controller');
+var controller = require('./users.controller');
 var router = require('express').Router();
 
 router.get('/:id', controller.getOne);

@@ -1,6 +1,6 @@
 var db = require('../../db/db.js');
-var User = require('../user/user.model.js');
-var Event = require('../event/event.model.js');
+var User = require('../users/users.model.js');
+var Event = require('../events/events.model.js');
 var bookshelf = require('bookshelf');
 
 db.schema.hasTable('ratings').then(function (exists) {

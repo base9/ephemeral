@@ -1,5 +1,5 @@
-var Event = require('./event.model.js');
-var seed = require('./event.seed.js');
+var Event = require('./events.model.js');
+var seed = require('./events.seed.js');
 var controller = module.exports;
 
 controller.getAll = function(req, res) {

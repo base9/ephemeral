@@ -1,4 +1,4 @@
-var Event = require('./event.model.js');
+var Event = require('./events.model.js');
 
 setTimeout(function(){
 

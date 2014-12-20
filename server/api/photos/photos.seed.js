@@ -1,4 +1,4 @@
-var Photo = require('./photo.model.js');
+var Photo = require('./photos.model.js');
 
 setTimeout(function(){
 

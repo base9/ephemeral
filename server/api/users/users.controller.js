@@ -1,6 +1,6 @@
 var controller = module.exports;
-var User = require('./user.model.js');
-var seed = require('./user.seed.js');
+var User = require('./users.model.js');
+var seed = require('./users.seed.js');
 
 controller.getOne = function(req, res) {
   User.where({id:req.params.id}).fetch()

@@ -1,6 +1,6 @@
 var controller = module.exports;
-var Photo = require('./photo.model.js');
-var seed = require('./photo.seed.js');
+var Photo = require('./photos.model.js');
+var seed = require('./photos.seed.js');
 
 
 controller.getOne = function(req, res) {
