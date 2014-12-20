@@ -23,31 +23,38 @@ var app = angular.module('starter', ['ionic'])
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
-    this.renderMap(mapOptions)
-
-    return this;
+    return map = this.renderMap(mapOptions)
   }
 
   mapObj.renderMap = function (mapOptions) {
-    map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    window.map = map;
+    return new google.maps.Map(document.getElementById('map'), mapOptions);
   }
 
   mapObj.geoLocate = function() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(pos) {
         map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-        var myLocation = new google.maps.Marker({
+
+        mapObj.myMarker = new google.maps.Marker({
           position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
           map: map,
           content: 'You Are Here!'
-        })
+        });
       }, function(err) {
         handleNoGeolocation(true);
       });
     } else {
       handleNoGeolocation(true);
     };    
+  }
+
+  mapObj.goToPlace = function(place) {
+    this.myMarker.setPosition(place.geometry.location)
+    
+    var bounds = new google.maps.LatLngBounds();
+    bounds.extend(place.geometry.location);
+    map.fitBounds(bounds);
+    map.setZoom(12);
   }
 
   mapObj.handleNoGeolocation = function(errorFlag) {
@@ -73,16 +80,16 @@ var app = angular.module('starter', ['ionic'])
 .factory('MapSearchFactory', function () {
   var searchObj = {};
 
-  searchObj.initialize = function () {
+  searchObj.initialize = function (map) {
     var input = (document.getElementById('pac-input'));
 
     // Positions the search box to the top left corner
+    // FIXME: map is global 
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
     var searchBox = new google.maps.places.SearchBox(input);
     
     // expose searchBox
     searchObj.searchBox = searchBox;
-    window.searchBox = searchBox;
   }
 
   return searchObj;
@@ -92,73 +99,23 @@ var app = angular.module('starter', ['ionic'])
   var markerObj = {};
   var markers = [];
 
-  markerObj.placeMarker = function(places) {
+  markerObj.placeMarkers = function(map, places) {
     // remove all existing markers
     markers = [];
     var bounds = new google.maps.LatLngBounds();
+
+    if (places.length === 0) {
+      return;
+    }
+
+    // for all existing markers
+      // remove map from marker
+      // 
+
     // create new markers for all places
     for (var i = 0; i < places.length; i++) {
       var place = places[i];
-      var image = {
-        url: place.icon,
-        size: new google.maps.Size(71, 71),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(17, 34),
-        scaledSize: new google.maps.Size(25, 25)
-      };
-      markers.push(new google.maps.Marker({
-        map: map,
-        title: place.name,
-        icon: image,
-        position: place.geometry.location
-      }));
-      bounds.extend(place.geometry.location);
-      console.log("shit happens here", markers);
-    }
-    map.fitBounds(bounds);
-    // debugger;
-    map.setZoom(12);
-  }
 
-  return markerObj;
-})
-
-.controller('MapController', ['MapFactory', 'MapSearchFactory', 'MarkerFactory', function(Map, SearchBox, Marker) {
-  
-  Map.initialize()
-    .geoLocate();
-
-  SearchBox.initialize();
-
-  this.goToPlace = function () {
-
-    var places = SearchBox.searchBox.getPlaces();
-    if (places.length) {
-      Marker.placeMarker(places);
-    }
-  }
-
-  google.maps.event.addListener(SearchBox.searchBox, 'places_changed', this.goToPlace)
-
-//   var markers = [];
-
-
-//   //Listens to changes when user submits in a location
-//   google.maps.event.addListener(searchBox, 'places_changed', function() {
-//     //Returns the query selected by the user, or null if no places have been found
-//     var places = searchBox.getPlaces();
-
-//     if (places.length == 0) {
-//       return;
-//     }
-//     for (var i = 0, marker; marker = markers[i]; i++) {
-//       marker.setMap(null);
-//     }
-
-//     markers = [];
-//     // For each place, get the icon, place name, and location.
-//     var bounds = new google.maps.LatLngBounds();
-//     for (var i = 0, place; place = places[i]; i++) {
       // var image = {
       //   url: place.icon,
       //   size: new google.maps.Size(71, 71),
@@ -166,24 +123,41 @@ var app = angular.module('starter', ['ionic'])
       //   anchor: new google.maps.Point(17, 34),
       //   scaledSize: new google.maps.Size(25, 25)
       // };
-//       console.log("INFO: ", image);
 
-//       // Create a marker for each place
-//       var marker = new google.maps.Marker({
-//         map: map,
-//         icon: image,
-//         title: place.name,
-//         position: place.geometry.location
-//       });
+      markers.push(new google.maps.Marker({
+        // FIXME: map is global 
+        map: map,
+        title: place.name,
+        // icon: image,
+        position: place.geometry.location
+      }));
 
-//       markers.push(marker);
+      bounds.extend(place.geometry.location);
+    }
+    map.fitBounds(bounds);
 
-//       bounds.extend(place.geometry.location);
-//     }
+    if (places.length === 1) {
+      map.setZoom(12);
+    }
+  }
 
-//     map.fitBounds(bounds);
-//   });
+  return markerObj;
+})
 
-//   $scope.map = map;
+.controller('MapController', ['MapFactory', 'MapSearchFactory', 'MarkerFactory', function(Map, SearchBox, Marker) {
+  
+  var map = Map.initialize();
+  var myMarker = Map.geoLocate();
+
+  SearchBox.initialize(map);
+
+  this.goToPlace = function () {
+    var places = SearchBox.searchBox.getPlaces();
+    if (places.length) {
+      Map.goToPlace(places[0])
+    }
+  }
+
+  google.maps.event.addListener(SearchBox.searchBox, 'places_changed', this.goToPlace)
 
 }])
