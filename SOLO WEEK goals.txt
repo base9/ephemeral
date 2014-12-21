@@ -1,0 +1,23 @@
+SOLO WEEK:
+
+
+Brian:
+ - website / email scraping
+ - product name ideation (and domain research)
+
+Evan:
+ - deployment (and refactor to mySQL)
+ - something?
+ - front-end UI
+
+
+Ash
+ - scrapers 
+ - recommendation engine
+ - server analytics engine
+ - get at least one of the three to an MVP stage
+
+Stephan 
+ - OAuth
+ - server analytics
+ - testing suite
