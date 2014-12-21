@@ -6,18 +6,17 @@ Brian:
  - product name ideation (and domain research)
 
 Evan:
- - deployment (and refactor to mySQL)
- - something?
+ - hook up testing to deployment
+ - refactor to mySQL or PostGRES
  - front-end UI
 
 
 Ash
- - scrapers 
  - recommendation engine
  - server analytics engine
- - get at least one of the three to an MVP stage
+ - get at least one of the two to an MVP stage
 
 Stephan 
- - OAuth
+ - OAuth *****
  - server analytics
  - testing suite
