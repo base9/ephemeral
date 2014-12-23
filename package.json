@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "",
+    "test": "mocha",
     "start": "node server/index.js"
   },
   "repository": {
@@ -29,17 +29,21 @@
   "dependencies": {
     "body-parser": "^1.10.0",
     "bookshelf": "^0.7.9",
+    "chai": "^1.10.0",
     "express": "^4.10.6",
-    "knex": "^0.7.3",
-    "morgan": "^1.5.0",
-    "sqlite3": "^3.0.4",
     "gulp": "^3.8.10",
     "gulp-jshint": "^1.9.0",
     "gulp-livereload": "^3.0.2",
     "gulp-nodemon": "^1.0.4",
     "gulp-sass": "^1.2.4",
     "gulp-util": "^3.0.1",
-    "jshint": "^2.5.10"
+    "jshint": "^2.5.10",
+    "knex": "^0.7.3",
+    "mocha": "^2.1.0",
+    "morgan": "^1.5.0",
+    "request": "^2.51.0",
+    "should": "^4.4.1",
+    "sqlite3": "^3.0.4"
   },
   "engines": {
     "node": "0.10.33"
