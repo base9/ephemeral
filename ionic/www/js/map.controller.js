@@ -20,6 +20,6 @@ angular.module('starter')
     Marker.placeMarkers(map, title, places, Http);
   });
 
-  Http.getRatings();
+  // Http.getRatings();
 
 }])

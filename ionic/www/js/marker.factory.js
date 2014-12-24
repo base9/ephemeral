@@ -42,23 +42,41 @@ angular.module('starter')
     if (places.length) {
       map.setZoom(14);
     }
-    addListener(map, title);
+
+    var ratings;
+    http.getRatings(function(element) {
+      ratings = element;
+    });
+
+    setTimeout(function() {
+      addListener(map, title, ratings)
+    }, 100);
   }
 
 
-  var addListener = function(map, titles) {
+  var addListener = function(map, titles, ratings) {
+    console.log("RATINGS LIST", ratings);
     //marker[i] should match to title[i]
     for (var i = 0; i < markers.length; i++) {
+      //grab ratings according to event_id
+      var rating = '';
+      for (var j = 0; j < ratings.length; j++) {
+        if (ratings[j].eventID === (i + 1)) {
+          rating += '<div><h6>' + ratings[j].stars + '</h6>' + '<p>' + ratings[j].comment + '</p></div>';
+        }
+      };
+      console.log("RATING", rating);
       var infowindow = new google.maps.InfoWindow();
       var marker = markers[i];
       var title = titles[i];
       console.log("ADD LISTENER", title);
-      google.maps.event.addListener(marker, 'click', (function(marker, title) {
+
+      google.maps.event.addListener(marker, 'click', (function(marker, title, rating) {
         return function() {
-          infowindow.setContent('<h4>' + title + '</h4>');
+          infowindow.setContent('<h4>' + title + '</h4>' + rating);
           infowindow.open(map, marker);
         }
-      })(marker, title));
+      })(marker, title, rating));
     };
   }
 

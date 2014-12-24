@@ -22,13 +22,15 @@ angular.module('starter')
 		  });
 	}
 
-	httpObject.getRatings = function() {
+	httpObject.getRatings = function(callback) {
 		$http.get('/api/ratings')
 			.success(function(data, status) {
 				var temp = data.map(function(element) {
-					return [element.event_id, element.comment, element.star];
+					return {eventID: element.event_id, comment: element.comment, stars: element.stars};
 				})
 				console.log("TEMP", temp);
+				console.log("CALLBACK", callback);
+				callback(temp);
 			})
 			.error(function(data, status) {
 				console.log("ERROR FOR API RATINGS");
