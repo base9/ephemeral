@@ -3,7 +3,7 @@ angular.module('starter')
   var markerObj = {};
   var markers = [];
 
-  markerObj.placeMarkers = function(map, places) {
+  markerObj.placeMarkers = function(map, title, places, http) {
     // remove all existing markers
     markers = [];
     var bounds = new google.maps.LatLngBounds();
@@ -42,16 +42,26 @@ angular.module('starter')
     if (places.length) {
       map.setZoom(14);
     }
+    addListener(map, title);
   }
 
-  markerObj.addListener = function(marker) {
+
+  var addListener = function(map, titles) {
+    //marker[i] should match to title[i]
     for (var i = 0; i < markers.length; i++) {
+      var infowindow = new google.maps.InfoWindow();
       var marker = markers[i];
-      google.maps.event.addListener(marker, 'click', function() {
-        console.log("LISTENING TO MARKER: ", marker);
-      });
+      var title = titles[i];
+      console.log("ADD LISTENER", title);
+      google.maps.event.addListener(marker, 'click', (function(marker, title) {
+        return function() {
+          infowindow.setContent('<h4>' + title + '</h4>');
+          infowindow.open(map, marker);
+        }
+      })(marker, title));
     };
   }
+
 
   return markerObj;
 })

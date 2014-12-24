@@ -6,18 +6,20 @@ angular.module('starter')
 
   SearchBox.initialize(map);
 
-  this.goToPlace = function () {
+  var goToPlace = function () {
     var places = SearchBox.searchBox.getPlaces();
     if (places.length) {
       Map.goToPlace(places[0])
     }
   }
 
-  google.maps.event.addListener(SearchBox.searchBox, 'places_changed', this.goToPlace)
+  google.maps.event.addListener(SearchBox.searchBox, 'places_changed', goToPlace);
 
-  Http.getMarkers(function(places) {
-    Marker.placeMarkers(map, places);
+  Http.getMarkers(function(title, places) {
+    // console.log("PLACES", places);
+    Marker.placeMarkers(map, title, places, Http);
   });
 
-  // Marker.addListener();
+  Http.getRatings();
+
 }])

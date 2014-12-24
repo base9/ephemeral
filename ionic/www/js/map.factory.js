@@ -32,7 +32,7 @@ angular.module('starter')
       });
     } else {
       handleNoGeolocation(true);
-    };    
+    };
   }
 
   mapObj.goToPlace = function(place) {
@@ -44,7 +44,7 @@ angular.module('starter')
     map.setZoom(12);
   }
 
-  mapObj.handleNoGeolocation = function(errorFlag) {
+  var handleNoGeolocation = function(errorFlag) {
     if (errorFlag) {
       var content = 'Error: The Geolocation service failed.';
     } else {
@@ -53,7 +53,7 @@ angular.module('starter')
 
     var options = {
       map: map,
-      position: new google.maps.LatLng(60, 105),
+      position: new google.maps.LatLng(60, 105), //default to IP address
       content: content
     };
 
