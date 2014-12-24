@@ -80,6 +80,5 @@ angular.module('starter')
     };
   }
 
-
   return markerObj;
 })
