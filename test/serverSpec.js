@@ -6,7 +6,7 @@ describe("Server", function(){
 
   describe("Endpoints", function(){
     it("should have a responsive GET api/events/  ", function(done) {
- 			request.get('http://127.0.0.1:9000/api/events', function(err, res, body) {
+ 			request.get('https://aqueous-beyond-6514.herokuapp.com/api/events', function(err, res, body) {
  				expect(res.statusCode).to.equal(200);
  				done();
  			})
@@ -14,7 +14,7 @@ describe("Server", function(){
 
     it("should have a responsive GET api/events/:id  ", function(done) {
     	// Checks events id:1, will not work if database is completely empty or if event id: 1 has been cleared
- 			request.get('http://127.0.0.1:9000/api/events/1', function(err, res, body) {
+ 			request.get('https://aqueous-beyond-6514.herokuapp.com/api/events/1', function(err, res, body) {
  				expect(res.statusCode).to.equal(200);
  				done();
  			})
@@ -23,7 +23,7 @@ describe("Server", function(){
     it("should have a responsive POST api/events/  ", function(done) {
     	// Checks events id:1, will not work if database is completely empty or if event id: 1 has been cleared
  			request
- 				.post('http://127.0.0.1:9000/api/events/')
+ 				.post('https://aqueous-beyond-6514.herokuapp.com/api/events/')
  				.form({
  					lat: 37.884541,  
  					lng: -122.304272,
