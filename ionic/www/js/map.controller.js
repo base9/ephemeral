@@ -16,10 +16,7 @@ angular.module('starter')
   google.maps.event.addListener(SearchBox.searchBox, 'places_changed', goToPlace);
 
   Http.getMarkers(function(title, places) {
-    // console.log("PLACES", places);
     Marker.placeMarkers(map, title, places, Http);
   });
-
-  // Http.getRatings();
 
 }])

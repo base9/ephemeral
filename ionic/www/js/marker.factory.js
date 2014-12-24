@@ -55,7 +55,6 @@ angular.module('starter')
 
 
   var addListener = function(map, titles, ratings) {
-    console.log("RATINGS LIST", ratings);
     //marker[i] should match to title[i]
     for (var i = 0; i < markers.length; i++) {
       //grab ratings according to event_id
@@ -65,12 +64,11 @@ angular.module('starter')
           rating += '<div><h6>' + ratings[j].stars + '</h6>' + '<p>' + ratings[j].comment + '</p></div>';
         }
       };
-      console.log("RATING", rating);
       var infowindow = new google.maps.InfoWindow();
       var marker = markers[i];
       var title = titles[i];
-      console.log("ADD LISTENER", title);
 
+      //must invoke function in order to grab current marker, title, and rating
       google.maps.event.addListener(marker, 'click', (function(marker, title, rating) {
         return function() {
           infowindow.setContent('<h4>' + title + '</h4>' + rating);

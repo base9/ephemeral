@@ -28,8 +28,8 @@ angular.module('starter')
 				var temp = data.map(function(element) {
 					return {eventID: element.event_id, comment: element.comment, stars: element.stars};
 				})
-				console.log("TEMP", temp);
-				console.log("CALLBACK", callback);
+				// console.log("TEMP", temp);
+				// console.log("CALLBACK", callback);
 				callback(temp);
 			})
 			.error(function(data, status) {
