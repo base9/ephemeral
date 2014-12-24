@@ -3,7 +3,7 @@ angular.module('starter')
   var markerObj = {};
   var markers = [];
 
-  markerObj.placeMarkers = function(map, places) {
+  markerObj.placeMarkers = function(map, title, places, http) {
     // remove all existing markers
     markers = [];
     var bounds = new google.maps.LatLngBounds();
@@ -29,20 +29,53 @@ angular.module('starter')
       // };
 
       markers.push(new google.maps.Marker({
-        // FIXME: map is global 
         map: map,
-        title: place.name,
+        // title: place.name,
         // icon: image,
-        position: place.geometry.location
+        position: place
       }));
 
-      bounds.extend(place.geometry.location);
+      bounds.extend(place);
     }
     map.fitBounds(bounds);
 
-    if (places.length === 1) {
-      map.setZoom(12);
+    if (places.length) {
+      map.setZoom(14);
     }
+
+    var ratings;
+    http.getRatings(function(element) {
+      ratings = element;
+    });
+
+    setTimeout(function() {
+      addListener(map, title, ratings)
+    }, 100);
+  }
+
+
+  var addListener = function(map, titles, ratings) {
+    //marker[i] should match to title[i]
+    for (var i = 0; i < markers.length; i++) {
+      //grab ratings according to event_id
+      var rating = '';
+      for (var j = 0; j < ratings.length; j++) {
+        if (ratings[j].eventID === (i + 1)) {
+          rating += '<div><h6>' + ratings[j].stars + '</h6>' + '<p>' + ratings[j].comment + '</p></div>';
+        }
+      };
+      var infowindow = new google.maps.InfoWindow();
+      var marker = markers[i];
+      var title = titles[i];
+
+      //must invoke function in order to grab current marker, title, and rating
+      google.maps.event.addListener(marker, 'click', (function(marker, title, rating) {
+        return function() {
+          infowindow.setContent('<h4>' + title + '</h4>' + rating);
+          infowindow.open(map, marker);
+        }
+      })(marker, title, rating));
+    };
   }
 
   return markerObj;

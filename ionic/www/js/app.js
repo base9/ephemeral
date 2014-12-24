@@ -11,4 +11,3 @@ angular.module('starter', ['ionic'])
     }
   })
 })
-
