@@ -52,13 +52,10 @@ controller.getLocal = function(req, res) {
 
  controller.addBatchDataFromKimonoAPI = function(req, res) {
    console.log('post req received at Kimono endpoint!');
-   var events = JSON.parse(req.body.collection1);
-   
+   var events = JSON.parse(req.body.results).collection1;
+      
    var recursiveAddEvents = function(events){
     var evnt = events.shift();
-    console.log('************************************* EVENT: ');
-    console.log(evnt);
-    console.log('*************************************');
     Event.where({title:evnt.title}).fetch().then(function (record) {
       if(!record){
         //parse event address into a lat and lng
@@ -75,16 +72,27 @@ controller.getLocal = function(req, res) {
               if(json.results[0]){
                 var lat = json.results[0].geometry.location.lat;
                 var lng = json.results[0].geometry.location.lng;
+                var startTime;
+                var info;
+
+                if(evnt.startTime){
+                  //TODO: parse event date/time into correct format. yikes.
+                  startTime = evnt.startTime.text;
+                }
+                if(evnt.details){
+                  info = evnt.details.text;
+                }
+
+
                 console.log("LAT*****:", lat, "LNG****:", lng)
                 var newEvent = new Event({
                   title: evnt.title,
                   lat: lat,  
                   lng: lng,
-                  //parse event date/time into correct format. yikes.
-                  startTime: evnt.startTime.text,
-                  info: evnt.details.text ,
+                  startTime: startTime,
+                  info: info,
+                  //TODO: user_id should be a special account reserved for SF_funcheap_bot
 
-                  //user_id should be a special account reserved for SF_funcheap_bot
                 })
                 .save();
                 console.log('added new event "' + evnt.title + '"');
@@ -93,7 +101,9 @@ controller.getLocal = function(req, res) {
               }
             }
           });
-        };
+        } else {
+          console.log('event already exists in DB; skipping');
+        }
     });
   if(events.length){
     setTimeout(recursiveAddEvents.bind(this,events),1000);
