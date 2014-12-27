@@ -27,6 +27,7 @@
     "jshint": "^2.5.10"
   },
   "dependencies": {
+    "bluebird": "^2.4.2",
     "body-parser": "^1.10.0",
     "bookshelf": "^0.7.9",
     "chai": "^1.10.0",
