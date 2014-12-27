@@ -53,7 +53,7 @@ controller.getLocal = function(req, res) {
  controller.addBatchDataFromKimonoAPI = function(req, res) {
    console.log('post req received at Kimono endpoint!');
    var events = JSON.parse(req.body.results).collection1;
-      
+
    var recursiveAddEvents = function(events){
     var evnt = events.shift();
     Event.where({title:evnt.title}).fetch().then(function (record) {
@@ -106,7 +106,9 @@ controller.getLocal = function(req, res) {
         }
     });
   if(events.length){
-    setTimeout(recursiveAddEvents.bind(this,events),1000);
+    setTimeout(recursiveAddEvents.bind(this,events),300);
+  } else {
+    res.status(201).end()
   }
  }
  recursiveAddEvents(events);
