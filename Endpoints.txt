@@ -23,8 +23,8 @@ __Status__     ___Req___                                    ___Res___
 [X]            POST /api/events                           201 OK
                {lat,long,title,description, startTime,EndTime}
 
-[ ]            POST /api/events/kimono/                   201 OK
-               {lat,long,title,description, startTime,EndTime}
+[X]            POST /api/events/kimono/                   201 OK
+               {results: {collection1: [{event1}, {event2}...]}}
 
 [ ]            POST /api/events/:id                       201 OK
                {id, fields to update}
