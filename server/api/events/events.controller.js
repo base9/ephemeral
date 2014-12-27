@@ -50,7 +50,10 @@ controller.getLocal = function(req, res) {
   });
 };
 
- controller.addBatchDataFromKimonoAPI = function(req, res) {
+//this function expects a large JSON object of events, that will be sent
+//periodically by a Kimono Labs scraper.  Function will parse the events
+//and add them to our DB.
+controller.addBatchDataFromKimonoAPI = function(req, res) {
    console.log('post req received at Kimono endpoint!');
    var events = JSON.parse(req.body.results).collection1;
 
@@ -58,7 +61,9 @@ controller.getLocal = function(req, res) {
     var evnt = events.shift();
     Event.where({title:evnt.title}).fetch().then(function (record) {
       if(!record){
-        //parse event address into a lat and lng
+
+
+        //parse event address into a lat and lng, via Google Geocoding API w/ Brian's API key.
         var apiKey = 'AIzaSyBtd0KrHPVY6i17OdnrJ-ID8jsZ99afO8U';
         var apiUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' 
         var formattedAddress = evnt.address.text.split(' ').join('+');
@@ -83,8 +88,7 @@ controller.getLocal = function(req, res) {
                   info = evnt.details.text;
                 }
 
-
-                console.log("LAT*****:", lat, "LNG****:", lng)
+                //create new event record for DB.
                 var newEvent = new Event({
                   title: evnt.title,
                   lat: lat,  
