@@ -126,8 +126,8 @@ controller.addBatchDataFromKimonoAPI = function(req, res) {
  recursiveAddEvents(events);
 }
 
-//output: an ISO 8601-formatted date/time string.
-// YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+01:00)
+//output: an ISO 8601-formatted date/time tuple [startTime,endTime].
+//format is: YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+01:00)
 function getStartEndTimes(dateString, durationString){
   console.log(dateString);
   console.log(durationString);
