@@ -1,8 +1,10 @@
+//this will alter the global object 'Date'
+require('./date.js');
+
 var Event = require('./events.model.js');
 var seed = require('./events.seed.js');
 var Promise = require('bluebird');
 var request = Promise.promisify(require('request'));
-
 var controller = module.exports;
 
 controller.getAll = function(req, res) {
@@ -78,11 +80,16 @@ controller.addBatchDataFromKimonoAPI = function(req, res) {
                 var lat = json.results[0].geometry.location.lat;
                 var lng = json.results[0].geometry.location.lng;
                 var startTime;
+                var endTime;
                 var info;
 
-                if(evnt.startTime){
-                  //TODO: parse event date/time into correct format. yikes.
-                  startTime = evnt.startTime.text;
+                if(evnt.date){
+                  //TODO: refactor kimono API to use "duration" and "info" properties (not detail and startTime)
+                  console.log("getting formatted times for event " + evnt.title);
+                  var formattedTimes = getStartEndTimes(evnt.date.text,evnt.startTime.text);
+                  startTime = formattedTimes[0];
+                  endTime = formattedTimes[1];
+                  console.log(startTime,endTime);
                 }
                 if(evnt.details){
                   info = evnt.details.text;
@@ -94,6 +101,7 @@ controller.addBatchDataFromKimonoAPI = function(req, res) {
                   lat: lat,  
                   lng: lng,
                   startTime: startTime,
+                  endTime: endTime,
                   info: info,
                   //TODO: user_id should be a special account reserved for SF_funcheap_bot
 
@@ -118,7 +126,30 @@ controller.addBatchDataFromKimonoAPI = function(req, res) {
  recursiveAddEvents(events);
 }
 
+//output: an ISO 8601-formatted date/time tuple [startTime,endTime].
+//format is: YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+01:00)
+function getStartEndTimes(dateString, durationString){
+  console.log(dateString);
+  console.log(durationString);
 
+  var startTime;
+  var endTime;
+
+  if(durationString==="All Day"){
+    startTime="12:00am";
+    endTime="11:59pm";
+  } else if(durationString.indexOf('to') > -1) {
+    startTime = durationString.split('to')[0];
+    endTime = durationString.split('to')[1];
+  } else {
+    startTime = durationString;
+  }
+
+  var formattedStartTime = Date.parse(dateString + ' ' + startTime).toISOString();
+  var formattedEndTime = endTime ? Date.parse(dateString + ' ' + endTime).toISOString() : "";
+
+  return [formattedStartTime, formattedEndTime]
+}
 
 
 
