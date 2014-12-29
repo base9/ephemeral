@@ -11,3 +11,5 @@ db.sqlite
 npm-debug.log
 
 bin/*
+
+lib

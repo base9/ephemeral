@@ -15,7 +15,6 @@ angular.module('starter')
     // for all existing markers
       // remove map from marker
       // 
-
     // create new markers for all places
     for (var i = 0; i < places.length; i++) {
       var place = places[i];
@@ -28,11 +27,19 @@ angular.module('starter')
       //   scaledSize: new google.maps.Size(25, 25)
       // };
 
-      markers.push(new google.maps.Marker({
+      markers.push(new google.maps.Circle({
         map: map,
         // title: place.name,
         // icon: image,
-        position: place
+        position: place,
+        strokeColor: 'green',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: 'green',
+        fillOpacity: 0.35,
+        map: map,
+        center: place,
+        radius: Math.random()*650
       }));
 
       bounds.extend(place);
