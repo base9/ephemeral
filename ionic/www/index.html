@@ -14,17 +14,43 @@
   </head>
   <body ng-app="starter">
 
-    <ion-pane>
-      <!-- <ion-header-bar class="bar-stable"> -->
-        <!-- <h1 class="title">Ionic Blank Starter</h1> -->
-      <!-- </ion-header-bar> -->
-      <ion-content ng-controller="MapController as MapCtrl">
-        <input type="text" id="pac-input" class="controls"/>
-        <div id="map" data-tap-disabled="true">
-        </div>
-      </ion-content>
-    </ion-pane>
-    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBnemtHaxtZyoxOU0NYEPXNxJwIhG0DeCE&sensor=true&v=3.exp&libraries=places"></script>
+    <ion-side-menus>
+      <ion-side-menu-content ng-controller="MenuController">
+        <ion-nav-bar class="bar bar-positive">
+          <ion-nav-buttons side="right">
+            <button class="button button-icon button-clear ion-navicon" menu-toggle="right">
+            </button>
+          </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-content ng-controller="MapController" class="mapCanvas">
+          <!-- <input type="text" id="pac-input" class="controls"/>   -->
+          <div id="map" data-tap-disabled="true">
+          </div>
+          <button id="GeoButton" ng-click="geoLocate()" ><i class="icon ion-android-locate"></i></button>
+        </ion-content>
+      </ion-side-menu-content>
+
+<!-- RIGHT SLIDE MENU -->
+      <ion-side-menu class="rightMenu" side="right">
+        <ion-header-bar class="bar bar-dark bar-header rightMenuHeader">
+          <h1 class="title">Menu</h1>
+        </ion-header-bar>
+        <ion-content>
+          <div class="button-bar logReg">
+            <a class="button" ng-click="">Login</a>
+            <a class="button" ng-click="">Register</a>
+          </div>
+          <div class="authForm">
+            <form>
+              <input ng-model="username" type="text"></input>
+              <input ng-model="password" type="password"></input>
+            </form>
+          </div>
+        </ion-content>
+      </ion-side-menu>
+    </ion-side-menus>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnemtHaxtZyoxOU0NYEPXNxJwIhG0DeCE&sensor=true&v=3.exp&libraries=places"></script>
 
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
@@ -40,5 +66,6 @@
     <script src="js/marker.factory.js"></script>
     <script src="js/httpHandler.factory.js"></script>
     <script src="js/map.controller.js"></script>
+    <script src="js/menu.controller.js"></script>
   </body>
 </html>

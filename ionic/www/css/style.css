@@ -25,7 +25,7 @@
   left: 15px;
 }*/
 
-#pac-input {
+/*#pac-input {
   background-color: #fff;
   padding: 0 11px 0 13px;
   width: 400px;
@@ -39,22 +39,34 @@
   border-color: #4d90fe;
   margin-left: -1px;
   padding-left: 14px;
-  /* Regular padding-left + 1. */
+  Regular padding-left + 1.
   width: 401px; 
+}*/
+
+/* MENUS */
+
+.rightMenu {
+  background-color: rgb(50,50,50);
 }
 
-.pac-container {
-  font-family: Roboto; 
+.mapCanvas {
+  margin-top: 43px;
 }
 
-#type-selector {
-  color: #fff;
-  background-color: #4d90fe;
-  padding: 5px 11px 0px 11px; 
+/* MAP BUTTONS */
+
+#GeoButton{
+  position:absolute;
+  z-index: 99;
+
+  left: 20px;
+  bottom: 30px;
+  width: 50px;
+  height: 50px;
+
+  font-size: 30px;
+  color: DimGray;  
 }
 
-#type-selector label {
-  font-family: Roboto;
-  font-size: 13px;
-  font-weight: 300; 
-}
+
+
