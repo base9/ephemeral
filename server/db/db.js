@@ -22,7 +22,7 @@ console.log("DATABASE_URL is ", process.env.DATABASE_URL);
 
     var db = knex({
       client: 'pg',
-      connection: process.env.PG_CONNECTION_STRING || 'postgres://localhost:5432'
+      connection: process.env.DATABASE_URL || 'postgres://localhost:5432'
       // connection: {
       //   Host: 'localhost',
       //   Port: '5432',
