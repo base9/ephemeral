@@ -2,7 +2,7 @@ var Rating = require('./ratings.model.js');
 
 setTimeout(function(){
   
-  Rating.where({id:1}).fetch().then(function (rating) {
+  Rating.where({comment:'The bagels were like, soooo stale'}).fetch().then(function (rating) {
     if(!rating){
       var newRating = new Rating({
         comment: 'The bagels were like, soooo stale',
@@ -15,7 +15,7 @@ setTimeout(function(){
     }
   });
 
-  Rating.where({id:2}).fetch().then(function (rating) {
+  Rating.where({comment:'Santa was very friendly'}).fetch().then(function (rating) {
     if(!rating){
       var newRating = new Rating({
         comment: 'Santa was very friendly',
@@ -28,7 +28,7 @@ setTimeout(function(){
     }
   });  
 
-  Rating.where({id:3}).fetch().then(function (rating) {
+  Rating.where({comment:'i was told there would be presents'}).fetch().then(function (rating) {
     if(!rating){
       var newRating = new Rating({
         comment: 'i was told there would be presents',
