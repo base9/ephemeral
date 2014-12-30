@@ -8,7 +8,7 @@ console.log("process.env thing is ", process.env.PG_CONNECTION_STRING);
 // if(process.env.PG_CONNECTION_STRING){
     var db = require('knex')({
       client: 'mysql',
-      connection: process.env.PG_CONNECTION_STRING
+      connection: 'mysql://beff67717752e6:21eda754@us-cdbr-iron-east-01.cleardb.net/heroku_fd9c5647c2bda50?reconnect=true'
     });
 
   // } else {
