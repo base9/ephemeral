@@ -10,12 +10,22 @@
 
 ### VERSION  1.1 .... Release date:   1/2/14 (Friday)
 
-- [ ] Deployed server 
+- [X] Deployed server 
 - [ ] Persistent DB (mySQL)
-- [ ] Continuous integration (travisCI or circleCI)
-- [ ] Good test coverage for both server and client apps
-- [ ] POST routes allowing users to add/update places
+- [.] Continuous integration (travisCI or circleCI)
+- [.] Good test coverage for both server and client apps
+- [.] POST routes allowing users to add/update places
 - [ ] User login / authentication
+- [ ] Client interface to add new events
+- [ ] Client interface to update (comment, add rating, etc) events
+- [ ] Basic but complete design of client interface (screens and layout, NOT styling)
+
+
+- most excited about
+  Ash: testing and continuous integration; interface layout and screens; side project: server analytics, auth sessions
+  Stephan: testing and continous integration; persistent mySQL DB; server analytics with Ash, 
+  Evan: everything client-side (design and build); recommendation engine
+  Brian: interface layout; continuous integration; more data scrapers and date/time extractors; *maybe* OAuth
 
 
 ### VERSION  1.2 .... Release date:   1/9/14 (Friday)
@@ -31,7 +41,7 @@
 - [ ] Email listener/parser API
 - [ ] Trip reports, and possibly other client analytics
 - [ ] Server-side scaling and DB optimization
-
+- [ ] State-based URLs for specific events (for sharing, bookmarking, etc)
 
 ### ITERATIVE IMPROVEMENTS
 
