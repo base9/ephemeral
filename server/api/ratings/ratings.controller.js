@@ -1,6 +1,5 @@
 var controller = module.exports;
 var Rating = require('./ratings.model.js');
-var seed = require('./ratings.seed.js');
 
 controller.getOne = function(req, res) {
   Rating.where({id:req.params.id}).fetch({
