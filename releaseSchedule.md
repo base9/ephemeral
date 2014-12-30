@@ -11,7 +11,7 @@
 ### VERSION  1.1 .... Release date:   1/2/14 (Friday)
 
 - [X] Deployed server 
-- [ ] Persistent DB (mySQL)
+- [X] Persistent DB (postgreSQL)
 - [.] Continuous integration (travisCI or circleCI)
 - [.] Good test coverage for both server and client apps
 - [.] POST routes allowing users to add/update places
