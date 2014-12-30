@@ -3,6 +3,8 @@
 var knex = require('knex');
 var path = require('path');
 
+console.log("process.env thing is ", process.env.PG_CONNECTION_STRING);
+
 // if(process.env.PG_CONNECTION_STRING){
     var db = require('knex')({
       client: 'mysql',
