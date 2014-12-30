@@ -3,26 +3,26 @@
 var knex = require('knex');
 var path = require('path');
 
-if(process.env.PG_CONNECTION_STRING){
+// if(process.env.PG_CONNECTION_STRING){
     var db = require('knex')({
       client: 'mysql',
       connection: process.env.PG_CONNECTION_STRING
     });
 
-  } else {
-    var db = knex({
-      client: 'sqlite3',
-      connection: {
-        host: '127.0.0.1',
-        user: 'dbUser',
-        password: 'dbPassword',
-        database: 'nowHereThisDb',
-        charset: 'utf8',
-        filename: path.join(__dirname, './db.sqlite')
-      }
-    });
+  // } else {
+  //   var db = knex({
+  //     client: 'sqlite3',
+  //     connection: {
+  //       host: '127.0.0.1',
+  //       user: 'dbUser',
+  //       password: 'dbPassword',
+  //       database: 'nowHereThisDb',
+  //       charset: 'utf8',
+  //       filename: path.join(__dirname, './db.sqlite')
+  //     }
+  //   });
     
-  }
+  // }
 
 
 module.exports = db;
