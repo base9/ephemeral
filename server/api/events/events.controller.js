@@ -66,9 +66,9 @@ controller.addBatchDataFromKimonoAPI = function(req, res) {
        }
    }
 
-   console.log('req.body', isValidJson(req.body);
-   console.log('req.body.results', isValidJson(req.body.results);
-   console.log('req.body.results.collection1', isValidJson(req.body.results.collection1);
+   console.log('req.body', isValidJson(req.body));
+   console.log('req.body.results', isValidJson(req.body.results));
+   console.log('req.body.results.collection1', isValidJson(req.body.results.collection1));
 
    var events = JSON.parse(req.body).results.collection1;
    var recursiveAddEvents = function(events){
