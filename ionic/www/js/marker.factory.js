@@ -53,9 +53,7 @@ angular.module('radar')
 
     var ratings = event.ratings;
 
-    setTimeout(function() {
-      addListener(map, events, markers)
-    }, 100);
+    addListener(map, events, markers)
   }
 
 

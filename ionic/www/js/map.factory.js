@@ -203,7 +203,13 @@ angular.module('radar')
           content: 'You Are Here!'
         });
         
-        // watchId = navigator.geolocation.watchPosition(mapObj.geoLocate);
+        watchId = navigator.geolocation.watchPosition(function() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(pos) {
+        mapObj.myMarker.setPosition(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+      })
+    }
+  });
 
       }, function(err) {
         handleNoGeolocation(true);
