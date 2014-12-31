@@ -5,6 +5,11 @@ var Event = require('./events.model.js');
 var Promise = require('bluebird');
 var request = Promise.promisify(require('request'));
 var controller = module.exports;
+var crontab = require('node-crontab');
+
+var cronTest = crontab.scheduleJob("* * * * *", function () {
+  announceAThing();
+});
 
 controller.getAll = function(req, res) {
   Event.fetchAll({
@@ -121,7 +126,7 @@ controller.addBatchDataFromKimonoAPI = function(req, res) {
   }
  }
  recursiveAddEvents(events);
-}
+};
 
 //output: an ISO 8601-formatted date/time tuple [startTime,endTime].
 //format is: YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+01:00)
@@ -146,47 +151,46 @@ function getStartEndTimes(dateString, durationString){
   var formattedEndTime = endTime ? Date.parse(dateString + ' ' + endTime).toISOString() : "";
 
   return [formattedStartTime, formattedEndTime]
-}
-
-controller.fetchBatchDataFromEventbriteApi = function(req, res) {
+};
   
-  function recursiveFetch(pageNumber){
-    console.log("fetching page " + pageNumber + "!");
-    var reqUrl = 'https://www.eventbriteapi.com/v3/events/search/?token=WUETWTBHZAXVIQK46NZM&start_date.keyword=today&venue.country=US'
-    reqUrl += '&page=' + pageNumber;
-    request(reqUrl)
-      .then(function (eventbriteRes) {
-        var body = JSON.parse(eventbriteRes[0].body);
-        body.events.forEach(function(event){
-          Event.where({title:event.name.text}).fetch().then(function (record) {
-            if(!record){
-              var newEvent = new Event({
-                title: event.name.text,
-                lat: event.venue.latitude,  
-                lng: event.venue.longitude,
-                startTime: event.start.utc,
-                endTime: event.end.utc,
-                info: (event.description.text ? event.description.text.slice(0,2000) : '')
-                //TODO: user_id should be a special account reserved for Eventbrite_bot
-                //TODO: do something better than a title match for preventing duplicate entries
-              })
-              .save();
-              console.log('added new event "' + event.name.text + '"');
-            } else {
-              console.log("event with that title already exists; skipping.")
-            }
-          });
+function fetchBatchDataFromEventbriteApi(pageNumber){
+  console.log("fetching page " + pageNumber + "!");
+  var reqUrl = 'https://www.eventbriteapi.com/v3/events/search/?token=WUETWTBHZAXVIQK46NZM&start_date.keyword=today&venue.country=US'
+  reqUrl += '&page=' + pageNumber;
+  request(reqUrl)
+    .then(function (eventbriteRes) {
+      var body = JSON.parse(eventbriteRes[0].body);
+      body.events.forEach(function(event){
+        Event.where({title:event.name.text}).fetch().then(function (record) {
+          if(!record){
+            var newEvent = new Event({
+              title: event.name.text,
+              lat: event.venue.latitude,  
+              lng: event.venue.longitude,
+              startTime: event.start.utc,
+              endTime: event.end.utc,
+              info: (event.description.text ? event.description.text.slice(0,2000) : '')
+              //TODO: user_id should be a special account reserved for Eventbrite_bot
+              //TODO: do something better than a title match for preventing duplicate entries
+            })
+            .save();
+            console.log('added new event "' + event.name.text + '"');
+          } else {
+            console.log("event with that title already exists; skipping.")
+          }
         });
-        if(pageNumber < body.pagination.page_count) {
-          console.log( (body.pagination.page_count - pageNumber) + " pages remaining.")
-          setTimeout(recursiveFetch.bind(this,pageNumber+1),500)
-        }
-      })
-  }
+      });
+      if(pageNumber < body.pagination.page_count) {
+        console.log( (body.pagination.page_count - pageNumber) + " pages remaining.")
+        setTimeout(recursiveFetch.bind(this,pageNumber+1),500)
+      }
+    })
+};
 
-  recursiveFetch(1);
+function announceAThing(){
+  console.log("it's CRON TIME!");
+};
 
-}
 
 
 
