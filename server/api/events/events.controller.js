@@ -82,11 +82,10 @@ controller.addBatchDataFromKimonoAPI = function(req, res) {
                 var info;
 
                 if(evnt.date){
-                  console.log("getting formatted times for event ", evnt);
-                  var formattedTimes = getStartEndTimes(evnt.date.text,evnt.startTime.text);
+                  console.log("getting formatted times for event ", evnt.title);
+                  var formattedTimes = getStartEndTimes(evnt.date.text,evnt.duration.text);
                   startTime = formattedTimes[0];
                   endTime = formattedTimes[1];
-                  console.log(startTime,endTime);
                 }
                 if(evnt.details){
                   info = evnt.details.text;
