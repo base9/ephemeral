@@ -57,25 +57,11 @@ controller.getLocal = function(req, res) {
 controller.addBatchDataFromKimonoAPI = function(req, res) {
    console.log('post req received at Kimono endpoint!');
    
-   function isValidJson(json) {
-       try {
-           JSON.parse(json);
-           return true;
-       } catch (e) {
-           return false;
-       }
-   }
-
-   console.log('req.body', isValidJson(req.body));
-   console.log('req.body.results', isValidJson(req.body.results));
-   console.log('req.body.results.collection1', isValidJson(req.body.results.collection1));
-
    var events = req.body.results.collection1;
    var recursiveAddEvents = function(events){
     var evnt = events.shift();
     Event.where({title:evnt.title}).fetch().then(function (record) {
       if(!record){
-
 
         //parse event address into a lat and lng, via Google Geocoding API w/ Brian's API key.
         var apiKey = 'AIzaSyBtd0KrHPVY6i17OdnrJ-ID8jsZ99afO8U';
@@ -96,8 +82,7 @@ controller.addBatchDataFromKimonoAPI = function(req, res) {
                 var info;
 
                 if(evnt.date){
-                  //TODO: refactor kimono API to use "duration" and "info" properties (not detail and startTime)
-                  console.log("getting formatted times for event " + evnt.title);
+                  console.log("getting formatted times for event ", evnt);
                   var formattedTimes = getStartEndTimes(evnt.date.text,evnt.startTime.text);
                   startTime = formattedTimes[0];
                   endTime = formattedTimes[1];
