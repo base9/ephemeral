@@ -70,7 +70,7 @@ controller.addBatchDataFromKimonoAPI = function(req, res) {
    console.log('req.body.results', isValidJson(req.body.results));
    console.log('req.body.results.collection1', isValidJson(req.body.results.collection1));
 
-   var events = JSON.parse(req.body).results.collection1;
+   var events = req.body.results.collection1;
    var recursiveAddEvents = function(events){
     var evnt = events.shift();
     Event.where({title:evnt.title}).fetch().then(function (record) {
