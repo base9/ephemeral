@@ -1,10 +1,8 @@
-//this will alter the global object 'Date'
-require('./date.js');
 
 var Event = require('./events.model.js');
 var Promise = require('bluebird');
 var request = Promise.promisify(require('request'));
-var utils = require('./utils.js');
+var utils = Promise.promisifyAll(require('./utils.js'));
 
 var controller = module.exports;
 var crontab = require('node-crontab');
@@ -17,7 +15,7 @@ controller.getAll = function(req, res) {
   Event.fetchAll({
       withRelated: ['user','rating']
   }).then(function (collection) {
-    sendResponse(collection,res);
+    utils.sendResponse(collection,res);
   });
 };
 
@@ -25,7 +23,7 @@ controller.getOne = function(req, res) {
   Event.where({id:req.params.id}).fetch({
       withRelated: ['user','rating']
     }).then(function (record) {
-      sendResponse(record,res);
+      utils.sendResponse(record,res);
   });
 };
 
@@ -41,7 +39,7 @@ controller.getLocal = function(req, res) {
   .fetchAll({
      withRelated: ['user','rating']
   }).then(function (record) {
-    sendResponse(record,res);
+    utils.sendResponse(record,res);
   });
 };
 
@@ -50,75 +48,60 @@ controller.getLocal = function(req, res) {
 //and add them to our DB.
 controller.addBatchDataFromKimonoAPI = function(req, res) {
    console.log('post req received at Kimono endpoint!');
-   
    var events = req.body.results.collection1;
+   
    var recursiveAddEvents = function(events){
     var event = events.shift();
-    Event.where({title:event.title}).fetch().then(function (record) {
-      if(!record){
+    if(!event.date){
+      console.log('event has no date field; skipping');
+    } else {
+      Event.where({title:event.title}).fetch()
+      .then(function (record) {
+        if(!record){
+          var params = {};
+          if(event.info){
+            params.info = event.info.text;
+          }
+          
+          //parse event address into a lat and lng, via Google Geocoding API w/ Brian's API key.
+          utils.parseAddressAsync(event.address.text)
+          .then(function(coordinates){
+            params.lat = coordinates[0];
+            params.lng = coordinates[1];
+            return true;
+          })
 
-        //parse event address into a lat and lng, via Google Geocoding API w/ Brian's API key.
-        var apiKey = 'AIzaSyBtd0KrHPVY6i17OdnrJ-ID8jsZ99afO8U';
-        var apiUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' 
-        var formattedAddress = event.address.text.split(' ').join('+');
-        var reqUrl =  apiUrl + formattedAddress + '&key=' + apiKey;
-        request(reqUrl)
-          .then(function (res, body) {
-            if (res.statusCode >= 400) {
-              console.log(res.statusCode + ' error on request to Geocoding API');
-            } else {
-              var json = JSON.parse(res[0].body);
-              if(json.results[0]){
-                var lat = json.results[0].geometry.location.lat;
-                var lng = json.results[0].geometry.location.lng;
-                var startTime;
-                var endTime;
-                var info;
+          //parse event times using Date.JS
+          .then(function(bool){
+            console.log("getting formatted times for event ", event.title);
+            return utils.getStartEndTimesAsync(event.date.text,event.duration.text)
+          })
+          .then(function(formattedTimes){
+              params.startTime = formattedTimes[0];
+              params.endTime = formattedTimes[1];
+            return true;
+          })
 
-                if(event.date){
-                  console.log("getting formatted times for event ", event.title);
-                  var formattedTimes = getStartEndTimes(event.date.text,event.duration.text);
-                  //TODO: refactor kimono API to use "duration" and "info" properties (not detail and startTime)
-                  startTime = formattedTimes[0];
-                  endTime = formattedTimes[1];
-                }
-                if(event.info){
-                  info = event.info.text.slice(0,2000);
-                }
-
-                //create new event record for DB.
-                var newEvent = new Event({
-                  title: event.title,
-                  lat: lat,  
-                  lng: lng,
-                  startTime: startTime,
-                  endTime: endTime,
-                  info: info,
-                  //TODO: user_id should be a special account reserved for SF_funcheap_bot
-
-                })
-                .save();
-                console.log('added new event "' + event.title + '"');
-              } else {
-                console.log("address missing or bad request; no event added.")
-              }
-            }
+          //save event to DB
+          .then(function(bool){
+            utils.addEventRecord(params,res);
           });
         } else {
           console.log('event already exists in DB; skipping');
         }
-    });
-  if(events.length){
-    setTimeout(recursiveAddEvents.bind(this,events),300);
-  } else {
-    res.status(201).end()
+      });
+    }
+    if(events.length){
+      setTimeout(recursiveAddEvents.bind(this,events),300);
+    } else {
+      res.status(201).end()
+    }
   }
- }
  recursiveAddEvents(events);
 };
 
-//output: an ISO 8601-formatted date/time tuple [startTime,endTime].
-//format is: YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+01:00)
+
+
 function getStartEndTimes(dateString, durationString){
   console.log(dateString);
   console.log(durationString);
