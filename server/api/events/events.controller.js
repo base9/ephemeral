@@ -56,8 +56,11 @@ controller.getLocal = function(req, res) {
 //and add them to our DB.
 controller.addBatchDataFromKimonoAPI = function(req, res) {
    console.log('post req received at Kimono endpoint!');
+   console.log(req.body.results);
+   console.log('********************')
    var events = JSON.parse(req.body.results).collection1;
-
+   console.log(events);
+   console.log('********************')
    var recursiveAddEvents = function(events){
     var evnt = events.shift();
     Event.where({title:evnt.title}).fetch().then(function (record) {
