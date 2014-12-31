@@ -7,8 +7,8 @@ var request = Promise.promisify(require('request'));
 var controller = module.exports;
 var crontab = require('node-crontab');
 
-var cronTest = crontab.scheduleJob("* * * * *", function () {
-  announceAThing();
+var midnightCronJob = crontab.scheduleJob("1 0 * * *", function () {
+  fetchBatchDataFromEventbriteApi(1);
 });
 
 controller.getAll = function(req, res) {
@@ -185,10 +185,6 @@ function fetchBatchDataFromEventbriteApi(pageNumber){
         setTimeout(recursiveFetch.bind(this,pageNumber+1),500)
       }
     })
-};
-
-function announceAThing(){
-  console.log("it's CRON TIME!");
 };
 
 
