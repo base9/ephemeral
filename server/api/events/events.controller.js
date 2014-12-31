@@ -2,7 +2,6 @@
 require('./date.js');
 
 var Event = require('./events.model.js');
-var seed = require('./events.seed.js');
 var Promise = require('bluebird');
 var request = Promise.promisify(require('request'));
 var controller = module.exports;

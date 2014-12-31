@@ -24,7 +24,7 @@ setTimeout(function(){
           user_id: 1
         })
         .save();
-      console.log('added dummy event "Free Bagels"')
+      console.log('added dummy event "Free Bagels at 8pm"')
     }
   });
 
