@@ -1,4 +1,4 @@
-angular.module('starter')
+angular.module('radar')
 .factory('MarkerFactory', function() {
   var markerObj = {};
   var markers = [];

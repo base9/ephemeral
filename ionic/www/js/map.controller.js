@@ -1,4 +1,4 @@
-angular.module('starter')
+angular.module('radar')
 .controller('MapController', ['MapFactory', 'MapSearchFactory', 'MarkerFactory', 'HttpHandler', '$scope', function(Map, SearchBox, Marker, Http, $scope) {
   
   $scope.geoLocate = function(){

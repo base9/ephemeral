@@ -14,6 +14,7 @@
     "tests"
   ],
   "dependencies": {
-    "oauth-js": "~0.3.0"
+    "oauth-js": "~0.3.0",
+    "angular-bootstrap": "~0.12.0"
   }
 }

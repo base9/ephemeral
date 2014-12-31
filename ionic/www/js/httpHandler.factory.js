@@ -1,4 +1,4 @@
-angular.module('starter')
+angular.module('radar')
 .factory('HttpHandler', ['$http', function($http) {
 
 	var httpObject = {};

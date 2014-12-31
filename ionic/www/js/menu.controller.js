@@ -1,5 +1,5 @@
-angular.module('starter')
-.controller('MenuController', function($scope, $ionicSideMenuDelegate, $ionicNavBarDelegate, $timeout) {
+angular.module('radar')
+.controller('MenuController', function($scope, $ionicSideMenuDelegate, $ionicNavBarDelegate, $timeout, $modal) {
 	$scope.toggleRight = function() {
 	  $ionicSideMenuDelegate.toggleRight();
 	};
@@ -12,14 +12,53 @@ angular.module('starter')
 		$ionicNavBarDelegate.title('Playdar!');
 	}, 150);
 
-	$scope.test = function() {
-		console.log("seearchtext")
+	// $scope.test = function() {
+	// 	console.log("seearchtext")
+	// }
+
+	$scope.login = function() {
+		$scope.toggleRight();
+		var modalInstance = $modal.open({
+		  templateUrl: 'templates/login.html',
+		  controller: 'ModalCtrl',
+		  // size: size,
+		  // resolve: {
+		  //   items: function () {
+		  //     return $scope.items;
+		  //   }
+		  // }
+		});
+
+		// modalInstance.result.then(function (selectedItem) {
+  //     $scope.selected = selectedItem;
+  //   }, function () {
+  //     $log.info('Modal dismissed at: ' + new Date());
+  //   });
 	}
 
+	$scope.register = function() {
+		$scope.toggleRight();
+		var modalInstance = $modal.open({
+		  templateUrl: 'templates/register.html',
+		  controller: 'ModalCtrl',
+		});	
+	};
 
 	$scope.newSearch = function() {
 		$scope.search = ''
 		$scope.showSearch = !$scope.showSearch;
-	}
+	};
 
 })
+
+angular.module('radar').controller('ModalCtrl', function ($scope, $modalInstance) {
+
+
+  $scope.ok = function () {
+    $modalInstance.close();
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});

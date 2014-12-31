@@ -30,10 +30,10 @@
 .searchBar .icon {
   font-size: 27px;
   line-height: 1.2;
-  padding-right: 6px;
-  padding-left: 6px;
   position: fixed;
   color: white;
+  padding-left: 6px;
+  padding-right: 6px;
 }
 .searchBar .searchTxt {
   left: 55px;
@@ -42,9 +42,14 @@
   height: calc(100% - 10px);
   color: white;
 }
-/*.searchBar.numicons2 .searchTxt {
-  width: calc(100% - 135px);
-}*/
+
+.searchIcon {
+  position: fixed;
+  width: 50px;
+  height: 50px;
+  background-color: black;
+}
+
 .searchBar .searchTxt > .bgdiv {
   background-color: darkBlue;
   width: 50%;
