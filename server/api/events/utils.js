@@ -1,6 +1,9 @@
 //this will alter the global object 'Date'
 require('./date.js');
 
+var Promise = require('bluebird');
+var request = Promise.promisify(require('request'));
+
 
 module.exports = {
   addEventRecord: addEventRecord,
@@ -35,12 +38,13 @@ function sendResponse(record, res){
 //output: a lat & long tuple, such as [-37.211, 122.5819]
 //returns [0,0] on error. (TODO: refactor this)
 function getCoordsFromAddress(addressString){
+  console.log('helper fn now fetching coordinates');
   var formattedAddress = addressString.split(' ').join('+');
   var apiKey = 'AIzaSyBtd0KrHPVY6i17OdnrJ-ID8jsZ99afO8U';
   var apiUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' 
   var reqUrl =  apiUrl + formattedAddress + '&key=' + apiKey;
   
-  request(reqUrl)
+  return request(reqUrl)
   .then(function(res) {
     if (res.statusCode >= 400) {
       console.log(res.statusCode + ' error on request to Geocoding API');
@@ -49,10 +53,12 @@ function getCoordsFromAddress(addressString){
       if(json.results[0]){
         var lat = json.results[0].geometry.location.lat;
         var lng = json.results[0].geometry.location.lng;
+        console.log('returning coordinates from helper fn')
         return([lat,lng]);
       }
       return [0,0];
     }
+
   });
 }
 
@@ -97,5 +103,10 @@ function parseEventbriteJSON(res){
 //TODO: make this actually do something.
 function validateEventRecord(params){
   return params;
+};
+
+//use this to schedule/throttle API calls so they don't go too fast and exceed our limit.
+function scheduleCalls(callback,waitTime){
+
 };
 

@@ -47,22 +47,56 @@ controller.getLocal = function(req, res) {
 //periodically by a Kimono Labs scraper.  Function will parse the events
 //and add them to our DB.
 controller.addBatchDataFromKimonoAPI = function(req, res) {
-   console.log('post req received at Kimono endpoint!');
-   var events = req.body.results.collection1;
+  console.log('post req received at kimono endpoint!')
+  request('https://www.kimonolabs.com/api/9djxfaym?apikey=xlOwSDfkEN6XINU2tWxQhXPAec5Z9baZ')
+  .then(function(res){
+    console.log('response received from kimono');
+    var events = JSON.parse(res[0].body).results.collection1;
    
-   var recursiveAddEvents = function(events){
-    var event = events.shift();
-    if(!event.date){
-      console.log('event has no date field; skipping');
-    } else {
-      Event.where({title:event.title}).fetch()
-      .then(function (record) {
-        if(!record){
-          var params = {};
-          if(event.info){
-            params.info = event.info.text;
+    var recursiveAddEvents = function(events){
+      console.log('recursively adding events!');
+      var event = events.shift();
+      if(!event.date){
+        console.log('event has no date field; skipping');
+      } else {
+        console.log('beginning to process event');
+        Event.where({title:event.title}).fetch()
+        .then(function (record) {
+          if(!record){
+            console.log('event doesnt exist in db. starting creation process');
+            var params = {};
+            if(event.info){
+              params.info = event.info.text;
+            }
+            
+            //parse event address into a lat and lng, via Google Geocoding API w/ Brian's API key.
+            utils.getCoordsFromAddressAsync(event.address.text)
+            .then(function(coordinates){
+              params.lat = coordinates[0];
+              params.lng = coordinates[1];
+              console.log('got the coordinates!');
+              return true;
+            })
+
+            //parse event times using Date.JS
+            .then(function(bool){
+              console.log("getting formatted times for event ", event.title);
+              return utils.getStartEndTimesAsync(event.date.text,event.duration.text)
+            })
+            .then(function(formattedTimes){
+                params.startTime = formattedTimes[0];
+                params.endTime = formattedTimes[1];
+              return true;
+            })
+
+            //save event to DB
+            .then(function(bool){
+              utils.addEventRecord(params,res);
+            });
+          } else {
+            console.log('event already exists in DB; skipping');
           }
-          
+
           //parse event address into a lat and lng, via Google Geocoding API w/ Brian's API key.
           utils.parseAddressAsync(event.address.text)
           .then(function(coordinates){
