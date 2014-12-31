@@ -9,7 +9,8 @@ angular.module('radar')
   mapObj.initialize = function () {
     var mapOptions = {
       zoom: 14,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      disableDefaultUI: true
     };
 
     var styles = [
