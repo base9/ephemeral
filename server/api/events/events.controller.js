@@ -7,7 +7,7 @@ var request = Promise.promisify(require('request'));
 var controller = module.exports;
 var crontab = require('node-crontab');
 
-var midnightCronJob = crontab.scheduleJob("1 0 * * *", function () {
+var midnightCronJob = crontab.scheduleJob("1 * * * *", function () {
   fetchBatchDataFromEventbriteApi(1);
 });
 
