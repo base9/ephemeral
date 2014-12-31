@@ -4,6 +4,8 @@ require('./date.js');
 var Event = require('./events.model.js');
 var Promise = require('bluebird');
 var request = Promise.promisify(require('request'));
+var utils = require('./utils.js');
+
 var controller = module.exports;
 var crontab = require('node-crontab');
 
@@ -28,12 +30,7 @@ controller.getOne = function(req, res) {
 };
 
 controller.addOne = function(req, res) {
-  var newEvent = new Event(req.body)
-  .save()
-  .then(function(){
-    console.log('added new event: ' + req.body.title);
-    res.status(201).end();
-  });
+  utils.addEventRecord(req.body,res);
 };
 
 controller.getLocal = function(req, res) {
