@@ -17,12 +17,18 @@ router(app);
 app.listen(process.env.PORT || 9000)
 console.log('app listening on localhost:' + 9000);
 
+
+setTimeout(function(){
+  var userSeed = require('./api/users/users.seed.js');
+},400);
+
 setTimeout(function(){
   var eventSeed = require('./api/events/events.seed.js');
-  var userSeed = require('./api/users/users.seed.js');
-  var ratingSeed = require('./api/ratings/ratings.seed.js');
+},600);
 
-},500)
+setTimeout(function(){
+  var ratingSeed = require('./api/ratings/ratings.seed.js');
+},800)
 
 
 // expose app 
