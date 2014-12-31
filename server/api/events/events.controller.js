@@ -191,24 +191,6 @@ function fetchBatchDataFromEventbriteApi(pageNumber){
 
 
 
-/* Parameters for adding to DB:
-
-      event.integer('user_id').unsigned().references('users.id');
-      evnt.string('lat', 40);  
-      evnt.string('lng', 40);
-      evnt.string('title', 255);
-      evnt.timestamp('startTime', 255);
-      evnt.timestamp('endTime', 255);
-      evnt.timestamp('revealTime', 255);
-      evnt.string('info', 1000);
-
-*/
-
-
-
-
-
-
 
 
 
