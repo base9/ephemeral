@@ -14,20 +14,16 @@ var midnightCronJob = crontab.scheduleJob("1 * * * *", function () {
 controller.getAll = function(req, res) {
   Event.fetchAll({
       withRelated: ['user','rating']
-    }).then(function (collection) {
-    res.json(collection);
+  }).then(function (collection) {
+    sendResponse(collection,res);
   });
 };
 
 controller.getOne = function(req, res) {
   Event.where({id:req.params.id}).fetch({
       withRelated: ['user','rating']
-    }).then(function (event) {
-      if(event){
-        res.json(event);
-      } else {
-        res.status(404).end();
-      }
+    }).then(function (record) {
+      sendResponse(record,res);
   });
 };
 
@@ -47,12 +43,8 @@ controller.getLocal = function(req, res) {
   })
   .fetchAll({
      withRelated: ['user','rating']
-  }).then(function (event) {
-    if(event){
-      res.json(event);
-    } else {
-      res.status(404).end();
-    }
+  }).then(function (record) {
+    sendResponse(record,res);
   });
 };
 
