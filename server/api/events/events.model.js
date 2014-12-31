@@ -14,7 +14,7 @@ db.schema.hasTable('events').then(function (exists) {
       evnt.timestamp('startTime', 255);
       evnt.timestamp('endTime', 255);
       evnt.timestamp('revealTime', 255);
-      evnt.string('info', 1000);
+      evnt.string('info', 2000);
       evnt.integer('photo_id').unsigned().references('photos.id');
       evnt.timestamps();
     }).then(function (){

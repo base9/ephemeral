@@ -84,11 +84,12 @@ controller.addBatchDataFromKimonoAPI = function(req, res) {
                 if(event.date){
                   console.log("getting formatted times for event ", event.title);
                   var formattedTimes = getStartEndTimes(event.date.text,event.duration.text);
+                  //TODO: refactor kimono API to use "duration" and "info" properties (not detail and startTime)
                   startTime = formattedTimes[0];
                   endTime = formattedTimes[1];
                 }
                 if(event.info){
-                  info = event.info.text;
+                  info = event.info.text.slice(0,2000);
                 }
 
                 //create new event record for DB.
@@ -147,12 +148,61 @@ function getStartEndTimes(dateString, durationString){
   return [formattedStartTime, formattedEndTime]
 }
 
+controller.fetchBatchDataFromEventbriteApi = function(req, res) {
+  
+  function recursiveFetch(pageNumber){
+    console.log("fetching page " + pageNumber + "!");
+    var reqUrl = 'https://www.eventbriteapi.com/v3/events/search/?token=WUETWTBHZAXVIQK46NZM&start_date.keyword=today&venue.country=US'
+    reqUrl += '&page=' + pageNumber;
+    request(reqUrl)
+      .then(function (eventbriteRes) {
+        var body = JSON.parse(eventbriteRes[0].body);
+        body.events.forEach(function(event){
+          Event.where({title:event.name.text}).fetch().then(function (record) {
+            if(!record){
+              var newEvent = new Event({
+                title: event.name.text,
+                lat: event.venue.latitude,  
+                lng: event.venue.longitude,
+                startTime: event.start.utc,
+                endTime: event.end.utc,
+                info: (event.description.text ? event.description.text.slice(0,2000) : '')
+                //TODO: user_id should be a special account reserved for Eventbrite_bot
+                //TODO: do something better than a title match for preventing duplicate entries
+              })
+              .save();
+              console.log('added new event "' + event.name.text + '"');
+            } else {
+              console.log("event with that title already exists; skipping.")
+            }
+          });
+        });
+        if(pageNumber < body.pagination.page_count) {
+          console.log( (body.pagination.page_count - pageNumber) + " pages remaining.")
+          setTimeout(recursiveFetch.bind(this,pageNumber+1),500)
+        }
+      })
+  }
+
+  recursiveFetch(1);
+
+}
 
 
 
 
+/* Parameters for adding to DB:
 
+      event.integer('user_id').unsigned().references('users.id');
+      evnt.string('lat', 40);  
+      evnt.string('lng', 40);
+      evnt.string('title', 255);
+      evnt.timestamp('startTime', 255);
+      evnt.timestamp('endTime', 255);
+      evnt.timestamp('revealTime', 255);
+      evnt.string('info', 1000);
 
+*/
 
 
 
