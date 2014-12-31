@@ -15,7 +15,7 @@ router(app);
 
 
 app.listen(process.env.PORT || 9000)
-console.log('app listening on localhost:' + 9000);
+console.log('app listening on localhost:' + process.env.PORT || 9000);
 
 
 setTimeout(function(){
