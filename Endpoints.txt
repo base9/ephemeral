@@ -6,7 +6,7 @@ __Status__     ___Req___                                    ___Res___
 [X]            GET /                                      index.html
 
                 
-[ ]            GET /api/events/local
+[X]            GET /api/events/local
                {lat, long, zoom level, filters}          [{event1},{event2},{event3}]
 
 
@@ -28,6 +28,10 @@ __Status__     ___Req___                                    ___Res___
 
 [ ]            POST /api/events/:id                       201 OK
                {id, fields to update}
+
+[ ]            POST /api/ratings/:event_id                201 OK
+               {id, fields to update}
+
 
 
 
