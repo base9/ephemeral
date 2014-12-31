@@ -68,9 +68,24 @@ controller.addBatchDataFromKimonoAPI = function(req, res) {
             if(event.info){
               params.info = event.info.text;
             }
+            params.title = event.title;
             
             //parse event address into a lat and lng, via Google Geocoding API w/ Brian's API key.
-            utils.getCoordsFromAddressAsync(event.address.text)
+            utils.getCoordsFromGoogleAPI(event.address.text)
+            .then(function(res) {
+              if (res.statusCode >= 400) {
+                console.log(res.statusCode + ' error on request to Geocoding API');
+              } else {
+                var json = JSON.parse(res[0].body);
+                if(json.results[0]){
+                  var lat = json.results[0].geometry.location.lat;
+                  var lng = json.results[0].geometry.location.lng;
+                  console.log('returning coordinates from helper fn')
+                  return([lat,lng]);
+                }
+                return [0,0];
+              }
+            })
             .then(function(coordinates){
               params.lat = coordinates[0];
               params.lng = coordinates[1];
@@ -81,17 +96,40 @@ controller.addBatchDataFromKimonoAPI = function(req, res) {
             //parse event times using Date.JS
             .then(function(bool){
               console.log("getting formatted times for event ", event.title);
-              return utils.getStartEndTimesAsync(event.date.text,event.duration.text)
+              var durationString = event.duration.text;
+              var dateString = event.date.text;
+              var startTime;
+              var endTime;
+
+              if(durationString==="All Day"){
+                startTime="12:00am";
+                endTime="11:59pm";
+              } else if(durationString.indexOf('to') > -1) {
+                startTime = durationString.split('to')[0];
+                endTime = durationString.split('to')[1];
+              } else {
+                startTime = durationString;
+              }
+
+              var formattedStartTime = Date.parse(dateString + ' ' + startTime).toISOString();
+              var formattedEndTime = endTime ? Date.parse(dateString + ' ' + endTime).toISOString() : null;
+
+              console.log('helper is sending back the formatted times');
+              return [formattedStartTime, formattedEndTime];
             })
             .then(function(formattedTimes){
+                console.log('got the formatted times!');
                 params.startTime = formattedTimes[0];
-                params.endTime = formattedTimes[1];
+                if(formattedTimes[1]){
+                  params.endTime = formattedTimes[1];
+                }
               return true;
             })
 
             //save event to DB
             .then(function(bool){
-              utils.addEventRecord(params,res);
+              console.log('now saving event to DB!');
+              utils.addEventRecord(params);
             });
           } else {
             console.log('event already exists in DB; skipping');
