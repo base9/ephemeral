@@ -56,18 +56,17 @@ controller.getLocal = function(req, res) {
 //and add them to our DB.
 controller.addBatchDataFromKimonoAPI = function(req, res) {
    console.log('post req received at Kimono endpoint!');
-   var events = JSON.parse(req.body.results).collection1;
-
+   
+   var events = req.body.results.collection1;
    var recursiveAddEvents = function(events){
-    var evnt = events.shift();
-    Event.where({title:evnt.title}).fetch().then(function (record) {
+    var event = events.shift();
+    Event.where({title:event.title}).fetch().then(function (record) {
       if(!record){
-
 
         //parse event address into a lat and lng, via Google Geocoding API w/ Brian's API key.
         var apiKey = 'AIzaSyBtd0KrHPVY6i17OdnrJ-ID8jsZ99afO8U';
         var apiUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' 
-        var formattedAddress = evnt.address.text.split(' ').join('+');
+        var formattedAddress = event.address.text.split(' ').join('+');
         var reqUrl =  apiUrl + formattedAddress + '&key=' + apiKey;
         request(reqUrl)
           .then(function (res, body) {
@@ -82,21 +81,19 @@ controller.addBatchDataFromKimonoAPI = function(req, res) {
                 var endTime;
                 var info;
 
-                if(evnt.date){
-                  //TODO: refactor kimono API to use "duration" and "info" properties (not detail and startTime)
-                  console.log("getting formatted times for event " + evnt.title);
-                  var formattedTimes = getStartEndTimes(evnt.date.text,evnt.startTime.text);
+                if(event.date){
+                  console.log("getting formatted times for event ", event.title);
+                  var formattedTimes = getStartEndTimes(event.date.text,event.duration.text);
                   startTime = formattedTimes[0];
                   endTime = formattedTimes[1];
-                  console.log(startTime,endTime);
                 }
-                if(evnt.details){
-                  info = evnt.details.text;
+                if(event.info){
+                  info = event.info.text;
                 }
 
                 //create new event record for DB.
                 var newEvent = new Event({
-                  title: evnt.title,
+                  title: event.title,
                   lat: lat,  
                   lng: lng,
                   startTime: startTime,
@@ -106,7 +103,7 @@ controller.addBatchDataFromKimonoAPI = function(req, res) {
 
                 })
                 .save();
-                console.log('added new event "' + evnt.title + '"');
+                console.log('added new event "' + event.title + '"');
               } else {
                 console.log("address missing or bad request; no event added.")
               }
