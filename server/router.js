@@ -13,5 +13,6 @@ module.exports = function ( app ) {
 
   // static
   // app.use(express.static(__dirname + '/../client'));
+  // app.use('/bower_components', express.static(__dirname));
   app.use(express.static(__dirname + '/../ionic/www'));
 }
