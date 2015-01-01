@@ -1,4 +1,4 @@
-angular.module('starter')
+angular.module('radar')
 .controller('SignInController', function() {
 
 	this.signInWithFacebook = function() {

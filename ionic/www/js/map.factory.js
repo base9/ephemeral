@@ -1,4 +1,4 @@
-angular.module('starter')
+angular.module('radar')
 
 .factory('MapFactory', function () {
   var mapObj = {};
@@ -9,7 +9,8 @@ angular.module('starter')
   mapObj.initialize = function () {
     var mapOptions = {
       zoom: 14,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      disableDefaultUI: true
     };
 
     var styles = [
@@ -203,7 +204,13 @@ angular.module('starter')
           content: 'You Are Here!'
         });
         
-        // watchId = navigator.geolocation.watchPosition(mapObj.geoLocate);
+        watchId = navigator.geolocation.watchPosition(function() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(pos) {
+        mapObj.myMarker.setPosition(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+      })
+    }
+  });
 
       }, function(err) {
         handleNoGeolocation(true);
