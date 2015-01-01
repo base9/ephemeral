@@ -9,7 +9,7 @@ angular.module('radar')
   
   $scope.geoLocate = function(){
     console.log("LOCATING.......")
-    Map.geoLocate();
+    Map.geoCenter();
   }
 
   var map = Map.initialize();

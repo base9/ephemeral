@@ -7,6 +7,40 @@ angular.module('radar')
   var watchId;
 
   mapObj.initialize = function () {
+
+    function placeMarker(position) {
+      var newEventWindow = new google.maps.InfoWindow({
+        content: '<div class="newEventWindow">'+
+        '<input type="text" placeholder="Add Event Title" ngModel="title"></input>'+
+        '<input type="text" placeHolder="Optional Info" ngModel="info"></input>'+
+        'start: <input type="time" ngModel="startTime"></input>'+
+        'end: <input type="time" ngModel="endTime"></input>'+
+        'category: <select name="category">'+
+        '<option value="Party">Party</option>'+
+        '<option value="Concert">Concert</option>'+
+        '<option value="Sports">Sports</option>'+
+        '</select><br>'+
+        '<button ng-click="">Save Event</button>'+
+        '</div>'
+      });
+
+      var marker = new google.maps.Circle({
+        map: map,
+        title: event.title,
+        // icon: image,
+        position: position,
+        strokeColor: 'green',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: 'green',
+        fillOpacity: 0.35,
+        map: map,
+        center: position,
+        radius: 20
+      });
+      newEventWindow.open(map, marker)
+    }
+
     var mapOptions = {
       zoom: 14,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -186,6 +220,11 @@ angular.module('radar')
     map = this.renderMap(mapOptions);
     map.mapTypes.set('map_style', styledMap);
     map.setMapTypeId('map_style');
+    
+    google.maps.event.addListener(map, 'click', function(event) {
+      placeMarker(event.latLng);
+    });
+
     return map;
   }
 
@@ -197,6 +236,7 @@ angular.module('radar')
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(pos) {
         map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+        map.setZoom(14);
 
         mapObj.myMarker = new google.maps.Marker({
           position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
@@ -205,12 +245,12 @@ angular.module('radar')
         });
         
         watchId = navigator.geolocation.watchPosition(function() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(pos) {
-        mapObj.myMarker.setPosition(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-      })
-    }
-  });
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(pos) {
+              mapObj.myMarker.setPosition(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+            })
+          }
+        });
 
       }, function(err) {
         handleNoGeolocation(true);
@@ -218,6 +258,14 @@ angular.module('radar')
     } else {
       handleNoGeolocation(true);
     };
+  }
+
+  mapObj.geoCenter = function() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(pos) {
+        map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+      })
+    }
   }
 
   mapObj.goToPlace = function(place) {
