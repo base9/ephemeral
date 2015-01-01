@@ -3,7 +3,9 @@ var router = require('express').Router();
 
 router.get('/local', controller.getLocal);
 
-router.post('/kimono', controller.addBatchDataFromKimonoAPI);
+router.get('/kimono', controller.fetchBatchDataFromKimonoAPI);
+
+router.get('/eventbrite', controller.fetchBatchDataFromEventbriteAPI);
 
 router.get('/:id', controller.getOne);
 
