@@ -41,7 +41,7 @@ angular.module('radar')
 		var modalInstance = $modal.open({
 		  templateUrl: 'templates/register.html',
 		  controller: 'ModalCtrl',
-		});	
+		});
 	};
 
 	$scope.newSearch = function() {

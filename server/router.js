@@ -1,7 +1,7 @@
-var express = require('express');
-var eventRouter = require('./api/events');
-var userRouter = require('./api/users');
-var photoRouter = require('./api/photos');
+var express      = require('express');
+var eventRouter  = require('./api/events');
+var userRouter   = require('./api/users');
+var photoRouter  = require('./api/photos');
 var ratingRouter = require('./api/ratings');
 
 module.exports = function ( app ) {
