@@ -4,7 +4,15 @@ angular.module('radar')
 	  $ionicSideMenuDelegate.toggleRight();
 	};
 
+
 	$scope.showSearch = false;
+
+// FILTER MENU
+	$scope.toggleFilter = false;
+	$scope.partyCheck = true;
+	$scope.concertCheck = true;
+	$scope.happyHourCheck = true;
+	$scope.startTime = Date.now()
 
 // This is an ugly hack -- Figure out real angular/ionic ready function
 	$timeout(function() {
@@ -15,6 +23,7 @@ angular.module('radar')
 	// $scope.test = function() {
 	// 	console.log("seearchtext")
 	// }
+	$scope.loggedIn = false;
 
 	$scope.login = function() {
 		$scope.toggleRight();
@@ -48,6 +57,8 @@ angular.module('radar')
 		$scope.search = ''
 		$scope.showSearch = !$scope.showSearch;
 	};
+
+
 
 })
 

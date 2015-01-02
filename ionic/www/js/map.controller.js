@@ -12,6 +12,10 @@ angular.module('radar')
     Map.geoCenter();
   }
 
+  $scope.saveNewEvent = function() {
+  	console.log("Saving Event.....")
+  }
+
   var map = Map.initialize();
   var myMarker = Map.geoLocate();
 

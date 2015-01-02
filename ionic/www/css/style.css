@@ -25,15 +25,16 @@
   height: 300px;
 }
 
-/* NAVBAR & MENUS */
+/* NAVBAR */
 
 .searchBar {
-  color: white;
-  margin: 0 !important;
+  margin: 0;
   padding: 0;
+  height: 100px;
 }
 
 .searchBar .icon {
+  display: inline-block;
   font-size: 27px;
   line-height: 1.2;
   position: fixed;
@@ -42,6 +43,7 @@
   padding-right: 6px;
 }
 .searchBar .searchTxt {
+  display: inline-block;
   left: 55px;
   width: 50%;
   position: fixed;
@@ -50,7 +52,7 @@
 }
 
 .searchIcon {
-  position: fixed;
+  display: inline-block;
   width: 50px;
   height: 50px;
   background-color: black;
@@ -64,7 +66,6 @@
   opacity: 0.3;
 }
 .searchBar .searchTxt > .bgtxt {
-  position: absolute;
   top: 0;
   left: 0;
   width: 50%;
@@ -77,9 +78,24 @@
   padding-right:5px;
 }
 
+/* MENU */
+
 .rightMenu {
   background-color: rgb(50,50,50);
 }
+
+.filter {
+  background-color: rgb(50,50,50);
+  color: white;
+}
+
+.filterPane {
+  background-color: dimGray;
+  /*height: 200px;*/
+  color: white;
+}
+
+
 
 /* MAP BUTTONS */
 
