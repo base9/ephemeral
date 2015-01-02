@@ -63,9 +63,7 @@ angular.module('radar')
       events[i].rating.forEach(function(rated) {
         rating += '<div><h6>' + rated.stars + '</h6>' + '<p>' + rated.comment + '</p></div>';
       })
-      var infowindow = new google.maps.InfoWindow(
-        
-        );
+      var infowindow = new google.maps.InfoWindow();
       var title = events[i].title;
       var marker = markers[i];
       //must invoke function in order to grab current marker, title, and rating

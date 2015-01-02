@@ -9,7 +9,11 @@ angular.module('radar')
   
   $scope.geoLocate = function(){
     console.log("LOCATING.......")
-    Map.geoLocate();
+    Map.geoCenter();
+  }
+
+  $scope.saveNewEvent = function() {
+  	console.log("Saving Event.....")
   }
 
   var map = Map.initialize();
