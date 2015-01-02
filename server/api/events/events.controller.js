@@ -1,195 +1,162 @@
-//this will alter the global object 'Date'
-require('./date.js');
 
 var Event = require('./events.model.js');
 var Promise = require('bluebird');
 var request = Promise.promisify(require('request'));
-var controller = module.exports;
+var utils = require('./utils.js');
 var crontab = require('node-crontab');
 
-var midnightCronJob = crontab.scheduleJob("1 * * * *", function () {
-  fetchBatchDataFromEventbriteApi(1);
+
+/****************** scheduled function calls *****************/
+
+//these scrapers run 5x a day, at 12:01, 4:01, 8:01, etc
+var cronJob = crontab.scheduleJob("1 */4 * * *", function () {
+  console.log("****************it's cron time!******************")
+  controller.fetchBatchDataFromEventbriteAPI();
+  controller.fetchBatchDataFromKimonoAPI();
 });
 
-controller.getAll = function(req, res) {
+
+/********************* Module.exports *************************/
+
+module.exports = {
+  getAll: getAll,
+  getOne: getOne,
+  addOne: addOne,
+  getLocal: getLocal,
+  fetchBatchDataFromKimonoAPI: fetchBatchDataFromKimonoAPI,
+  fetchBatchDataFromEventbriteAPI: fetchBatchDataFromEventbriteAPI
+};
+
+/******************** Generic DB interactions **********************/
+
+function getAll(req, res) {
   Event.fetchAll({
       withRelated: ['user','rating']
-    }).then(function (collection) {
-    res.json(collection);
+  }).then(function (collection) {
+    utils.sendResponse(collection,res);
   });
 };
 
-controller.getOne = function(req, res) {
+function getOne(req, res) {
   Event.where({id:req.params.id}).fetch({
       withRelated: ['user','rating']
-    }).then(function (event) {
-      if(event){
-        res.json(event);
-      } else {
-        res.status(404).end();
-      }
+    }).then(function (record) {
+      utils.sendResponse(record,res);
   });
 };
 
-controller.addOne = function(req, res) {
-  var newEvent = new Event(req.body)
-  .save()
-  .then(function(){
-    console.log('added new event: ' + req.body.title);
-    res.status(201).end();
-  });
+function addOne(req, res) {
+  utils.addEventRecord(req.body,res);
 };
 
-controller.getLocal = function(req, res) {
+function getLocal(req, res) {
   Event.query(function(qb){
     qb.whereBetween('lat', [req.query.lat1,req.query.lat2]);
     qb.whereBetween('lng', [req.query.lng1,req.query.lng2]);
   })
   .fetchAll({
      withRelated: ['user','rating']
-  }).then(function (event) {
-    if(event){
-      res.json(event);
-    } else {
-      res.status(404).end();
-    }
+  }).then(function (record) {
+    utils.sendResponse(record,res);
   });
 };
+
+
+/************** Kimono API functions ******************/
 
 //this function expects a large JSON object of events, that will be sent
 //periodically by a Kimono Labs scraper.  Function will parse the events
 //and add them to our DB.
-controller.addBatchDataFromKimonoAPI = function(req, res) {
-   console.log('post req received at Kimono endpoint!');
-   
-   var events = req.body.results.collection1;
-   var recursiveAddEvents = function(events){
-    var event = events.shift();
-    Event.where({title:event.title}).fetch().then(function (record) {
+function fetchBatchDataFromKimonoAPI() {
+  request('https://www.kimonolabs.com/api/9djxfaym?apikey=xlOwSDfkEN6XINU2tWxQhXPAec5Z9baZ')
+  .then(function(res){
+    console.log('response received from kimono');
+    var events = JSON.parse(res[0].body).results.collection1;
+    var throttledAddEventFromKimono = utils.makeThrottledFunction(addEventFromKimono,500);
+    for (var i = 0; i < events.length; i++) {
+      throttledAddEventFromKimono(events[i]);
+    };
+  });
+};
+
+function addEventFromKimono(event){
+  if(!event.date){
+    console.log('event has no date field; skipping');
+  } else {
+    Event.where({title:event.title}).fetch()
+    .then(function (record) {
       if(!record){
+        var params = {};
+        if(event.info){
+          params.info = event.info.text;
+        }
+        params.title = event.title;
+        utils.sendGoogleAPIRequest(event.address.text)
+          .then(function(res){
+            
+            coordinates = utils.getCoordinatesFromGoogleAPIResponse(res);
+            params.lat = coordinates[0];
+            params.lng = coordinates[1];
+            
+            startEndTimes = utils.getStartEndTimes(event.date.text,event.duration.text);
+            params.startTime = startEndTimes[0];
+            params.endTime = startEndTimes[1];
 
-        //parse event address into a lat and lng, via Google Geocoding API w/ Brian's API key.
-        var apiKey = 'AIzaSyBtd0KrHPVY6i17OdnrJ-ID8jsZ99afO8U';
-        var apiUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' 
-        var formattedAddress = event.address.text.split(' ').join('+');
-        var reqUrl =  apiUrl + formattedAddress + '&key=' + apiKey;
-        request(reqUrl)
-          .then(function (res, body) {
-            if (res.statusCode >= 400) {
-              console.log(res.statusCode + ' error on request to Geocoding API');
-            } else {
-              var json = JSON.parse(res[0].body);
-              if(json.results[0]){
-                var lat = json.results[0].geometry.location.lat;
-                var lng = json.results[0].geometry.location.lng;
-                var startTime;
-                var endTime;
-                var info;
+            utils.addEventRecord(params);
+          });
+      } else {
+        console.log('event already exists in DB; skipping');
+      }
+   });
+  }
+};
 
-                if(event.date){
-                  console.log("getting formatted times for event ", event.title);
-                  var formattedTimes = getStartEndTimes(event.date.text,event.duration.text);
-                  //TODO: refactor kimono API to use "duration" and "info" properties (not detail and startTime)
-                  startTime = formattedTimes[0];
-                  endTime = formattedTimes[1];
-                }
-                if(event.info){
-                  info = event.info.text.slice(0,2000);
-                }
 
-                //create new event record for DB.
-                var newEvent = new Event({
-                  title: event.title,
-                  lat: lat,  
-                  lng: lng,
-                  startTime: startTime,
-                  endTime: endTime,
-                  info: info,
-                  //TODO: user_id should be a special account reserved for SF_funcheap_bot
+/************** Eventbrite API functions ******************/
 
-                })
-                .save();
-                console.log('added new event "' + event.title + '"');
-              } else {
-                console.log("address missing or bad request; no event added.")
-              }
-            }
+
+function fetchBatchDataFromEventbriteAPI(){
+  console.log('req received at eventbrite endpoint!');
+  var throttledFetchPageFromEventbriteAPI = utils.makeThrottledFunction(fetchPageFromEventbriteAPI,2500);
+  var reqUrl = 'https://www.eventbriteapi.com/v3/events/search/?token=WUETWTBHZAXVIQK46NZM&start_date.keyword=today&venue.country=US'
+  request(reqUrl)
+  .then(function (res) {
+    var pages = JSON.parse(res[0].body).pagination.page_count;
+    console.log('initial package received from eventbrite... beginning batch fetch. ' + pages + ' total pages to fetch.');
+    
+    for (var i = 1; i <= pages; i++) {
+      throttledFetchPageFromEventbriteAPI(reqUrl, i);
+    };
+  });
+}
+
+
+
+function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
+  console.log("fetching page " + pageNumber);
+  request(reqUrl + '&page=' + pageNumber)
+  .then(function (res) {
+    var body = JSON.parse(res[0].body);
+    body.events.forEach(function(event){
+      Event.where({title:event.name.text}).fetch().then(function (record) {
+        if(!record){
+          utils.addEventRecord({
+            title: event.name.text,
+            lat: event.venue.latitude,  
+            lng: event.venue.longitude,
+            startTime: event.start.utc,
+            endTime: event.end.utc,
+            info: (event.description.text ? event.description.text.slice(0,2000) : '')
+            //TODO: user_id should be a special account reserved for Eventbrite_bot
+            //TODO: do something better than a title match for preventing duplicate entries
           });
         } else {
-          console.log('event already exists in DB; skipping');
+          console.log("event with that title already exists; skipping.")
         }
-    });
-  if(events.length){
-    setTimeout(recursiveAddEvents.bind(this,events),300);
-  } else {
-    res.status(201).end()
-  }
- }
- recursiveAddEvents(events);
-};
-
-//output: an ISO 8601-formatted date/time tuple [startTime,endTime].
-//format is: YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+01:00)
-function getStartEndTimes(dateString, durationString){
-  console.log(dateString);
-  console.log(durationString);
-
-  var startTime;
-  var endTime;
-
-  if(durationString==="All Day"){
-    startTime="12:00am";
-    endTime="11:59pm";
-  } else if(durationString.indexOf('to') > -1) {
-    startTime = durationString.split('to')[0];
-    endTime = durationString.split('to')[1];
-  } else {
-    startTime = durationString;
-  }
-
-  var formattedStartTime = Date.parse(dateString + ' ' + startTime).toISOString();
-  var formattedEndTime = endTime ? Date.parse(dateString + ' ' + endTime).toISOString() : "";
-
-  return [formattedStartTime, formattedEndTime]
-};
-  
-function fetchBatchDataFromEventbriteApi(pageNumber){
-  console.log("fetching page " + pageNumber + "!");
-  var reqUrl = 'https://www.eventbriteapi.com/v3/events/search/?token=WUETWTBHZAXVIQK46NZM&start_date.keyword=today&venue.country=US'
-  reqUrl += '&page=' + pageNumber;
-  request(reqUrl)
-    .then(function (eventbriteRes) {
-      var body = JSON.parse(eventbriteRes[0].body);
-      body.events.forEach(function(event){
-        Event.where({title:event.name.text}).fetch().then(function (record) {
-          if(!record){
-            var newEvent = new Event({
-              title: event.name.text,
-              lat: event.venue.latitude,  
-              lng: event.venue.longitude,
-              startTime: event.start.utc,
-              endTime: event.end.utc,
-              info: (event.description.text ? event.description.text.slice(0,2000) : '')
-              //TODO: user_id should be a special account reserved for Eventbrite_bot
-              //TODO: do something better than a title match for preventing duplicate entries
-            })
-            .save();
-            console.log('added new event "' + event.name.text + '"');
-          } else {
-            console.log("event with that title already exists; skipping.")
-          }
-        });
       });
-      if(pageNumber < body.pagination.page_count) {
-        console.log( (body.pagination.page_count - pageNumber) + " pages remaining.")
-        setTimeout(recursiveFetch.bind(this,pageNumber+1),500)
-      }
-    })
+    });
+  })
 };
-
-
-
-
 
 
 
