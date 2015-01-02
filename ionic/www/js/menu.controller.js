@@ -1,9 +1,5 @@
 angular.module('radar')
-.controller('MenuController', function($scope, $ionicSideMenuDelegate, $ionicNavBarDelegate, $timeout, $modal) {
-	$scope.toggleRight = function() {
-	  $ionicSideMenuDelegate.toggleRight();
-	};
-
+.controller('MenuController', function($scope, $ionicSideMenuDelegate, $ionicNavBarDelegate, $timeout, $ionicModal) {
 
 	$scope.showSearch = false;
 
@@ -25,25 +21,29 @@ angular.module('radar')
 	// }
 	$scope.loggedIn = false;
 
-	$scope.login = function() {
-		$scope.toggleRight();
-		var modalInstance = $modal.open({
-		  templateUrl: 'templates/login.html',
-		  controller: 'ModalCtrl',
-		  // size: size,
-		  // resolve: {
-		  //   items: function () {
-		  //     return $scope.items;
-		  //   }
-		  // }
-		});
+/* MODALS */
 
-		// modalInstance.result.then(function (selectedItem) {
-  //     $scope.selected = selectedItem;
-  //   }, function () {
-  //     $log.info('Modal dismissed at: ' + new Date());
-  //   });
+  $scope.openModal = function() {
+    $scope.modal.show();
+  };
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+  }
+
+	$scope.toggleRight = function() {
+	  $ionicSideMenuDelegate.toggleRight();
+	};
+	
+	$scope.login = function() {
+			$ionicModal.fromTemplateUrl('../templates/login.html', {
+		    scope: $scope,
+		  }).then(function(modal) {
+		    $scope.modal = modal;
+				$scope.toggleRight();
+				$scope.openModal();
+		  });
 	}
+
 
 	$scope.register = function() {
 		$scope.toggleRight();
@@ -51,6 +51,13 @@ angular.module('radar')
 		  templateUrl: 'templates/register.html',
 		  controller: 'ModalCtrl',
 		});
+		$ionicModal.fromTemplateUrl('../templates/register.html', {
+	    scope: $scope,
+	  }).then(function(modal) {
+	    $scope.modal = modal;
+			$scope.toggleRight();
+			$scope.openModal();
+	  });
 	};
 
 	$scope.newSearch = function() {
