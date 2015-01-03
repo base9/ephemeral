@@ -1,3 +1,5 @@
+// This file is not currently in use.
+// See server/router.js
 var controller = require('./auth.controller');
 var router = require('express').Router();
 
