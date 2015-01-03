@@ -1,3 +1,5 @@
+// This file is not currently in use.
+// See server/router.js
 controller = {};
 
 controller.login = function (req, res) {
