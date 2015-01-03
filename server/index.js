@@ -17,7 +17,7 @@ config.express(app);
 config.passport(app, passport);
 
 // use router for app
-router(app);
+router(app, passport);
 
 app.listen(process.env.PORT || 9000);
 console.log('app listening on localhost:' + (process.env.PORT || 9000));

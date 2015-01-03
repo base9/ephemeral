@@ -37,7 +37,9 @@ var User = bookshelf(db).Model.extend({
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
   },
   validPassword: function(password) {
-    return bcrypt.compareSync(password, this.pwd); //this might throw an error in the future since idk how db works
+    // console.log(password, this.get('pwd'))
+    // return false;
+    return bcrypt.compareSync(password, this.get('pwd')); //this might throw an error in the future since idk how db works
   }
 });
 
