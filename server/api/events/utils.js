@@ -96,14 +96,16 @@ function validateEventRecord(params){
 
 
 //TODO: make the throttledFn usable as a promise
-function makeThrottledFunction(callback,delay){
-  var waitTime = 0;
+function makeThrottledFunction(callback,interval){
+  var queueLength = 0;
   return function(){
     var args = Array.prototype.slice.call(arguments);
     setTimeout(function(){
       callback.apply(null,args);
-      waitTime -=delay;
-    },waitTime);
-    waitTime += delay;
+      queueLength--;
+      }, queueLength*interval);
+    queueLength++;
   }
-}
+};
+
+
