@@ -7,7 +7,7 @@ setTimeout(function(){
       var newUser = new User({
         name: 'Steve Erwin',
         email: 'steve@outbackadventures.com',
-        bio: 'global explorer and animal lover',
+        bio: 'global explorer and animal lover'
       })
       .save();
       console.log('added dummy user "Steve Erwin"');
