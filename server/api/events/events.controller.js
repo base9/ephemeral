@@ -33,7 +33,12 @@ function getAll(req, res) {
   Event.fetchAll({
       withRelated: ['user','rating']
   }).then(function (collection) {
-    utils.sendResponse(collection,res);
+    var trimmed = collection.map(function(event){
+      event.attributes.creator = event.relations.user.attributes.name;
+      delete event.relations.user;
+      return event;
+    });
+    utils.sendResponse(trimmed,res);
   });
 };
 
@@ -72,7 +77,7 @@ function fetchBatchDataFromKimonoAPI() {
   .then(function(res){
     console.log('response received from kimono');
     var events = JSON.parse(res[0].body).results.collection1;
-    var throttledAddEventFromKimono = utils.makeThrottledFunction(addEventFromKimono,500);
+    var throttledAddEventFromKimono = utils.makeThrottledFunction(addEventFromKimono,2000);
     for (var i = 0; i < events.length; i++) {
       throttledAddEventFromKimono(events[i]);
     };
@@ -117,7 +122,7 @@ function addEventFromKimono(event){
 
 function fetchBatchDataFromEventbriteAPI(){
   console.log('req received at eventbrite endpoint!');
-  var throttledFetchPageFromEventbriteAPI = utils.makeThrottledFunction(fetchPageFromEventbriteAPI,2500);
+  var throttledFetchPageFromEventbriteAPI = utils.makeThrottledFunction(fetchPageFromEventbriteAPI,5000);
   var reqUrl = 'https://www.eventbriteapi.com/v3/events/search/?token=WUETWTBHZAXVIQK46NZM&start_date.keyword=today&venue.country=US'
   request(reqUrl)
   .then(function (res) {
