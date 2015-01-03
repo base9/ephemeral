@@ -13,6 +13,7 @@ module.exports = {
   sendGoogleAPIRequest: sendGoogleAPIRequest,
   getCoordinatesFromGoogleAPIResponse: getCoordinatesFromGoogleAPIResponse,
   makeThrottledFunction: makeThrottledFunction,
+  each: each
 };
 
 //expects a record ready to be added to the Events table.
@@ -102,13 +103,13 @@ function makeThrottledFunction(callback,interval){
   var queue = [];
   var isAsleep = true;
 
-  var invokeFunction = function(){
+  function invokeFromQueue(){
     if(queue.length){
-     isAsleep = false;
-     callback.apply(null,queue.shift()) 
-     setTimeout(invokeFunction,interval);
+      isAsleep = false;
+      callback.apply(null,queue.shift());
+      setTimeout(invokeFromQueue,interval);
     } else {
-     isAsleep = true;
+      isAsleep = true;
     }
   }
 
@@ -116,7 +117,25 @@ function makeThrottledFunction(callback,interval){
     var args = Array.prototype.slice.call(arguments);
     queue.push(args);
     if(isAsleep){
-      invokeFunction();
+      invokeFromQueue();
+    }
+  }
+};
+
+
+
+function each(collection, iterator) {
+  if(Array.isArray(collection)){
+    for(var i = 0; i < collection.length; i++){
+      iterator(collection[i],i,collection);
+    }
+  } else {
+    console.log('its an object!')
+    for(var key in collection){
+      console.log('operating on key', key);
+      if(collection.hasOwnProperty(key)){
+        iterator(collection[key],key,collection);
+      }
     }
   }
 };
