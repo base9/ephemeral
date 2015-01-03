@@ -1,20 +1,25 @@
 // npm dependencies
-var express = require('express');
+var express  = require('express');
+var passport = require('passport');
 
 // file dependencies
-var config = require('./config');
+var config = require('./config/middleware');
 var router = require('./router');
 
 var app = express();
 
+require('./config/passport')(passport);
+
 // run app through config
 config.express(app);
 
+//run passport through config
+config.passport(app, passport);
+
 // use router for app
-router(app);
+router(app, passport);
 
-
-app.listen(process.env.PORT || 9000)
+app.listen(process.env.PORT || 9000);
 console.log('app listening on localhost:' + (process.env.PORT || 9000));
 
 
@@ -30,10 +35,7 @@ setTimeout(function(){
   var ratingSeed = require('./api/ratings/ratings.seed.js');
 },800)
 
-
 // expose app 
 module.exports = app;
-
-
 
 //how SHOULD it work?  creating an event or a user should return that ID.  

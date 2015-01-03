@@ -1,5 +1,5 @@
 angular.module('radar')
-.controller('SignInController', function() {
+.controller('SignUpController', ['$http', function(http) {
 
 	this.signInWithFacebook = function() {
 		OAuth.initialize('L3_Da00cNGJ1srYmK7TIzzMyWjI');
@@ -30,5 +30,11 @@ angular.module('radar')
 				console.log("OAUTH FAILED");
 			})
 	}
+	this.login = function() {
+		// http.post()
+	}
+	// this.signup = function() {
+	// 	http.post('/auth/signup', )
+	// }
 
-});
+}]);

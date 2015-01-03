@@ -89,12 +89,15 @@
       </ion-side-menus>
 
 
+
     <!-- Google Maps API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnemtHaxtZyoxOU0NYEPXNxJwIhG0DeCE&sensor=true&v=3.exp&libraries=places"></script>
 
-    <div ng-controller="SignInController as signCtrl">
-      <button ng-click="signCtrl.signInWithFacebook()">Facebook</button>
-      <button ng-click="signCtrl.signInWithGoogle()">Google</button>
+    <div ng-controller="SignUpController as signUpCtrl">
+      <button ng-click="signUpCtrl.signInWithFacebook()">Facebook</button>
+      <button ng-click="signUpCtrl.signInWithGoogle()">Google</button>
+      <button ng-click="signUpCtrl.login()">Test</button>
+      <!-- <button ng-click="signUpCtrl.signup()">signup</button> -->
     </div>
 
     <!-- ionic/angularjs js -->
@@ -116,6 +119,7 @@
     <script src="js/map.controller.js"></script>
     <script src="js/menu.controller.js"></script>
     <script src="js/eventWindow.controller.js"></script>
+
 
     <!-- Bootstrap -->
     <script src="lib/ionic/js/angular-bootstrap/ui-bootstrap.min.js"></script>

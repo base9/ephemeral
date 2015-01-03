@@ -1,6 +1,7 @@
-var db = require('../../db/db.js');
+var db        = require('../../db/db.js');
 var bookshelf = require('bookshelf');
-var Event = require('../events/events.model.js');
+var bcrypt    = require('bcrypt');
+var Event     = require('../events/events.model.js');
 //add photo and position
 
 db.schema.hasTable('users').then(function (exists) {
@@ -24,13 +25,21 @@ var User = bookshelf(db).Model.extend({
   tableName: 'users',
   hasTimestamps: true,
   position: function() {
-    return this.hasOne(Position)
+    return this.hasOne(Position);
   }, 
   event: function() {
     return this.hasMany(Event);
   },
   photo: function() {
     return this.hasOne(Photo);
+  },
+  generateHash: function(password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+  },
+  validPassword: function(password) {
+    // console.log(password, this.get('pwd'))
+    // return false;
+    return bcrypt.compareSync(password, this.get('pwd')); //this might throw an error in the future since idk how db works
   }
 });
 
