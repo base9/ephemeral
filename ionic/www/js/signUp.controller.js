@@ -33,5 +33,8 @@ angular.module('radar')
 	this.login = function() {
 		// http.post()
 	}
+	// this.signup = function() {
+	// 	http.post('/auth/signup', )
+	// }
 
 }]);
