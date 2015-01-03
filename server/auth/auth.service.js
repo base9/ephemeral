@@ -1,9 +1,10 @@
 authService = {};
 
 authService.isLoggedIn = function(req, res, next) {
-  console.log("Auth service reporting live");
-  console.log(req.isAuthenticated())
-  return next();
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/');
 };
 
 module.exports = authService;
