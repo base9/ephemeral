@@ -33,7 +33,12 @@ function getAll(req, res) {
   Event.fetchAll({
       withRelated: ['user','rating']
   }).then(function (collection) {
-    utils.sendResponse(collection,res);
+    var trimmed = collection.map(function(event){
+      event.attributes.creator = event.relations.user.attributes.name;
+      delete event.relations.user;
+      return event;
+    });
+    utils.sendResponse(trimmed,res);
   });
 };
 
