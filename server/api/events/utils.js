@@ -26,7 +26,7 @@ function addEventRecord(params, res){
       if(res){
         res.status(201).end(model.attributes.id.toString());
       } 
-      return model;
+      return model.attributes.id.toString();
     });
 };
 
