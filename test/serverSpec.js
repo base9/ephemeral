@@ -28,9 +28,9 @@ describe('Server Endpoints', function(){
             return done(err);
           }
           var event = res.body;
-          expect(event.id).to.equal(1)
-          expect(event.title).to.equal('SantaCon')
-          done()
+          expect(event.id).to.equal(1);
+          expect(event.title).to.equal('SantaCon');
+          done();
         })
     });
 
@@ -41,6 +41,7 @@ describe('Server Endpoints', function(){
           if (err) {
             return done(err);
           }
+          expect(res.text).to.equal('Moved Temporarily. Redirecting to /');
           done();
         })
     });
