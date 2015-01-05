@@ -20,14 +20,13 @@ module.exports = {
 //will use a validation helper before adding to the table.
 function addEventRecord(params, res){
   var validatedParams = validateEventRecord(params);
-  return new Event(validatedParams)
+  new Event(validatedParams)
     .save()
     .then(function(model){
-      console.log('added new event: ' + params.title);
       if(res){
-        res.status(201).end();
+        res.status(201).end(model.attributes.id.toString());
       } 
-      return model;
+      return model.attributes.id.toString();
     });
 };
 
@@ -118,24 +117,6 @@ function makeThrottledFunction(callback,interval){
     queue.push(args);
     if(isAsleep){
       invokeFromQueue();
-    }
-  }
-};
-
-
-
-function each(collection, iterator) {
-  if(Array.isArray(collection)){
-    for(var i = 0; i < collection.length; i++){
-      iterator(collection[i],i,collection);
-    }
-  } else {
-    console.log('its an object!')
-    for(var key in collection){
-      console.log('operating on key', key);
-      if(collection.hasOwnProperty(key)){
-        iterator(collection[key],key,collection);
-      }
     }
   }
 };

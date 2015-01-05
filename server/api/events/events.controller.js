@@ -51,7 +51,7 @@ function getOne(req, res) {
 };
 
 function addOne(req, res) {
-  utils.addEventRecord(req.body,res);
+  utils.addEventRecord(req.query,res);
 };
 
 function getLocal(req, res) {
