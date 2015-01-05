@@ -56,8 +56,31 @@ function addOne(req, res) {
 
 function getLocal(req, res) {
   Event.query(function(qb){
+
+    //two dates are used to get modified
+    var date1 = new Date();
+    var date2 = new Date();
+
+    //currentTime is used to keep track of current time
+    var currentTime = new Date();
+
+    //beginningDate to current date at 3 a.m.
+    date1.setHours(3, 0, 0, 0);
+    var beginningDate = date1.toISOString();
+
+    //endingDate to next day at 3 a.m.
+    date2.setDate(date1.getDate() + 1);
+    date2.setHours(3, 0, 0, 0);
+    var endingDate = date2.toISOString();
+
+    //Narrows down events based on specified location
     qb.whereBetween('lat', [req.query.lat1,req.query.lat2]);
     qb.whereBetween('lng', [req.query.lng1,req.query.lng2]);
+
+    //Narrows down events within specified ISO8601 time
+    qb.where('startTime', '<', endingDate).andWhere('endTime', '>', beginningDate);
+    qb.where('endTime', '>', currentTime);
+
   })
   .fetchAll({
      withRelated: ['user','rating']
