@@ -15,12 +15,25 @@ angular.module('radar')
 		  });
 	}
 
-	httpObject.saveNewEvent = function(callback) {
-		//get all events
-		$http.post('/api/events')
+	httpObject.saveNewEvent = function(title, info, start, end, category, address, coords, userId) {
+		console.log(title, info, start, end, category, userId);
+
+		$http({
+		  method: 'POST',
+		  url: '/api/events',
+		  data: {
+		  	title: title,
+		  	info: info,
+		  	startTime: start,
+		  	endTime: end,
+		  	lat: coords.lat,
+		  	lng: coords.lng,
+		  	//category: category,
+		  	user_id: userId
+		  }
+		})
 		  .success(function(data, status) {
-		  	httpObject.events = data;
-		 		callback(data);
+		  	console.log("posted new event")
 		  })
 		  .error(function(data, status) {
 		    console.log("ERROR FOR API EVENTS");

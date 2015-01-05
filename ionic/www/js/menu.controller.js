@@ -1,5 +1,16 @@
 angular.module('radar')
-.controller('MenuController', function($scope, $ionicSideMenuDelegate, $ionicNavBarDelegate, $timeout, $ionicModal) {
+.controller('MenuController', [
+	'$scope',
+	'$ionicSideMenuDelegate',
+	'$ionicNavBarDelegate',
+	'$timeout',
+	'$ionicModal',
+	'MapFactory', 
+	'MarkerFactory', 
+	'HttpHandler', 
+	'$scope', 
+	function($scope, $ionicSideMenuDelegate, $ionicNavBarDelegate, $timeout, $ionicModal, Map, Marker, Http) {
+
 
 	$scope.showSearch = false;
 
@@ -64,6 +75,7 @@ angular.module('radar')
 	/* NEW EVENT MODAL */
 
 	$scope.postNewEvent = function() {
+		// TODO: Check for authentication. If authenticated, proceed. Else "Please Login or register to post events"
 		$ionicModal.fromTemplateUrl('../templates/newEventModal.html', {
 	    scope: $scope,
 	  }).then(function(modal) {
@@ -73,16 +85,16 @@ angular.module('radar')
 	  });
 	};
 
-	$scope.saveNewEvent = function(title, info, start, end, category) {
-		console.log(title, info, start, end, category);
+	$scope.saveNewEvent = function(title, info, start, end, category, address, coords) {
+		// TODO: Get userId from Auth, pass it into http call below
+		var userId = 1
+		Http.saveNewEvent(title, info, start, end, category, address, coords, userId);
 	}
 
 
-
-})
+}])
 
 angular.module('radar').controller('ModalCtrl', function ($scope, $modalInstance) {
-
 
   $scope.ok = function () {
     $modalInstance.close();
@@ -91,4 +103,5 @@ angular.module('radar').controller('ModalCtrl', function ($scope, $modalInstance
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');
   };
+
 });

@@ -248,6 +248,26 @@ angular.module('radar')
     return new google.maps.Map(document.getElementById('map'), mapOptions);
   }
 
+  mapObj.findCurrentLocation = function() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(pos) {
+        return {lat: pos.coords.latitude, lng: pos.coords.longitude}
+      })
+    } else {
+      handleNoGeolocation(true);
+    };
+  }
+
+  mapObj.getAddressForCoords = function(lat,lng) {
+    // TODO: call google API reverse lookup for address from lat long, return address string
+    return "Great American Music Hall 859 O'Farrell Street San Francisco, CA 94109";
+  }
+
+  mapObj.getCoordsForAddress = function(address) {
+    // TODO: call google API lat long from address, replace dummy data below
+    return {lat: 37.792979,lng:  -122.421242};
+  }
+
   mapObj.geoLocate = function() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(pos) {
@@ -260,20 +280,18 @@ angular.module('radar')
           content: 'You Are Here!'
         });
         
-        watchId = navigator.geolocation.watchPosition(function() {
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(pos) {
-              mapObj.myMarker.setPosition(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-            })
-          }
-        });
+        // watchId = navigator.geolocation.watchPosition(function() {
+        //   if (navigator.geolocation) {
+        //     navigator.geolocation.getCurrentPosition(function(pos) {
+        //       mapObj.myMarker.setPosition(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+        //     })
+        //   }
+        // });
 
       }, function(err) {
         handleNoGeolocation(true);
       });
-    } else {
-      handleNoGeolocation(true);
-    };
+    }
   }
 
   mapObj.geoCenter = function() {
