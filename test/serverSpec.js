@@ -9,8 +9,7 @@ describe('Server Endpoints', function(){
   var events = '/api/events';
   describe('Event API', function(){
     it('GET "api/events/" should send non empty response', function(done) {
-      request
-        .get(events)
+      request.get(events)
         .expect(200)
         .end(function (err, res) {
           if (err) done(err);
@@ -19,8 +18,15 @@ describe('Server Endpoints', function(){
     });
 
     it('GET api/events/:id should send the event with requested id', function(done) {
-      
-      done()
+      request.get(events + '/1')
+        .expect(200)
+        .end(function (err, res) {
+          if (err) done(err);
+          var event = res.body;
+          expect(event.id).to.equal(1)
+          expect(event.title).to.equal('SantaCon')
+          done()
+        })
     });
 
     it('should have a responsive POST api/events/  ', function(done) {
