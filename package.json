@@ -24,7 +24,8 @@
     "gulp-nodemon": "^1.0.4",
     "gulp-sass": "^1.2.4",
     "gulp-util": "^3.0.1",
-    "jshint": "^2.5.10"
+    "jshint": "^2.5.10",
+    "supertest": "^0.15.0"
   },
   "dependencies": {
     "bcrypt": "^0.8.0",
