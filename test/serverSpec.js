@@ -13,7 +13,9 @@ describe('Server Endpoints', function(){
       request.get(events)
         .expect(200)
         .end(function (err, res) {
-          if (err) done(err);
+          if (err) {
+            return done(err);
+          }
           done();
         });
     });
@@ -22,7 +24,9 @@ describe('Server Endpoints', function(){
       request.get(events + '/1')
         .expect(200)
         .end(function (err, res) {
-          if (err) done(err);
+          if (err) {
+            return done(err);
+          }
           var event = res.body;
           expect(event.id).to.equal(1)
           expect(event.title).to.equal('SantaCon')
@@ -34,8 +38,10 @@ describe('Server Endpoints', function(){
       request.post(events)
         .expect(302)
         .end(function (err, res) {
-          if (err) done(err);
-          else done();
+          if (err) {
+            return done(err);
+          }
+          done();
         })
     });
   });
