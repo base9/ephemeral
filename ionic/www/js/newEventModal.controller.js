@@ -1,5 +1,5 @@
 angular.module('radar')
-.controller('EventWindowController', [
+.controller('NewEventWindowController', [
 	'MapFactory', 
 	'MarkerFactory', 
 	'HttpHandler', 

@@ -44,14 +44,18 @@ angular.module('radar')
 		  });
 	}
 
-
 	$scope.register = function() {
-		$scope.toggleRight();
-		var modalInstance = $modal.open({
-		  templateUrl: 'templates/register.html',
-		  controller: 'ModalCtrl',
-		});
 		$ionicModal.fromTemplateUrl('../templates/register.html', {
+	    scope: $scope,
+	  }).then(function(modal) {
+	    $scope.modal = modal;
+			$scope.toggleRight();
+			$scope.openModal();
+	  });
+	};
+
+	$scope.postNewEvent = function() {
+		$ionicModal.fromTemplateUrl('../templates/newEventModal.html', {
 	    scope: $scope,
 	  }).then(function(modal) {
 	    $scope.modal = modal;
