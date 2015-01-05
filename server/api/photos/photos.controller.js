@@ -5,7 +5,6 @@ var request = require('request');
 var Photo = require('./photos.model.js');
 var seed = require('./photos.seed.js');
 var AWS = require('aws-sdk');
-AWS.config.region = 'us-west-1';
 var s3 = new AWS.S3();
 var fs = require('fs');
 
@@ -77,10 +76,11 @@ controller.s3PostTest = function(){
 
 controller.s3SignedPostTest = function(req,res){
   console.log('req received for signed PUT url')
-  var params = {Bucket: 'base9Photos', Key: 'aNewFile.jpg'};
+  var params = {Bucket: 'base9photos', Key: 'aNewFile.jpg'};
   var url = s3.getSignedUrl('putObject', params);
   console.log("The URL is", url);
   res.json(url);
+  fs.createReadStream('candles.jpg').pipe(request.put(url));
 }
 
 
