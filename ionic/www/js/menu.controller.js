@@ -13,7 +13,7 @@ angular.module('radar')
 // This is an ugly hack -- Figure out real angular/ionic ready function
 	$timeout(function() {
 		$ionicNavBarDelegate.handle = 'navBar';
-		$ionicNavBarDelegate.title('Playdar!');
+		$ionicNavBarDelegate.title('Ephemeral');
 	}, 150);
 
 	// $scope.test = function() {
@@ -22,6 +22,8 @@ angular.module('radar')
 	$scope.loggedIn = false;
 
 /* MODALS */
+
+	$scope.test = "HELLO"
 
   $scope.openModal = function() {
     $scope.modal.show();
@@ -54,6 +56,13 @@ angular.module('radar')
 	  });
 	};
 
+	$scope.newSearch = function() {
+		$scope.search = ''
+		$scope.showSearch = !$scope.showSearch;
+	};
+
+	/* NEW EVENT MODAL */
+
 	$scope.postNewEvent = function() {
 		$ionicModal.fromTemplateUrl('../templates/newEventModal.html', {
 	    scope: $scope,
@@ -64,10 +73,9 @@ angular.module('radar')
 	  });
 	};
 
-	$scope.newSearch = function() {
-		$scope.search = ''
-		$scope.showSearch = !$scope.showSearch;
-	};
+	$scope.saveNewEvent = function(title, info, start, end, category) {
+		console.log(title, info, start, end, category);
+	}
 
 
 

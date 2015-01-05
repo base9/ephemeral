@@ -3,18 +3,18 @@
     <h1 class="title">Post New Event</h1>
   </ion-header-bar>
   <ion-content>
-    <div class="newEventModal" ng-controller="NewEventModalController">
-      <input type="text" placeholder="Add Event Title" ngModel="title"></input>
-      <input type="text" placeHolder="Optional Info" ngModel="info"></input>
-      start: <input type="time" ngModel="startTime"></input>
-      end: <input type="time" ngModel="endTime"></input>
-      category: <select name="category">
+    <div class>
+      <input type="text" placeholder="Add Event Title" ng-model="title"></input>
+      <input type="text" placeHolder="Optional Info" ng-model="info"></input>
+      start: <input type="time" ng-model="start"></input>
+      end: <input type="time" ng-model="end"></input>
+      category: <select name="category" ng-model="category">
         <option value="party">Party</option>
         <option value="music">Music</option>
         <option value="happyHour">Happy Hour</option>
         <option value="Other">Other</option>
       </select><br>
-      <button ng-click="saveNewEvent(title, info, startTime, endTime, category)">Save Event</button>
+      <button ng-click="saveNewEvent(title, info, start, end, category)">Save Event</button>
     </div>
   </ion-content>
 </ion-modal-view>
