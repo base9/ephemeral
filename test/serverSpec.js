@@ -2,7 +2,8 @@ var should = require('should');
 var expect = require('chai').expect;
 var request = require('supertest');
 
-var app = require('./../server')
+// run the app for testing and import access
+var app = require('./../server');
  
 describe('Server Endpoints', function(){
   request = request('http://localhost:9000');
@@ -29,8 +30,13 @@ describe('Server Endpoints', function(){
         })
     });
 
-    it('should have a responsive POST api/events/  ', function(done) {
-      done()
+    it('should redirect POST "api/events/" to "/" if not logged in', function(done) {
+      request.post(events)
+        .expect(302)
+        .end(function (err, res) {
+          if (err) done(err);
+          else done();
+        })
     });
   });
 });
