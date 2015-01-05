@@ -3,19 +3,22 @@ var gulp = require('gulp'),
     sass = require('gulp-sass'),
     livereload = require('gulp-livereload'),
     nodemon = require('gulp-nodemon'),
-    jshint = require('gulp-jshint');
+    jshint = require('gulp-jshint'),
+    mocha = require('gulp-mocha');
 
-var paths = {
+var path = {
   sass: './client/styles/*.scss',
   cssRoot: './client/assets',
   server: './server.js',
-  client: 'client/**/*'
+  serverSideJs: './server/**/*.js',
+  client: 'client/**/*',
+  test: './test/**/*.js'
 }
 
 gulp.task('sass', function () {
-  gulp.src(paths.sass)
+  gulp.src(path.sass)
     .pipe(sass())
-    .pipe(gulp.dest(paths.cssRoot));
+    .pipe(gulp.dest(path.cssRoot));
 });
 
 gulp.task('watch', function() {
@@ -24,19 +27,28 @@ gulp.task('watch', function() {
 
   // Watch any files in dist/, reload on change
   livereload.listen();
-  gulp.watch([paths.client]).on('change', livereload.changed);
+  gulp.watch([path.client]).on('change', livereload.changed);
 });
 
 // TODO: watch out for dev mode vs prod mode
 // FIXME
 gulp.task('lint', function() {
-  return gulp.src(paths.js)
+  return gulp.src(path.js)
     .pipe(jshint())
+})
+
+gulp.task('test', function() {
+  gulp.watch(path.serverSideJs, ['mocha'])
+})
+
+gulp.task('mocha', function () {
+  return gulp.src(path.test)
+    .pipe(mocha({reporter: 'nyan'}))
 })
 
 gulp.task('express', function() {
   nodemon({
-    script: paths.server,
+    script: path.server,
   })
 
   // .on('change', ['lint'])

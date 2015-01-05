@@ -1,41 +1,61 @@
 var should = require('should');
-var expect = require("chai").expect;
-var request = require('request');
+var expect = require('chai').expect;
+var request = require('supertest');
+
+// run the app for testing and import access
+var app = require('./../server');
  
-describe("Server", function(){
-
-  describe("Endpoints", function(){
-    it("should have a responsive GET api/events/  ", function(done) {
- 			request.get('https://aqueous-beyond-6514.herokuapp.com/api/events', function(err, res, body) {
- 				expect(res.statusCode).to.equal(200);
- 				done();
- 			})
+describe('Server Endpoints', function(){
+  request = request('http://localhost:9000');
+  var events = '/api/events';
+  describe('Event API', function(){
+    it('GET "api/events/" should send non empty response', function(done) {
+      request.get(events)
+        .expect(200)
+        .end(function (err, res) {
+          if (err) {
+            return done(err);
+          }
+          done();
+        });
     });
 
-    it("should have a responsive GET api/events/:id  ", function(done) {
-    	// Checks events id:1, will not work if database is completely empty or if event id: 1 has been cleared
- 			request.get('https://aqueous-beyond-6514.herokuapp.com/api/events/1', function(err, res, body) {
- 				expect(res.statusCode).to.equal(200);
- 				done();
- 			})
+    it('GET api/events/:id should send the event with requested id', function(done) {
+      request.get(events + '/1')
+        .expect(200)
+        .end(function (err, res) {
+          if (err) {
+            return done(err);
+          }
+          var event = res.body;
+          expect(event.id).to.equal(1);
+          expect(event.title).to.equal('SantaCon');
+          done();
+        })
     });
 
-    it("should have a responsive POST api/events/  ", function(done) {
-    	// Checks events id:1, will not work if database is completely empty or if event id: 1 has been cleared
- 			request
- 				.post('https://aqueous-beyond-6514.herokuapp.com/api/events/')
- 				.form({
- 					lat: 37.884541,  
- 					lng: -122.304272,
- 					title: "Evan's Awesome Party!",
- 					info: "Is Rockin' like 1995"
- 				})
- 				.on('response', function (res) {
- 				  expect(res.statusCode).to.equal(201);
- 				  done();
- 				});
+    it('should redirect POST "api/events/" to "/" if not logged in', function(done) {
+      request.post(events)
+        .expect(302)
+        .end(function (err, res) {
+          if (err) {
+            return done(err);
+          }
+          expect(res.text).to.equal('Moved Temporarily. Redirecting to /');
+          done();
+        })
     });
-
   });
-
 });
+
+// Static server
+  // index html
+  // css, js and bower lib files
+
+// Auth 
+  // signup should create new user
+  // signup errors are raised at the right moments
+  // login should be able to login with correct credentials
+  // login should not login with wrong credentials
+  // logout should log out
+  // protected api should not be accessible without sending session token

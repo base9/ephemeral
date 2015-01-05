@@ -12,8 +12,7 @@ module.exports = {
   getStartEndTimes: getStartEndTimes,
   sendGoogleAPIRequest: sendGoogleAPIRequest,
   getCoordinatesFromGoogleAPIResponse: getCoordinatesFromGoogleAPIResponse,
-  makeThrottledFunction: makeThrottledFunction,
-  each: each
+  makeThrottledFunction: makeThrottledFunction
 };
 
 //expects a record ready to be added to the Events table.
