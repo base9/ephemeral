@@ -13,3 +13,5 @@ npm-debug.log
 bin/*
 
 lib/*
+
+server/api/photos/aws_keys.js
