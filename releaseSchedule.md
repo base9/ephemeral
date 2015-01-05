@@ -15,7 +15,7 @@
 - [.] Continuous integration (travisCI or circleCI)
 - [.] Good test coverage for both server and client apps
 - [.] POST routes allowing users to add/update places
-- [ ] User login / authentication
+- [X] User login / authentication
 - [ ] Client interface to add new events
 - [ ] Client interface to update (comment, add rating, etc) events
 - [ ] Basic but complete design of client interface (screens and layout, NOT styling)
