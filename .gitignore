@@ -14,4 +14,4 @@ bin/*
 
 lib/*
 
-server/api/photos/aws_keys.js
+api_keys.js

@@ -42,9 +42,8 @@ function sendResponse(record, res){
 //returns [0,0] on error. (TODO: refactor this)
 function sendGoogleAPIRequest(addressString){
   var formattedAddress = addressString.split(' ').join('+');
-  var apiKey = 'AIzaSyBtd0KrHPVY6i17OdnrJ-ID8jsZ99afO8U';
   var apiUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' 
-  var reqUrl =  apiUrl + formattedAddress + '&key=' + apiKey;
+  var reqUrl =  apiUrl + formattedAddress + '&key=' + process.env.GOOGLE_GEOCODING_API_KEY;
   return request(reqUrl);
 };
 

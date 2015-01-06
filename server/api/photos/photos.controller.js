@@ -8,9 +8,6 @@ var AWS = require('aws-sdk');
 var s3 = new AWS.S3();
 var fs = require('fs');
 
-//sets up key and secret as env variables from a file that is .gitignored.
-require('./aws_keys.js');
-
 
 //POSTING A PHOTO: intended process
 //client sends a GET to api/phots/addnew.  includes user id, event name, file extension, other details.
