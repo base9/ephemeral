@@ -101,7 +101,7 @@ function fetchBatchDataFromKimonoAPI() {
   request('https://www.kimonolabs.com/api/9djxfaym?apikey=xlOwSDfkEN6XINU2tWxQhXPAec5Z9baZ')
   .then(function(res){
     console.log('response received from kimono');
-    var events = JSON.parse(res[0].body).results.collection1;
+    var events = JSON.parse(res[0].body).results.collection1; //split results and collection1 with if statements
     var throttledAddEventFromKimono = utils.makeThrottledFunction(addEventFromKimono,2000);
     for (var i = 0; i < events.length; i++) {
       throttledAddEventFromKimono(events[i]);
@@ -121,7 +121,7 @@ function addEventFromKimono(event){
           params.info = event.info.text;
         }
         params.title = event.title;
-        utils.sendGoogleAPIRequest(event.address.text)
+        utils.sendGoogleAPIRequest(event.address.text) //here is where the problem starts (should be event.address)
           .then(function(res){
             
             coordinates = utils.getCoordinatesFromGoogleAPIResponse(res);
