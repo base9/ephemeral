@@ -45,6 +45,7 @@ controller.getAll = function(req, res) {
 
 //TODO: photo bucket currently allows anonymous read/write access.  refactor this.
 //should allow credentialed read-write access (for dev environment - have api keys cached on dev machine)
+//'When deploying, you should change the ‘AllowedOrigin’ to only accept requests from your domain.''
 
 //images can be viewed by the client very simply, like this: 
 //<img src='https://s3-us-west-1.amazonaws.com/base9photos/UNIQUE_FILE_NAME.jpg'></img>
@@ -76,12 +77,28 @@ controller.s3PostTest = function(){
 
 controller.s3SignedPostTest = function(req,res){
   console.log('req received for signed PUT url')
-  var params = {Bucket: 'base9photos', Key: 'aNewFile.jpg'};
+  var params = {Bucket: 'base9photos', Key: 'candles.jpg'};
   var url = s3.getSignedUrl('putObject', params);
   console.log("The URL is", url);
   res.json(url);
-  fs.createReadStream('candles.jpg').pipe(request.put(url));
+  //fs.createReadStream('candles.jpg').pipe(request.put(url));
 }
+
+
+controller.addOne = function(req,res){
+  new Photo(req.query)
+  .save()
+  .then(function(record){
+    var fileName = record.attributes.id.toString());
+    var params = {Bucket: 'base9photos', Key: fileName + '.jpg'};
+    var url = s3.getSignedUrl('putObject', params);
+    res.json(url);
+  });
+}
+
+
+//TODO: add controller.delete for removing photos - only allowed if user is photo owner.
+//invoked automatically if initial upload to S3 fails.
 
 
 
