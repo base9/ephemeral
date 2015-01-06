@@ -34,13 +34,30 @@ controller.addOne = function(req,res){
   });
 }
 
+//deletes a photo record from the DB, if it exists and the request
+//is coming from that photo's owner. does NOT do anything to 
+//remove the photo from the S3 server!
+controller.deleteOne = function(req,res){
+  Photo.where({id:req.params.id}).fetch({
+    }).then(function (record) {
+      
+      //delete the record
+      if(record && record.user_id===req.params.user_id){
+        record.destroy()
+        .on('destroyed',function(){
+          res.status(204).end();
+        };
 
-
-//TODO: add controller.delete for removing photos - only allowed if user is photo owner.
-//invoked automatically if initial upload to S3 fails.
-
-
-
+      //unauthorized
+      } else if(record) {
+        res.status(403).end()
+      
+      //record not found
+      } else {
+        res.status(404).end()
+      }
+  });
+};
 
 
 
