@@ -19,7 +19,6 @@ angular.module('radar')
 	$scope.partyCheck = true;
 	$scope.concertCheck = true;
 	$scope.happyHourCheck = true;
-	$scope.startTime = new Date();
 
 // This is an ugly hack -- Figure out real angular/ionic ready function
 	$timeout(function() {
@@ -74,6 +73,8 @@ angular.module('radar')
 
 	/* NEW EVENT MODAL */
 
+	
+
 	$scope.getCurrentAddress = function() {
 		console.log("getting address")
 		$scope.coords = Map.findCurrentLocation() // TODO: Promisify
@@ -82,20 +83,27 @@ angular.module('radar')
 		$scope.coords = {lat: 37.792979, lng: -122.421242}
 		var address = Map.getAddressForCoords($scope.coords.lat, $scope.coords.lng) // TODO: Promisify
 		//.then()
-		$scope.streetAddress1 = address.streetAddress;
-		$scope.city = address.city;
-		$scope.state = address.state;
-		$scope.zipCode = address.zipCode;
+		$scope.newPostData.streetAddress1 = address.streetAddress;
+		$scope.newPostData.city = address.city;
+		$scope.newPostData.state = address.state;
+		$scope.newPostData.zipCode = address.zipCode;
 	}
 
 	$scope.postNewEvent = function() {
 		// TODO: Check for authentication. If authenticated, proceed. Else "Please Login or register to post events"
-		$scope.coords = {lat: undefined, lng: undefined};
-		$scope.streetAddress1 = ''
-		$scope.streetAddress2 = ''
-		$scope.city = ''
-		$scope.state = ''
-		$scope.zipCode = ''
+		$scope.newPostData = {
+				title: '',
+				info: '',
+				streetAddress1: '',
+				streetAddress2: '',
+				city: '',
+				state: '',
+				zipCode: '',
+				startDateTime: new Date(),
+				endDateTime: '',
+				category: '',
+				coords: {lat: undefined, lng: undefined}
+			};
 		$ionicModal.fromTemplateUrl('../templates/newEventModal.html', {
 	    scope: $scope,
 	  }).then(function(modal) {
@@ -105,12 +113,12 @@ angular.module('radar')
 	  });
 	};
 
-	$scope.saveNewEvent = function(title, info, streetAddress1, streetAddress2, city, state, zipCode, startDateTime, endDateTime, category) {
+	$scope.saveNewEvent = function() {
 		// TODO: Get userId from Auth, pass it into http call below
 		var userId = 1
 		// DUMMY INFO BELOW
-		Map.getCoordsForAddress((streetAddress1+'+'+streetAddress2+'+'+city+'+'+state+'+'+zipCode).split(' ').join('+'))
-		Http.saveNewEvent(title, info, streetAddress1, streetAddress2, city, state, zipCode, startDateTime, endDateTime, category, userId, $scope.coords);
+		$scope.newPostData.coords = Map.getCoordsForAddress(($scope.newPostData.streetAddress1+'+'+$scope.newPostData.streetAddress2+'+'+$scope.newPostData.city+'+'+$scope.newPostData.state+'+'+$scope.newPostData.zipCode).split(' ').join('+'))
+		Http.saveNewEvent($scope.newPostData);
 	}
 
 	$scope.startDateTime = new Date();

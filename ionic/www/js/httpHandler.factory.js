@@ -15,27 +15,26 @@ angular.module('radar')
 		  });
 	}
 
-	httpObject.saveNewEvent = function(title, info, streetAddress1, streetAddress2, city, state, zipCode, startDateTime, endDateTime, category, coords, userId) {
-		console.log(title, info, streetAddress1, streetAddress2, city, state, zipCode, startDateTime, endDateTime, category, coords, userId);
-
+	httpObject.saveNewEvent = function(postData) {
+		console.log(postData);
 		$http({
 		  method: 'POST',
 		  url: '/api/events',
 		  data: {
-		  	title: title,
-		  	info: info,
-		  	startTime: startDateTime,
-		  	endTime: endDateTime,
-		  	lat: coords.lat,
-		  	lng: coords.lng,
+		  	title: postData.title,
+		  	info: postData.info,
+		  	startTime: postData.startDateTime,
+		  	endTime: postData.endDateTime,
+		  	lat: postData.coords.lat,
+		  	lng: postData.coords.lng,
 		  	// TODO: Uncomment these fields after preparing schema and gmapsAPI call for address
-		  	//category: category,
-		  	//streetAddress1: streetAddress1,
-		  	//streetAddress2: streetAddress2,
-		  	//city: city,
-		  	//state: state,
-		  	//zipCode: zipCode,
-		  	user_id: userId
+		  	//category: postData.category,
+		  	//streetAddress1: postData.streetAddress1,
+		  	//streetAddress2: postData.streetAddress2,
+		  	//city: postData.city,
+		  	//state: postData.state,
+		  	//zipCode: postData.zipCode,
+		  	user_id: postData.userId
 		  }
 		})
 		  .success(function(data, status) {

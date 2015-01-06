@@ -230,6 +230,7 @@ angular.module('radar')
         mapObj.myMarker = new google.maps.Marker({
           position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
           map: map,
+          icon: 'img/self_marker.png',
           content: 'You Are Here!'
         });
         
