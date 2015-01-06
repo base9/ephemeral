@@ -1,10 +1,11 @@
-authService = {};
+module.exports = {
+  isLoggedIn: isLoggedin
+};
 
-authService.isLoggedIn = function(req, res, next) {
+
+function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   }
   res.redirect('/');
 };
-
-module.exports = authService;

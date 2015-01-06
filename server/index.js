@@ -25,7 +25,7 @@ config.passport(app, passport);
 router(app, passport);
 
 app.listen(process.env.PORT || 9000);
-console.log('app listening on localhost:' + (process.env.PORT || 9000));
+console.log('app listening on port:' + (process.env.PORT || 9000));
 
 
 setTimeout(function(){
