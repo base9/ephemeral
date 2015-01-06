@@ -41,4 +41,7 @@ setTimeout(function(){
 },800)
 
 // expose app 
+
 module.exports = app;
+
+//how SHOULD it work?  creating an event or a user should return that ID.  

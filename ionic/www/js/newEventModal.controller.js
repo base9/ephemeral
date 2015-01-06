@@ -7,6 +7,9 @@ angular.module('radar').controller('NewEventModalController', [
 
 		$scope.saveNewEvent = function() {
 			console.log("SAVING NEW EVENT");
-		}
+		};
 
-}])
+		$scope.test = "HELLO";
+
+
+}]);

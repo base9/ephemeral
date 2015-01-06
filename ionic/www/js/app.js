@@ -12,5 +12,5 @@ angular.module('radar', [
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
-  })
-})
+  });
+});

@@ -11,8 +11,8 @@ var crontab = require('node-crontab');
 //these scrapers run 5x a day, at 12:01, 4:01, 8:01, etc
 var cronJob = crontab.scheduleJob("1 */4 * * *", function () {
   console.log("****************it's cron time!******************")
-  fetchBatchDataFromEventbriteAPI();
-  fetchBatchDataFromKimonoAPI();
+  controller.fetchBatchDataFromEventbriteAPI();
+  controller.fetchBatchDataFromKimonoAPI();
 });
 
 
@@ -51,8 +51,6 @@ function getOne(req, res) {
 };
 
 function addOne(req, res) {
-  // TODO: if (!req.body.coords) -> Make util call for address string from coords.lat,coords.lng;
-  // TODO: add result of above operation to req.body/query for addEventRecord call
   utils.addEventRecord(req.query,res);
 };
 
@@ -100,7 +98,7 @@ function getLocal(req, res) {
 //periodically by a Kimono Labs scraper.  Function will parse the events
 //and add them to our DB.
 function fetchBatchDataFromKimonoAPI() {
-  request('https://www.kimonolabs.com/api/9djxfaym?apikey=' + process.env.KIMONO_API_KEY)
+  request('https://www.kimonolabs.com/api/9djxfaym?apikey=xlOwSDfkEN6XINU2tWxQhXPAec5Z9baZ')
   .then(function(res){
     console.log('response received from kimono');
     var events = JSON.parse(res[0].body).results.collection1;
@@ -152,9 +150,7 @@ function addEventFromKimono(event){
 function fetchBatchDataFromEventbriteAPI(){
   console.log('req received at eventbrite endpoint!');
   var throttledFetchPageFromEventbriteAPI = utils.makeThrottledFunction(fetchPageFromEventbriteAPI,5000);
-  var reqUrl = 'https://www.eventbriteapi.com/v3/events/search/?token=' 
-               + process.env.EVENTBRITE_API_TOKEN 
-               + '&start_date.keyword=today&venue.country=US';
+  var reqUrl = 'https://www.eventbriteapi.com/v3/events/search/?token=WUETWTBHZAXVIQK46NZM&start_date.keyword=today&venue.country=US'
   request(reqUrl)
   .then(function (res) {
     var pages = JSON.parse(res[0].body).pagination.page_count;

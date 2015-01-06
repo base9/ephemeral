@@ -13,7 +13,7 @@ angular.module('radar')
 		  .error(function(data, status) {
 		    console.log("ERROR FOR API EVENTS");
 		  });
-	}
+	};
 
 	httpObject.saveNewEvent = function(postData) {
 		console.log(postData);
