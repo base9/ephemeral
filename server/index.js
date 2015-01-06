@@ -2,6 +2,11 @@
 var express  = require('express');
 var passport = require('passport');
 
+//load api keys from local file when in local dev environment.
+if(!process.env.port){
+  require('../api_keys.js');
+}
+
 // file dependencies
 var config = require('./config/middleware');
 var router = require('./router');
@@ -37,5 +42,3 @@ setTimeout(function(){
 
 // expose app 
 module.exports = app;
-
-//how SHOULD it work?  creating an event or a user should return that ID.  

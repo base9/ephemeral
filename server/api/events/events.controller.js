@@ -98,7 +98,7 @@ function getLocal(req, res) {
 //periodically by a Kimono Labs scraper.  Function will parse the events
 //and add them to our DB.
 function fetchBatchDataFromKimonoAPI() {
-  request('https://www.kimonolabs.com/api/9djxfaym?apikey=xlOwSDfkEN6XINU2tWxQhXPAec5Z9baZ')
+  request('https://www.kimonolabs.com/api/9djxfaym?apikey=' + process.env.KIMONO_API_KEY)
   .then(function(res){
     console.log('response received from kimono');
     var events = JSON.parse(res[0].body).results.collection1;
@@ -148,7 +148,9 @@ function addEventFromKimono(event){
 function fetchBatchDataFromEventbriteAPI(){
   console.log('req received at eventbrite endpoint!');
   var throttledFetchPageFromEventbriteAPI = utils.makeThrottledFunction(fetchPageFromEventbriteAPI,5000);
-  var reqUrl = 'https://www.eventbriteapi.com/v3/events/search/?token=WUETWTBHZAXVIQK46NZM&start_date.keyword=today&venue.country=US'
+  var reqUrl = 'https://www.eventbriteapi.com/v3/events/search/?token=' 
+               + process.env.EVENTBRITE_API_TOKEN 
+               + '&start_date.keyword=today&venue.country=US';
   request(reqUrl)
   .then(function (res) {
     var pages = JSON.parse(res[0].body).pagination.page_count;

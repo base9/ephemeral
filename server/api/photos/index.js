@@ -1,9 +1,8 @@
 var controller = require('./photos.controller');
 var router = require('express').Router();
 
-router.get('/:id', controller.getOne);
+router.post('/addOne', controller.addOne);
 
-router.get('/', controller.getAll);
-
+router.post('/delete', controller.deleteOne);
 
 module.exports = router;
