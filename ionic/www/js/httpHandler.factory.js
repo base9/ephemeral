@@ -27,13 +27,12 @@ angular.module('radar')
 		  	endTime: postData.endDateTime,
 		  	lat: postData.coords.lat,
 		  	lng: postData.coords.lng,
-		  	// TODO: Uncomment these fields after preparing schema and gmapsAPI call for address
-		  	//category: postData.category,
-		  	//streetAddress1: postData.streetAddress1,
-		  	//streetAddress2: postData.streetAddress2,
-		  	//city: postData.city,
-		  	//state: postData.state,
-		  	//zipCode: postData.zipCode,
+		  	category: postData.category,
+		  	streetAddress1: postData.streetAddress1,
+		  	streetAddress2: postData.streetAddress2,
+		  	city: postData.city,
+		  	state: postData.state,
+		  	zipCode: postData.zipCode,
 		  	user_id: postData.userId
 		  }
 		})

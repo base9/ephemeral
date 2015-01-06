@@ -23,6 +23,7 @@ function addEventRecord(params, res){
     .save()
     .then(function(model){
       if(res){
+        console.log("Posted "+ params.title + " to Database")
         res.status(201).end(model.attributes.id.toString());
       } 
       return model.attributes.id.toString();
