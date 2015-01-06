@@ -15,6 +15,26 @@ angular.module('radar')
 		  });
 	}
 
+	httpObject.getAddressForCoords = function(lat, lng, callback) {
+		$http.get('/api/events/reversegeocode?lat=' + lat + '&lng=' + lng)
+		  .success(function(data, status) {
+		 		callback(data);
+		  })
+		  .error(function(data, status) {
+		    console.log("ERROR FOR API EVENTS");
+		  });
+	}
+
+	httpObject.getCoordsForAddress = function(address, callback) {
+		$http.get('/api/events/geocode?address=' + address)
+		  .success(function(data, status) {
+		 		callback(data);
+		  })
+		  .error(function(data, status) {
+		    console.log("ERROR FOR API EVENTS");
+		  });
+	}
+
 	httpObject.saveNewEvent = function(postData) {
 		console.log(postData);
 		$http({
@@ -27,13 +47,12 @@ angular.module('radar')
 		  	endTime: postData.endDateTime,
 		  	lat: postData.coords.lat,
 		  	lng: postData.coords.lng,
-		  	// TODO: Uncomment these fields after preparing schema and gmapsAPI call for address
-		  	//category: postData.category,
-		  	//streetAddress1: postData.streetAddress1,
-		  	//streetAddress2: postData.streetAddress2,
-		  	//city: postData.city,
-		  	//state: postData.state,
-		  	//zipCode: postData.zipCode,
+		  	category: postData.category,
+		  	streetAddress1: postData.streetAddress1,
+		  	streetAddress2: postData.streetAddress2,
+		  	city: postData.city,
+		  	state: postData.state,
+		  	zipCode: postData.zipCode,
 		  	user_id: postData.userId
 		  }
 		})

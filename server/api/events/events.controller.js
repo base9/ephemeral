@@ -24,7 +24,9 @@ module.exports = {
   addOne: addOne,
   getLocal: getLocal,
   fetchBatchDataFromKimonoAPI: fetchBatchDataFromKimonoAPI,
-  fetchBatchDataFromEventbriteAPI: fetchBatchDataFromEventbriteAPI
+  fetchBatchDataFromEventbriteAPI: fetchBatchDataFromEventbriteAPI,
+  getCoordsFromAddress: getCoordsFromAddress,
+  getAddressFromCoords: getAddressFromCoords
 };
 
 /******************** Generic DB interactions **********************/
@@ -53,7 +55,8 @@ function getOne(req, res) {
 function addOne(req, res) {
   // TODO: if (!req.body.coords) -> Make util call for address string from coords.lat,coords.lng;
   // TODO: add result of above operation to req.body/query for addEventRecord call
-  utils.addEventRecord(req.query,res);
+  console.log("Sending New Post to Database: ",req.body)
+  utils.addEventRecord(req.body, res);
 };
 
 function getLocal(req, res) {
@@ -91,6 +94,27 @@ function getLocal(req, res) {
   });
 };
 
+/************** Geocoding ******************/
+
+function getCoordsFromAddress(req,res) {
+  console.log("REVERSE GEOCODE REQUEST ADDRESS: ", req.query.address);
+  utils.geocodeGoogleAPIRequest(req.query.address)
+    .then(function(response){  
+      coordinates = utils.getCoordinatesFromGoogleAPIResponse(response);
+      console.log("GOT COORDS FROM ADDRESS: ", coordinates)
+      res.json(coordinates);
+    });
+}
+
+function getAddressFromCoords(req,res) {
+  console.log("REVERSE GEOCODE REQUEST QUERY: ", req.query);
+  utils.reverseGeocodeGoogleAPIRequest(req.query)
+    .then(function(response) {
+      var addressParams = utils.parseGoogleAPIAddress(response)
+      res.json(addressParams)
+    })
+}
+
 
 /************** Kimono API functions ******************/
 
@@ -121,7 +145,7 @@ function addEventFromKimono(event){
           params.info = event.info.text;
         }
         params.title = event.title;
-        utils.sendGoogleAPIRequest(event.address.text)
+        utils.geocodeGoogleAPIRequest(event.address.text)
           .then(function(res){
             
             coordinates = utils.getCoordinatesFromGoogleAPIResponse(res);
