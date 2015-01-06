@@ -12,7 +12,6 @@ module.exports = {
   getStartEndTimes: getStartEndTimes,
   sendGoogleAPIRequest: sendGoogleAPIRequest,
   getCoordinatesFromGoogleAPIResponse: getCoordinatesFromGoogleAPIResponse,
-  makeThrottledFunction: makeThrottledFunction
   makeThrottledFunction: makeThrottledFunction,
 };
 
