@@ -15,6 +15,16 @@ angular.module('radar')
 		  });
 	}
 
+	httpObject.getAddressForCoords = function(lat, lng, callback) {
+		$http.get('/api/events/reversegeocode?lat=' + lat + '&lng=' + lng)
+		  .success(function(data, status) {
+		 		callback(data);
+		  })
+		  .error(function(data, status) {
+		    console.log("ERROR FOR API EVENTS");
+		  });
+	}
+
 	httpObject.saveNewEvent = function(postData) {
 		console.log(postData);
 		$http({

@@ -81,7 +81,7 @@ function parseGoogleAPIAddress(res){
     address = address.split(',');
     address[2] = address[2].split(' ')
     addressParams = {
-      address1: address[0],
+      streetAddress1: address[0],
       city: address[1],
       state: address[2][1],
       zipCode: address[2][2],

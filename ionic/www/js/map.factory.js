@@ -195,23 +195,13 @@ angular.module('radar')
     return new google.maps.Map(document.getElementById('map'), mapOptions);
   }
 
-  mapObj.findCurrentLocation = function() {
+  mapObj.findCurrentLocation = function(callback) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(pos) {
-        return {lat: pos.coords.latitude, lng: pos.coords.longitude}
+        callback({lat: pos.coords.latitude, lng: pos.coords.longitude})
       })
     } else {
       handleNoGeolocation(true);
-    };
-  }
-
-  mapObj.getAddressForCoords = function(lat,lng) {
-    // TODO: call google API reverse lookup for address from lat long, return address string
-    return { 
-      streetAddress: "859 O'Farrell Street" ,
-      city: "San Francisco",
-      state: "CA",
-      zipCode: "94109"
     };
   }
 
