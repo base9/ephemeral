@@ -1,5 +1,6 @@
+
 module.exports = {
-  isLoggedIn: isLoggedin
+  isLoggedIn: isLoggedIn
 };
 
 
