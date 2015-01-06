@@ -8,7 +8,6 @@ var AWS = require('aws-sdk');
 var s3 = new AWS.S3();
 var fs = require('fs');
 
-
 //POSTING A PHOTO: intended process
 //client sends a GET to api/phots/addnew.  includes user id, event name, file extension, other details.
 //server creates an entry in photos table. generates and returns presigned S3 URL to client.
@@ -28,12 +27,13 @@ controller.addOne = function(req,res){
   new Photo(req.query)
   .save()
   .then(function(record){
-    var fileName = record.attributes.id.toString());
+    var fileName = record.attributes.id.toString();
     var params = {Bucket: 'base9photos', Key: fileName + '.jpg'};
     var url = s3.getSignedUrl('putObject', params);
     res.json(url);
   });
 }
+
 
 
 //TODO: add controller.delete for removing photos - only allowed if user is photo owner.

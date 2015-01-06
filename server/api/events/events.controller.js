@@ -98,7 +98,7 @@ function getLocal(req, res) {
 //periodically by a Kimono Labs scraper.  Function will parse the events
 //and add them to our DB.
 function fetchBatchDataFromKimonoAPI() {
-  request('https://www.kimonolabs.com/api/9djxfaym?apikey=' + process.env.KIMONO_API_KEY);
+  request('https://www.kimonolabs.com/api/9djxfaym?apikey=' + process.env.KIMONO_API_KEY)
   .then(function(res){
     console.log('response received from kimono');
     var events = JSON.parse(res[0].body).results.collection1;
