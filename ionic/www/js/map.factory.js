@@ -8,55 +8,6 @@ angular.module('radar')
 
   mapObj.initialize = function () {
 
-    function placeMarker(position) {
-      //Check if user is in "Place New Event" Mode
-      var newEventWindow = new google.maps.InfoWindow({
-        content: '<div class="newEventWindow" ng-controller="EventWindowController">'+
-        '<input type="text" placeholder="Add Event Title" ngModel="title"></input>'+
-        '<input type="text" placeHolder="Optional Info" ngModel="info"></input>'+
-        'start: <input type="time" ngModel="startTime"></input>'+
-        'end: <input type="time" ngModel="endTime"></input>'+
-        'category: <select name="category">'+
-        '<option value="Party">Party</option>'+
-        '<option value="Concert">Concert</option>'+
-        '<option value="Sports">Sports</option>'+
-        '<option value="Other">Other</option>'+
-        '</select><br>'+
-        '<button ng-click="saveNewEvent(title, info, startTime, endTime, category)">Save Event</button>'+
-        '</div>'
-      });
-
-      var marker = new google.maps.Circle({
-        map: map,
-        title: event.title,
-        position: position,
-        strokeColor: 'green',
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: 'green',
-        fillOpacity: 0.35,
-        map: map,
-        center: position,
-        radius: 20
-      });
-      
-      // google.maps.event.addListener(marker,'click',(function(marker , scope, localLatLng ){
-      //         return function(){
-      //           var content = '<div id="infowindow_content" ng-include src="\'/test.html\'"></div>';
-      //           scope.latLng = localLatLng;
-      //           var compiled = $compile(content)(scope);
-      //           scope.$apply();
-      //           infowindow.setContent( compiled[0].innerHTML );
-      //           infowindow.open( Map , marker );
-      //         };//return fn()
-      //       })( marker , scope, scope.markers[i].locations )
-
-
-      newEventWindow.open(map, marker)
-
-
-    }
-
     var mapOptions = {
       zoom: 14,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -236,10 +187,6 @@ angular.module('radar')
     map = this.renderMap(mapOptions);
     map.mapTypes.set('map_style', styledMap);
     map.setMapTypeId('map_style');
-    
-    google.maps.event.addListener(map, 'click', function(event) {
-      placeMarker(event.latLng);
-    });
 
     return map;
   }

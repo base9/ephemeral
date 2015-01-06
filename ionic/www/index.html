@@ -72,12 +72,14 @@
                     </div> 
                     <div class="list">
                       <label class="item item-input">
-                        <span class="input-label" ng-model="startTime">Start Time:</span>
-                        <input type="time">
+                      <!-- TODO: Fix time display to show only hours and minutes  -->
+                        <span class="input-label">Start Time:</span>
+                        <input type="time" ng-model="startTime">
                       </label>
                       <label class="item item-input">
-                        <span class="input-label" ng-model="endTime">End Time:</span>
-                        <input type="time">
+                      <!-- TODO: Make default value end of day/3AM next day  -->
+                        <span class="input-label">End Time:</span>
+                        <input type="time" ng-model="endTime">
                       </label>
                     </div>
                   </div>

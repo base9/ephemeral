@@ -28,6 +28,7 @@ angular.module('radar')
 		  	endTime: endDateTime,
 		  	lat: coords.lat,
 		  	lng: coords.lng,
+		  	// TODO: Uncomment these fields after preparing schema and gmapsAPI call for address
 		  	//category: category,
 		  	//streetAddress1: streetAddress1,
 		  	//streetAddress2: streetAddress2,

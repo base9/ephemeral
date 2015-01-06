@@ -19,7 +19,7 @@ angular.module('radar')
 	$scope.partyCheck = true;
 	$scope.concertCheck = true;
 	$scope.happyHourCheck = true;
-	$scope.startTime = Date.now()
+	$scope.startTime = new Date();
 
 // This is an ugly hack -- Figure out real angular/ionic ready function
 	$timeout(function() {

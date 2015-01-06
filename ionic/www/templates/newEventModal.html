@@ -1,0 +1,34 @@
+<ion-modal-view class="newEventModal">
+  <ion-header-bar>
+    <h1 class="title">Post New Event</h1>
+  </ion-header-bar>
+  <ion-content>
+    <form class='newEventForm'>
+      <input type="text" placeholder="Add Event Title" ng-model="title" required />
+      <input type="text" placeHolder="Optional Info" ng-model="info"></input>
+      <div class="addressForm">
+        <button class="getCurrentAddress" ng-click="getCurrentAddress()">My Location</button>
+        <input type="text" placeHolder="Street Address 1" ng-model="streetAddress1" required />
+        <input type="text" placeHolder="apt, room, floor #" ng-model="streetAddress2" />
+        <input type="text" placeHolder="City" ng-model="city" required />
+        <input type="text" placeHolder="State" ng-model="state" required />
+        <input type="text" placeHolder="Zip Code" ng-model="zipCode"></input>
+      <!-- TODO: Fix time display to show only hours and minutes  -->
+      </div>
+      start: <input type="datetime-local" name="start" ng-model="startDateTime" min="startDateTime" required />
+        <span class="error" ng-show="newEventForm.start.$error.required">
+            Required!</span>
+        <span class="error" ng-show="newEventForm.start.$error.datetimelocal">
+            Not a valid date!</span>
+      end: <input type="datetime-local" ng-model="endDateTime"></input>
+      category: <select name="category" ng-model="category">
+        <option value="party">Party</option>
+        <option value="music">Music</option>
+        <option value="happyHour">Happy Hour</option>
+        <option value="Other">Other</option>
+      </select><br>
+      Upload Photo: <input type="file" /><br>
+      <input type="submit" value="Save Event" ng-click="saveNewEvent(title, info, streetAddress1, streetAddress2, city, state, zipCode, startDateTime, endDateTime, category)" />
+    </form>
+  </ion-content>
+</ion-modal-view>
