@@ -46,7 +46,7 @@ controller.deleteOne = function(req,res){
         record.destroy()
         .on('destroyed',function(){
           res.status(204).end();
-        };
+        });
 
       //unauthorized
       } else if(record) {
