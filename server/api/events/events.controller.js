@@ -150,15 +150,15 @@ function addEventFromKimono(event){
         }
         params.title = event.title;
 
-        utils.sendGoogleAPIRequest(event.address.text) //here is where the problem starts (should be event.address)
+        utils.sendGoogleAPIRequest(event.address) //here is where the problem starts (should be event.address)
           .then(function(res){
             
             coordinates = utils.getCoordinatesFromGoogleAPIResponse(res);
             params.lat = coordinates[0];
             params.lng = coordinates[1];
             
-            console.log("BEFORE: ", event.date.text, event.duration.text);
-            startEndTimes = utils.getStartEndTimes(event.date.text,event.duration.text);
+            console.log("BEFORE: ", event.date.text, event.duration);
+            startEndTimes = utils.getStartEndTimes(event.date.text,event.duration);
             params.startTime = startEndTimes[0];
             params.endTime = startEndTimes[1];
             console.log("AFTER: ", "START", params.startTime, "END", params.endTime);
