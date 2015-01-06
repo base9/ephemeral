@@ -76,11 +76,11 @@ angular.module('radar')
 
 	$scope.getCurrentAddress = function() {
 		console.log("getting address")
-		$scope.coords = Map.findCurrentLocation() // Promisify
+		$scope.coords = Map.findCurrentLocation() // TODO: Promisify
 		//.then()
 		//DUMMY INFO BELOW
 		$scope.coords = {lat: 37.792979, lng: -122.421242}
-		var address = Map.getAddressForCoords($scope.coords.lat, $scope.coords.lng) // Promisify
+		var address = Map.getAddressForCoords($scope.coords.lat, $scope.coords.lng) // TODO: Promisify
 		//.then()
 		$scope.streetAddress1 = address.streetAddress;
 		$scope.city = address.city;
@@ -91,6 +91,11 @@ angular.module('radar')
 	$scope.postNewEvent = function() {
 		// TODO: Check for authentication. If authenticated, proceed. Else "Please Login or register to post events"
 		$scope.coords = {lat: undefined, lng: undefined};
+		$scope.streetAddress1 = ''
+		$scope.streetAddress2 = ''
+		$scope.city = ''
+		$scope.state = ''
+		$scope.zipCode = ''
 		$ionicModal.fromTemplateUrl('../templates/newEventModal.html', {
 	    scope: $scope,
 	  }).then(function(modal) {
