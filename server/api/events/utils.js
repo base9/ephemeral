@@ -14,6 +14,7 @@ module.exports = {
   reverseGeocodeGoogleAPIRequest: reverseGeocodeGoogleAPIRequest,
   getCoordinatesFromGoogleAPIResponse: getCoordinatesFromGoogleAPIResponse,
   makeThrottledFunction: makeThrottledFunction,
+  parseGoogleAPIAddress: parseGoogleAPIAddress
 };
 
 //expects a record ready to be added to the Events table.
@@ -49,12 +50,6 @@ function geocodeGoogleAPIRequest(addressString){
   return request(reqUrl);
 };
 
-function reverseGeocodeGoogleAPIRequest(coords){
-  var formattedCoords = coords.lat+','+coords.lng;
-  var apiUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
-  var reqUrl =  apiUrl + formattedCoords + '&key=' + process.env.GOOGLE_GEOCODING_API_KEY;
-  return request(reqUrl);
-}
 
 function getCoordinatesFromGoogleAPIResponse(res){
   if (res.statusCode >= 400) {
@@ -69,6 +64,32 @@ function getCoordinatesFromGoogleAPIResponse(res){
     return [0,0];
   }
 };
+
+function reverseGeocodeGoogleAPIRequest(coords){
+  var formattedCoords = coords.lat+','+coords.lng;
+  var apiUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
+  var reqUrl =  apiUrl + formattedCoords + '&key=' + process.env.GOOGLE_GEOCODING_API_KEY;
+  console.log("REQUEST URL: ", reqUrl)
+  return request(reqUrl);
+}
+
+function parseGoogleAPIAddress(res){
+  if (res.statusCode >= 400) {
+    console.log(res.statusCode + ' error on request to Geocoding API');
+  } else {
+    var address = JSON.parse(res[0].body).results[0].formatted_address;
+    address = address.split(',');
+    address[2] = address[2].split(' ')
+    addressParams = {
+      address1: address[0],
+      city: address[1],
+      state: address[2][1],
+      zipCode: address[2][2],
+      country: address[3]
+    }   
+    return addressParams;
+  }
+}
 
 //input: ("Tuesday December 4th, 2014", "3pm to 6pm")
 //output: an ISO 8601-formatted date/time tuple [startTime,endTime].

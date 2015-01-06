@@ -110,7 +110,8 @@ function getAddressFromCoords(req,res) {
   console.log("REVERSE GEOCODE REQUEST QUERY: ", req.query);
   utils.reverseGeocodeGoogleAPIRequest(req.query)
     .then(function(response) {
-      console.log("UNPARSED RESPONSE: ",response)
+      var addressParams = utils.parseGoogleAPIAddress(response)
+      res.json(addressParams)
     })
 }
 
