@@ -3,7 +3,7 @@ var express  = require('express');
 var passport = require('passport');
 
 //load api keys from local file when in local dev environment.
-if(!process.env.port){
+if(!process.env.PORT){
   require('../api_keys.js');
 }
 
