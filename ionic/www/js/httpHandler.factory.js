@@ -15,20 +15,37 @@ angular.module('radar')
 		  });
 	}
 
-	// httpObject.getRatings = function(callback) {
-	// 	$http.get('/api/ratings')
-	// 		.success(function(data, status) {
-	// 			var temp = data.map(function(element) {
-	// 				return {eventID: element.event_id, comment: element.comment, stars: element.stars};
-	// 			})
-	// 			// console.log("TEMP", temp);
-	// 			// console.log("CALLBACK", callback);
-	// 			callback(temp);
-	// 		})
-	// 		.error(function(data, status) {
-	// 			console.log("ERROR FOR API RATINGS");
-	// 		});
-	// }
+	httpObject.saveNewEvent = function(postData) {
+		console.log(postData);
+		$http({
+		  method: 'POST',
+		  url: '/api/events',
+		  data: {
+		  	title: postData.title,
+		  	info: postData.info,
+		  	startTime: postData.startDateTime,
+		  	endTime: postData.endDateTime,
+		  	lat: postData.coords.lat,
+		  	lng: postData.coords.lng,
+		  	// TODO: Uncomment these fields after preparing schema and gmapsAPI call for address
+		  	//category: postData.category,
+		  	//streetAddress1: postData.streetAddress1,
+		  	//streetAddress2: postData.streetAddress2,
+		  	//city: postData.city,
+		  	//state: postData.state,
+		  	//zipCode: postData.zipCode,
+		  	user_id: postData.userId
+		  }
+		})
+		  .success(function(data, status) {
+		  	console.log("posted new event")
+		  })
+		  .error(function(data, status) {
+		    console.log("ERROR FOR API EVENTS");
+		  });
+	}
+
+	
 
 	return httpObject;
 }]);

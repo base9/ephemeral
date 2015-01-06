@@ -1,5 +1,4 @@
-angular.module('radar')
-.controller('EventWindowController', [
+angular.module('radar').controller('NewEventModalController', [
 	'MapFactory', 
 	'MarkerFactory', 
 	'HttpHandler', 
@@ -9,8 +8,5 @@ angular.module('radar')
 		$scope.saveNewEvent = function() {
 			console.log("SAVING NEW EVENT");
 		}
-
-		$scope.test = "HELLO";
-
 
 }])

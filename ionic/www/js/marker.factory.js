@@ -3,7 +3,7 @@ angular.module('radar')
   var markerObj = {};
   markers = [];
 
-  markerObj.placeMarkers = function(map, events, http) {
+  markerObj.placeMarkers = function(map, events, http, callback) {
     // remove all existing markers
     markers = [];
     var bounds = new google.maps.LatLngBounds();
@@ -38,7 +38,6 @@ angular.module('radar')
         strokeWeight: 2,
         fillColor: 'green',
         fillOpacity: 0.35,
-        map: map,
         center: position,
         radius: Math.random()*650
       }));
@@ -53,27 +52,8 @@ angular.module('radar')
 
     var ratings = event.ratings;
 
-    addListener(map, events, markers)
+    callback(markers)
   }
 
-
-  var addListener = function(map, events, markers) {
-    for (var i = 0; i < markers.length; i++) {
-      var rating = '';
-      events[i].rating.forEach(function(rated) {
-        rating += '<div><h6>' + rated.stars + '</h6>' + '<p>' + rated.comment + '</p></div>';
-      })
-      var infowindow = new google.maps.InfoWindow();
-      var title = events[i].title;
-      var marker = markers[i];
-      //must invoke function in order to grab current marker, title, and rating
-      google.maps.event.addListener(marker, 'click', (function(marker, title, rating) {
-        return function() {
-          infowindow.setContent('<div class="infoWindow"><h4>' + title + '</h4>' + rating + '</div>');
-          infowindow.open(map, marker);
-        }
-      })(marker, title, rating));
-    };
-  };
   return markerObj;
 })

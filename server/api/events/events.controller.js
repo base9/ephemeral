@@ -51,6 +51,8 @@ function getOne(req, res) {
 };
 
 function addOne(req, res) {
+  // TODO: if (!req.body.coords) -> Make util call for address string from coords.lat,coords.lng;
+  // TODO: add result of above operation to req.body/query for addEventRecord call
   utils.addEventRecord(req.query,res);
 };
 

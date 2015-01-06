@@ -28,54 +28,8 @@
 /* NAVBAR */
 
 .searchBar {
-  margin: 0;
-  padding: 0;
-  height: 100px;
-}
-
-.searchBar .icon {
-  display: inline-block;
-  font-size: 27px;
-  line-height: 1.2;
-  position: fixed;
-  color: white;
-  padding-left: 6px;
-  padding-right: 6px;
-}
-.searchBar .searchTxt {
-  display: inline-block;
-  left: 55px;
-  width: 50%;
-  position: fixed;
-  height: calc(100% - 10px);
-  color: white;
-}
-
-.searchIcon {
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  background-color: black;
-}
-
-.searchBar .searchTxt > .bgdiv {
-  background-color: darkBlue;
-  width: 50%;
-  height: 100%;
-  position: absolute;
-  opacity: 0.3;
-}
-.searchBar .searchTxt > .bgtxt {
-  top: 0;
-  left: 0;
-  width: 50%;
-  height: 100%;
-}
-.searchBar .searchTxt input {
-  background-color: inherit;
-  color: white;
-  padding-left: 5px;
-  padding-right:5px;
+  margin-top: -5px;
+  border-bottom: 0px;
 }
 
 /* MENU */
@@ -96,6 +50,10 @@
 }
 
 
+/* MODALS */
+.newEventModal {
+  
+}
 
 /* MAP BUTTONS */
 
