@@ -20,4 +20,6 @@ router.get('/', controller.getAll);
 // otherwise it would redirect to homepage
 router.post('/', /*auth.isLoggedIn,*/ controller.addOne);
 
+// router.post('/event', controller.postEvent);
+
 module.exports = router;

@@ -13,7 +13,7 @@ angular.module('radar')
 		  .error(function(data, status) {
 		    console.log("ERROR FOR API EVENTS");
 		  });
-	}
+	};
 
 	httpObject.getAddressForCoords = function(lat, lng, callback) {
 		$http.get('/api/events/reversegeocode?lat=' + lat + '&lng=' + lng)

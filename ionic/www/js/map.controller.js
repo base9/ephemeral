@@ -9,9 +9,9 @@ angular.module('radar')
 	function(Map, SearchBox, Marker, Http, $ionicModal, $scope) {
   
   $scope.geoLocate = function(){
-    console.log("LOCATING.......")
+    console.log("LOCATING.......");
     Map.geoCenter();
-  }
+  };
 
   $scope.openModal = function() {
     $scope.modal.show();
@@ -19,7 +19,7 @@ angular.module('radar')
   $scope.closeModal = function() {
     $scope.modal.hide();
   }
-  
+
   var map = Map.initialize();
   var myMarker = Map.geoLocate();
 
@@ -50,4 +50,4 @@ angular.module('radar')
     });
   });
 
-}])
+}]);
