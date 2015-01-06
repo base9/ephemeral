@@ -205,12 +205,6 @@ angular.module('radar')
     };
   }
 
-  mapObj.getCoordsForAddress = function(address) {
-    // TODO: call google API lat long from address, replace dummy data below
-    console.log(address);
-    return {lat: 37.792979, lng: -122.421242};
-  }
-
   mapObj.geoLocate = function() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(pos) {

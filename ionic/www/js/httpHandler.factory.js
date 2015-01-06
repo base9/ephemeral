@@ -25,6 +25,16 @@ angular.module('radar')
 		  });
 	}
 
+	httpObject.getCoordsForAddress = function(address, callback) {
+		$http.get('/api/events/geocode?address=' + address)
+		  .success(function(data, status) {
+		 		callback(data);
+		  })
+		  .error(function(data, status) {
+		    console.log("ERROR FOR API EVENTS");
+		  });
+	}
+
 	httpObject.saveNewEvent = function(postData) {
 		console.log(postData);
 		$http({
