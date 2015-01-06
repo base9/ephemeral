@@ -11,8 +11,8 @@ var crontab = require('node-crontab');
 //these scrapers run 5x a day, at 12:01, 4:01, 8:01, etc
 var cronJob = crontab.scheduleJob("1 */4 * * *", function () {
   console.log("****************it's cron time!******************")
-  controller.fetchBatchDataFromEventbriteAPI();
-  controller.fetchBatchDataFromKimonoAPI();
+  fetchBatchDataFromEventbriteAPI();
+  fetchBatchDataFromKimonoAPI();
 });
 
 
