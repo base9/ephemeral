@@ -10,7 +10,8 @@ module.exports = {
   addEventRecord: addEventRecord,
   sendResponse: sendResponse,
   getStartEndTimes: getStartEndTimes,
-  sendGoogleAPIRequest: sendGoogleAPIRequest,
+  geocodeGoogleAPIRequest: geocodeGoogleAPIRequest,
+  reverseGeocodeGoogleAPIRequest: reverseGeocodeGoogleAPIRequest,
   getCoordinatesFromGoogleAPIResponse: getCoordinatesFromGoogleAPIResponse,
   makeThrottledFunction: makeThrottledFunction,
 };
@@ -41,12 +42,19 @@ function sendResponse(record, res){
 //input: a string such as '1600 Amphitheater Parkway, Mountain View CA'
 //output: a lat & long tuple, such as [-37.211, 122.5819]
 //returns [0,0] on error. (TODO: refactor this)
-function sendGoogleAPIRequest(addressString){
+function geocodeGoogleAPIRequest(addressString){
   var formattedAddress = addressString.split(' ').join('+');
   var apiUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' 
   var reqUrl =  apiUrl + formattedAddress + '&key=' + process.env.GOOGLE_GEOCODING_API_KEY;
   return request(reqUrl);
 };
+
+function reverseGeocodeGoogleAPIRequest(coords){
+  var formattedCoords = coords.lat+','+coords.lng;
+  var apiUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
+  var reqUrl =  apiUrl + formattedCoords + '&key=' + process.env.GOOGLE_GEOCODING_API_KEY;
+  return request(reqUrl);
+}
 
 function getCoordinatesFromGoogleAPIResponse(res){
   if (res.statusCode >= 400) {

@@ -2,6 +2,10 @@ var controller = require('./events.controller');
 var router = require('express').Router();
 var auth = require('./../../auth/auth.service');
 
+router.get('/geocode', controller.getCoordsFromAddress);
+
+router.get('/reversegeocode', controller.getAddressFromCoords);
+
 router.get('/local', controller.getLocal);
 
 router.get('/kimono', controller.fetchBatchDataFromKimonoAPI);

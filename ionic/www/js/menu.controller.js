@@ -77,10 +77,10 @@ angular.module('radar')
 
 	$scope.getCurrentAddress = function() {
 		console.log("getting address")
-		$scope.coords = Map.findCurrentLocation() // TODO: Promisify
+		$scope.newPostData.coords = Map.findCurrentLocation() // TODO: Promisify
 		//.then()
 		//DUMMY INFO BELOW
-		$scope.coords = {lat: 37.792979, lng: -122.421242}
+		$scope.newPostData.coords = {lat: 37.792979, lng: -122.421242}
 		var address = Map.getAddressForCoords($scope.coords.lat, $scope.coords.lng) // TODO: Promisify
 		//.then()
 		$scope.newPostData.streetAddress1 = address.streetAddress;
