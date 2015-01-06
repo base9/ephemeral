@@ -1,10 +1,10 @@
-var gulp = require('gulp'),
-    gutil = require('gulp-util'),
-    sass = require('gulp-sass'),
-    livereload = require('gulp-livereload'),
-    nodemon = require('gulp-nodemon'),
-    jshint = require('gulp-jshint'),
-    mocha = require('gulp-mocha');
+var gulp = require('gulp');
+var gutil = require('gulp-util');
+var sass = require('gulp-sass');
+var livereload = require('gulp-livereload');
+var nodemon = require('gulp-nodemon');
+var jshint = require('gulp-jshint');
+var mocha = require('gulp-mocha');
 
 var path = {
   sass: './client/styles/*.scss',
@@ -12,7 +12,8 @@ var path = {
   server: './server.js',
   serverSideJs: './server/**/*.js',
   client: 'client/**/*',
-  test: './test/**/*.js'
+  test: './test/**/*.js',
+  clientSideJs: './ionic/www/js/**/*.js'
 }
 
 gulp.task('sass', function () {
@@ -27,24 +28,27 @@ gulp.task('watch', function() {
 
   // Watch any files in dist/, reload on change
   livereload.listen();
-  gulp.watch([path.client]).on('change', livereload.changed);
+  gulp.watch(path.client).on('change', livereload.changed);
+
+  //watch for any changes made to js files in client and server
+  gulp.watch([path.clientSideJs, path.serverSideJs], ['lint']);
 });
 
 // TODO: watch out for dev mode vs prod mode
-// FIXME
 gulp.task('lint', function() {
-  return gulp.src(path.js)
+  return gulp.src([path.clientSideJs, path.serverSideJs])
     .pipe(jshint())
-})
-
-gulp.task('test', function() {
-  gulp.watch(path.serverSideJs, ['mocha'])
-})
+    .pipe(jshint.reporter('default'));
+});
 
 gulp.task('mocha', function () {
   return gulp.src(path.test)
-    .pipe(mocha({reporter: 'nyan'}))
-})
+    .pipe(mocha({reporter: 'nyan'}));
+});
+
+gulp.task('test', function() {
+  gulp.watch(path.serverSideJs, ['mocha']);
+});
 
 gulp.task('express', function() {
   nodemon({
@@ -54,10 +58,8 @@ gulp.task('express', function() {
   // .on('change', ['lint'])
   .on('restart', function() {
     console.log('restarted server');
-  })
-})
-
-gulp.task('default', ['sass', 'watch', 'express'], function (){
-
+  });
 });
+
+gulp.task('default', ['lint', 'sass', 'watch', 'express']);
 
