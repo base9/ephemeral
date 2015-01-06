@@ -1,5 +1,5 @@
 //this will alter the global object 'Date'
-require('./date.js');
+// require('./date.js');
 
 var Promise = require('bluebird');
 var request = Promise.promisify(require('request'));
@@ -70,8 +70,8 @@ function getStartEndTimes(dateString, durationString){
   var endTime;
 
   if(durationString==="All Day"){
-    startTime="12:00am";
-    endTime="11:59pm";
+    startTime="12:00 am";
+    endTime="11:59 pm";
   } else if(durationString.indexOf('to') > -1) {
     startTime = durationString.split('to')[0];
     endTime = durationString.split('to')[1];
@@ -79,8 +79,10 @@ function getStartEndTimes(dateString, durationString){
     startTime = durationString;
   }
 
-  var formattedStartTime = Date.parse(dateString + ' ' + startTime).toISOString();
-  var formattedEndTime = endTime ? Date.parse(dateString + ' ' + endTime).toISOString() : null;
+  var formattedStartTime = Date.parse(dateString + ' ' + startTime);
+  console.log("formattedStartTime: ", formattedStartTime);
+  var formattedEndTime = endTime ? Date.parse(dateString + ' ' + endTime) : null;
+  console.log("formattedEndTime: ", formattedEndTime);
 
   return [formattedStartTime, formattedEndTime];
 }

@@ -28,6 +28,21 @@ setTimeout(function(){
     }
   });
 
+  Event.where({title:'Snarf at 8pm'}).fetch().then(function (evnt) {
+    if(!evnt){
+      var newEvent = new Event({
+          title: 'Snarf at 8pm',
+          startTime: '1420516800000',
+          endTime: null,
+          lat: 37.7931290,
+          lng: -122.394200,
+          user_id: 1
+        })
+        .save();
+      console.log('added dummy event "Snarfy at 8pm"')
+    }
+  });
+
 },100);
 
 

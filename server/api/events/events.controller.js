@@ -64,24 +64,26 @@ function getLocal(req, res) {
     var date2 = new Date();
 
     //currentTime is used to keep track of current time
-    var currentTime = new Date();
+    var currentTime = Date.now();
 
     //beginningDate to current date at 3 a.m.
-    date1.setHours(3, 0, 0, 0);
-    var beginningDate = date1.toISOString();
+    var beginningDate = date1.setHours(3, 0, 0, 0);
 
     //endingDate to next day at 3 a.m.
     date2.setDate(date1.getDate() + 1);
-    date2.setHours(3, 0, 0, 0);
-    var endingDate = date2.toISOString();
+    var endingDate = date2.setHours(3, 0, 0, 0);
+
+    console.log("RANGE", beginningDate, endingDate, "CURRENT TIME", currentTime);
 
     //Narrows down events based on specified location
     qb.whereBetween('lat', [req.query.lat1,req.query.lat2]);
     qb.whereBetween('lng', [req.query.lng1,req.query.lng2]);
 
     //Narrows down events within specified ISO8601 time
-    qb.where('startTime', '<', endingDate).andWhere('endTime', '>', beginningDate);
-    qb.where('endTime', '>', currentTime);
+    qb.where('startTime', '<', endingDate)
+      .andWhere('endTime', '>', beginningDate)
+      .andWhere('endTime', '>', currentTime)
+      .orWhere('endTime', null);
 
   })
   .fetchAll({
@@ -128,9 +130,11 @@ function addEventFromKimono(event){
             params.lat = coordinates[0];
             params.lng = coordinates[1];
             
+            console.log("BEFORE: ", event.date.text, event.duration.text);
             startEndTimes = utils.getStartEndTimes(event.date.text,event.duration.text);
             params.startTime = startEndTimes[0];
             params.endTime = startEndTimes[1];
+            console.log("AFTER: ", "START", params.startTime, "END", params.endTime);
 
             utils.addEventRecord(params);
           });
