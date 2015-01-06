@@ -15,8 +15,8 @@ angular.module('radar')
 		  });
 	}
 
-	httpObject.saveNewEvent = function(title, info, start, end, category, address, coords, userId) {
-		console.log(title, info, start, end, category, userId);
+	httpObject.saveNewEvent = function(title, info, streetAddress1, streetAddress2, city, state, zipCode, startDateTime, endDateTime, category, coords, userId) {
+		console.log(title, info, streetAddress1, streetAddress2, city, state, zipCode, startDateTime, endDateTime, category, coords, userId);
 
 		$http({
 		  method: 'POST',
@@ -24,11 +24,16 @@ angular.module('radar')
 		  data: {
 		  	title: title,
 		  	info: info,
-		  	startTime: start,
-		  	endTime: end,
+		  	startTime: startDateTime,
+		  	endTime: endDateTime,
 		  	lat: coords.lat,
 		  	lng: coords.lng,
 		  	//category: category,
+		  	//streetAddress1: streetAddress1,
+		  	//streetAddress2: streetAddress2,
+		  	//city: city,
+		  	//state: state,
+		  	//zipCode: zipCode,
 		  	user_id: userId
 		  }
 		})

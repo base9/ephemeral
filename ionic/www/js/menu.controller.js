@@ -74,8 +74,23 @@ angular.module('radar')
 
 	/* NEW EVENT MODAL */
 
+	$scope.getCurrentAddress = function() {
+		console.log("getting address")
+		$scope.coords = Map.findCurrentLocation() // Promisify
+		//.then()
+		//DUMMY INFO BELOW
+		$scope.coords = {lat: 37.792979, lng: -122.421242}
+		var address = Map.getAddressForCoords($scope.coords.lat, $scope.coords.lng) // Promisify
+		//.then()
+		$scope.streetAddress1 = address.streetAddress;
+		$scope.city = address.city;
+		$scope.state = address.state;
+		$scope.zipCode = address.zipCode;
+	}
+
 	$scope.postNewEvent = function() {
 		// TODO: Check for authentication. If authenticated, proceed. Else "Please Login or register to post events"
+		$scope.coords = {lat: undefined, lng: undefined};
 		$ionicModal.fromTemplateUrl('../templates/newEventModal.html', {
 	    scope: $scope,
 	  }).then(function(modal) {
@@ -85,23 +100,27 @@ angular.module('radar')
 	  });
 	};
 
-	$scope.saveNewEvent = function(title, info, start, end, category, address, coords) {
+	$scope.saveNewEvent = function(title, info, streetAddress1, streetAddress2, city, state, zipCode, startDateTime, endDateTime, category) {
 		// TODO: Get userId from Auth, pass it into http call below
 		var userId = 1
-		Http.saveNewEvent(title, info, start, end, category, address, coords, userId);
+		// DUMMY INFO BELOW
+		Map.getCoordsForAddress((streetAddress1+'+'+streetAddress2+'+'+city+'+'+state+'+'+zipCode).split(' ').join('+'))
+		Http.saveNewEvent(title, info, streetAddress1, streetAddress2, city, state, zipCode, startDateTime, endDateTime, category, userId, $scope.coords);
 	}
 
+	$scope.startDateTime = new Date();
+	$scope.endDateTime
 
 }])
 
-angular.module('radar').controller('ModalCtrl', function ($scope, $modalInstance) {
+// angular.module('radar').controller('ModalCtrl', function ($scope, $modalInstance) {
 
-  $scope.ok = function () {
-    $modalInstance.close();
-  };
+//   $scope.ok = function () {
+//     $modalInstance.close();
+//   };
 
-  $scope.cancel = function () {
-    $modalInstance.dismiss('cancel');
-  };
+//   $scope.cancel = function () {
+//     $modalInstance.dismiss('cancel');
+//   };
 
-});
+// });

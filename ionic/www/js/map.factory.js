@@ -260,12 +260,18 @@ angular.module('radar')
 
   mapObj.getAddressForCoords = function(lat,lng) {
     // TODO: call google API reverse lookup for address from lat long, return address string
-    return "Great American Music Hall 859 O'Farrell Street San Francisco, CA 94109";
+    return { 
+      streetAddress: "859 O'Farrell Street" ,
+      city: "San Francisco",
+      state: "CA",
+      zipCode: "94109"
+    };
   }
 
   mapObj.getCoordsForAddress = function(address) {
     // TODO: call google API lat long from address, replace dummy data below
-    return {lat: 37.792979,lng:  -122.421242};
+    console.log(address);
+    return {lat: 37.792979, lng: -122.421242};
   }
 
   mapObj.geoLocate = function() {
