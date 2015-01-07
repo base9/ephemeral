@@ -61,11 +61,12 @@ angular.module('radar')
 			email: email,
 			pwd: pwd
 		}).success(function(data, status) {
+			console.log('welcome back in')
 			$scope.loggedInEmail = email;
 			$scope.loggedIn = true;
 			$scope.closeModal();
 		}).error(function() {
-			// handle error cases
+			console.log('invalid username or password')
 		})
 	}
 
@@ -83,6 +84,17 @@ angular.module('radar')
 		if (!(userEmail && userPassword && (userPassword === confirmPassword))) {
 			return console.log('either (invalid email or password) or (passwords don\'t match)');
 		}
+		Http.postSignup({
+			email: userEmail,
+			pwd: userPassword
+		}).success(function(data, status) {
+			console.log('welcome to the cluuub');
+			$scope.loggedInEmail = userEmail;
+			$scope.loggedIn = true;
+			$scope.closeModal();
+		}).error(function(data, status) {
+			console.log('user already exists')
+		})
 	}
 
 	$scope.newSearch = function() {
