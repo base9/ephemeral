@@ -8,16 +8,16 @@ var mocha = require('gulp-mocha');
 
 var path = {
   sass: './ionic/scss/*.scss',
-  cssRoot: './ionic/www/css/',
-  server: './server.js',
+  cssRoot: './ionic/www/css',
+  server: './server/index.js',
   serverSideJs: './server/**/*.js',
-  client: 'client/**/*',
+  client: 'ionic/www/**/*',
   test: './test/**/*.js',
   clientSideJs: './ionic/www/js/**/*.js'
 }
 
 gulp.task('sass', function () {
-  gulp.src(path.sass)
+  return gulp.src(path.sass)
     .pipe(sass())
     .pipe(gulp.dest(path.cssRoot));
 });
@@ -55,7 +55,6 @@ gulp.task('expressDev', function() {
     script: path.server,
   })
 
-  // .on('change', ['lint'])
   .on('restart', function() {
     console.log('restarted server');
   });

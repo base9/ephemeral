@@ -6,8 +6,8 @@ angular.module('radar')
   var map;
   var watchId;
 
-  mapObj.initialize = function () {
-
+  mapObj.initialize = function() {
+  
     function placeMarker(position) {
       //Check if user is in "Place New Event" Mode
       var newEventWindow = new google.maps.InfoWindow({
@@ -39,29 +39,16 @@ angular.module('radar')
         radius: 20
       });
       
-      // google.maps.event.addListener(marker,'click',(function(marker , scope, localLatLng ){
-      //         return function(){
-      //           var content = '<div id="infowindow_content" ng-include src="\'/test.html\'"></div>';
-      //           scope.latLng = localLatLng;
-      //           var compiled = $compile(content)(scope);
-      //           scope.$apply();
-      //           infowindow.setContent( compiled[0].innerHTML );
-      //           infowindow.open( Map , marker );
-      //         };//return fn()
-      //       })( marker , scope, scope.markers[i].locations )
-
-
       newEventWindow.open(map, marker);
 
 
     }
-
     var mapOptions = {
       zoom: 14,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       disableDefaultUI: true
     };
-
+  
     var styles = [
     {
         "featureType": "landscape.man_made",
@@ -177,7 +164,7 @@ angular.module('radar')
         "stylers": [
             {
                 "color": "#ffffff"
-            },
+            }, 
             {
                 "visibility": "on"
             }
@@ -227,10 +214,9 @@ angular.module('radar')
                 "color": "#a2daf2"
             }
         ]
-    }
-];
-    var styledMap = new google.maps.StyledMapType(styles,
-    {name: "Styled Map"});
+    }];
+
+    var styledMap = new google.maps.StyledMapType(styles, {name: "Styled Map"});
 
     map = this.renderMap(mapOptions);
     map.mapTypes.set('map_style', styledMap);
@@ -253,14 +239,16 @@ angular.module('radar')
     }
   };
 
-  mapObj.geoLocate = function() {
+  mapObj.geoLocate = function(callback) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(pos) {
-        map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+        var currentLocation = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+        callback(pos.coords);
+        map.setCenter(currentLocation);
         map.setZoom(14);
 
         mapObj.myMarker = new google.maps.Marker({
-          position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
+          position: currentLocation,
           map: map,
           icon: 'img/self_marker.png',
           content: 'You Are Here!'

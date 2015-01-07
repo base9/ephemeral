@@ -53,6 +53,8 @@ function addOne(req, res) {
   // TODO: if (!req.body.coords) -> Make util call for address string from coords.lat,coords.lng;
   // TODO: add result of above operation to req.body/query for addEventRecord call
   utils.addEventRecord(req.body, res);
+  console.log("Sending New Post to Database: ",req.body);
+  utils.addEventRecord(req.body, res);
 }
 
 function addManySpoofs(req,res){
@@ -113,7 +115,6 @@ function getLocal(req, res) {
     utils.sendResponse(utils.formatAndTrimEventRecords(collection),res);
   });
 }
-
 
 /************** Geocoding ******************/
 
@@ -229,7 +230,3 @@ function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
     });
   });
 }
-
-
-
-

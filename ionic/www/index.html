@@ -21,9 +21,56 @@
     <!-- ui view -->
     <div ui-view=""></div>
 
-
-
-
+  <!-- RIGHT SLIDE MENU -->      
+      <ion-side-menu class="rightMenu" side="right">
+        <header class="bar bar-dark bar-header rightMenuHeader">
+            <h1 class="title">OPTIONS</h1>
+        </header>
+        <ion-content class="has-header">
+          <ion-nav-view name="OPTIONS"></ion-nav-view>
+          <div class="button-bar logReg" ng-show="!loggedIn">
+            <a class="button" ng-click="login()">Login</a>
+            <a class="button" ng-click="register()">Register</a>
+          </div>
+          <div class="button-bar logReg" ng-show="loggedIn">
+            <a class="button" ng-click="logout()">Logout</a>
+          </div>
+          <div class="button-bar">
+            <a class="button" ng-click="postNewEvent()">Post Event</a>
+          </div>
+          <div class="button-bar">
+            <a class="button" ng-click="toggleFilter = !toggleFilter">Filters</a>
+          </div>
+          <div class="list list-inset filterPane" ng-show="toggleFilter">
+            <div class="categories">
+              <ion-checkbox ng-model="partyCheck">Parties</ion-checkbox>
+              <ion-checkbox ng-model="concertCheck">Concerts</ion-checkbox>
+              <ion-checkbox ng-model="happyHourCheck">Happy Hours</ion-checkbox>
+            </div>
+            <div class="distance item range range-positive">
+              Max Distance: <input type="range" name="distance" min="0" max="100" value="60" ng-model="distance">
+                {{distance}}
+            </div> 
+            <div class="popularity item range range-positive">
+              Min Popularity: <input type="range" name="distance" min="0" max="10" value="0" ng-model="popularity">
+              {{popularity}}
+            </div> 
+            <div class="list">
+              <label class="item item-input">
+              <!-- TODO: Fix time display to show only hours and minutes  -->
+                <span class="input-label">Start Time:</span>
+                <input type="time" ng-model="startTime">
+              </label>
+              <label class="item item-input">
+              <!-- TODO: Make default value end of day/3AM next day  -->
+                <span class="input-label">End Time:</span>
+                <input type="time" ng-model="endTime">
+              </label>
+            </div>
+          </div>
+        </ion-content>
+      </ion-side-menu>
+    </ion-side-menus>
 
     <!-- Google Maps API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnemtHaxtZyoxOU0NYEPXNxJwIhG0DeCE&sensor=true&v=3.exp&libraries=places"></script>
