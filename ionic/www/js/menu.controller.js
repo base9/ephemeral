@@ -56,8 +56,7 @@ angular.module('radar')
 	  });
 	}
 
-	$scope.postLogin = function(email, pwd) {
-		console.log('login:', email, pwd);
+	$scope.handleLogin = function(email, pwd) {
 		Http.postLogin({
 			email: email,
 			pwd: pwd
@@ -79,6 +78,10 @@ angular.module('radar')
 			$scope.openModal();
 	  });
 	};
+
+	$scope.postSignin = function() {
+
+	}
 
 	$scope.newSearch = function() {
 		$scope.search = ''
