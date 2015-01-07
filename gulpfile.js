@@ -46,11 +46,11 @@ gulp.task('mocha', function () {
     .pipe(mocha({reporter: 'nyan'}));
 });
 
-gulp.task('test', function() {
-  gulp.watch(path.serverSideJs, ['mocha']);
-});
+gulp.task('mochaWatch', function() {
+  return gulp.watch(path.serverSideJs, ['mocha']);
+})
 
-gulp.task('express', function() {
+gulp.task('expressDev', function() {
   nodemon({
     script: path.server,
   })
@@ -61,5 +61,9 @@ gulp.task('express', function() {
   });
 });
 
-gulp.task('default', ['lint', 'sass', 'watch', 'express']);
+/////////////Command-line API////////////////////////////
+// $> gulp
+gulp.task('default', ['lint', 'sass', 'watch', 'expressDev']);
 
+// $> gulp test
+gulp.task('test', ['mochaWatch', 'mocha']);

@@ -3,7 +3,7 @@ var expect = require('chai').expect;
 var request = require('supertest');
 
 // run the app for testing and import access
-var app = require('./../server');
+var app = require('./../server').app;
  
 describe('Server Endpoints', function(){
   request = request('http://localhost:9000');

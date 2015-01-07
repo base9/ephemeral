@@ -26,7 +26,8 @@
     "gulp-sass": "^1.2.4",
     "gulp-util": "^3.0.1",
     "jshint": "^2.5.10",
-    "supertest": "^0.15.0"
+    "supertest": "^0.15.0",
+    "supertest-as-promised": "^1.0.0"
   },
   "dependencies": {
     "aws-sdk": "^2.1.4",
