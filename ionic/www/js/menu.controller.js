@@ -57,6 +57,10 @@ angular.module('radar')
 	}
 
 	$scope.handleLogin = function(email, pwd) {
+		if (!userData.email) {
+			// logic for handling user errors goes here 
+		  return console.log('no email');
+		}
 		Http.postLogin({
 			email: email,
 			pwd: pwd
@@ -82,6 +86,7 @@ angular.module('radar')
 
 	$scope.handleSignup = function(userEmail, userPassword, confirmPassword) {
 		if (!(userEmail && userPassword && (userPassword === confirmPassword))) {
+			// logic for handling user errors goes here 
 			return console.log('either (invalid email or password) or (passwords don\'t match)');
 		}
 		Http.postSignup({

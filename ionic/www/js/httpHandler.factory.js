@@ -65,9 +65,6 @@ angular.module('radar')
 	};
 
 	httpObject.postLogin = function (userData) {
-    if (!userData.email) {
-      return console.log('no email');
-    }
     return $http({
       method: 'POST',
       url: '/auth/login',
@@ -76,9 +73,6 @@ angular.module('radar')
   };
 
   httpObject.postSignup = function (userData) {
-    if (!userData.email) {
-      return console.log('no email');
-    }
     return $http({
       method: 'POST',
       url: '/auth/signup',
