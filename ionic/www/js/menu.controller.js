@@ -79,8 +79,10 @@ angular.module('radar')
 	  });
 	};
 
-	$scope.postSignin = function() {
-
+	$scope.handleSignup = function(userEmail, userPassword, confirmPassword) {
+		if (!(userEmail && userPassword && (userPassword === confirmPassword))) {
+			return console.log('either (invalid email or password) or (passwords don\'t match)');
+		}
 	}
 
 	$scope.newSearch = function() {
