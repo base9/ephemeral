@@ -1,27 +1,29 @@
-var Rating = require('./ratings.model.js');
+var Comment = require('./comments.model.js');
 var Event = require('../events/events.model.js');
 
 setTimeout(function(){
   
   Event.where({title:'Free Bagels at 8pm'}).fetch().then(function (event) {
     if(event){
-        var newRating = new Rating({
+        var newComment = new Comment({
           user_id: 1,
           event_id: event.id,
+          comment: 'omg so STALE!'
         })
         .save();
-        console.log('added dummy rating for bagel event');
+        console.log('added dummy comment for bagel event');
     }
   });
 
   Event.where({title:'SantaCon'}).fetch().then(function (event) {
     if(event){
-        var newRating = new Rating({
+        var newComment = new Comment({
           user_id: 1,
           event_id: event.id,
+          comment: 'he was very friendly'
         })
         .save();
-        console.log('added dummy rating for SantaCon');
+        console.log('added dummy comment for SantaCon');
     }
   });
 

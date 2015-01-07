@@ -45,6 +45,39 @@ describe('Server Endpoints', function(){
           done();
         })
     });
+
+
+    var ratings = '/api/ratings';
+
+    it('should add new ratings', function(done) {
+      request.post(ratings)
+        .set('Accept', 'application/json')
+        .send({user_id: 1, event_id: 1})
+        .expect(201)
+        .end(function (err, res) {
+          if (err) {
+            return done(err);
+          }
+          done();
+        })
+    });
+
+    var comments = '/api/comments';
+
+    it('should add new comments', function(done) {
+      request.post(comments)
+        .set('Accept', 'application/json')
+        .send({user_id: 1, event_id: 1, comment:'test comment'})
+        .expect(201)
+        .end(function (err, res) {
+          if (err) {
+            return done(err);
+          }
+          done();
+        })
+    });
+
+
   });
 });
 
