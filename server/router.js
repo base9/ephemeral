@@ -14,14 +14,14 @@ module.exports = function (app, passport) {
   
   // app.use('/auth', authRouter);
   app.post('/auth/login', passport.authenticate('local-login', {
-    successRedirect: '/success',
-    failureRedirect: '/fail',
+    successRedirect: '/',
+    failureRedirect: '/login',
     failureFlash: true
   }));
 
   app.post('/auth/signup', passport.authenticate('local-signup', {
-    successRedirect: '/success',
-    failureRedirect: '/fail',
+    successRedirect: '/',
+    failureRedirect: '/signup',
     failureFlash: true
   }))
 

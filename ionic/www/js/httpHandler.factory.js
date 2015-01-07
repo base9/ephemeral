@@ -62,9 +62,23 @@ angular.module('radar')
 		  .error(function(data, status) {
 		    console.log("ERROR FOR API EVENTS");
 		  });
-	}
+	};
 
-	
+	httpObject.postLogin = function (userData) {
+    return $http({
+      method: 'POST',
+      url: '/auth/login',
+      data: userData
+    })
+  };
+
+  httpObject.postSignup = function (userData) {
+    return $http({
+      method: 'POST',
+      url: '/auth/signup',
+      data: userData
+    })
+  }
 
 	return httpObject;
 }]);

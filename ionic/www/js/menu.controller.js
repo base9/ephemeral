@@ -47,13 +47,31 @@ angular.module('radar')
 	};
 	
 	$scope.login = function() {
-			$ionicModal.fromTemplateUrl('../templates/login.html', {
-		    scope: $scope,
-		  }).then(function(modal) {
-		    $scope.modal = modal;
-				$scope.toggleRight();
-				$scope.openModal();
-		  });
+		$ionicModal.fromTemplateUrl('../templates/login.html', {
+	    scope: $scope,
+	  }).then(function(modal) {
+	    $scope.modal = modal;
+			$scope.toggleRight();
+			$scope.openModal();
+	  });
+	}
+
+	$scope.handleLogin = function(email, pwd) {
+		if (!userData.email) {
+			// logic for handling user errors goes here 
+		  return console.log('no email');
+		}
+		Http.postLogin({
+			email: email,
+			pwd: pwd
+		}).success(function(data, status) {
+			console.log('welcome back in')
+			$scope.loggedInEmail = email;
+			$scope.loggedIn = true;
+			$scope.closeModal();
+		}).error(function() {
+			console.log('invalid username or password')
+		})
 	}
 
 	$scope.register = function() {
@@ -65,6 +83,24 @@ angular.module('radar')
 			$scope.openModal();
 	  });
 	};
+
+	$scope.handleSignup = function(userEmail, userPassword, confirmPassword) {
+		if (!(userEmail && userPassword && (userPassword === confirmPassword))) {
+			// logic for handling user errors goes here 
+			return console.log('either (invalid email or password) or (passwords don\'t match)');
+		}
+		Http.postSignup({
+			email: userEmail,
+			pwd: userPassword
+		}).success(function(data, status) {
+			console.log('welcome to the cluuub');
+			$scope.loggedInEmail = userEmail;
+			$scope.loggedIn = true;
+			$scope.closeModal();
+		}).error(function(data, status) {
+			console.log('user already exists')
+		})
+	}
 
 	$scope.newSearch = function() {
 		$scope.search = ''
