@@ -2,7 +2,7 @@ var User = require('./users.model.js');
 
 setTimeout(function(){
 
-  User.where({name:'Steve Erwin'}).fetch().then(function (user) {
+  User.where({id:1}).fetch().then(function (user) {
     if(!user){
       var newUser = new User({
         name: 'Steve Erwin',

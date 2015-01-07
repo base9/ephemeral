@@ -27,13 +27,19 @@ module.exports = {
 };
 
 function addOne(req,res){
-  new Photo(req.query)
+  console.log('body:', req.body);
+  new Photo(req.body)
   .save()
-  .then(function(record){
-    var fileName = record.attributes.id.toString();
+  .then(function(photo){
+    console.log('photo:', photo)
+    var fileName = photo.attributes.id.toString();
     var params = {Bucket: 'base9photos', Key: fileName + '.jpg'};
     var url = s3.getSignedUrl('putObject', params);
     res.status(201).json(url);
+    photo.save({url: url}, {patch: true})
+    .then(function(photo){
+      console.log('updated photo:', photo)
+    });
   });
 }
 

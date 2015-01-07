@@ -29,7 +29,7 @@ describe('Server Endpoints', function(){
           }
           var event = res.body;
           expect(event.id).to.equal(1);
-          expect(event.title).to.equal('Snarf at 8pm');
+          expect(event.title).to.equal('Free Bagels at 8pm');
           done();
         })
     });

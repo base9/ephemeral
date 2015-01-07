@@ -146,7 +146,7 @@ function addEventFromKimono(event){
         }
         params.title = event.title;
 
-        utils.sendGoogleAPIRequest(event.address) //here is where the problem starts (should be event.address)
+        utils.geocodeGoogleAPIRequest(event.address) //here is where the problem starts (should be event.address)
           .then(function(res){
             
             coordinates = utils.getCoordinatesFromGoogleAPIResponse(res);

@@ -8,7 +8,7 @@ db.schema.hasTable('photos').then(function (exists) {
       photo.integer('user_id').unsigned().references('users.id');
       photo.integer('event_id').unsigned().references('events.id');
       photo.timestamps();
-      photo.string('filename');
+      photo.string('url',200);
     }).then(function (){
       console.log('Created table: photos');
     });
@@ -18,7 +18,7 @@ db.schema.hasTable('photos').then(function (exists) {
 var Photo = bookshelf(db).Model.extend({
   tableName: 'photos',
   hasTimestamps: true,
-  creator: function() {
+  user: function() {
     return this.belongsTo(User);
   },  
   event: function() {
