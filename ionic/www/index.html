@@ -43,6 +43,13 @@
                 </header>
               <ion-content class="has-header">
                   <ion-nav-view name="OPTIONS"></ion-nav-view>
+                  
+                  <!-- Greeting for logged in user - start -->
+                  <div class="button-bar logReg" ng-show="loggedIn">
+                      <a class="button" ng-click="">Hi {{loggedInEmail}}</a>
+                  </div>
+                  <!-- Greeting - end -->
+
                   <div class="button-bar logReg" ng-show="!loggedIn">
                       <a class="button" ng-click="login()">Login</a>
                       <a class="button" ng-click="register()">Register</a>

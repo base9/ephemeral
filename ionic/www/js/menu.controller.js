@@ -61,6 +61,12 @@ angular.module('radar')
 		Http.postLogin({
 			email: email,
 			pwd: pwd
+		}).success(function(data, status) {
+			$scope.loggedInEmail = email;
+			$scope.loggedIn = true;
+			$scope.closeModal();
+		}).error(function() {
+			// handle error cases
 		})
 	}
 

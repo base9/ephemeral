@@ -47,15 +47,12 @@ angular.module('radar')
 
 	httpObject.postLogin = function (userData) {
     if (!userData.email) {
-      return console.log('no email')
+      return console.log('no email');
     }
-    $http({
+    return $http({
       method: 'POST',
       url: '/auth/login',
       data: userData
-
-    }).success(function(data, status) {
-      console.log('logged in')
     })
   }
 
