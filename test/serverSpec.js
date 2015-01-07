@@ -45,6 +45,24 @@ describe('Server Endpoints', function(){
           done();
         })
     });
+
+
+    var ratings = '/api/ratings';
+
+    it('should add new ratings', function(done) {
+      request.post(ratings)
+        .set('Accept', 'application/json')
+        .send({user_id: 1, event_id: 1})
+        .expect(201)
+        .end(function (err, res) {
+          if (err) {
+            return done(err);
+          }
+          done();
+        })
+    });
+
+
   });
 });
 

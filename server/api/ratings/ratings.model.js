@@ -10,8 +10,6 @@ db.schema.hasTable('ratings').then(function (exists) {
       rating.integer('user_id').unsigned().references('users.id');
       rating.integer('event_id').unsigned().references('events.id');
       rating.timestamps();
-      rating.integer('stars');
-      rating.string('comment', 1000);
     }).then(function (){
       console.log('Created table: ratings');
     });
@@ -23,7 +21,7 @@ var Rating = bookshelf(db).Model.extend({
   hasTimestamps: true,
   user: function() {
     return this.belongsTo(User);
-  } , 
+  }, 
   event: function() {
     return this.belongsTo(Event);
   }
