@@ -7,6 +7,9 @@ var AWS = require('aws-sdk');
 var s3 = new AWS.S3();
 var fs = require('fs');
 
+var S3_URL = 'https://s3-us-west-1.amazonaws.com/';
+var S3_BUCKET = 'base9photos';
+
 //POSTING A PHOTO: intended process
 //client sends a GET to api/phots/addnew.  includes user id, event name, file extension, other details.
 //server creates an entry in photos table. generates and returns presigned S3 URL to client.
@@ -32,11 +35,11 @@ function addOne(req,res){
   .save()
   .then(function(photo){
     console.log('photo:', photo)
-    var fileName = photo.attributes.id.toString();
-    var params = {Bucket: 'base9photos', Key: fileName + '.jpg'};
+    var fileName = photo.attributes.id.toString() + '.jpg';
+    var params = {Bucket: S3_BUCKET, Key: fileName};
     var url = s3.getSignedUrl('putObject', params);
     res.status(201).json(url);
-    photo.save({url: url}, {patch: true})
+    photo.save({url: S3_URL + S3_BUCKET + '/' + fileName}, {patch: true})
     .then(function(photo){
       console.log('updated photo:', photo)
     });

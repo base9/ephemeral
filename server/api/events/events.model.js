@@ -22,7 +22,6 @@ db.schema.hasTable('events').then(function (exists) {
       evnt.string('city', 100);
       evnt.string('state', 20);
       evnt.string('zipCode', 40);
-      evnt.integer('photo_id').unsigned().references('photos.id');
       evnt.timestamps();
     }).then(function (){
       console.log('Created table: events');
