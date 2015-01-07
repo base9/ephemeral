@@ -47,11 +47,10 @@ gulp.task('mocha', function () {
 });
 
 gulp.task('mochaWatch', function() {
-  gulp.watch(path.serverSideJs, ['mocha']);
+  return gulp.watch(path.serverSideJs, ['mocha']);
 })
 
-
-gulp.task('express', function() {
+gulp.task('expressDev', function() {
   nodemon({
     script: path.server,
   })
@@ -64,7 +63,7 @@ gulp.task('express', function() {
 
 /////////////Command-line API////////////////////////////
 // $> gulp
-gulp.task('default', ['lint', 'sass', 'watch', 'express']);
+gulp.task('default', ['lint', 'sass', 'watch', 'expressDev']);
 
 // $> gulp test
-gulp.task('test', ['mocha', 'mochaWatch']);
+gulp.task('test', ['mochaWatch', 'mocha']);
