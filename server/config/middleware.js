@@ -7,7 +7,7 @@ var flash      = require('connect-flash');
 module.exports = {
   express: expressMiddleware,
   passport: passportMiddleware
-}
+};
 
 function expressMiddleware (app) {
   app.use(bodyParser.urlencoded({extended: true}));

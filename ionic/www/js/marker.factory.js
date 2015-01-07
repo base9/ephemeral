@@ -18,7 +18,7 @@ angular.module('radar')
     // create new markers for all events
     for (var i = 0; i < events.length; i++) {
       var event = events[i];
-      var position = new google.maps.LatLng(event.lat, event.lng)
+      var position = new google.maps.LatLng(event.lat, event.lng);
 
       // var image = {
       //   url: place.icon,
@@ -52,8 +52,8 @@ angular.module('radar')
 
     var ratings = event.ratings;
 
-    callback(markers)
-  }
+    callback(markers);
+  };
 
   return markerObj;
-})
+});

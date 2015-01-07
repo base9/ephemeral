@@ -18,7 +18,7 @@ angular.module('radar')
   };
   $scope.closeModal = function() {
     $scope.modal.hide();
-  }
+  };
 
   var map = Map.initialize();
   var myMarker = Map.geoLocate();
@@ -29,7 +29,7 @@ angular.module('radar')
       for (var i = 0; i < markers.length; i++) {
         var title = events[i].title;
         var marker = markers[i];
-        var event = events[i]
+        var event = events[i];
         //must invoke function in order to grab current marker, title, and rating
         google.maps.event.addListener(marker, 'click', (function(marker, event) {
           return function() {
@@ -39,14 +39,14 @@ angular.module('radar')
               $scope.modal = modal;
               $scope.openModal();
             });
-            $scope.title = event.title
-            $scope.info = event.info
-            $scope.startTime = event.startTime
-            $scope.endTime = event.endTime
-            $scope.title = event.title
-          }
+            $scope.title = event.title;
+            $scope.info = event.info;
+            $scope.startTime = event.startTime;
+            $scope.endTime = event.endTime;
+            $scope.title = event.title;
+          };
         })(marker, event));
-      };
+      }
     });
   });
 

@@ -23,7 +23,7 @@ angular.module('radar')
 		  .error(function(data, status) {
 		    console.log("ERROR FOR API EVENTS");
 		  });
-	}
+	};
 
 	httpObject.getCoordsForAddress = function(address, callback) {
 		$http.get('/api/events/geocode?address=' + address)
@@ -33,7 +33,7 @@ angular.module('radar')
 		  .error(function(data, status) {
 		    console.log("ERROR FOR API EVENTS");
 		  });
-	}
+	};
 
 	httpObject.saveNewEvent = function(postData) {
 		console.log(postData);
@@ -57,7 +57,7 @@ angular.module('radar')
 		  }
 		})
 		  .success(function(data, status) {
-		  	console.log("posted new event")
+		  	console.log("posted new event");
 		  })
 		  .error(function(data, status) {
 		    console.log("ERROR FOR API EVENTS");
@@ -69,7 +69,7 @@ angular.module('radar')
       method: 'POST',
       url: '/auth/login',
       data: userData
-    })
+    });
   };
 
   httpObject.postSignup = function (userData) {
@@ -77,8 +77,8 @@ angular.module('radar')
       method: 'POST',
       url: '/auth/signup',
       data: userData
-    })
-  }
+    });
+  };
 
 	return httpObject;
 }]);

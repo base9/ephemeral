@@ -246,12 +246,12 @@ angular.module('radar')
   mapObj.findCurrentLocation = function(callback) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(pos) {
-        callback({lat: pos.coords.latitude, lng: pos.coords.longitude})
-      })
+        callback({lat: pos.coords.latitude, lng: pos.coords.longitude});
+      });
     } else {
       handleNoGeolocation(true);
-    };
-  }
+    }
+  };
 
   mapObj.geoLocate = function() {
     if (navigator.geolocation) {
@@ -301,10 +301,11 @@ angular.module('radar')
   };
 
   var handleNoGeolocation = function(errorFlag) {
+    var content;
     if (errorFlag) {
-      var content = 'Error: The Geolocation service failed.';
+      content = 'Error: The Geolocation service failed.';
     } else {
-      var content = 'Error: Your browser doesn\'t support geolocation.';
+      content = 'Error: Your browser doesn\'t support geolocation.';
     }
 
     var options = {
