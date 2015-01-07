@@ -3,7 +3,7 @@ var Rating = require('./ratings.model.js');
 
 module.exports = {
   addOne: addOne
-}
+};
 
 function addOne(req, res) {
   var newRating = new Rating({

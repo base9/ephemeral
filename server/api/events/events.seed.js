@@ -11,7 +11,7 @@ setTimeout(function(){
         user_id: 1
       })
       .save();
-      console.log('added dummy event "SantaCon"')
+      console.log('added dummy event "SantaCon"');
     }
   });
 
@@ -24,7 +24,7 @@ setTimeout(function(){
           user_id: 1
         })
         .save();
-      console.log('added dummy event "Free Bagels at 8pm"')
+      console.log('added dummy event "Free Bagels at 8pm"');
     }
   });
 
@@ -39,7 +39,7 @@ setTimeout(function(){
           user_id: 1
         })
         .save();
-      console.log('added dummy event "Snarfy at 8pm"')
+      console.log('added dummy event "Snarfy at 8pm"');
     }
   });
 
