@@ -12,7 +12,7 @@ angular.module('radar')
     
     // expose searchBox
     searchObj.searchBox = searchBox;
-  }
+  };
 
   return searchObj;
-})
+});

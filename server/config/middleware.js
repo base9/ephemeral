@@ -38,4 +38,4 @@ var defaultCorsHeaders = {
 module.exports = {
   express: expressMiddleware,
   passport: passportMiddleware
-}
+};

@@ -6,8 +6,8 @@ module.exports = {
 };
 
 function login (req, res) {
-  console.log(req.body)
-  console.log(req.isAuthenticated())
+  //console.log(req.body);
+  console.log(req.isAuthenticated());
   res.send(200);
 }
 
