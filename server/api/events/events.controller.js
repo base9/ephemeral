@@ -186,8 +186,6 @@ function fetchBatchDataFromEventbriteAPI(){
   });
 }
 
-
-
 function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
   console.log("fetching page " + pageNumber);
   request(reqUrl + '&page=' + pageNumber)
