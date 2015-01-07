@@ -108,14 +108,30 @@ angular.module('radar')
 	/* NEW EVENT MODAL */
 
 	function getDateTime() {
-		var dateString = (new Date()).toString.split(' ');
-		datString[4] = dateString[4].split(':');
+		var dateString = (new Date()).toString().split(' ');
+		dateString[4] = dateString[4].split(':');
+		var hours = parseFloat(dateString[4][0])
+		var AMPM;
+		(hours > -1 && hours < 12) ? AMPM = "AM" : AMPM = "PM";
+		if (hours > 12 || hours === 0) {
+			hours = Math.abs(hours-12)
+			if (hours > 0 && hours < 10) {
+				hours = "0" + hours.toString();
+			} else {
+				hours = hours.toString();
+			}
+		}
+		var minutes = Math.ceil(parseFloat(dateString[4][1])/5)*5;
+		console.log("MINUTES: ", minutes)
+
 		var dateTime = {
 			month: dateString[1],
 			day: dateString[2],
 			year: dateString[3],
-			hours: dateString[4][0],
-			minutes: dateString[4][1]
+			hours: hours,
+			minutes: minutes.toString(),
+			timeZone: dateString[5],
+			AMPM: AMPM
 		}
 		return dateTime;
 	}
@@ -137,6 +153,35 @@ angular.module('radar')
 	$scope.postNewEvent = function() {
 		// TODO: Check for authentication. If authenticated, proceed. Else "Please Login or register to post events"
 		var dateTime = getDateTime();
+		var startHours = parseFloat(dateTime.hours)
+		var endAMPM = dateTime.AMPM;
+		var endHours = startHours + 2;
+		if (endHours > 12) {
+			endHours -= 12;
+			endAMPM === "AM" ? endAMPM = "PM" : endAMPM = "AM";
+		}
+		if (endHours > 0 && endHours < 10) {
+			endHours = "0" + endHours.toString();
+		} else {
+			endHours = endHours.toString();
+		}
+
+
+		console.log(dateTime)
+		$scope.dateTime = {
+			startDay: dateTime.day,
+			startMonth: dateTime.month,
+			startYear: dateTime.year, 
+			startHours: dateTime.hours,
+			startMinutes: dateTime.minutes,
+			startAMPM: dateTime.AMPM,
+			endDay: dateTime.day,
+			endMonth: dateTime.month,
+			endYear: dateTime.year, 
+			endHours: endHours.toString(),
+			endMinutes: dateTime.minutes,
+			endAMPM: endAMPM
+		}
 
 		$scope.newPostData = {
 				title: '',
@@ -146,7 +191,7 @@ angular.module('radar')
 				city: '',
 				state: '',
 				zipCode: '',
-				startDateTime: new Date(),
+				startDateTime: '',
 				endDateTime: '',
 				category: '',
 				coords: {lat: undefined, lng: undefined}
@@ -162,9 +207,12 @@ angular.module('radar')
 
 	$scope.saveNewEvent = function() {
 		// TODO: Get userId from Auth, pass it into http call below
-		var userId = 1;
-		// DUMMY INFO BELOW
-		var address = ($scope.newPostData.streetAddress1+'+'+$scope.newPostData.streetAddress2+'+'+$scope.newPostData.city+'+'+$scope.newPostData.state+'+'+$scope.newPostData.zipCode).split(' ').join('+');
+		var userId = 1
+		var address = ($scope.newPostData.streetAddress1+'+'+$scope.newPostData.streetAddress2+'+'+$scope.newPostData.city+'+'+$scope.newPostData.state+'+'+$scope.newPostData.zipCode).split(' ').join('+')
+		var timeZone = getDateTime().timeZone;
+		$scope.newPostData.startDateTime = '';
+		$scope.newPostData.endDateTime ='';
+
 		Http.getCoordsForAddress(address, function(coords) {
 			$scope.newPostData.coords = coords;
 			Http.saveNewEvent($scope.newPostData);
