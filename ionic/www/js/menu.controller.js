@@ -219,7 +219,6 @@ angular.module('radar')
 		});
 	};
 
-
 }])
 
 
