@@ -56,14 +56,11 @@ angular.module('radar')
 	  });
 	}
 
-	$scope.userEmail = "";
-	$scope.userPassword = "";
-
-	$scope.postLogin = function() {
-		console.log('login');
+	$scope.postLogin = function(email, pwd) {
+		console.log('login:', email, pwd);
 		Http.postLogin({
-			email: $scope.userEmail,
-			pwd: $scope.userPassword
+			email: email,
+			pwd: pwd
 		})
 	}
 

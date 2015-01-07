@@ -46,6 +46,9 @@ angular.module('radar')
 	};
 
 	httpObject.postLogin = function (userData) {
+    if (!userData.email) {
+      return console.log('no email')
+    }
     $http({
       method: 'POST',
       url: '/auth/login',
