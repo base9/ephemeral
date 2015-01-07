@@ -127,10 +127,14 @@ function validateEventRecord(params){
 
 function trim(collection){
   var trimmed = collection.map(function(event){
-    event.attributes.ratings = event.relations.rating.length;
-    event.attributes.creator = event.relations.user.attributes.name;
-    delete event.relations.user;
-    delete event.relations.rating;
+    if(event.relations.rating){
+      event.attributes.ratings = event.relations.rating.length;
+      delete event.relations.rating;
+    }
+    if(event.relations.user){
+      event.attributes.creator = event.relations.user.attributes.name;
+      delete event.relations.user;
+    }
     return event;
   });
   return trimmed;

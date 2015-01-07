@@ -33,7 +33,7 @@ function addOne(req,res){
     var fileName = record.attributes.id.toString();
     var params = {Bucket: 'base9photos', Key: fileName + '.jpg'};
     var url = s3.getSignedUrl('putObject', params);
-    res.json(url);
+    res.status(201).json(url);
   });
 }
 
@@ -50,6 +50,7 @@ function deleteOne(req,res){
         .on('destroyed',function(){
           res.status(204).end();
         });
+
       //unauthorized
       } else if(record) {
         res.status(403).end();

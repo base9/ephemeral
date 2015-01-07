@@ -5,8 +5,8 @@ db.schema.hasTable('photos').then(function (exists) {
   if (!exists) {
     db.schema.createTable('photos', function (photo) {
       photo.increments('id').primary();
-      photo.integer('creator').unsigned().references('users.id');
-      photo.integer('event').unsigned().references('events.id');
+      photo.integer('user_id').unsigned().references('users.id');
+      photo.integer('event_id').unsigned().references('events.id');
       photo.timestamps();
       photo.string('filename');
     }).then(function (){
@@ -27,3 +27,5 @@ var Photo = bookshelf(db).Model.extend({
 });
 
 module.exports = Photo;
+
+

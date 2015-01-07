@@ -34,7 +34,7 @@ module.exports = {
 
 function getAll(req, res) {
   Event.fetchAll({
-      withRelated: ['user','rating']
+      withRelated: ['user']
   }).then(function (collection) {
     utils.sendResponse(utils.trim(collection),res);
   });
@@ -42,7 +42,7 @@ function getAll(req, res) {
 
 function getOne(req, res) {
   Event.where({id:req.params.id}).fetch({
-      withRelated: ['user','rating']
+      withRelated: ['user','rating','photo']
     }).then(function (record) {
       utils.sendResponse(utils.trim([record])[0],res);
   });
