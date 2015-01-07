@@ -3,7 +3,7 @@ var Comment = require('./comments.model.js');
 
 module.exports = {
   addOne: addOne
-}
+};
 
 function addOne(req, res) {
   var newComment = new Comment({

@@ -33,14 +33,14 @@ angular.module('radar')
 
 /* MODALS */
 
-	$scope.test = "HELLO"
+	$scope.test = "HELLO";
 
   $scope.openModal = function() {
     $scope.modal.show();
   };
   $scope.closeModal = function() {
     $scope.modal.hide();
-  }
+  };
 
 	$scope.toggleRight = function() {
 	  $ionicSideMenuDelegate.toggleRight();
@@ -54,7 +54,7 @@ angular.module('radar')
 			$scope.toggleRight();
 			$scope.openModal();
 	  });
-	}
+	};
 
 	$scope.handleLogin = function(email, pwd) {
 		if (!userData.email) {
@@ -65,14 +65,14 @@ angular.module('radar')
 			email: email,
 			pwd: pwd
 		}).success(function(data, status) {
-			console.log('welcome back in')
+			console.log('welcome back in');
 			$scope.loggedInEmail = email;
 			$scope.loggedIn = true;
 			$scope.closeModal();
 		}).error(function() {
-			console.log('invalid username or password')
-		})
-	}
+			console.log('invalid username or password');
+		});
+	};
 
 	$scope.register = function() {
 		$ionicModal.fromTemplateUrl('../templates/register.html', {
@@ -98,12 +98,12 @@ angular.module('radar')
 			$scope.loggedIn = true;
 			$scope.closeModal();
 		}).error(function(data, status) {
-			console.log('user already exists')
-		})
-	}
+			console.log('user already exists');
+		});
+	};
 
 	$scope.newSearch = function() {
-		$scope.search = ''
+		$scope.search = '';
 		$scope.showSearch = !$scope.showSearch;
 	};
 
@@ -112,7 +112,7 @@ angular.module('radar')
 	
 
 	$scope.getCurrentAddress = function() {
-		console.log("getting address")
+		console.log("getting address");
 		Map.findCurrentLocation(function(coords) {	
 			var address = Http.getAddressForCoords(coords.lat, coords.lng, function(address) {
 				console.log(address);
@@ -120,9 +120,9 @@ angular.module('radar')
 				$scope.newPostData.city = address.city;
 				$scope.newPostData.state = address.state;
 				$scope.newPostData.zipCode = address.zipCode;
-			})
-		}) // TODO: Promisify
-	}
+			});
+		}); // TODO: Promisify
+	};
 
 	$scope.postNewEvent = function() {
 		// TODO: Check for authentication. If authenticated, proceed. Else "Please Login or register to post events"
@@ -150,19 +150,19 @@ angular.module('radar')
 
 	$scope.saveNewEvent = function() {
 		// TODO: Get userId from Auth, pass it into http call below
-		var userId = 1
+		var userId = 1;
 		// DUMMY INFO BELOW
-		var address = ($scope.newPostData.streetAddress1+'+'+$scope.newPostData.streetAddress2+'+'+$scope.newPostData.city+'+'+$scope.newPostData.state+'+'+$scope.newPostData.zipCode).split(' ').join('+')
+		var address = ($scope.newPostData.streetAddress1+'+'+$scope.newPostData.streetAddress2+'+'+$scope.newPostData.city+'+'+$scope.newPostData.state+'+'+$scope.newPostData.zipCode).split(' ').join('+');
 		Http.getCoordsForAddress(address, function(coords) {
 			$scope.newPostData.coords = coords;
 			Http.saveNewEvent($scope.newPostData);
-		})
-	}
+		});
+	};
 
 	$scope.startDateTime = new Date();
-	$scope.endDateTime
+	$scope.endDateTime;
 
-}])
+}]);
 
 // angular.module('radar').controller('ModalCtrl', function ($scope, $modalInstance) {
 
