@@ -22,4 +22,6 @@ router.post('/', /*auth.isLoggedIn,*/ controller.addOne);
 
 // router.post('/event', controller.postEvent);
 
+// router.post('/event', controller.postEvent);
+
 module.exports = router;
