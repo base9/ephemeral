@@ -1,6 +1,5 @@
 //helpful: http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-examples.html
 
-var controller = module.exports;
 var request = require('request');
 var Photo = require('./photos.model.js');
 var seed = require('./photos.seed.js');
@@ -22,8 +21,12 @@ var fs = require('fs');
 //images can be viewed by the client very simply, like this: 
 //<img src='https://s3-us-west-1.amazonaws.com/base9photos/UNIQUE_FILE_NAME.jpg'></img>
 
+module.exports = {
+  addOne: addOne,
+  deleteOne: deleteOne
+}
 
-controller.addOne = function(req,res){
+function addOne(req,res){
   new Photo(req.query)
   .save()
   .then(function(record){
@@ -37,7 +40,7 @@ controller.addOne = function(req,res){
 //deletes a photo record from the DB, if it exists and the request
 //is coming from that photo's owner. does NOT do anything to 
 //remove the photo from the S3 server!
-controller.deleteOne = function(req,res){
+function deleteOne(req,res){
   Photo.where({id:req.params.id}).fetch({
     }).then(function (record) {
       
@@ -47,7 +50,6 @@ controller.deleteOne = function(req,res){
         .on('destroyed',function(){
           res.status(204).end();
         });
-
       //unauthorized
       } else if(record) {
         res.status(403).end()

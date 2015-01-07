@@ -11,8 +11,8 @@ var crontab = require('node-crontab');
 //these scrapers run 5x a day, at 12:01, 4:01, 8:01, etc
 var cronJob = crontab.scheduleJob("1 */4 * * *", function () {
   console.log("****************it's cron time!******************")
-  fetchBatchDataFromEventbriteAPI();
-  fetchBatchDataFromKimonoAPI();
+  controller.fetchBatchDataFromEventbriteAPI();
+  controller.fetchBatchDataFromKimonoAPI();
 });
 
 
@@ -24,7 +24,9 @@ module.exports = {
   addOne: addOne,
   getLocal: getLocal,
   fetchBatchDataFromKimonoAPI: fetchBatchDataFromKimonoAPI,
-  fetchBatchDataFromEventbriteAPI: fetchBatchDataFromEventbriteAPI
+  fetchBatchDataFromEventbriteAPI: fetchBatchDataFromEventbriteAPI,
+  getCoordsFromAddress: getCoordsFromAddress,
+  getAddressFromCoords: getAddressFromCoords
 };
 
 /******************** Generic DB interactions **********************/
@@ -51,9 +53,12 @@ function getOne(req, res) {
 };
 
 function addOne(req, res) {
+
   // TODO: if (!req.body.coords) -> Make util call for address string from coords.lat,coords.lng;
   // TODO: add result of above operation to req.body/query for addEventRecord call
-  utils.addEventRecord(req.query,res);
+  console.log("Sending New Post to Database: ",req.body)
+  utils.addEventRecord(req.body, res);
+
 };
 
 function getLocal(req, res) {
@@ -64,24 +69,26 @@ function getLocal(req, res) {
     var date2 = new Date();
 
     //currentTime is used to keep track of current time
-    var currentTime = new Date();
+    var currentTime = Date.now();
 
     //beginningDate to current date at 3 a.m.
-    date1.setHours(3, 0, 0, 0);
-    var beginningDate = date1.toISOString();
+    var beginningDate = date1.setHours(3, 0, 0, 0);
 
     //endingDate to next day at 3 a.m.
     date2.setDate(date1.getDate() + 1);
-    date2.setHours(3, 0, 0, 0);
-    var endingDate = date2.toISOString();
+    var endingDate = date2.setHours(3, 0, 0, 0);
+
+    console.log("RANGE", beginningDate, endingDate, "CURRENT TIME", currentTime);
 
     //Narrows down events based on specified location
     qb.whereBetween('lat', [req.query.lat1,req.query.lat2]);
     qb.whereBetween('lng', [req.query.lng1,req.query.lng2]);
 
     //Narrows down events within specified ISO8601 time
-    qb.where('startTime', '<', endingDate).andWhere('endTime', '>', beginningDate);
-    qb.where('endTime', '>', currentTime);
+    qb.where('startTime', '<', endingDate)
+      .andWhere('endTime', '>', beginningDate)
+      .andWhere('endTime', '>', currentTime)
+      .orWhere('endTime', null);
 
   })
   .fetchAll({
@@ -91,6 +98,27 @@ function getLocal(req, res) {
   });
 };
 
+/************** Geocoding ******************/
+
+function getCoordsFromAddress(req,res) {
+  console.log("REVERSE GEOCODE REQUEST ADDRESS: ", req.query.address);
+  utils.geocodeGoogleAPIRequest(req.query.address)
+    .then(function(response){  
+      coordinates = utils.getCoordinatesFromGoogleAPIResponse(response);
+      console.log("GOT COORDS FROM ADDRESS: ", coordinates)
+      res.json(coordinates);
+    });
+}
+
+function getAddressFromCoords(req,res) {
+  console.log("REVERSE GEOCODE REQUEST QUERY: ", req.query);
+  utils.reverseGeocodeGoogleAPIRequest(req.query)
+    .then(function(response) {
+      var addressParams = utils.parseGoogleAPIAddress(response)
+      res.json(addressParams)
+    })
+}
+
 
 /************** Kimono API functions ******************/
 
@@ -98,10 +126,10 @@ function getLocal(req, res) {
 //periodically by a Kimono Labs scraper.  Function will parse the events
 //and add them to our DB.
 function fetchBatchDataFromKimonoAPI() {
-  request('https://www.kimonolabs.com/api/9djxfaym?apikey=' + process.env.KIMONO_API_KEY)
+  request('https://www.kimonolabs.com/api/9djxfaym?apikey=xlOwSDfkEN6XINU2tWxQhXPAec5Z9baZ')
   .then(function(res){
     console.log('response received from kimono');
-    var events = JSON.parse(res[0].body).results.collection1;
+    var events = JSON.parse(res[0].body).results.collection1; //split results and collection1 with if statements
     var throttledAddEventFromKimono = utils.makeThrottledFunction(addEventFromKimono,2000);
     for (var i = 0; i < events.length; i++) {
       throttledAddEventFromKimono(events[i]);
@@ -121,16 +149,19 @@ function addEventFromKimono(event){
           params.info = event.info.text;
         }
         params.title = event.title;
-        utils.sendGoogleAPIRequest(event.address.text)
+
+        utils.sendGoogleAPIRequest(event.address) //here is where the problem starts (should be event.address)
           .then(function(res){
             
             coordinates = utils.getCoordinatesFromGoogleAPIResponse(res);
             params.lat = coordinates[0];
             params.lng = coordinates[1];
             
-            startEndTimes = utils.getStartEndTimes(event.date.text,event.duration.text);
+            console.log("BEFORE: ", event.date.text, event.duration);
+            startEndTimes = utils.getStartEndTimes(event.date.text,event.duration);
             params.startTime = startEndTimes[0];
             params.endTime = startEndTimes[1];
+            console.log("AFTER: ", "START", params.startTime, "END", params.endTime);
 
             utils.addEventRecord(params);
           });
@@ -148,9 +179,7 @@ function addEventFromKimono(event){
 function fetchBatchDataFromEventbriteAPI(){
   console.log('req received at eventbrite endpoint!');
   var throttledFetchPageFromEventbriteAPI = utils.makeThrottledFunction(fetchPageFromEventbriteAPI,5000);
-  var reqUrl = 'https://www.eventbriteapi.com/v3/events/search/?token=' 
-               + process.env.EVENTBRITE_API_TOKEN 
-               + '&start_date.keyword=today&venue.country=US';
+  var reqUrl = 'https://www.eventbriteapi.com/v3/events/search/?token=WUETWTBHZAXVIQK46NZM&start_date.keyword=today&venue.country=US'
   request(reqUrl)
   .then(function (res) {
     var pages = JSON.parse(res[0].body).pagination.page_count;

@@ -3,7 +3,7 @@ var express  = require('express');
 var passport = require('passport');
 
 //load api keys from local file when in local dev environment.
-if(!process.env.port){
+if(!process.env.PORT){
   require('../api_keys.js');
 }
 
@@ -25,7 +25,7 @@ config.passport(app, passport);
 router(app, passport);
 
 app.listen(process.env.PORT || 9000);
-console.log('app listening on localhost:' + (process.env.PORT || 9000));
+console.log('app listening on port:' + (process.env.PORT || 9000));
 
 
 setTimeout(function(){
@@ -41,4 +41,7 @@ setTimeout(function(){
 },800)
 
 // expose app 
+
 module.exports = app;
+
+//how SHOULD it work?  creating an event or a user should return that ID.  

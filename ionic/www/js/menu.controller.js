@@ -108,16 +108,15 @@ angular.module('radar')
 
 	$scope.getCurrentAddress = function() {
 		console.log("getting address")
-		$scope.coords = Map.findCurrentLocation() // TODO: Promisify
-		//.then()
-		//DUMMY INFO BELOW
-		$scope.coords = {lat: 37.792979, lng: -122.421242}
-		var address = Map.getAddressForCoords($scope.coords.lat, $scope.coords.lng) // TODO: Promisify
-		//.then()
-		$scope.newPostData.streetAddress1 = address.streetAddress;
-		$scope.newPostData.city = address.city;
-		$scope.newPostData.state = address.state;
-		$scope.newPostData.zipCode = address.zipCode;
+		Map.findCurrentLocation(function(coords) {	
+			var address = Http.getAddressForCoords(coords.lat, coords.lng, function(address) {
+				console.log(address);
+				$scope.newPostData.streetAddress1 = address.streetAddress1;
+				$scope.newPostData.city = address.city;
+				$scope.newPostData.state = address.state;
+				$scope.newPostData.zipCode = address.zipCode;
+			})
+		}) // TODO: Promisify
 	}
 
 	$scope.postNewEvent = function() {
@@ -148,8 +147,11 @@ angular.module('radar')
 		// TODO: Get userId from Auth, pass it into http call below
 		var userId = 1
 		// DUMMY INFO BELOW
-		$scope.newPostData.coords = Map.getCoordsForAddress(($scope.newPostData.streetAddress1+'+'+$scope.newPostData.streetAddress2+'+'+$scope.newPostData.city+'+'+$scope.newPostData.state+'+'+$scope.newPostData.zipCode).split(' ').join('+'))
-		Http.saveNewEvent($scope.newPostData);
+		var address = ($scope.newPostData.streetAddress1+'+'+$scope.newPostData.streetAddress2+'+'+$scope.newPostData.city+'+'+$scope.newPostData.state+'+'+$scope.newPostData.zipCode).split(' ').join('+')
+		Http.getCoordsForAddress(address, function(coords) {
+			$scope.newPostData.coords = coords;
+			Http.saveNewEvent($scope.newPostData);
+		})
 	}
 
 	$scope.startDateTime = new Date();

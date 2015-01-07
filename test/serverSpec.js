@@ -59,3 +59,11 @@ describe('Server Endpoints', function(){
   // login should not login with wrong credentials
   // logout should log out
   // protected api should not be accessible without sending session token
+
+// API/photo
+
+  // /addOne should return a signed URL and create a new record
+
+  //destroyOne should respond with the right status code.  
+  //should do something different if auth check fails.
+

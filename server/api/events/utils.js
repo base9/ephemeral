@@ -1,5 +1,5 @@
 //this will alter the global object 'Date'
-require('./date.js');
+// require('./date.js');
 
 var Promise = require('bluebird');
 var request = Promise.promisify(require('request'));
@@ -10,9 +10,11 @@ module.exports = {
   addEventRecord: addEventRecord,
   sendResponse: sendResponse,
   getStartEndTimes: getStartEndTimes,
-  sendGoogleAPIRequest: sendGoogleAPIRequest,
+  geocodeGoogleAPIRequest: geocodeGoogleAPIRequest,
+  reverseGeocodeGoogleAPIRequest: reverseGeocodeGoogleAPIRequest,
   getCoordinatesFromGoogleAPIResponse: getCoordinatesFromGoogleAPIResponse,
   makeThrottledFunction: makeThrottledFunction,
+  parseGoogleAPIAddress: parseGoogleAPIAddress
 };
 
 //expects a record ready to be added to the Events table.
@@ -23,6 +25,7 @@ function addEventRecord(params, res){
     .save()
     .then(function(model){
       if(res){
+        console.log("Posted "+ params.title + " to Database")
         res.status(201).end(model.attributes.id.toString());
       } 
       return model.attributes.id.toString();
@@ -40,12 +43,13 @@ function sendResponse(record, res){
 //input: a string such as '1600 Amphitheater Parkway, Mountain View CA'
 //output: a lat & long tuple, such as [-37.211, 122.5819]
 //returns [0,0] on error. (TODO: refactor this)
-function sendGoogleAPIRequest(addressString){
+function geocodeGoogleAPIRequest(addressString){
   var formattedAddress = addressString.split(' ').join('+');
   var apiUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' 
   var reqUrl =  apiUrl + formattedAddress + '&key=' + process.env.GOOGLE_GEOCODING_API_KEY;
   return request(reqUrl);
 };
+
 
 function getCoordinatesFromGoogleAPIResponse(res){
   if (res.statusCode >= 400) {
@@ -61,6 +65,32 @@ function getCoordinatesFromGoogleAPIResponse(res){
   }
 };
 
+function reverseGeocodeGoogleAPIRequest(coords){
+  var formattedCoords = coords.lat+','+coords.lng;
+  var apiUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
+  var reqUrl =  apiUrl + formattedCoords + '&key=' + process.env.GOOGLE_GEOCODING_API_KEY;
+  console.log("REQUEST URL: ", reqUrl)
+  return request(reqUrl);
+}
+
+function parseGoogleAPIAddress(res){
+  if (res.statusCode >= 400) {
+    console.log(res.statusCode + ' error on request to Geocoding API');
+  } else {
+    var address = JSON.parse(res[0].body).results[0].formatted_address;
+    address = address.split(',');
+    address[2] = address[2].split(' ')
+    addressParams = {
+      streetAddress1: address[0],
+      city: address[1],
+      state: address[2][1],
+      zipCode: address[2][2],
+      country: address[3]
+    }   
+    return addressParams;
+  }
+}
+
 //input: ("Tuesday December 4th, 2014", "3pm to 6pm")
 //output: an ISO 8601-formatted date/time tuple [startTime,endTime].
 //ISO 8601 format is: YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+01:00)
@@ -70,8 +100,8 @@ function getStartEndTimes(dateString, durationString){
   var endTime;
 
   if(durationString==="All Day"){
-    startTime="12:00am";
-    endTime="11:59pm";
+    startTime="12:00 am";
+    endTime="11:59 pm";
   } else if(durationString.indexOf('to') > -1) {
     startTime = durationString.split('to')[0];
     endTime = durationString.split('to')[1];
@@ -79,8 +109,10 @@ function getStartEndTimes(dateString, durationString){
     startTime = durationString;
   }
 
-  var formattedStartTime = Date.parse(dateString + ' ' + startTime).toISOString();
-  var formattedEndTime = endTime ? Date.parse(dateString + ' ' + endTime).toISOString() : null;
+  var formattedStartTime = Date.parse(dateString + ' ' + startTime);
+  console.log("formattedStartTime: ", formattedStartTime);
+  var formattedEndTime = endTime ? Date.parse(dateString + ' ' + endTime) : null;
+  console.log("formattedEndTime: ", formattedEndTime);
 
   return [formattedStartTime, formattedEndTime];
 }
