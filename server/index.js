@@ -40,6 +40,12 @@ setTimeout(function(){
   var ratingSeed = require('./api/ratings/ratings.seed.js');
 },800)
 
+setTimeout(function(){
+  var commentSeed = require('./api/comments/comments.seed.js');
+},1000)
+
+
+
 // expose app 
 
 module.exports = app;

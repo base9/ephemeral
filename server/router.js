@@ -1,9 +1,10 @@
-var express      = require('express');
-var eventRouter  = require('./api/events');
-var userRouter   = require('./api/users');
-var photoRouter  = require('./api/photos');
-var ratingRouter = require('./api/ratings');
-var authRouter   = require('./auth');
+var express       = require('express');
+var eventRouter   = require('./api/events');
+var userRouter    = require('./api/users');
+var photoRouter   = require('./api/photos');
+var ratingRouter  = require('./api/ratings');
+var commentRouter = require('./api/comments');
+var authRouter    = require('./auth');
 
 module.exports = function (app, passport) {
   // router
@@ -11,6 +12,7 @@ module.exports = function (app, passport) {
   app.use('/api/users', userRouter);
   app.use('/api/photos', photoRouter);
   app.use('/api/ratings', ratingRouter);
+  app.use('/api/comments', commentRouter);
   
   // app.use('/auth', authRouter);
   app.post('/auth/login', passport.authenticate('local-login', {
