@@ -13,7 +13,7 @@ angular.module('radar')
 		  .error(function(data, status) {
 		    console.log("ERROR FOR API EVENTS");
 		  });
-	}
+	};
 
 	httpObject.saveNewEvent = function(postData) {
 		console.log(postData);
@@ -43,9 +43,18 @@ angular.module('radar')
 		  .error(function(data, status) {
 		    console.log("ERROR FOR API EVENTS");
 		  });
-	}
+	};
 
-	
+	httpObject.postLogin = function (userData) {
+    $http({
+      method: 'POST',
+      url: '/auth/login',
+      data: userData
+
+    }).success(function(data, status) {
+      console.log('logged in')
+    })
+  }
 
 	return httpObject;
 }]);

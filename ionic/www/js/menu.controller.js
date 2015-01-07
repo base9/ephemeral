@@ -47,13 +47,24 @@ angular.module('radar')
 	};
 	
 	$scope.login = function() {
-			$ionicModal.fromTemplateUrl('../templates/login.html', {
-		    scope: $scope,
-		  }).then(function(modal) {
-		    $scope.modal = modal;
-				$scope.toggleRight();
-				$scope.openModal();
-		  });
+		$ionicModal.fromTemplateUrl('../templates/login.html', {
+	    scope: $scope,
+	  }).then(function(modal) {
+	    $scope.modal = modal;
+			$scope.toggleRight();
+			$scope.openModal();
+	  });
+	}
+
+	$scope.userEmail = "";
+	$scope.userPassword = "";
+
+	$scope.postLogin = function() {
+		console.log('login');
+		Http.postLogin({
+			email: $scope.userEmail,
+			pwd: $scope.userPassword
+		})
 	}
 
 	$scope.register = function() {
