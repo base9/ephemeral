@@ -13,8 +13,8 @@ module.exports = function(passport) {
     User.where({id: id})
     .fetch()
     .then(function (user) {
-      done(null, user)
-    })
+      done(null, user);
+    });
 
   //   User.findById(id, function(err, user) {
 		// 	done(err, user);
@@ -35,7 +35,7 @@ module.exports = function(passport) {
       .fetch()
       .then(function (user) {
         // if username is taken
-        console.log('user', user)
+        console.log('user', user);
         if (user) {
           return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
         }
@@ -48,14 +48,14 @@ module.exports = function(passport) {
         newUser.set({
           email: email,
           pwd: newUser.generateHash(password)
-        })
+        });
 
         newUser.save()
         .then(function () {
           return done(null, newUser);
-        }) 
+        }); 
 
-      })
+      });
 	}));
 
 	//LOCAL LOGIN
@@ -74,7 +74,7 @@ module.exports = function(passport) {
         }
 
         return done(null, user);
-      })
+      });
 	 
    //  User.findOne({ 'email':  email }, function(err, user) {
 	  //   if (err) { return done(err) };

@@ -14,7 +14,8 @@ module.exports = {
   reverseGeocodeGoogleAPIRequest: reverseGeocodeGoogleAPIRequest,
   getCoordinatesFromGoogleAPIResponse: getCoordinatesFromGoogleAPIResponse,
   makeThrottledFunction: makeThrottledFunction,
-  parseGoogleAPIAddress: parseGoogleAPIAddress
+  parseGoogleAPIAddress: parseGoogleAPIAddress,
+  trim: trim
 };
 
 //expects a record ready to be added to the Events table.
@@ -25,12 +26,12 @@ function addEventRecord(params, res){
     .save()
     .then(function(model){
       if(res){
-        console.log("Posted "+ params.title + " to Database")
+        console.log("Posted "+ params.title + " to Database");
         res.status(201).end(model.attributes.id.toString());
       } 
       return model.attributes.id.toString();
     });
-};
+}
 
 function sendResponse(record, res){
   if(record){
@@ -45,10 +46,10 @@ function sendResponse(record, res){
 //returns [0,0] on error. (TODO: refactor this)
 function geocodeGoogleAPIRequest(addressString){
   var formattedAddress = addressString.split(' ').join('+');
-  var apiUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' 
+  var apiUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address='; 
   var reqUrl =  apiUrl + formattedAddress + '&key=' + process.env.GOOGLE_GEOCODING_API_KEY;
   return request(reqUrl);
-};
+}
 
 
 function getCoordinatesFromGoogleAPIResponse(res){
@@ -63,13 +64,13 @@ function getCoordinatesFromGoogleAPIResponse(res){
     }
     return [0,0];
   }
-};
+}
 
 function reverseGeocodeGoogleAPIRequest(coords){
   var formattedCoords = coords.lat+','+coords.lng;
   var apiUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
   var reqUrl =  apiUrl + formattedCoords + '&key=' + process.env.GOOGLE_GEOCODING_API_KEY;
-  console.log("REQUEST URL: ", reqUrl)
+  console.log("REQUEST URL: ", reqUrl);
   return request(reqUrl);
 }
 
@@ -79,14 +80,14 @@ function parseGoogleAPIAddress(res){
   } else {
     var address = JSON.parse(res[0].body).results[0].formatted_address;
     address = address.split(',');
-    address[2] = address[2].split(' ')
+    address[2] = address[2].split(' ');
     addressParams = {
       streetAddress1: address[0],
       city: address[1],
       state: address[2][1],
       zipCode: address[2][2],
       country: address[3]
-    }   
+    };   
     return addressParams;
   }
 }
@@ -122,12 +123,22 @@ function getStartEndTimes(dateString, durationString){
 //TODO: make this actually do something.
 function validateEventRecord(params){
   return params;
-};
+}
+
+function trim(collection){
+  var trimmed = collection.map(function(event){
+    event.attributes.ratings = event.relations.rating.length;
+    event.attributes.creator = event.relations.user.attributes.name;
+    delete event.relations.user;
+    delete event.relations.rating;
+    return event;
+  });
+  return trimmed;
+}
+
 
 
 //TODO: make the throttledFn usable as a promise
-
-
 function makeThrottledFunction(callback,interval){
   var queue = [];
   var isAsleep = true;
@@ -148,8 +159,8 @@ function makeThrottledFunction(callback,interval){
     if(isAsleep){
       invokeFromQueue();
     }
-  }
-};
+  };
+}
 
 
 

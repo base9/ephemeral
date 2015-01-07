@@ -10,9 +10,9 @@ var crontab = require('node-crontab');
 
 //these scrapers run 5x a day, at 12:01, 4:01, 8:01, etc
 var cronJob = crontab.scheduleJob("1 */4 * * *", function () {
-  console.log("****************it's cron time!******************")
-  controller.fetchBatchDataFromEventbriteAPI();
-  controller.fetchBatchDataFromKimonoAPI();
+  console.log("****************it's cron time!******************");
+  fetchBatchDataFromEventbriteAPI();
+  fetchBatchDataFromKimonoAPI();
 });
 
 
@@ -35,31 +35,25 @@ function getAll(req, res) {
   Event.fetchAll({
       withRelated: ['user','rating']
   }).then(function (collection) {
-    var trimmed = collection.map(function(event){
-      event.attributes.creator = event.relations.user.attributes.name;
-      delete event.relations.user;
-      return event;
-    });
-    utils.sendResponse(trimmed,res);
+    utils.sendResponse(utils.trim(collection),res);
   });
-};
+}
 
 function getOne(req, res) {
   Event.where({id:req.params.id}).fetch({
       withRelated: ['user','rating']
     }).then(function (record) {
-      utils.sendResponse(record,res);
+      utils.sendResponse(utils.trim([record])[0],res);
   });
-};
+}
 
 function addOne(req, res) {
 
   // TODO: if (!req.body.coords) -> Make util call for address string from coords.lat,coords.lng;
   // TODO: add result of above operation to req.body/query for addEventRecord call
-  console.log("Sending New Post to Database: ",req.body)
+  console.log("Sending New Post to Database: ",req.body);
   utils.addEventRecord(req.body, res);
-
-};
+}
 
 function getLocal(req, res) {
   Event.query(function(qb){
@@ -93,10 +87,11 @@ function getLocal(req, res) {
   })
   .fetchAll({
      withRelated: ['user','rating']
-  }).then(function (record) {
-    utils.sendResponse(record,res);
+  }).then(function (collection) {
+    utils.sendResponse(utils.trim(collection),res);
   });
-};
+}
+
 
 /************** Geocoding ******************/
 
@@ -105,7 +100,7 @@ function getCoordsFromAddress(req,res) {
   utils.geocodeGoogleAPIRequest(req.query.address)
     .then(function(response){  
       coordinates = utils.getCoordinatesFromGoogleAPIResponse(response);
-      console.log("GOT COORDS FROM ADDRESS: ", coordinates)
+      console.log("GOT COORDS FROM ADDRESS: ", coordinates);
       res.json(coordinates);
     });
 }
@@ -114,9 +109,9 @@ function getAddressFromCoords(req,res) {
   console.log("REVERSE GEOCODE REQUEST QUERY: ", req.query);
   utils.reverseGeocodeGoogleAPIRequest(req.query)
     .then(function(response) {
-      var addressParams = utils.parseGoogleAPIAddress(response)
-      res.json(addressParams)
-    })
+      var addressParams = utils.parseGoogleAPIAddress(response);
+      res.json(addressParams);
+    });
 }
 
 
@@ -133,9 +128,9 @@ function fetchBatchDataFromKimonoAPI() {
     var throttledAddEventFromKimono = utils.makeThrottledFunction(addEventFromKimono,2000);
     for (var i = 0; i < events.length; i++) {
       throttledAddEventFromKimono(events[i]);
-    };
+    }
   });
-};
+}
 
 function addEventFromKimono(event){
   if(!event.date){
@@ -170,7 +165,7 @@ function addEventFromKimono(event){
       }
    });
   }
-};
+}
 
 
 /************** Eventbrite API functions ******************/
@@ -179,7 +174,7 @@ function addEventFromKimono(event){
 function fetchBatchDataFromEventbriteAPI(){
   console.log('req received at eventbrite endpoint!');
   var throttledFetchPageFromEventbriteAPI = utils.makeThrottledFunction(fetchPageFromEventbriteAPI,5000);
-  var reqUrl = 'https://www.eventbriteapi.com/v3/events/search/?token=WUETWTBHZAXVIQK46NZM&start_date.keyword=today&venue.country=US'
+  var reqUrl = 'https://www.eventbriteapi.com/v3/events/search/?token=WUETWTBHZAXVIQK46NZM&start_date.keyword=today&venue.country=US';
   request(reqUrl)
   .then(function (res) {
     var pages = JSON.parse(res[0].body).pagination.page_count;
@@ -187,11 +182,9 @@ function fetchBatchDataFromEventbriteAPI(){
     
     for (var i = 1; i <= pages; i++) {
       throttledFetchPageFromEventbriteAPI(reqUrl, i);
-    };
+    }
   });
 }
-
-
 
 function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
   console.log("fetching page " + pageNumber);
@@ -212,12 +205,12 @@ function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
             //TODO: do something better than a title match for preventing duplicate entries
           });
         } else {
-          console.log("event with that title already exists; skipping.")
+          console.log("event with that title already exists; skipping.");
         }
       });
     });
-  })
-};
+  });
+}
 
 
 

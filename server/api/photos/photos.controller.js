@@ -24,7 +24,7 @@ var fs = require('fs');
 module.exports = {
   addOne: addOne,
   deleteOne: deleteOne
-}
+};
 
 function addOne(req,res){
   new Photo(req.query)
@@ -52,14 +52,14 @@ function deleteOne(req,res){
         });
       //unauthorized
       } else if(record) {
-        res.status(403).end()
+        res.status(403).end();
       
       //record not found
       } else {
-        res.status(404).end()
+        res.status(404).end();
       }
   });
-};
+}
 
 
 
