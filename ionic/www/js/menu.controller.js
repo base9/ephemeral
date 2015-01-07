@@ -33,8 +33,6 @@ angular.module('radar')
 
 /* MODALS */
 
-	$scope.test = "HELLO";
-
   $scope.openModal = function() {
     $scope.modal.show();
   };
@@ -109,6 +107,18 @@ angular.module('radar')
 
 	/* NEW EVENT MODAL */
 
+	function getDateTime() {
+		var dateString = (new Date()).toString.split(' ');
+		datString[4] = dateString[4].split(':');
+		var dateTime = {
+			month: dateString[1],
+			day: dateString[2],
+			year: dateString[3],
+			hours: dateString[4][0],
+			minutes: dateString[4][1]
+		}
+		return dateTime;
+	}
 	
 
 	$scope.getCurrentAddress = function() {
@@ -126,6 +136,8 @@ angular.module('radar')
 
 	$scope.postNewEvent = function() {
 		// TODO: Check for authentication. If authenticated, proceed. Else "Please Login or register to post events"
+		var dateTime = getDateTime();
+
 		$scope.newPostData = {
 				title: '',
 				info: '',
@@ -159,10 +171,9 @@ angular.module('radar')
 		});
 	};
 
-	$scope.startDateTime = new Date();
-	$scope.endDateTime;
 
-}]);
+}])
+
 
 // angular.module('radar').controller('ModalCtrl', function ($scope, $modalInstance) {
 
