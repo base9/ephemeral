@@ -16,8 +16,12 @@ router.get('/:id', controller.getOne);
 
 router.get('/', controller.getAll);
 
-// POST request to /api/events will go to controller.addOne only if logged in, 
+// POST request to /api/events will go to controller.addOne only if logged in,
 // otherwise it would redirect to homepage
 router.post('/', /*auth.isLoggedIn,*/ controller.addOne);
+
+// router.post('/event', controller.postEvent);
+
+// router.post('/event', controller.postEvent);
 
 module.exports = router;
