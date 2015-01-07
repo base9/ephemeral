@@ -34,14 +34,12 @@ function addOne(req,res){
   new Photo(req.body)
   .save()
   .then(function(photo){
-    console.log('photo:', photo)
     var fileName = photo.attributes.id.toString() + '.jpg';
     var params = {Bucket: S3_BUCKET, Key: fileName};
     var url = s3.getSignedUrl('putObject', params);
     res.status(201).json(url);
     photo.save({url: S3_URL + S3_BUCKET + '/' + fileName}, {patch: true})
     .then(function(photo){
-      console.log('updated photo:', photo)
     });
   });
 }

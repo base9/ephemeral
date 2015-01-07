@@ -1,10 +1,6 @@
 var Event = require('./events.model.js');
 
 setTimeout(function(){
-  Event.where({title:'Snarf at 8pm'}).fetch().then(function (evnt) {
-    if(!evnt){
-      var newEvent = new Event({
-          title: 'Snarf at 8pm',
   Event.where({id:1}).fetch().then(function (event) {
     if(!event){
       var newEvent = new Event({
