@@ -42,7 +42,7 @@ config.passport(app, passport);
 // use router for app
 router(app, passport);
 
-// expose http wrapped app to enable closing the server programmatically 
+// expose http wrapped app as server to enable closing the server programmatically 
 var server = app.listen(process.env.PORT || localPort[process.env.MODE]);
 console.log('app listening on port:' + (process.env.PORT || localPort[process.env.MODE]));
 
@@ -73,5 +73,3 @@ module.exports = {
 if (server) {
   module.exports.server = server;
 }
-
-//how SHOULD it work?  creating an event or a user should return that ID.  
