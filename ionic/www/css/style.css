@@ -51,8 +51,8 @@
 
 
 /* MODALS */
-.newEventModal {
-  
+.eventInfoWindow {
+  border-radius: 20px;  
 }
 
 /* MAP BUTTONS */
