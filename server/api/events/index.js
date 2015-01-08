@@ -8,8 +8,9 @@ router.get('/reversegeocode', controller.getAddressFromCoords);
 
 router.get('/local', controller.getLocal);
 
+//these two endpoints (kimono and eventbrite) are for dev testing purposes only.
+//TODO: they should be secured or removed at some point.
 router.get('/kimono', controller.fetchBatchDataFromKimonoAPI);
-
 router.get('/eventbrite', controller.fetchBatchDataFromEventbriteAPI);
 
 router.get('/:id', controller.getOne);
@@ -19,9 +20,5 @@ router.get('/', controller.getAll);
 // POST request to /api/events will go to controller.addOne only if logged in,
 // otherwise it would redirect to homepage
 router.post('/', auth.isLoggedIn, controller.addOne);
-
-// router.post('/event', controller.postEvent);
-
-// router.post('/event', controller.postEvent);
 
 module.exports = router;
