@@ -35,15 +35,15 @@ function getAll(req, res) {
   Event.fetchAll({
       withRelated: ['user','rating']
   }).then(function (collection) {
-    utils.sendResponse(utils.trim(collection),res);
+    utils.sendResponse(utils.formatAndTrimEventRecords(collection),res);
   });
 }
 
 function getOne(req, res) {
   Event.where({id:req.params.id}).fetch({
-      withRelated: ['user','rating']
+      withRelated: ['user','rating','photos']
     }).then(function (record) {
-      utils.sendResponse(utils.trim([record])[0],res);
+      utils.sendResponse(utils.formatAndTrimEventRecords([record])[0],res);
   });
 }
 
@@ -88,7 +88,7 @@ function getLocal(req, res) {
   .fetchAll({
      withRelated: ['user','rating']
   }).then(function (collection) {
-    utils.sendResponse(utils.trim(collection),res);
+    utils.sendResponse(utils.formatAndTrimEventRecords(collection),res);
   });
 }
 
@@ -145,7 +145,7 @@ function addEventFromKimono(event){
         }
         params.title = event.title;
 
-        utils.sendGoogleAPIRequest(event.address) //here is where the problem starts (should be event.address)
+        utils.geocodeGoogleAPIRequest(event.address) //here is where the problem starts (should be event.address)
           .then(function(res){
             
             coordinates = utils.getCoordinatesFromGoogleAPIResponse(res);

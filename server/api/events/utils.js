@@ -15,7 +15,7 @@ module.exports = {
   getCoordinatesFromGoogleAPIResponse: getCoordinatesFromGoogleAPIResponse,
   makeThrottledFunction: makeThrottledFunction,
   parseGoogleAPIAddress: parseGoogleAPIAddress,
-  trim: trim
+  formatAndTrimEventRecords: formatAndTrimEventRecords
 };
 
 //expects a record ready to be added to the Events table.
@@ -125,12 +125,17 @@ function validateEventRecord(params){
   return params;
 }
 
-function trim(collection){
+function formatAndTrimEventRecords(collection){
   var trimmed = collection.map(function(event){
-    event.attributes.ratings = event.relations.rating.length;
-    event.attributes.creator = event.relations.user.attributes.name;
-    delete event.relations.user;
-    delete event.relations.rating;
+    if(event.relations.rating){
+      event.attributes.ratings = event.relations.rating.length;
+      event.attributes.popularity = getPopularity(event.attributes.ratings);
+      delete event.relations.rating;
+    }
+    if(event.relations.user){
+      event.attributes.creator = event.relations.user.attributes.name;
+      delete event.relations.user;
+    }
     return event;
   });
   return trimmed;
@@ -160,6 +165,15 @@ function makeThrottledFunction(callback,interval){
       invokeFromQueue();
     }
   };
+}
+
+//accepts a rating integer and converts it to a scale of 1-5.
+//(somewhat arbitrarily)
+function getPopularity(rating){
+  var popularity = Math.ceil(rating / 20);
+  popularity = Math.max(popularity, 1);
+  popularity = Math.min(popularity, 5);
+  return popularity;
 }
 
 

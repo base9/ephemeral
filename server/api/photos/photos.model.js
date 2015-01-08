@@ -5,10 +5,10 @@ db.schema.hasTable('photos').then(function (exists) {
   if (!exists) {
     db.schema.createTable('photos', function (photo) {
       photo.increments('id').primary();
-      photo.integer('creator').unsigned().references('users.id');
-      photo.integer('event').unsigned().references('events.id');
+      photo.integer('user_id').unsigned().references('users.id');
+      photo.integer('event_id').unsigned().references('events.id');
       photo.timestamps();
-      photo.string('filename');
+      photo.string('url',200);
     }).then(function (){
       console.log('Created table: photos');
     });
@@ -18,7 +18,7 @@ db.schema.hasTable('photos').then(function (exists) {
 var Photo = bookshelf(db).Model.extend({
   tableName: 'photos',
   hasTimestamps: true,
-  creator: function() {
+  user: function() {
     return this.belongsTo(User);
   },  
   event: function() {
@@ -27,3 +27,5 @@ var Photo = bookshelf(db).Model.extend({
 });
 
 module.exports = Photo;
+
+

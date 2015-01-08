@@ -29,7 +29,7 @@ describe('Server Endpoints', function(){
           }
           var event = res.body;
           expect(event.id).to.equal(1);
-          expect(event.title).to.equal('SantaCon');
+          expect(event.title).to.equal('Free Bagels at 8pm');
           done();
         })
     });
@@ -77,6 +77,22 @@ describe('Server Endpoints', function(){
         })
     });
 
+
+    var photos = '/api/photos';
+
+    it('should return a signed url upon new photo POST request', function(done) {
+      request.post(photos + '/addOne')
+        .set('Accept', 'application/json')
+        .send({user_id: 1, event_id: 1})
+        .expect(201)
+        .end(function (err, res) {
+          if (err) {
+            return done(err);
+          }
+          expect(res.text.slice(0,48)).to.equal('\"https://base9photos.s3-us-west-1.amazonaws.com/')
+          done();
+        })
+    });
 
   });
 });
