@@ -13,6 +13,7 @@
     -->
   </head>
   <body ng-app="radar">
+      
         <ion-side-menus ng-controller="MenuController">
             <ion-side-menu-content>
                 <ion-nav-bar class="bar bar-positive" delegate-handle="navBar" align-title="center">
@@ -99,12 +100,6 @@
     <!-- Google Maps API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnemtHaxtZyoxOU0NYEPXNxJwIhG0DeCE&sensor=true&v=3.exp&libraries=places"></script>
 
-    <div ng-controller="SignUpController as signUpCtrl">
-      <button ng-click="signUpCtrl.signInWithFacebook()">Facebook</button>
-      <button ng-click="signUpCtrl.signInWithGoogle()">Google</button>
-      <button ng-click="signUpCtrl.login()">Test</button>
-      <!-- <button ng-click="signUpCtrl.signup()">signup</button> -->
-    </div>
 
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
@@ -112,18 +107,15 @@
     <!-- cordova script (this will be a 404 during development) -->
     <!-- // <script src="cordova.js"></script> -->
 
-    <!-- oauth script -->
-    <script src="lib/oauth-js/dist/oauth.min.js"></script>
-
     <!-- All app js -->
-    <script src="js/app.js"></script>
-    <script src="js/map.factory.js"></script>
-    <script src="js/mapSearch.factory.js"></script>
-    <script src="js/marker.factory.js"></script>
-    <script src="js/httpHandler.factory.js"></script>
-    <script src="js/signUp.controller.js"></script>
-    <script src="js/map.controller.js"></script>
-    <script src="js/menu.controller.js"></script>
+    <script src="app/core/app.js"></script>
+    <script src="app/map/map.factory.js"></script>
+    <script src="app/filters/search/mapSearch.factory.js"></script>
+    <script src="app/markers/marker.factory.js"></script>
+    <script src="app/http/httpHandler.factory.js"></script>
+    <script src="app/auth/signUp.controller.js"></script>
+    <script src="app/map/map.controller.js"></script>
+    <script src="app/sidebar/sidebar.controller.js"></script>
 
 
     <!-- Bootstrap -->

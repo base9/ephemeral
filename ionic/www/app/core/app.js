@@ -1,7 +1,7 @@
 angular.module('radar', [
-	'ionic',
-	'ui.bootstrap'
-	])
+  'ionic',
+  'ui.bootstrap'
+  ])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
