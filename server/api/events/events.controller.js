@@ -51,7 +51,6 @@ function addOne(req, res) {
 
   // TODO: if (!req.body.coords) -> Make util call for address string from coords.lat,coords.lng;
   // TODO: add result of above operation to req.body/query for addEventRecord call
-  console.log("Sending New Post to Database: ",req.body);
   utils.addEventRecord(req.body, res);
 }
 
@@ -198,9 +197,9 @@ function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
             title: event.name.text,
             lat: event.venue.latitude,  
             lng: event.venue.longitude,
-            startTime: event.start.utc,
-            endTime: event.end.utc,
-            info: (event.description.text ? event.description.text.slice(0,2000) : '')
+            startTime: Date.parse(event.start.utc),
+            endTime: Date.parse(event.end.utc),
+            info: ((event.description && event.description.text) ? event.description.text.slice(0,2000) : '')
             //TODO: user_id should be a special account reserved for Eventbrite_bot
             //TODO: do something better than a title match for preventing duplicate entries
           });

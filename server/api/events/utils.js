@@ -26,9 +26,9 @@ function addEventRecord(params, res){
     .save()
     .then(function(model){
       if(res){
-        console.log("Posted "+ params.title + " to Database");
         res.status(201).end(model.attributes.id.toString());
       } 
+      console.log("added event to database: " + model.attributes.title);
       return model.attributes.id.toString();
     });
 }
