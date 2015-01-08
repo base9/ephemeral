@@ -16,7 +16,6 @@ var cronJob = crontab.scheduleJob("1 */4 * * *", function () {
 });
 
 
-
 /********************* Module.exports *************************/
 
 module.exports = {
