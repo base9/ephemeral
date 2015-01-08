@@ -7,9 +7,6 @@ var AWS = require('aws-sdk');
 var s3 = new AWS.S3();
 var fs = require('fs');
 
-var S3_URL = 'https://s3-us-west-1.amazonaws.com/';
-var S3_BUCKET = 'base9photos';
-
 //POSTING A PHOTO: intended process
 //client sends a GET to api/phots/addnew.  includes user id, event name, file extension, other details.
 //server creates an entry in photos table. generates and returns presigned S3 URL to client.
@@ -30,17 +27,13 @@ module.exports = {
 };
 
 function addOne(req,res){
-  console.log('body:', req.body);
-  new Photo(req.body)
+  new Photo(req.query)
   .save()
-  .then(function(photo){
-    var fileName = photo.attributes.id.toString() + '.jpg';
-    var params = {Bucket: S3_BUCKET, Key: fileName};
+  .then(function(record){
+    var fileName = record.attributes.id.toString();
+    var params = {Bucket: 'base9photos', Key: fileName + '.jpg'};
     var url = s3.getSignedUrl('putObject', params);
-    res.status(201).json(url);
-    photo.save({url: S3_URL + S3_BUCKET + '/' + fileName}, {patch: true})
-    .then(function(photo){
-    });
+    res.json(url);
   });
 }
 
@@ -57,7 +50,6 @@ function deleteOne(req,res){
         .on('destroyed',function(){
           res.status(204).end();
         });
-
       //unauthorized
       } else if(record) {
         res.status(403).end();
@@ -67,7 +59,7 @@ function deleteOne(req,res){
         res.status(404).end();
       }
   });
-}
+};
 
 
 
