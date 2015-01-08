@@ -42,7 +42,7 @@ function getAll(req, res) {
 
 function getOne(req, res) {
   Event.where({id:req.params.id}).fetch({
-      withRelated: ['user','rating','photo']
+      withRelated: ['user','rating','photos']
     }).then(function (record) {
       utils.sendResponse(utils.trim([record])[0],res);
   });

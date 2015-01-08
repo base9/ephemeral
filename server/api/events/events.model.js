@@ -35,7 +35,7 @@ var Event = bookshelf(db).Model.extend({
   user: function() {
     return this.belongsTo(User);
   }, 
-  photo: function() {
+  photos: function() {
     return this.hasMany(Photo);
   },
   rating: function() {

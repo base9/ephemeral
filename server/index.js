@@ -1,7 +1,7 @@
 ///////////////////////Environment settings/////////////////////////
 // TODO: env settings in another file
 // load api keys from local file when in local dev environment.
-if(!process.env.MODE === 'prod'){
+if(process.env.MODE !== 'prod'){
   require('../api_keys.js');
 }
 console.log('Running in >>>>>', process.env.MODE, 'mode');

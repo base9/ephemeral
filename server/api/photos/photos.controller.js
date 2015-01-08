@@ -27,13 +27,15 @@ module.exports = {
 };
 
 function addOne(req,res){
-  new Photo(req.query)
+  new Photo(req.body)
   .save()
   .then(function(record){
-    var fileName = record.attributes.id.toString();
-    var params = {Bucket: 'base9photos', Key: fileName + '.jpg'};
-    var url = s3.getSignedUrl('putObject', params);
-    res.json(url);
+    var fileName = record.attributes.id.toString() + '.jpg';
+    var params = {Bucket: process.env.S3_BUCKET_NAME, Key: fileName};
+    var photoUrl = 'https://' + process.env.S3_BUCKET_NAME + '.s3-' + process.env.AWS_REGION + '.amazonaws.com/' + fileName;
+    var signedUrl = s3.getSignedUrl('putObject', params);
+    record.save({url: photoUrl}, {patch: true});
+    res.status(201).json(signedUrl);
   });
 }
 
@@ -59,7 +61,7 @@ function deleteOne(req,res){
         res.status(404).end();
       }
   });
-};
+}
 
 
 
