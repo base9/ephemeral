@@ -94,23 +94,19 @@ function getLocal(req, res) {
 
 /************** Geocoding ******************/
 
-function getCoordsFromAddress(req,res) {
-  console.log("REVERSE GEOCODE REQUEST ADDRESS: ", req.query.address);
-  utils.geocodeGoogleAPIRequest(req.query.address)
-    .then(function(response){  
-      coordinates = utils.getCoordinatesFromGoogleAPIResponse(response);
-      console.log("GOT COORDS FROM ADDRESS: ", coordinates);
-      res.json(coordinates);
-    });
+
+//who uses these endpoints?
+//the client shouldn't.  the client should use client-side geocoding.
+//so: its only used by kimono and eventbrite.
+
+function getCoordsFromAddress(address) {
+  console.log("GEOCODE REQUEST ADDRESS: ", address);
+  return request('https://base9geocode.herokuapp.com/geo/geocode?address=' + address);
 }
 
-function getAddressFromCoords(req,res) {
-  console.log("REVERSE GEOCODE REQUEST QUERY: ", req.query);
-  utils.reverseGeocodeGoogleAPIRequest(req.query)
-    .then(function(response) {
-      var addressParams = utils.parseGoogleAPIAddress(response);
-      res.json(addressParams);
-    });
+function getAddressFromCoords(coords) {
+  console.log("REVERSE GEOCODE REQUEST QUERY: ", coords);
+  return request('https://base9geocode.herokuapp.com/geo/reverseGeocode?lat=' + coords[0] + '&lng=' + coords[1]);
 }
 
 
@@ -144,12 +140,11 @@ function addEventFromKimono(event){
         }
         params.title = event.title;
 
-        utils.geocodeGoogleAPIRequest(event.address) //here is where the problem starts (should be event.address)
+        getCoordsFromAddress(event.address)
           .then(function(res){
-            
-            coordinates = utils.getCoordinatesFromGoogleAPIResponse(res);
-            params.lat = coordinates[0];
-            params.lng = coordinates[1];
+            params.lat = res.body[0];
+            params.lng = res.body[1];
+            console.log(params.lat, params.lng);
             
             console.log("BEFORE: ", event.date.text, event.duration);
             startEndTimes = utils.getStartEndTimes(event.date.text,event.duration);
@@ -172,7 +167,7 @@ function addEventFromKimono(event){
 
 function fetchBatchDataFromEventbriteAPI(){
   console.log('req received at eventbrite endpoint!');
-  var throttledFetchPageFromEventbriteAPI = utils.makeThrottledFunction(fetchPageFromEventbriteAPI,5000);
+  var throttledFetchPageFromEventbriteAPI = utils.makeThrottledFunction(fetchPageFromEventbriteAPI,1500);
   var reqUrl = 'https://www.eventbriteapi.com/v3/events/search/?token=WUETWTBHZAXVIQK46NZM&start_date.keyword=today&venue.country=US';
   request(reqUrl)
   .then(function (res) {
