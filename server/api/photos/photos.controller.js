@@ -2,7 +2,6 @@
 
 var request = require('request');
 var Photo = require('./photos.model.js');
-var seed = require('./photos.seed.js');
 var AWS = require('aws-sdk');
 var s3 = new AWS.S3();
 var fs = require('fs');
