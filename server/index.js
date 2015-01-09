@@ -53,18 +53,6 @@ setTimeout(function(){
   var eventSeed = require('./api/events/events.seed.js');
 },400);
 
-// setTimeout(function(){
-//   var userSeed = require('./api/users/users.seed.js');
-// },400);
-
-// setTimeout(function(){
-//   var ratingSeed = require('./api/ratings/ratings.seed.js');
-// },800);
-
-// setTimeout(function(){
-//   var commentSeed = require('./api/comments/comments.seed.js');
-// },1000);
-
 ///////////////////////////////////////////////////////////////////////
 
 
