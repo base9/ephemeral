@@ -210,8 +210,8 @@ function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
   .then(function (res) {
     var body = JSON.parse(res[0].body);
     body.events.forEach(function(event){
-      // Event.where({title:event.name.text}).fetch().then(function (record) {
-        // if(!record){
+      Event.where({title:event.name.text}).fetch().then(function (record) {
+        if(!record){
           utils.addEventRecord({
             title: event.name.text,
             lat: event.venue.latitude,  
@@ -222,10 +222,10 @@ function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
             //TODO: user_id should be a special account reserved for Eventbrite_bot
             //TODO: do something better than a title match for preventing duplicate entries
           });
-        // } else {
-        //   console.log("event with that title already exists; skipping.");
-        // }
-      // });
+        } else {
+          console.log("event with that title already exists; skipping.");
+        }
+      });
     });
   });
 }
