@@ -11,7 +11,9 @@ module.exports = {
   sendResponse: sendResponse,
   getStartEndTimes: getStartEndTimes,
   makeThrottledFunction: makeThrottledFunction,
-  formatAndTrimEventRecords: formatAndTrimEventRecords
+  formatAndTrimEventRecords: formatAndTrimEventRecords,
+  generateRandomLong: generateRandomLong,
+  generateRandomLat: generateRandomLat
 };
 
 //expects a record ready to be added to the Events table.
@@ -122,6 +124,23 @@ function getPopularity(rating){
   return popularity;
 }
 
-
+// LONGITUDE -180 to + 180
+function generateRandomLong() {
+    var num = (Math.random()*180);
+    var posorneg = Math.round(Math.random());
+    if (posorneg == 0) {
+        num = num * -1;
+    }
+    return num;
+}
+// LATITUDE -90 to +90
+function generateRandomLat() {
+    var num = (Math.random()*90);
+    var posorneg = Math.round(Math.random());
+    if (posorneg == 0) {
+        num = num * -1;
+    }
+    return num;
+}
 
 

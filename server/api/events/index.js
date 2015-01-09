@@ -8,6 +8,8 @@ router.get('/reversegeocode', controller.getAddressFromCoords);
 
 router.get('/local', controller.getLocal);
 
+router.get('/spoof', controller.addManySpoofs);
+
 //these two endpoints (kimono and eventbrite) are for dev testing purposes only.
 //TODO: they should be secured or removed at some point.
 router.get('/kimono', controller.fetchBatchDataFromKimonoAPI);
