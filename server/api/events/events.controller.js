@@ -35,15 +35,15 @@ function getAll(req, res) {
   Event.fetchAll({
       withRelated: ['user','rating']
   }).then(function (collection) {
-    utils.sendResponse(utils.trim(collection),res);
+    utils.sendResponse(utils.formatAndTrimEventRecords(collection),res);
   });
 }
 
 function getOne(req, res) {
   Event.where({id:req.params.id}).fetch({
-      withRelated: ['user','rating']
+      withRelated: ['user','rating','photos']
     }).then(function (record) {
-      utils.sendResponse(utils.trim([record])[0],res);
+      utils.sendResponse(utils.formatAndTrimEventRecords([record])[0],res);
   });
 }
 
@@ -51,7 +51,6 @@ function addOne(req, res) {
 
   // TODO: if (!req.body.coords) -> Make util call for address string from coords.lat,coords.lng;
   // TODO: add result of above operation to req.body/query for addEventRecord call
-  console.log("Sending New Post to Database: ",req.body);
   utils.addEventRecord(req.body, res);
 }
 
@@ -88,30 +87,27 @@ function getLocal(req, res) {
   .fetchAll({
      withRelated: ['user','rating']
   }).then(function (collection) {
-    utils.sendResponse(utils.trim(collection),res);
+    utils.sendResponse(utils.formatAndTrimEventRecords(collection),res);
   });
 }
 
 
 /************** Geocoding ******************/
 
-function getCoordsFromAddress(req,res) {
-  console.log("REVERSE GEOCODE REQUEST ADDRESS: ", req.query.address);
-  utils.geocodeGoogleAPIRequest(req.query.address)
-    .then(function(response){  
-      coordinates = utils.getCoordinatesFromGoogleAPIResponse(response);
-      console.log("GOT COORDS FROM ADDRESS: ", coordinates);
-      res.json(coordinates);
-    });
+//returns a promise of an http response.  parse the response like this:
+//var coords = JSON.parse(res[0].body);
+//coords will be a lat, lng tuple like [44.5, -122.67]
+function getCoordsFromAddress(address) {
+  console.log("GEOCODE REQUEST ADDRESS: ", address);
+  return request('https://base9geocode.herokuapp.com/geo/geocode?address=' + address);
 }
 
-function getAddressFromCoords(req,res) {
-  console.log("REVERSE GEOCODE REQUEST QUERY: ", req.query);
-  utils.reverseGeocodeGoogleAPIRequest(req.query)
-    .then(function(response) {
-      var addressParams = utils.parseGoogleAPIAddress(response);
-      res.json(addressParams);
-    });
+//returns a promise of an http response.  parse the response like this:
+//var address = JSON.parse(res[0].body);
+//'address' will be an object with fields like addressLine1, city, state, zipCode, etc.
+function getAddressFromCoords(coords) {
+  console.log("REVERSE GEOCODE REQUEST QUERY: ", coords);
+  return request('https://base9geocode.herokuapp.com/geo/reverseGeocode?lat=' + coords[0] + '&lng=' + coords[1]);
 }
 
 
@@ -121,7 +117,7 @@ function getAddressFromCoords(req,res) {
 //periodically by a Kimono Labs scraper.  Function will parse the events
 //and add them to our DB.
 function fetchBatchDataFromKimonoAPI() {
-  request('https://www.kimonolabs.com/api/9djxfaym?apikey=xlOwSDfkEN6XINU2tWxQhXPAec5Z9baZ')
+  request('https://www.kimonolabs.com/api/9djxfaym?apikey=' + process.env.KIMONO_API_KEY)
   .then(function(res){
     console.log('response received from kimono');
     var events = JSON.parse(res[0].body).results.collection1; //split results and collection1 with if statements
@@ -145,12 +141,11 @@ function addEventFromKimono(event){
         }
         params.title = event.title;
 
-        utils.sendGoogleAPIRequest(event.address) //here is where the problem starts (should be event.address)
+        getCoordsFromAddress(event.address.text? event.address.text : event.address)
           .then(function(res){
-            
-            coordinates = utils.getCoordinatesFromGoogleAPIResponse(res);
-            params.lat = coordinates[0];
-            params.lng = coordinates[1];
+            var coords = JSON.parse(res[0].body);
+            params.lat = coords[0];
+            params.lng = coords[1];
             
             console.log("BEFORE: ", event.date.text, event.duration);
             startEndTimes = utils.getStartEndTimes(event.date.text,event.duration);
@@ -173,8 +168,8 @@ function addEventFromKimono(event){
 
 function fetchBatchDataFromEventbriteAPI(){
   console.log('req received at eventbrite endpoint!');
-  var throttledFetchPageFromEventbriteAPI = utils.makeThrottledFunction(fetchPageFromEventbriteAPI,5000);
-  var reqUrl = 'https://www.eventbriteapi.com/v3/events/search/?token=WUETWTBHZAXVIQK46NZM&start_date.keyword=today&venue.country=US';
+  var throttledFetchPageFromEventbriteAPI = utils.makeThrottledFunction(fetchPageFromEventbriteAPI,1500);
+  var reqUrl = 'https://www.eventbriteapi.com/v3/events/search/?token=' + process.env.EVENTBRITE_API_TOKEN + '&start_date.keyword=today&venue.country=US';
   request(reqUrl)
   .then(function (res) {
     var pages = JSON.parse(res[0].body).pagination.page_count;
@@ -198,9 +193,9 @@ function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
             title: event.name.text,
             lat: event.venue.latitude,  
             lng: event.venue.longitude,
-            startTime: event.start.utc,
-            endTime: event.end.utc,
-            info: (event.description.text ? event.description.text.slice(0,2000) : '')
+            startTime: Date.parse(event.start.utc),
+            endTime: Date.parse(event.end.utc),
+            info: ((event.description && event.description.text) ? event.description.text.slice(0,2000) : '')
             //TODO: user_id should be a special account reserved for Eventbrite_bot
             //TODO: do something better than a title match for preventing duplicate entries
           });

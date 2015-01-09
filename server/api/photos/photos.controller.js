@@ -2,10 +2,10 @@
 
 var request = require('request');
 var Photo = require('./photos.model.js');
-var seed = require('./photos.seed.js');
 var AWS = require('aws-sdk');
 var s3 = new AWS.S3();
 var fs = require('fs');
+var S3_BUCKET_NAME = 'base9photos';
 
 //POSTING A PHOTO: intended process
 //client sends a GET to api/phots/addnew.  includes user id, event name, file extension, other details.
@@ -27,13 +27,16 @@ module.exports = {
 };
 
 function addOne(req,res){
-  new Photo(req.query)
+  new Photo(req.body)
   .save()
   .then(function(record){
-    var fileName = record.attributes.id.toString();
-    var params = {Bucket: 'base9photos', Key: fileName + '.jpg'};
-    var url = s3.getSignedUrl('putObject', params);
-    res.json(url);
+    var fileName = record.attributes.id.toString() + '.jpg';
+    var params = {Bucket: S3_BUCKET_NAME, Key: fileName};
+    var photoUrl = 'https://' + S3_BUCKET_NAME + '.s3-' + process.env.AWS_REGION + '.amazonaws.com/' + fileName;
+    console.log(photoUrl);
+    var signedUrl = s3.getSignedUrl('putObject', params);
+    record.save({url: photoUrl}, {patch: true});
+    res.status(201).json(signedUrl);
   });
 }
 

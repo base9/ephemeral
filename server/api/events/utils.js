@@ -10,12 +10,8 @@ module.exports = {
   addEventRecord: addEventRecord,
   sendResponse: sendResponse,
   getStartEndTimes: getStartEndTimes,
-  geocodeGoogleAPIRequest: geocodeGoogleAPIRequest,
-  reverseGeocodeGoogleAPIRequest: reverseGeocodeGoogleAPIRequest,
-  getCoordinatesFromGoogleAPIResponse: getCoordinatesFromGoogleAPIResponse,
   makeThrottledFunction: makeThrottledFunction,
-  parseGoogleAPIAddress: parseGoogleAPIAddress,
-  trim: trim
+  formatAndTrimEventRecords: formatAndTrimEventRecords
 };
 
 //expects a record ready to be added to the Events table.
@@ -26,9 +22,9 @@ function addEventRecord(params, res){
     .save()
     .then(function(model){
       if(res){
-        console.log("Posted "+ params.title + " to Database");
         res.status(201).end(model.attributes.id.toString());
       } 
+      console.log("added event to database: " + model.attributes.title);
       return model.attributes.id.toString();
     });
 }
@@ -41,56 +37,6 @@ function sendResponse(record, res){
   }
 }
 
-//input: a string such as '1600 Amphitheater Parkway, Mountain View CA'
-//output: a lat & long tuple, such as [-37.211, 122.5819]
-//returns [0,0] on error. (TODO: refactor this)
-function geocodeGoogleAPIRequest(addressString){
-  var formattedAddress = addressString.split(' ').join('+');
-  var apiUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address='; 
-  var reqUrl =  apiUrl + formattedAddress + '&key=' + process.env.GOOGLE_GEOCODING_API_KEY;
-  return request(reqUrl);
-}
-
-
-function getCoordinatesFromGoogleAPIResponse(res){
-  if (res.statusCode >= 400) {
-    console.log(res.statusCode + ' error on request to Geocoding API');
-  } else {
-    var json = JSON.parse(res[0].body);
-    if(json.results[0]){
-      var lat = json.results[0].geometry.location.lat;
-      var lng = json.results[0].geometry.location.lng;
-      return [lat,lng];
-    }
-    return [0,0];
-  }
-}
-
-function reverseGeocodeGoogleAPIRequest(coords){
-  var formattedCoords = coords.lat+','+coords.lng;
-  var apiUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
-  var reqUrl =  apiUrl + formattedCoords + '&key=' + process.env.GOOGLE_GEOCODING_API_KEY;
-  console.log("REQUEST URL: ", reqUrl);
-  return request(reqUrl);
-}
-
-function parseGoogleAPIAddress(res){
-  if (res.statusCode >= 400) {
-    console.log(res.statusCode + ' error on request to Geocoding API');
-  } else {
-    var address = JSON.parse(res[0].body).results[0].formatted_address;
-    address = address.split(',');
-    address[2] = address[2].split(' ');
-    addressParams = {
-      streetAddress1: address[0],
-      city: address[1],
-      state: address[2][1],
-      zipCode: address[2][2],
-      country: address[3]
-    };   
-    return addressParams;
-  }
-}
 
 //input: ("Tuesday December 4th, 2014", "3pm to 6pm")
 //output: an ISO 8601-formatted date/time tuple [startTime,endTime].
@@ -125,12 +71,17 @@ function validateEventRecord(params){
   return params;
 }
 
-function trim(collection){
+function formatAndTrimEventRecords(collection){
   var trimmed = collection.map(function(event){
-    event.attributes.ratings = event.relations.rating.length;
-    event.attributes.creator = event.relations.user.attributes.name;
-    delete event.relations.user;
-    delete event.relations.rating;
+    if(event.relations.rating){
+      event.attributes.ratings = event.relations.rating.length;
+      event.attributes.popularity = getPopularity(event.attributes.ratings);
+      delete event.relations.rating;
+    }
+    if(event.relations.user){
+      event.attributes.creator = event.relations.user.attributes.name;
+      delete event.relations.user;
+    }
     return event;
   });
   return trimmed;
@@ -160,6 +111,15 @@ function makeThrottledFunction(callback,interval){
       invokeFromQueue();
     }
   };
+}
+
+//accepts a rating integer and converts it to a scale of 1-5.
+//(somewhat arbitrarily)
+function getPopularity(rating){
+  var popularity = Math.ceil(rating / 20);
+  popularity = Math.max(popularity, 1);
+  popularity = Math.min(popularity, 5);
+  return popularity;
 }
 
 

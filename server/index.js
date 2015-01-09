@@ -1,7 +1,7 @@
 ///////////////////////Environment settings/////////////////////////
 // TODO: env settings in another file
 // load api keys from local file when in local dev environment.
-if(!process.env.MODE === 'prod'){
+if(process.env.MODE !== 'prod'){
   require('../api_keys.js');
 }
 console.log('Running in >>>>>', process.env.MODE, 'mode');
@@ -48,21 +48,11 @@ console.log('app listening on port:' + (process.env.PORT || localPort[process.en
 
 
 ///////////////////////////////////////////////////////////////////////
-setTimeout(function(){
-  var userSeed = require('./api/users/users.seed.js');
-},400);
 
 setTimeout(function(){
   var eventSeed = require('./api/events/events.seed.js');
-},600);
+},400);
 
-setTimeout(function(){
-  var ratingSeed = require('./api/ratings/ratings.seed.js');
-},800);
-
-setTimeout(function(){
-  var commentSeed = require('./api/comments/comments.seed.js');
-},1000);
 ///////////////////////////////////////////////////////////////////////
 
 
