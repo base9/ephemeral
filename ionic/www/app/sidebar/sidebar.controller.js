@@ -33,8 +33,6 @@ angular.module('radar')
 
 /* MODALS */
 
-  $scope.test = "HELLO";
-
   $scope.openModal = function() {
     $scope.modal.show();
   };
@@ -109,7 +107,36 @@ angular.module('radar')
 
   /* NEW EVENT MODAL */
 
-  
+
+  // HOPEFULLY REMOVE THIS FUNCTION
+  function getDateTime() {
+    var dateString = (new Date()).toString().split(' ');
+    dateString[4] = dateString[4].split(':');
+    var hours = parseFloat(dateString[4][0])
+    var AMPM;
+    (hours > -1 && hours < 12) ? AMPM = "AM" : AMPM = "PM";
+    if (hours > 12 || hours === 0) {
+      hours = Math.abs(hours-12)
+      if (hours > 0 && hours < 10) {
+        hours = "0" + hours.toString();
+      } else {
+        hours = hours.toString();
+      }
+    }
+    var minutes = Math.ceil(parseFloat(dateString[4][1])/5)*5;
+    console.log("MINUTES: ", minutes)
+
+    var dateTime = {
+      month: dateString[1],
+      day: dateString[2],
+      year: dateString[3],
+      hours: hours,
+      minutes: minutes.toString(),
+      timeZone: dateString[5],
+      AMPM: AMPM
+    }
+    return dateTime;
+  }
 
   $scope.getCurrentAddress = function() {
     console.log("getting address");
@@ -126,6 +153,37 @@ angular.module('radar')
 
   $scope.postNewEvent = function() {
     // TODO: Check for authentication. If authenticated, proceed. Else "Please Login or register to post events"
+    var dateTime = getDateTime();
+    var startHours = parseFloat(dateTime.hours)
+    var endAMPM = dateTime.AMPM;
+    var endHours = startHours + 2;
+    if (endHours > 12) {
+      endHours -= 12;
+      endAMPM === "AM" ? endAMPM = "PM" : endAMPM = "AM";
+    }
+    if (endHours > 0 && endHours < 10) {
+      endHours = "0" + endHours.toString();
+    } else {
+      endHours = endHours.toString();
+    }
+
+
+    console.log(dateTime)
+    $scope.dateTime = {
+      startDay: dateTime.day,
+      startMonth: dateTime.month,
+      startYear: dateTime.year, 
+      startHours: dateTime.hours,
+      startMinutes: dateTime.minutes,
+      startAMPM: dateTime.AMPM,
+      endDay: dateTime.day,
+      endMonth: dateTime.month,
+      endYear: dateTime.year, 
+      endHours: endHours.toString(),
+      endMinutes: dateTime.minutes,
+      endAMPM: endAMPM
+    }
+
     $scope.newPostData = {
         title: '',
         info: '',
@@ -134,7 +192,7 @@ angular.module('radar')
         city: '',
         state: '',
         zipCode: '',
-        startDateTime: new Date(),
+        startDateTime: '',
         endDateTime: '',
         category: '',
         coords: {lat: undefined, lng: undefined}
@@ -159,8 +217,83 @@ angular.module('radar')
     });
   };
 
-  $scope.startDateTime = new Date();
-  $scope.endDateTime;
+  /*************  UI Bootstrap Datepicker Functions ************/
+  $scope.today = function() {
+    $scope.dt = new Date();
+  };
+  $scope.today();
+
+  $scope.clear = function () {
+    $scope.dt = null;
+  };
+
+  // Disable weekend selection
+  $scope.disabled = function(date, mode) {
+    return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+  };
+
+  $scope.toggleMin = function() {
+    $scope.minDate = $scope.minDate ? null : new Date();
+  };
+  $scope.toggleMin();
+
+  $scope.open = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    $scope.opened = true;
+  };
+
+  $scope.dateOptions = {
+    formatYear: 'yy',
+    startingDay: 1
+  };
+
+  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+  $scope.format = $scope.formats[0];
+
+/*************  UI Bootstrap Timepicker Functions ************/
+
+  $scope.startTime = new Date();
+
+  $scope.hstep = 1;
+  $scope.mstep = 10;
+
+  $scope.options = {
+    hstep: [1, 2, 3],
+    mstep: [1, 5, 10, 15, 25, 30]
+  };
+
+  $scope.ismeridian = true;
+  $scope.toggleMode = function() {
+    $scope.ismeridian = ! $scope.ismeridian;
+  };
+
+  $scope.update = function() {
+    var d = new Date();
+    d.setHours( 14 );
+    d.setMinutes( 0 );
+    $scope.mytime = d;
+  };
+
+  $scope.clear = function() {
+    $scope.mytime = null;
+  };
+
+/*************  Input type="file" Custom Functionality ************/
+  $scope.getFile = function(){
+      document.getElementById("upfile").click();
+  }
+
+  $scope.sub = function(obj){
+     var file = obj.value;
+     var fileName = file.split("\\");
+     document.getElementById("addPhotoButton").innerHTML = fileName[fileName.length-1];
+     document.myForm.submit();
+     event.preventDefault();
+  }
+
+
 
 }]);
 

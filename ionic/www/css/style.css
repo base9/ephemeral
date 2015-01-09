@@ -49,12 +49,6 @@
   color: white;
 }
 
-
-/* MODALS */
-.newEventModal {
-  
-}
-
 /* MAP BUTTONS */
 
 #GeoButton{
@@ -70,5 +64,11 @@
   color: DimGray;  
 }
 
+/* FONTS */
+
+@font-face {
+  font-family: 'skinny';
+  src: url('../fonts/skinny.ttc');
+}
 
 

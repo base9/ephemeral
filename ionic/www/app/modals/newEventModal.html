@@ -1,34 +1,77 @@
-<ion-modal-view class="newEventModal">
-  <ion-header-bar>
-    <h1 class="title">Post New Event</h1>
-  </ion-header-bar>
-  <ion-content>
-    <form class='newEventForm'>
-      <input type="text" placeholder="Add Event Title" ng-model="newPostData.title" required />
-      <input type="text" placeHolder="Optional Info" ng-model="newPostData.info"></input>
-      <div class="addressForm">
-        <button class="getCurrentAddress" ng-click="getCurrentAddress()">My Location</button>
-        <input type="text" placeHolder="Street Address 1" ng-model="newPostData.streetAddress1" required />
-        <input type="text" placeHolder="apt, room, floor #" ng-model="newPostData.streetAddress2" />
-        <input type="text" placeHolder="City" ng-model="newPostData.city" required />
-        <input type="text" placeHolder="State" ng-model="newPostData.state" required />
-        <input type="text" placeHolder="Zip Code" ng-model="newPostData.zipCode"></input>
-      <!-- TODO: Fix time display to show only hours and minutes  -->
+<i class="icon ion-ios7-close close-modal" ng-click="closeModal()"></i>
+
+<ion-modal-view class="newEventModal transparent">
+  <div class="background">
+    <div class="headBar row">
+      <span class="addPhoto">
+        <form action="" method="POST" enctype="multipart/form-data">
+           <div id="addPhotoButton" ng-click="getFile()">Add<br>Photo</div>
+           <!-- this is your file input tag, so i hide it!-->
+           <div style='height: 0px;width:0px; overflow:hidden;'><input id="upfile" type="file" value="upload"/></div>
+         </form>
+      </span>
+      <div class="col-80">
+        <textarea class="textInput title" maxlength="30" placeholder="Title..." ng-model="newPostData.title" required />
+        <textarea class="textInput info" maxlength="200" placeHolder="optional info..." ng-model="newPostData.info" />
       </div>
-      start: <input type="datetime-local" name="start" ng-model="newPostData.startDateTime" min="newPostData.startDateTime" required />
-        <span class="error" ng-show="newEventForm.start.$error.required">
-            Required!</span>
-        <span class="error" ng-show="newEventForm.start.$error.datetimelocal">
-            Not a valid date!</span>
-      end: <input type="datetime-local" ng-model="newPostData.endDateTime"></input>
-      category: <select name="category" ng-model="newPostData.category">
-        <option value="party">Party</option>
-        <option value="music">Music</option>
+    </div>
+
+    <div class="addressForm">
+      <!-- TODO: Make modal controller call getCurrentAddress() on load -->
+      <textarea class="textInput street1" placeHolder="Street Address 1" ng-model="newPostData.streetAddress1" required />
+      <textarea class="textInput street2" placeHolder="apt, room, floor #" ng-model="newPostData.streetAddress2" />
+      <textarea class="textInput city" placeHolder="City" ng-model="newPostData.city" required />
+      <textarea class="textInput state" placeHolder="State" ng-model="newPostData.state" required />
+    </div>
+
+    <div class="dateTime">
+      <h4> starts: </h4>
+
+      <timepicker class="timepick" ng-model="startTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+      <div class="row date">
+        <p class="input-group">
+          <input type="text" class="textInput form-control" datepicker-popup="{{format}}" ng-model="startDate" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+        </p>
+      </div>
+
+      <h4> ends: </h4>
+
+      <timepicker ng-model="endTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+      <div class="row date">
+          <div class="col-md-6">
+              <p class="input-group">
+                <input type="text" class="textInput form-control" datepicker-popup="{{format}}" ng-model="endDate" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+              </p>
+          </div>
+      </div>
+    </div>
+
+    <div class="categoryCost">
+      <h4> category: </h4> 
+      <select name="category" ng-model="newPostData.category">
+        <option value="concert">Concert</option>
+        <option value="streetFair">Street Fair</option>
         <option value="happyHour">Happy Hour</option>
+        <option value="party">Party</option>
+        <option value="performance">Performance</option>
         <option value="Other">Other</option>
-      </select><br>
-      Upload Photo: <input type="file" /><br>
-      <input type="submit" value="Save Event" ng-click="saveNewEvent()" />
-    </form>
-  </ion-content>
+      </select>
+      <h4> cost: $ </h4>
+      <input type="number" ng-model="price"> 
+    </div>
+
+    <div class="postButtons">
+      <button class="cancelEventButton" ng-click="closeModal()">Cancel</button>
+      <button class="postEventButton" ng-click="saveNewEvent()">Post Event</button>
+    </div>
+
+    <img class="backgroundImage" src="{{backgroundImageUrl}}" />
+
+  </div>
 </ion-modal-view>
