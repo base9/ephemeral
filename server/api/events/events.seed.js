@@ -45,19 +45,19 @@ function addDummyUserAndEvent(){
               .then(function(event){
                 var eventId = event.attributes.id;
                 setTimeout(function(){
-                  addDummyPhoto(userId,eventId);
+                  addDummyPhoto(userId, eventId,'dummy1');
                 },100);          
 
                 setTimeout(function(){
-                  addDummyPhoto(userId,eventId);
+                  addDummyPhoto(userId, eventId,'dummy2');
                 },200);
 
                 setTimeout(function(){
-                  addDummyPhoto(userId,eventId);
+                  addDummyPhoto(userId, eventId,'dummy3');
                 },300);
 
                 setTimeout(function(){
-                  addDummyPhoto(userId,eventId);
+                  addDummyPhoto(userId, eventId,'dummy4');
                 },400);
 
                 setTimeout(function(){
@@ -97,16 +97,17 @@ function addDummyUserAndEvent(){
 
 
 
-function addDummyPhoto(userId,eventId){
-  new Photo({user_id:userId,event_id:eventId})
+function addDummyPhoto(userId, eventId, slug){
+  new Photo({user_id:userId, event_id:eventId})
   .save()
   .then(function(record){
-    var fileName = record.attributes.id.toString() + '.jpg';
+    var fileName = slug + '.jpg';
     var params = {Bucket: S3_BUCKET_NAME, Key: fileName};
     var photoUrl = 'https://' + S3_BUCKET_NAME + '.s3-' + process.env.AWS_REGION + '.amazonaws.com/' + fileName;
     //var signedUrl = s3.getSignedUrl('putObject', params);
     record.save({url: photoUrl}, {patch: true});
     console.log('added dummy photo');
+    console.log(userId, eventId, fileName);
   });
 }
 
