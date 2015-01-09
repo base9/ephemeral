@@ -231,7 +231,7 @@ angular.module('radar')
   };
 
   var withinCoordinates = function(events, userLocation, parameters) {
-    if (events.lat <= userLocation.lat + parameters.north 
+    if (events.lat <= userLocation.lat + parameters.north
       && events.lat >= userLocation.lat - parameters.north
       && events.lng <= userLocation.lng + parameters.east
       && events.lng >= userLocation.lng - parameters.east) {

@@ -187,6 +187,7 @@ function addEventFromKimono(event){
 
 /************** Eventbrite API functions ******************/
 
+var categories = [];
 
 function fetchBatchDataFromEventbriteAPI(){
   console.log('req received at eventbrite endpoint!');
@@ -209,16 +210,24 @@ function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
   .then(function (res) {
     var body = JSON.parse(res[0].body);
     body.events.forEach(function(event){
-      console.log("**********EVENT************", event.ticket_classes);
-      // console.log("**********NAME*************: ", event.name, "CURRENCY", event.currency, "CATEGORY", event.category);
+      console.log("**********EVENT************", event.ticket_classes[0]);
+      if (event.category === null) {
+        event.category = {name: 'Other'};
+      }
+      categories.push(event.category.name);
       Event.where({title:event.name.text}).fetch().then(function (record) {
         if(!record){
           utils.addEventRecord({
             title: event.name.text,
+            streetAddress1: event.venue.address.address_1,
+            streetAddress2: (event.venue.address.address_2 ? event.venue.address.address_2 : ''),
+            url: event.organizer.url,
             lat: event.venue.latitude,  
             lng: event.venue.longitude,
             startTime: Date.parse(event.start.utc),
             endTime: Date.parse(event.end.utc),
+            category: categoryFilter(event.category.name),
+            price: (event.ticket_classes[0].free ? 0 : ((event.ticket_classes[0].cost.value / 100) + (event.ticket_classes[0].fee.value / 100))),
             info: ((event.description && event.description.text) ? event.description.text.slice(0,2000) : '')
             //TODO: user_id should be a special account reserved for Eventbrite_bot
             //TODO: do something better than a title match for preventing duplicate entries
@@ -228,5 +237,25 @@ function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
         }
       });
     });
+    console.log("LIST OF CATEGORIES", categories);
   });
 }
+
+function categoryFilter(eventCategory) {
+  if (eventCategory === 'Sports & Fitness' || eventCategory === 'Health & Wellness') {
+    return eventCategory = 'Fitness';
+  } else if (eventCategory === 'Hobbies & Special Interest' || eventCategory === 'Home & Lifestyle') {
+    return eventCategory = 'Personal Interest';
+  } else if (eventCategory === 'Music' || eventCategory === 'Film, Media & Entertainment' || eventCategory === 'Performing & Visual Arts') {
+    return eventCategory = 'Music and Entertainment';
+  } else if (eventCategory === 'Community & Culture' || eventCategory === 'Charity & Causes') {
+    return eventCategory = 'Community and Culture';
+  } else if (eventCategory === 'Food & Drink') {
+    return eventCategory = 'Food and Drink';
+  } else if (eventCategory === 'Travel & Outdoor') {
+    return eventCategory = 'Travel and Outdoor';
+  } else {
+    return eventCategory = 'Other';
+  }
+}
+
