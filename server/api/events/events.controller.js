@@ -209,6 +209,8 @@ function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
   .then(function (res) {
     var body = JSON.parse(res[0].body);
     body.events.forEach(function(event){
+      console.log("**********EVENT************", event.ticket_classes);
+      // console.log("**********NAME*************: ", event.name, "CURRENCY", event.currency, "CATEGORY", event.category);
       Event.where({title:event.name.text}).fetch().then(function (record) {
         if(!record){
           utils.addEventRecord({

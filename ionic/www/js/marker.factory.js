@@ -24,7 +24,7 @@ angular.module('radar')
 
     // var ratings = event.ratings;
     callback(markers);
-  }
+  };
   //not using other above function because no callback is needed
   markerObj.filterMarkers = function(map, objFilters, filters) {
 
@@ -76,7 +76,7 @@ angular.module('radar')
     if (events.length) {
       map.setZoom(14);
     }
-  }
+  };
 
 /********************* HELPER FUNCTIONS *********************/
   
@@ -101,14 +101,14 @@ angular.module('radar')
 
       bounds.extend(position);
     }
-  }
+  };
 
   //Removes all markers on the map
   var clearMarkers = function(markers) {
     for (var i = 0; i < markers.length; i++) {
       markers[i].setMap(null);
     }
-  }
+  };
 
   var filterPopularity = function(events, popularity) {
     var results = [];
@@ -118,7 +118,7 @@ angular.module('radar')
       }
     }
     return results;
-  }
+  };
 
   var filterCategory = function(events, category) {
     var results = [];
@@ -128,7 +128,7 @@ angular.module('radar')
       }
     }
     return results;
-  }
+  };
 
   var filterDistance = function(events, userLocation, distance) {
     var results = [];
@@ -139,7 +139,7 @@ angular.module('radar')
       }
     }
     return results;
-  }
+  };
 
   var filterKeyword = function(events, keywords) {
     var results = [];
@@ -156,7 +156,7 @@ angular.module('radar')
       }
     }
     return {'foundMatch': true, 'results': results};
-  }
+  };
 
   var filterCost = function(events, lowCost, highCost) {
     var results = [];
@@ -166,7 +166,7 @@ angular.module('radar')
       }
     }
     return results;
-  }
+  };
 
   //All time will be dealt in number of milliseconds since Jan 1, 1970
   var filterTime = function(events, now, startTime, endTime) {
@@ -194,16 +194,16 @@ angular.module('radar')
       }
     }
     return results;
-  }
+  };
 
   var latitudeLongitudeToDistanceConverter = function(lat, lng, d) {
 
     Number.prototype.toRadians = function() {
       return this * Math.PI / 180;
-    }
+    };
     Number.prototype.toDegrees = function() {
       return this * 180 / Math.PI;
-    }
+    };
 
     //Radius of Earth in miles
     var R = 3959;
@@ -228,17 +228,17 @@ angular.module('radar')
     // var d = R * c;
 
     return {'north': lat2North.toDegrees() - lat, 'east': lng2East.toDegrees() - lng};
-  }
+  };
 
   var withinCoordinates = function(events, userLocation, parameters) {
     if (events.lat <= userLocation.lat + parameters.north 
-     && events.lat >= userLocation.lat - parameters.north
-     && events.lng <= userLocation.lng + parameters.east
-     && events.lng >= userLocation.lng - parameters.east) {
+      && events.lat >= userLocation.lat - parameters.north
+      && events.lng <= userLocation.lng + parameters.east
+      && events.lng >= userLocation.lng - parameters.east) {
       return true;
     }
     return false;
-  }
+  };
 
   return markerObj;
 });

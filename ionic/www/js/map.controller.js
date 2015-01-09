@@ -20,12 +20,12 @@ angular.module('radar')
     };
     $scope.closeModal = function() {
       $scope.modal.hide();
-    }
+    };
 
     var map = Map.initialize();
 
     var myMarker = Map.geoLocate(function(location) {
-      listOfMarkers.location = {'lat': location.latitude, 'lng': location.longitude}
+      listOfMarkers.location = {'lat': location.latitude, 'lng': location.longitude};
       console.log("LIST OF MARKERS: ", listOfMarkers);
     });
 
@@ -53,7 +53,7 @@ angular.module('radar')
               $scope.info = event.info;
               $scope.startTime = event.startTime;
               $scope.endTime = event.endTime;
-            }
+            };
           })(marker, event));
         }
       });
@@ -61,8 +61,6 @@ angular.module('radar')
 
     this.filter = function(filters) {
       Marker.filterMarkers(map, listOfMarkers, filters);
-    }
-
-    window.uglyScope = $scope;
+    };
 
 }]);
