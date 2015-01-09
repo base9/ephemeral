@@ -33,7 +33,7 @@ angular.module('radar')
         //must invoke function in order to grab current marker, title, and rating
         google.maps.event.addListener(marker, 'click', (function(marker, event) {
           return function() {
-            $ionicModal.fromTemplateUrl('../templates/eventInfoModal.html', {
+            $ionicModal.fromTemplateUrl('app/modals/eventInfoModal.html', {
               scope: $scope,
             }).then(function(modal) {
               $scope.modal = modal;

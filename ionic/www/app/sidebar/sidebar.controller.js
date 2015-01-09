@@ -47,7 +47,7 @@ angular.module('radar')
   };
   
   $scope.login = function() {
-    $ionicModal.fromTemplateUrl('../templates/login.html', {
+    $ionicModal.fromTemplateUrl('app/modals/login.html', {
       scope: $scope,
     }).then(function(modal) {
       $scope.modal = modal;
@@ -75,7 +75,7 @@ angular.module('radar')
   };
 
   $scope.register = function() {
-    $ionicModal.fromTemplateUrl('../templates/register.html', {
+    $ionicModal.fromTemplateUrl('app/modals/register.html', {
       scope: $scope,
     }).then(function(modal) {
       $scope.modal = modal;
@@ -139,7 +139,7 @@ angular.module('radar')
         category: '',
         coords: {lat: undefined, lng: undefined}
       };
-    $ionicModal.fromTemplateUrl('../templates/newEventModal.html', {
+    $ionicModal.fromTemplateUrl('app/modals/newEventModal.html', {
       scope: $scope,
     }).then(function(modal) {
       $scope.modal = modal;
