@@ -30,10 +30,9 @@ function addOne(req,res){
   new Photo(req.body)
   .save()
   .then(function(record){
-    var fileName = record.attributes.id.toString() + '.jpg';
+    var fileName = makeHash(24) + '.jpg';
     var params = {Bucket: S3_BUCKET_NAME, Key: fileName};
     var photoUrl = 'https://' + S3_BUCKET_NAME + '.s3-' + process.env.AWS_REGION + '.amazonaws.com/' + fileName;
-    console.log(photoUrl);
     var signedUrl = s3.getSignedUrl('putObject', params);
     record.save({url: photoUrl}, {patch: true});
     res.status(201).json(signedUrl);
@@ -66,6 +65,15 @@ function deleteOne(req,res){
 
 
 
+function makeHash(length){
+    var text = [];
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < length; i++ )
+        text.push(possible.charAt(Math.floor(Math.random() * possible.length)));
+
+    return text.join('');
+}
 
 
 
