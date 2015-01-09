@@ -116,7 +116,7 @@ function getAddressFromCoords(coords) {
 //periodically by a Kimono Labs scraper.  Function will parse the events
 //and add them to our DB.
 function fetchBatchDataFromKimonoAPI() {
-  request('https://www.kimonolabs.com/api/9djxfaym?apikey=' + process.env.KIMONO_API_KEY);
+  request('https://www.kimonolabs.com/api/9djxfaym?apikey=' + process.env.KIMONO_API_KEY)
   .then(function(res){
     console.log('response received from kimono');
     var events = JSON.parse(res[0].body).results.collection1; //split results and collection1 with if statements
@@ -140,10 +140,11 @@ function addEventFromKimono(event){
         }
         params.title = event.title;
 
-        getCoordsFromAddress(event.address)
+        getCoordsFromAddress(event.address.text? event.address.text : event.address)
           .then(function(res){
-            params.lat = res.body[0];
-            params.lng = res.body[1];
+            var coords = JSON.parse(res[0].body);
+            params.lat = coords[0];
+            params.lng = coords[1];
             console.log(params.lat, params.lng);
             
             console.log("BEFORE: ", event.date.text, event.duration);
