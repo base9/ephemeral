@@ -288,6 +288,14 @@ angular.module('radar')
       document.getElementById("upfile").click();
   }
 
+  $scope.sub = function(obj){
+     var file = obj.value;
+     var fileName = file.split("\\");
+     document.getElementById("addPhotoButton").innerHTML = fileName[fileName.length-1];
+     document.myForm.submit();
+     event.preventDefault();
+  }
+
 }])
 
 

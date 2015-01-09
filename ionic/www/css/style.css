@@ -49,12 +49,6 @@
   color: white;
 }
 
-
-/* MODALS */
-.eventInfoWindow {
-  border-radius: 20px;  
-}
-
 /* MAP BUTTONS */
 
 #GeoButton{
@@ -69,3 +63,12 @@
   font-size: 30px;
   color: DimGray;  
 }
+
+/* FONTS */
+
+@font-face {
+  font-family: 'skinny';
+  src: url('../fonts/skinny.ttc');
+}
+
+

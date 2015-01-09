@@ -21,10 +21,165 @@ $dark:                            #444 !default;
 // Include all of Ionic
 //@import "www/lib/ionic/scss/ionic";
 
+$bgGray:						rgba(30,30,30,0.92);
 $textGray: 					#b4b4b4;
 $inputGray: 				#868686;
 $placeholderGray: 	#555555;
 $inputRadius:				10px;
 $modalRadius:				15px;
-$buttonRadius:			10px;
+$buttonRadius:			4px;
 $moneyGreen:				#038312;
+
+
+.newEventModal {
+	
+	font-family: 'Muli', sans-serif;
+	border-radius: $modalRadius;
+
+	::-webkit-input-placeholder {
+	   color: $placeholderGray;
+	   font-family: 'Muli', sans-serif;
+	}
+	::-webkit-input-placeholder {
+	   color: $placeholderGray;
+	   font-family: 'Muli', sans-serif;
+	}
+	:-moz-placeholder { /* Firefox 18- */
+	   color: $placeholderGray;
+	   font-family: 'Muli', sans-serif;  
+	}
+	::-moz-placeholder {  /* Firefox 19+ */
+	   color: $placeholderGray;
+	   font-family: 'Muli', sans-serif;  
+	}
+	:-ms-input-placeholder {  
+	   color: $placeholderGray;
+	   font-family: 'Muli', sans-serif;  
+	}
+
+	input, textarea {
+		border-radius: $buttonRadius;
+		margin: 8px 10px;
+		padding-left: 10px;
+		padding-top: 12px;
+		resize: none;
+	}
+	
+	#addPhotoButton {
+   width: 120px;
+   height: 120px;
+   padding-top: 38px;
+   padding-left: 2px;
+   margin-left: 20px;
+   text-align: center;
+   background-color: $placeholderGray;
+   cursor: pointer;
+   color: #aeaeae;
+   font-size: 18px;
+  }
+
+  .background {
+  	padding: 10px 10px;
+  	border-radius: $modalRadius;
+		background-color: $bgGray;
+  }
+
+  .textInput {
+  	background-color: $inputGray;
+  	color: $placeholderGray;
+
+  }
+
+  .title {
+  	margin-top: 1px;
+  	height: 40px;
+  	font-size: 30px;
+  	width: 50%;
+  	// line-height: ;
+  }
+
+  .info {
+  	height: 70px;
+  	font-size: 14px;
+  	width: 50%;
+  }
+
+  .addressForm {
+  	width: 39.6%;
+  	margin-left: 16.6%;
+
+  	textarea {
+  		height: 22px;
+  		margin: 6px 10px;
+  		padding-left: 10px;
+			padding-top: 4px;
+			font-size: 15px;
+  	}
+
+  	.city {
+  		width: 85%;
+			display: inline-block;
+			margin-right: 0px;
+			margin-top: 0px;
+  	}
+	  
+	  .state {
+  		width: 12%;
+			display: inline-block;
+			margin-right: -12px;
+			margin-left: 5px;
+			margin-top: 0px;
+	  }
+	}
+
+	.dateTime {
+		width: 39.6%;
+  	margin-left: 16.6%;
+
+		h4 {
+			font-size: 17px;
+			color: #b4b4b4;
+			display: inline-block;
+		}
+
+		.timepick {
+			display: inline-block;
+
+			input {
+				background-color: $inputGray;
+			}
+
+			button {
+				background-color: $inputGray;
+				margin-left: 15px;
+				border: 1px solid $inputGray;	
+			}
+			
+		}
+
+	}
+
+
+
+
+}
+
+
+.transparent {
+  background-color: transparent !important;
+}
+
+.close-modal {
+  position: absolute;
+  right: 19.5%;
+  top: 18.4%;
+  font-size: 1.8em;
+  text-align: center;
+  z-index: 20;
+  background-color: #f5f5f5;
+  border-radius: 30px;
+  width: 26px;
+  cursor: pointer;
+  line-height: 0px;
+  border: 0.5px solid #ddd;
+}
