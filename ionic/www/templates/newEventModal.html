@@ -5,9 +5,16 @@
 
     <div class="headBar">
       <span class="addPhoto">
-        <input type="file">
+       <!--  <input type="file">
           <button class="addPhotoButton"> Add <br/> Photo </button>
-        </input>
+        </input> -->
+        <form action="#type your action here" method="POST" enctype="multipart/form-data">
+           <div id="addPhotoButton" style="height: 50px; width: 100px;border: 1px dashed #BBB; cursor:pointer;" ng-click="getFile()">Click to upload!</div>
+           <!-- this is your file input tag, so i hide it!-->
+           <div style='height: 0px;width:0px; overflow:hidden;'><input id="upfile" type="file" value="upload"/></div>
+           <!-- here you can have file submit button or you can write a simple script to upload the file automatically-->
+           <input type="submit" value='submit' >
+         </form>
       </span>
       <input type="text" class="title" maxlength="80" placeholder="Title..." ng-model="newPostData.title" required />
       <input type="text" class="info" maxlength="200" placeHolder="optional info..." ng-model="newPostData.info" />
@@ -24,7 +31,9 @@
 
     <div class="dateTime">
       <h4> starts: </h4>
-      <select class="time" name="startTime" ng-model="dateTime.startTime">
+
+      <timepicker ng-model="startTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+      <!-- <select class="time" name="startTime" ng-model="dateTime.startTime">
         <option value="12:00">12:00</option>
         <option value="12:15">12:15</option>
         <option value="12:30">12:30</option>
@@ -77,11 +86,23 @@
       <select class="ampm" name="startAmpm" ng-model="dateTime.startAMPM">
         <option value="AM">AM</option>
         <option value="PM">PM</option>
-      </select>
-      <input type="date" ng-model="dateTime.startTime" />
+      </select> -->
+      <!-- <input type="date" ng-model="dateTime.startTime" /> -->
+      <div class="row date">
+          <div class="col-md-6">
+              <p class="input-group">
+                <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="startDate" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+              </p>
+          </div>
+      </div>
 
       <h4> ends: </h4>
-      <select class="time" name="endTime" ng-model="dateTime.endTime">
+
+      <timepicker ng-model="endTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+      <!-- <select class="time" name="endTime" ng-model="dateTime.endTime">
         <option value="12:00">12:00</option>
         <option value="12:15">12:15</option>
         <option value="12:30">12:30</option>
@@ -134,8 +155,17 @@
       <select class="ampm" name="endAmpm" ng-model="dateTime.endAMPM">
         <option value="AM">AM</option>
         <option value="PM">PM</option>
-      </select>
-      <input type="date" ng-model="dateTime.endTime" />
+      </select>  -->
+      <div class="row date">
+          <div class="col-md-6">
+              <p class="input-group">
+                <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="endDate" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+              </p>
+          </div>
+      </div>
     </div>
 
     <div class="categoryCost">
@@ -161,3 +191,4 @@
 
   </ion-content>
 </ion-modal-view>
+

@@ -7,8 +7,8 @@ var jshint = require('gulp-jshint');
 var mocha = require('gulp-mocha');
 
 var path = {
-  sass: './client/styles/*.scss',
-  cssRoot: './client/assets',
+  sass: './ionic/scss/*.scss',
+  cssRoot: './ionic/www/css/',
   server: './server.js',
   serverSideJs: './server/**/*.js',
   client: 'client/**/*',
@@ -24,7 +24,7 @@ gulp.task('sass', function () {
 
 gulp.task('watch', function() {
   // watch scss files
-  gulp.watch('./client/assets/*.scss', ['sass']);
+  gulp.watch(path.sass, ['sass']);
 
   // Watch any files in dist/, reload on change
   livereload.listen();
