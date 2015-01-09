@@ -1,5 +1,6 @@
 <ion-modal-view class="eventInfoWindow">
   <ion-content>
+
   	<div class="headBar">
 	  	<img src="{{mainPhoto.url}}" class="mainPhoto" / >
 	  	<h1 class="title"> {{title}} </h1>
@@ -8,6 +9,7 @@
 	  	<h2>{{likes}}</h2>
 	    <h3 class="info"> {{info}} </h3>
 	  </div>
+
 	  <div class="details">
 	    <h3 class="time"> {{startTime}} - {{endTime}} </h3>
 	    <h2 class="price"> {{price}} </h2>
@@ -16,10 +18,11 @@
 	    <h3 class="address"> {{city}}, {{state}} </h3>
 	    <button class="directions"> Get Directions </button>
 	  </div>
+	
 	  <div class="photoComments">
 	   	<div class="photos">
 		   	<span ng-repeat="photo in photos">
-		   		<img src="photo.url" class="">
+		   		<img src="{{photo.url}}" class="">
 		   	</span>
 		   	<span class="addPhoto">
 		   		<button class="addPhotoButton"> Add <br/> Photo </button>
@@ -34,5 +37,6 @@
 	   		</span>
 	   	</div>
 	  </div>
+	  
   </ion-content>
 </ion-modal-view>

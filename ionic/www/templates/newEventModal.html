@@ -1,195 +1,163 @@
 <ion-modal-view class="newEventModal">
   <ion-content>
-    <form class='newEventForm'>
-      <input type="text" placeholder="Add Event Title" ng-model="newPostData.title" required />
-      <input type="text" placeHolder="Optional Info" ng-model="newPostData.info"></input>
-      <div class="addressForm">
-        <button class="getCurrentAddress" ng-click="getCurrentAddress()">My Location</button>
-        <input type="text" placeHolder="Street Address 1" ng-model="newPostData.streetAddress1" required />
-        <input type="text" placeHolder="apt, room, floor #" ng-model="newPostData.streetAddress2" />
-        <input type="text" placeHolder="City" ng-model="newPostData.city" required />
-        <input type="text" placeHolder="State" ng-model="newPostData.state" required />
-        <input type="text" placeHolder="Zip Code" ng-model="newPostData.zipCode"></input>
-      <!-- TODO: Fix time display to show only hours and minutes  -->
-      </div>
 
-      <input type="date"></input>
+    <button class="closeModalButton" ng-click="closeModal()"> X </button>
 
-      start: <select name="month" ng-model="dateTime.startMonth">
-        <option value="Jan">Jan</option>
-        <option value="Feb">Feb</option>
-        <option value="Mar">Mar</option>
-        <option value="Apr">Apr</option>
-        <option value="May">May</option>
-        <option value="Jun">Jun</option>
-        <option value="Jul">Jul</option>
-        <option value="Aug">Aug</option>
-        <option value="Sep">Sep</option>
-        <option value="Oct">Oct</option>
-        <option value="Nov">Nov</option>
-        <option value="Dec">Dec</option>
+    <div class="headBar">
+      <span class="addPhoto">
+        <input type="file">
+          <button class="addPhotoButton"> Add <br/> Photo </button>
+        </input>
+      </span>
+      <input type="text" class="title" maxlength="80" placeholder="Title..." ng-model="newPostData.title" required />
+      <input type="text" class="info" maxlength="200" placeHolder="optional info..." ng-model="newPostData.info" />
+    </div>
+
+    <div class="addressForm">
+      <!-- TODO: Make modal controller call getCurrentAddress() on load -->
+      <input type="text" class="street1" placeHolder="Street Address 1" ng-model="newPostData.streetAddress1" required />
+      <input type="text" class="street2" placeHolder="apt, room, floor #" ng-model="newPostData.streetAddress2" />
+      <input type="text" class="city" placeHolder="City" ng-model="newPostData.city" required />
+      <input type="text" class="state" placeHolder="State" ng-model="newPostData.state" required />
+      <input type="text" class="zipCode" placeHolder="Zip Code" ng-model="newPostData.zipCode"></input>
+    </div>
+
+    <div class="dateTime">
+      <h4> starts: </h4>
+      <select class="time" name="startTime" ng-model="dateTime.startTime">
+        <option value="12:00">12:00</option>
+        <option value="12:15">12:15</option>
+        <option value="12:30">12:30</option>
+        <option value="12:45">12:45</option>
+        <option value="1:00">1:00</option>
+        <option value="1:15">1:15</option>
+        <option value="1:30">1:30</option>
+        <option value="1:45">1:45</option>
+        <option value="2:00">2:00</option>
+        <option value="2:15">2:15</option>
+        <option value="2:30">2:30</option>
+        <option value="2:45">2:45</option>
+        <option value="3:00">3:00</option>
+        <option value="3:15">3:15</option>
+        <option value="3:30">3:30</option>
+        <option value="3:45">3:45</option>
+        <option value="4:00">4:00</option>
+        <option value="4:15">4:15</option>
+        <option value="4:30">4:30</option>
+        <option value="4:45">4:45</option>
+        <option value="5:00">5:00</option>
+        <option value="5:15">5:15</option>
+        <option value="5:30">5:30</option>
+        <option value="5:45">5:45</option>
+        <option value="6:00">6:00</option>
+        <option value="6:15">6:15</option>
+        <option value="6:30">6:30</option>
+        <option value="6:45">6:45</option>
+        <option value="7:00">7:00</option>
+        <option value="7:15">7:15</option>
+        <option value="7:30">7:30</option>
+        <option value="7:45">7:45</option>
+        <option value="8:00">8:00</option>
+        <option value="8:15">8:15</option>
+        <option value="8:30">8:30</option>
+        <option value="8:45">8:45</option>
+        <option value="9:00">9:00</option>
+        <option value="9:15">9:15</option>
+        <option value="9:30">9:30</option>
+        <option value="9:45">9:45</option>
+        <option value="10:00">10:00</option>
+        <option value="10:15">10:15</option>
+        <option value="10:30">10:30</option>
+        <option value="10:45">10:45</option>
+        <option value="11:00">11:00</option>
+        <option value="11:15">11:15</option>
+        <option value="11:30">11:30</option>
+        <option value="11:45">11:45</option>
       </select>
-
-      <select name="day" ng-model="dateTime.startDay">
-        <option value="01">1</option>
-        <option value="02">2</option>
-        <option value="03">3</option>
-        <option value="04">4</option>
-        <option value="05">5</option>
-        <option value="06">6</option>
-        <option value="07">7</option>
-        <option value="08">8</option>
-        <option value="09">9</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
-        <option value="13">13</option>
-        <option value="14">14</option>
-        <option value="15">15</option>
-        <option value="16">16</option>
-        <option value="17">17</option>
-        <option value="18">18</option>
-        <option value="19">19</option>
-        <option value="20">20</option>
-        <option value="21">21</option>
-        <option value="22">22</option>
-        <option value="23">23</option>
-        <option value="24">24</option>
-        <option value="25">25</option>
-        <option value="26">26</option>
-        <option value="27">27</option>
-        <option value="28">28</option>
-        <option value="29">29</option>
-        <option value="30">30</option>
-        <option value="31">31</option>
-      </select>
-
-      <select name="hours" ng-model="dateTime.startHours">
-        <option value="01">1</option>
-        <option value="02">2</option>
-        <option value="03">3</option>
-        <option value="04">4</option>
-        <option value="05">5</option>
-        <option value="06">6</option>
-        <option value="07">7</option>
-        <option value="08">8</option>
-        <option value="09">9</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
-      </select>
-
-      <select name="minutes" ng-model="dateTime.startMinutes">
-        <option value="00">00</option>
-        <option value="05">05</option>
-        <option value="10">10</option>
-        <option value="15">15</option>
-        <option value="20">20</option>
-        <option value="25">25</option>
-        <option value="30">30</option>
-        <option value="35">35</option>
-        <option value="40">40</option>
-        <option value="45">45</option>
-        <option value="50">50</option>
-        <option value="55">55</option>
-      </select>
-
-      <select name="minutes" ng-model="dateTime.startAMPM">
+      <select class="ampm" name="startAmpm" ng-model="dateTime.startAMPM">
         <option value="AM">AM</option>
         <option value="PM">PM</option>
       </select>
+      <input type="date" ng-model="dateTime.startTime" />
 
-      end: <select name="month" ng-model="dateTime.endMonth">
-        <option value="Jan">Jan</option>
-        <option value="Feb">Feb</option>
-        <option value="Mar">Mar</option>
-        <option value="Apr">Apr</option>
-        <option value="May">May</option>
-        <option value="Jun">Jun</option>
-        <option value="Jul">Jul</option>
-        <option value="Aug">Aug</option>
-        <option value="Sep">Sep</option>
-        <option value="Oct">Oct</option>
-        <option value="Nov">Nov</option>
-        <option value="Dec">Dec</option>
+      <h4> ends: </h4>
+      <select class="time" name="endTime" ng-model="dateTime.endTime">
+        <option value="12:00">12:00</option>
+        <option value="12:15">12:15</option>
+        <option value="12:30">12:30</option>
+        <option value="12:45">12:45</option>
+        <option value="1:00">1:00</option>
+        <option value="1:15">1:15</option>
+        <option value="1:30">1:30</option>
+        <option value="1:45">1:45</option>
+        <option value="2:00">2:00</option>
+        <option value="2:15">2:15</option>
+        <option value="2:30">2:30</option>
+        <option value="2:45">2:45</option>
+        <option value="3:00">3:00</option>
+        <option value="3:15">3:15</option>
+        <option value="3:30">3:30</option>
+        <option value="3:45">3:45</option>
+        <option value="4:00">4:00</option>
+        <option value="4:15">4:15</option>
+        <option value="4:30">4:30</option>
+        <option value="4:45">4:45</option>
+        <option value="5:00">5:00</option>
+        <option value="5:15">5:15</option>
+        <option value="5:30">5:30</option>
+        <option value="5:45">5:45</option>
+        <option value="6:00">6:00</option>
+        <option value="6:15">6:15</option>
+        <option value="6:30">6:30</option>
+        <option value="6:45">6:45</option>
+        <option value="7:00">7:00</option>
+        <option value="7:15">7:15</option>
+        <option value="7:30">7:30</option>
+        <option value="7:45">7:45</option>
+        <option value="8:00">8:00</option>
+        <option value="8:15">8:15</option>
+        <option value="8:30">8:30</option>
+        <option value="8:45">8:45</option>
+        <option value="9:00">9:00</option>
+        <option value="9:15">9:15</option>
+        <option value="9:30">9:30</option>
+        <option value="9:45">9:45</option>
+        <option value="10:00">10:00</option>
+        <option value="10:15">10:15</option>
+        <option value="10:30">10:30</option>
+        <option value="10:45">10:45</option>
+        <option value="11:00">11:00</option>
+        <option value="11:15">11:15</option>
+        <option value="11:30">11:30</option>
+        <option value="11:45">11:45</option>
       </select>
-
-      <select name="day" ng-model="dateTime.endDay">
-        <option value="01">1</option>
-        <option value="02">2</option>
-        <option value="03">3</option>
-        <option value="04">4</option>
-        <option value="05">5</option>
-        <option value="06">6</option>
-        <option value="07">7</option>
-        <option value="08">8</option>
-        <option value="09">9</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
-        <option value="13">13</option>
-        <option value="14">14</option>
-        <option value="15">15</option>
-        <option value="16">16</option>
-        <option value="17">17</option>
-        <option value="18">18</option>
-        <option value="19">19</option>
-        <option value="20">20</option>
-        <option value="21">21</option>
-        <option value="22">22</option>
-        <option value="23">23</option>
-        <option value="24">24</option>
-        <option value="25">25</option>
-        <option value="26">26</option>
-        <option value="27">27</option>
-        <option value="28">28</option>
-        <option value="29">29</option>
-        <option value="30">30</option>
-        <option value="31">31</option>
-      </select>
-
-      <select name="hours" ng-model="dateTime.endHours">
-        <option value="01">1</option>
-        <option value="02">2</option>
-        <option value="03">3</option>
-        <option value="04">4</option>
-        <option value="05">5</option>
-        <option value="06">6</option>
-        <option value="07">7</option>
-        <option value="08">8</option>
-        <option value="09">9</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
-      </select>
-
-      <select name="minutes" ng-model="dateTime.endMinutes">
-        <option value="00">00</option>
-        <option value="05">05</option>
-        <option value="10">10</option>
-        <option value="15">15</option>
-        <option value="20">20</option>
-        <option value="25">25</option>
-        <option value="30">30</option>
-        <option value="35">35</option>
-        <option value="40">40</option>
-        <option value="45">45</option>
-        <option value="50">50</option>
-        <option value="55">55</option>
-      </select>
-
-      <select name="minutes" ng-model="dateTime.endAMPM">
+      <select class="ampm" name="endAmpm" ng-model="dateTime.endAMPM">
         <option value="AM">AM</option>
         <option value="PM">PM</option>
       </select>
-      category: <select name="category" ng-model="newPostData.category">
-        <option value="party">Party</option>
-        <option value="music">Music</option>
+      <input type="date" ng-model="dateTime.endTime" />
+    </div>
+
+    <div class="categoryCost">
+      <h4> category: </h4> 
+      <select name="category" ng-model="newPostData.category">
+        <option value="concert">Concert</option>
+        <option value="streetFair">Street Fair</option>
         <option value="happyHour">Happy Hour</option>
+        <option value="party">Party</option>
+        <option value="performance">Performance</option>
         <option value="Other">Other</option>
-      </select><br>
-      Upload Photo: <input type="file" /><br>
-      <input type="submit" value="Save Event" ng-click="saveNewEvent()" />
-    </form>
+      </select>
+      <h4> cost: $ </h4>
+      <input type="number" ng-model="price"> 
+    </div>
+
+    <div class="postButtons">
+      <button class="cancelEventButton" ng-click="closeModal()">Cancel</button>
+      <button class="postEventButton" ng-click="saveNewEvent()">Post Event</button>
+    </div>
+
+    <img class="backgroundImage" src="{{backgroundImageUrl}}" />
+
   </ion-content>
 </ion-modal-view>
