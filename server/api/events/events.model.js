@@ -14,6 +14,7 @@ db.schema.hasTable('events').then(function (exists) {
       evnt.string('title', 255);
       evnt.bigInteger('startTime', 255);
       evnt.bigInteger('endTime', 255);
+      evnt.integer('price');
       // evnt.timestamp('revealTime', 255);
       evnt.string('info', 2000);
       evnt.string('category', 50);
