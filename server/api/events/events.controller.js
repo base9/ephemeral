@@ -94,16 +94,17 @@ function getLocal(req, res) {
 
 /************** Geocoding ******************/
 
-
-//who uses these endpoints?
-//the client shouldn't.  the client should use client-side geocoding.
-//so: its only used by kimono and eventbrite.
-
+//returns a promise of an http response.  parse the response like this:
+//var coords = JSON.parse(res[0].body);
+//coords will be a lat, lng tuple like [44.5, -122.67]
 function getCoordsFromAddress(address) {
   console.log("GEOCODE REQUEST ADDRESS: ", address);
   return request('https://base9geocode.herokuapp.com/geo/geocode?address=' + address);
 }
 
+//returns a promise of an http response.  parse the response like this:
+//var address = JSON.parse(res[0].body);
+//'address' will be an object with fields like addressLine1, city, state, zipCode, etc.
 function getAddressFromCoords(coords) {
   console.log("REVERSE GEOCODE REQUEST QUERY: ", coords);
   return request('https://base9geocode.herokuapp.com/geo/reverseGeocode?lat=' + coords[0] + '&lng=' + coords[1]);
@@ -145,7 +146,6 @@ function addEventFromKimono(event){
             var coords = JSON.parse(res[0].body);
             params.lat = coords[0];
             params.lng = coords[1];
-            console.log(params.lat, params.lng);
             
             console.log("BEFORE: ", event.date.text, event.duration);
             startEndTimes = utils.getStartEndTimes(event.date.text,event.duration);
