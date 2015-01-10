@@ -219,7 +219,8 @@ angular.module('radar')
 
   /*************  UI Bootstrap Datepicker Functions ************/
   $scope.today = function() {
-    $scope.dt = new Date();
+    $scope.startDate = new Date();
+    $scope.endDate = new Date();
   };
   $scope.today();
 

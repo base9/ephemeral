@@ -24,7 +24,7 @@ $dark:                            #444 !default;
 
 $bgGray:						rgba(30,30,30,0.92);
 $textGray: 					#b4b4b4;
-$inputBgGray: 			#868686;
+$inputBgGray: 			#c6c6c6;
 $inputFillText:			rgb(30,30,30);
 $placeholderGray: 	#555555;
 $inputRadius:				10px;
@@ -32,6 +32,13 @@ $modalRadius:				15px;
 $buttonRadius:			4px;
 $moneyGreen:				#038312;
 
+@mixin background($color1, $color2) { 
+	background: -webkit-gradient(linear, left top, left bottom, from($color1), to($color2));
+	background: -webkit-linear-gradient(top, $color1, $color2);
+	background: -moz-linear-gradient(top, $color1, $color2);
+	background: -ms-linear-gradient(top, $color1, $color2);
+	background: -o-linear-gradient(top, $color1, $color2);
+}
 
 .newEventModal {
 
@@ -173,7 +180,7 @@ $moneyGreen:				#038312;
 			}
 
 			input {
-				background-color: #868686;
+				background-color: $inputBgGray;
 				// width: 67%;
 				margin-top: 5px;
 				padding: 0px;
@@ -207,7 +214,14 @@ $moneyGreen:				#038312;
 			margin-top: -3px;
 
 			.textInput {
-				padding-left: 3px;
+				padding-left: 6px;
+				border-radius: 5px;
+				width: 136%;
+			}
+
+			.dateButton {
+				background-color: rgba(0,0,0,0);
+				border: 0px;
 			}
 
 		}
@@ -274,16 +288,12 @@ $moneyGreen:				#038312;
 		.postEventButton {
 		  border: 0.6px solid #b4b4b4;
 		  background: #00440b;
-		  background: -webkit-gradient(linear, left top, left bottom, from(#006210), to(#00440b));
-		  background: -webkit-linear-gradient(top, #006210, #00440b);
-		  background: -moz-linear-gradient(top, #006210, #00440b);
-		  background: -ms-linear-gradient(top, #006210, #00440b);
-		  background: -o-linear-gradient(top, #006210, #00440b);
+		  @include background(#00af1d, #007513);
 		  padding: 13.5px 26px;
 		  -webkit-border-radius: $buttonRadius + 5px;
 		  -moz-border-radius: $buttonRadius + 5px;
 		  border-radius: $buttonRadius + 5px;
-		  color: #b7b7b7;
+		  color: #e3e3e3;
 		  font-size: 15px;
 		  text-decoration: none;
 		  vertical-align: middle;
@@ -292,7 +302,7 @@ $moneyGreen:				#038312;
 		  border-top-color: #28597a;
 	  }
 		.postEventButton:active {
-		  border-top-color: #1b435e;
+		  @include background(#00380a, #00590f);
 		}	
 	}
 }

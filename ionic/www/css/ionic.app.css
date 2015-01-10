@@ -66,7 +66,7 @@ $dark:                            #444 !default;
     padding: 10px 10px;
     border-radius: 15px; }
   .newEventModal .textInput {
-    background-color: #868686;
+    background-color: #c6c6c6;
     color: #1e1e1e; }
   .newEventModal .title {
     margin-top: 1px;
@@ -112,18 +112,18 @@ $dark:                            #444 !default;
     .newEventModal .dateTime .timepick td {
       margin-left: 10px; }
     .newEventModal .dateTime .timepick input {
-      background-color: #868686;
+      background-color: #c6c6c6;
       margin-top: 5px;
       padding: 0px;
       color: #1e1e1e; }
     .newEventModal .dateTime .timepick button {
-      background-color: #868686;
+      background-color: #c6c6c6;
       margin-left: 14px;
       margin-top: -3px;
-      border: 1px solid #868686; }
+      border: 1px solid #c6c6c6; }
     .newEventModal .dateTime .timepick .textInput {
       padding: 1px 0 0 4px;
-      background-color: #868686;
+      background-color: #c6c6c6;
       color: #1e1e1e; }
     .newEventModal .dateTime .timepick p button {
       margin-top: -10px; }
@@ -133,7 +133,12 @@ $dark:                            #444 !default;
       position: fixed;
       margin-top: -3px; }
       .newEventModal .dateTime .date .textInput {
-        padding-left: 3px; }
+        padding-left: 6px;
+        border-radius: 5px;
+        width: 136%; }
+      .newEventModal .dateTime .date .dateButton {
+        background-color: rgba(0, 0, 0, 0);
+        border: 0px; }
     .newEventModal .dateTime .endDate {
       margin-left: 5px; }
   .newEventModal .categoryCost {
@@ -144,7 +149,7 @@ $dark:                            #444 !default;
       color: #b4b4b4;
       display: inline-block; }
     .newEventModal .categoryCost select, .newEventModal .categoryCost .priceInput {
-      background-color: #868686;
+      background-color: #c6c6c6;
       border: 0px; }
     .newEventModal .categoryCost .cost {
       margin-left: 10px; }
@@ -178,23 +183,27 @@ $dark:                            #444 !default;
     .newEventModal .postButtons .postEventButton {
       border: 0.6px solid #b4b4b4;
       background: #00440b;
-      background: -webkit-gradient(linear, left top, left bottom, from(#006210), to(#00440b));
-      background: -webkit-linear-gradient(top, #006210, #00440b);
-      background: -moz-linear-gradient(top, #006210, #00440b);
-      background: -ms-linear-gradient(top, #006210, #00440b);
-      background: -o-linear-gradient(top, #006210, #00440b);
+      background: -webkit-gradient(linear, left top, left bottom, from(#00af1d), to(#007513));
+      background: -webkit-linear-gradient(top, #00af1d, #007513);
+      background: -moz-linear-gradient(top, #00af1d, #007513);
+      background: -ms-linear-gradient(top, #00af1d, #007513);
+      background: -o-linear-gradient(top, #00af1d, #007513);
       padding: 13.5px 26px;
       -webkit-border-radius: 9px;
       -moz-border-radius: 9px;
       border-radius: 9px;
-      color: #b7b7b7;
+      color: #e3e3e3;
       font-size: 15px;
       text-decoration: none;
       vertical-align: middle; }
     .newEventModal .postButtons .postEventButton:hover {
       border-top-color: #28597a; }
     .newEventModal .postButtons .postEventButton:active {
-      border-top-color: #1b435e; }
+      background: -webkit-gradient(linear, left top, left bottom, from(#00380a), to(#00590f));
+      background: -webkit-linear-gradient(top, #00380a, #00590f);
+      background: -moz-linear-gradient(top, #00380a, #00590f);
+      background: -ms-linear-gradient(top, #00380a, #00590f);
+      background: -o-linear-gradient(top, #00380a, #00590f); }
 
 .transparent {
   background-color: transparent !important; }
