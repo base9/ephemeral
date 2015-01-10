@@ -26,7 +26,8 @@ module.exports = {
   fetchBatchDataFromKimonoAPI: fetchBatchDataFromKimonoAPI,
   fetchBatchDataFromEventbriteAPI: fetchBatchDataFromEventbriteAPI,
   getCoordsFromAddress: getCoordsFromAddress,
-  getAddressFromCoords: getAddressFromCoords
+  getAddressFromCoords: getAddressFromCoords,
+  addManySpoofs: addManySpoofs
 };
 
 /******************** Generic DB interactions **********************/
@@ -54,9 +55,32 @@ function addOne(req, res) {
   utils.addEventRecord(req.body, res);
 }
 
-function getLocal(req, res) {
-  Event.query(function(qb){
+function addManySpoofs(req,res){
+  res.status(200).end();
+  var numSpoofs = req.query.number;
+  for(var i = 0; i < numSpoofs; i++){
+    var newEvent = new Event({
+      title: 'Spoof event #' + i,
+      startTime: Date.now(),
+      endTime: Date.now()+20000000,
+      lat: utils.generateRandomLat(),
+      lng: utils.generateRandomLong(),
+      user_id: 1,
+      info: 'info for spoof event #' + i,
+      category: 'Party',
+      streetAddress1: '1 Embarcadero Blvd',
+      streetAddress2: 'Suite 101',
+      city: 'San Francisco',
+      state: 'CA',
+      zipCode: '94102',
+      price: Math.random()*100
+    })
+    .save();
+  }
+}
 
+function getLocal(req, res) {
+    
     //two dates are used to get modified
     var date1 = new Date();
     var date2 = new Date();
@@ -71,18 +95,17 @@ function getLocal(req, res) {
     date2.setDate(date1.getDate() + 1);
     var endingDate = date2.setHours(3, 0, 0, 0);
 
-    console.log("RANGE", beginningDate, endingDate, "CURRENT TIME", currentTime);
+  Event.query(function(qb){
 
     //Narrows down events based on specified location
-    qb.whereBetween('lat', [req.query.lat1,req.query.lat2]);
-    qb.whereBetween('lng', [req.query.lng1,req.query.lng2]);
+    qb.whereBetween('lat', [Math.min(req.query.lat1,req.query.lat2),Math.max(req.query.lat1,req.query.lat2)]);
+    qb.whereBetween('lng', [Math.min(req.query.lng1,req.query.lng2),Math.max(req.query.lng1,req.query.lng2)]);
 
     //Narrows down events within specified ISO8601 time
     qb.where('startTime', '<', endingDate)
       .andWhere('endTime', '>', beginningDate)
       .andWhere('endTime', '>', currentTime)
       .orWhere('endTime', null);
-
   })
   .fetchAll({
      withRelated: ['user','rating']
