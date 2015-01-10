@@ -1,0 +1,14 @@
+breaking data-parser into a separate server:
+
+event model and schema and etc will remain in main repo
+
+
+scraper connections, cron jobs, date/time parsing, etc will go to parsing repo
+
+both repos will have a connection to the geocoding server (just in case)
+
+when new events are posted to the main server, it will pass them along to
+the parsing server as quickly as possible.
+
+
+
