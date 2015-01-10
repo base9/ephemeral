@@ -24,7 +24,8 @@ $dark:                            #444 !default;
 
 $bgGray:						rgba(30,30,30,0.92);
 $textGray: 					#b4b4b4;
-$inputGray: 				#868686;
+$inputBgGray: 			#868686;
+$inputFillText:			rgb(30,30,30);
 $placeholderGray: 	#555555;
 $inputRadius:				10px;
 $modalRadius:				15px;
@@ -36,6 +37,7 @@ $moneyGreen:				#038312;
 	
 	font-family: 'Muli', sans-serif;
 	border-radius: $modalRadius;
+	height: 100%;
 
 	::-webkit-input-placeholder {
 	   color: $placeholderGray;
@@ -86,8 +88,8 @@ $moneyGreen:				#038312;
   }
 
   .textInput {
-  	background-color: $inputGray;
-  	color: $placeholderGray;
+  	background-color: $inputBgGray;
+  	color: $inputFillText;
 
   }
 
@@ -107,7 +109,7 @@ $moneyGreen:				#038312;
 
   .addressForm {
   	width: 39.6%;
-  	margin-left: 16.6%;
+  	margin-left: 15.6%;
 
   	textarea {
   		height: 22px;
@@ -139,28 +141,138 @@ $moneyGreen:				#038312;
 
 		h4 {
 			font-size: 17px;
-			color: #b4b4b4;
+			color: $textGray;
+			display: inline-block;
+			margin-top: 13px;
+			position: fixed;
+		}
+
+		.timePickerDirective {
+			margin-left: 50px;
 			display: inline-block;
 		}
 
 		.timepick {
-			display: inline-block;
+
+			td {
+				margin-left: 10px;
+			}
 
 			input {
-				background-color: $inputGray;
+				background-color: #868686;
+				// width: 67%;
+				margin-top: 5px;
+				padding: 0px;
+				color: $inputFillText;
 			}
 
 			button {
-				background-color: $inputGray;
-				margin-left: 15px;
-				border: 1px solid $inputGray;	
+				background-color: $inputBgGray;
+				margin-left: 14px;
+				margin-top: -3px;
+				border: 1px solid $inputBgGray;	
 			}
-			
+
+			.textInput {
+					padding: 1px 0 0 4px;
+					background-color: $inputBgGray;
+					color: $inputFillText;
+			}
+
+			p {
+				button {
+					margin-top: -10px;
+				}
+			}
+		}
+
+		.date {
+			width: 112px;
+			display: inline-block;
+			position: fixed;
+			margin-top: -3px
+		}
+
+		.endDate {
+			margin-left: 5px;
 		}
 
 	}
 
+	.categoryCost {
+		width: 39.6%;
+  	margin-left: 16.6%;
 
+  	h4 {
+  		font-size: 17px;
+  		color: $textGray;
+  		display: inline-block;
+  	}
+
+  	select, .priceInput {
+  		background-color: $inputBgGray;
+  		border: 0px;
+  	}
+
+  	.cost {
+  		margin-left: 10px;
+  	}
+
+  	.priceInput {
+	  	width: 15%;
+	  	display: inline-block;
+	  	height: 20px;
+  	}
+	}
+
+	.postButtons {
+		margin-top: 15px;
+		width: 39.6%;
+		margin-left: 29%;
+
+		.cancelEventButton {
+		  border: 1px solid #b4b4b4;
+		  padding: 13.5px 26px;
+		  background-color: rgba(0,0,0,0);
+		  -webkit-border-radius: $buttonRadius + 5px;
+		  -moz-border-radius: $buttonRadius + 5px;
+		  border-radius: $buttonRadius + 5px;
+		  color: #b7b7b7;
+		  font-size: 15px;
+		  text-decoration: none;
+		  vertical-align: middle;
+		  margin-right: 15px;
+		}
+		.cancelEventButton:active {
+		  background-color: #b7b7b7;
+		  color: rgb(30,30,30);
+		}
+
+		.postEventButton {
+		  border: 0.6px solid #b4b4b4;
+		  background: #00440b;
+		  background: -webkit-gradient(linear, left top, left bottom, from(#006210), to(#00440b));
+		  background: -webkit-linear-gradient(top, #006210, #00440b);
+		  background: -moz-linear-gradient(top, #006210, #00440b);
+		  background: -ms-linear-gradient(top, #006210, #00440b);
+		  background: -o-linear-gradient(top, #006210, #00440b);
+		  padding: 13.5px 26px;
+		  -webkit-border-radius: $buttonRadius + 5px;
+		  -moz-border-radius: $buttonRadius + 5px;
+		  border-radius: $buttonRadius + 5px;
+		  color: #b7b7b7;
+		  font-size: 15px;
+		  text-decoration: none;
+		  vertical-align: middle;
+		}
+		.postEventButton:hover {
+		  border-top-color: #28597a;
+	  }
+		.postEventButton:active {
+		  border-top-color: #1b435e;
+		}
+		
+	}
 
 
 }

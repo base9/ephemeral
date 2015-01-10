@@ -16,7 +16,8 @@ $dark:                            #444 !default;
 */
 .newEventModal {
   font-family: 'Muli', sans-serif;
-  border-radius: 15px; }
+  border-radius: 15px;
+  height: 100%; }
   .newEventModal ::-webkit-input-placeholder {
     color: #555555;
     font-family: 'Muli', sans-serif; }
@@ -57,7 +58,7 @@ $dark:                            #444 !default;
     background-color: rgba(30, 30, 30, 0.92); }
   .newEventModal .textInput {
     background-color: #868686;
-    color: #555555; }
+    color: #1e1e1e; }
   .newEventModal .title {
     margin-top: 1px;
     height: 40px;
@@ -69,7 +70,7 @@ $dark:                            #444 !default;
     width: 50%; }
   .newEventModal .addressForm {
     width: 39.6%;
-    margin-left: 16.6%; }
+    margin-left: 15.6%; }
     .newEventModal .addressForm textarea {
       height: 22px;
       margin: 6px 10px;
@@ -93,15 +94,92 @@ $dark:                            #444 !default;
     .newEventModal .dateTime h4 {
       font-size: 17px;
       color: #b4b4b4;
+      display: inline-block;
+      margin-top: 13px;
+      position: fixed; }
+    .newEventModal .dateTime .timePickerDirective {
+      margin-left: 50px;
       display: inline-block; }
-    .newEventModal .dateTime .timepick {
+    .newEventModal .dateTime .timepick td {
+      margin-left: 10px; }
+    .newEventModal .dateTime .timepick input {
+      background-color: #868686;
+      margin-top: 5px;
+      padding: 0px;
+      color: #1e1e1e; }
+    .newEventModal .dateTime .timepick button {
+      background-color: #868686;
+      margin-left: 14px;
+      margin-top: -3px;
+      border: 1px solid #868686; }
+    .newEventModal .dateTime .timepick .textInput {
+      padding: 1px 0 0 4px;
+      background-color: #868686;
+      color: #1e1e1e; }
+    .newEventModal .dateTime .timepick p button {
+      margin-top: -10px; }
+    .newEventModal .dateTime .date {
+      width: 112px;
+      display: inline-block;
+      position: fixed;
+      margin-top: -3px; }
+    .newEventModal .dateTime .endDate {
+      margin-left: 5px; }
+  .newEventModal .categoryCost {
+    width: 39.6%;
+    margin-left: 16.6%; }
+    .newEventModal .categoryCost h4 {
+      font-size: 17px;
+      color: #b4b4b4;
       display: inline-block; }
-      .newEventModal .dateTime .timepick input {
-        background-color: #868686; }
-      .newEventModal .dateTime .timepick button {
-        background-color: #868686;
-        margin-left: 15px;
-        border: 1px solid #868686; }
+    .newEventModal .categoryCost select, .newEventModal .categoryCost .priceInput {
+      background-color: #868686;
+      border: 0px; }
+    .newEventModal .categoryCost .cost {
+      margin-left: 10px; }
+    .newEventModal .categoryCost .priceInput {
+      width: 15%;
+      display: inline-block;
+      height: 20px; }
+  .newEventModal .postButtons {
+    margin-top: 15px;
+    width: 39.6%;
+    margin-left: 29%; }
+    .newEventModal .postButtons .cancelEventButton {
+      border: 1px solid #b4b4b4;
+      padding: 13.5px 26px;
+      background-color: rgba(0, 0, 0, 0);
+      -webkit-border-radius: 9px;
+      -moz-border-radius: 9px;
+      border-radius: 9px;
+      color: #b7b7b7;
+      font-size: 15px;
+      text-decoration: none;
+      vertical-align: middle;
+      margin-right: 15px; }
+    .newEventModal .postButtons .cancelEventButton:active {
+      background-color: #b7b7b7;
+      color: #1e1e1e; }
+    .newEventModal .postButtons .postEventButton {
+      border: 0.6px solid #b4b4b4;
+      background: #00440b;
+      background: -webkit-gradient(linear, left top, left bottom, from(#006210), to(#00440b));
+      background: -webkit-linear-gradient(top, #006210, #00440b);
+      background: -moz-linear-gradient(top, #006210, #00440b);
+      background: -ms-linear-gradient(top, #006210, #00440b);
+      background: -o-linear-gradient(top, #006210, #00440b);
+      padding: 13.5px 26px;
+      -webkit-border-radius: 9px;
+      -moz-border-radius: 9px;
+      border-radius: 9px;
+      color: #b7b7b7;
+      font-size: 15px;
+      text-decoration: none;
+      vertical-align: middle; }
+    .newEventModal .postButtons .postEventButton:hover {
+      border-top-color: #28597a; }
+    .newEventModal .postButtons .postEventButton:active {
+      border-top-color: #1b435e; }
 
 .transparent {
   background-color: transparent !important; }
