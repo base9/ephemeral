@@ -63,6 +63,7 @@ $dark:                            #444 !default;
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
     border-radius: 10px;
+    border-radius: 10px;
     margin: -10px -10px;
     z-index: -1;
     opacity: 0.2; }
@@ -77,12 +78,17 @@ $dark:                            #444 !default;
     padding-left: 10px;
     padding-top: 12px;
     resize: none; }
-  .newEventModal .background {
-    padding: 10px 10px;
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    -ms-border-radius: 15px;
-    border-radius: 15px; }
+  .newEventModal #addPhotoButton {
+    width: 120px;
+    height: 120px;
+    padding-top: 38px;
+    padding-left: 2px;
+    margin-left: 20px;
+    text-align: center;
+    background-color: #555555;
+    cursor: pointer;
+    color: #aeaeae;
+    font-size: 18px; }
   .newEventModal .textInput {
     background-color: #c6c6c6;
     color: #1e1e1e; }
@@ -159,7 +165,8 @@ $dark:                            #444 !default;
         width: 136%; }
       .newEventModal .dateTime .date .dateButton {
         background-color: rgba(0, 0, 0, 0);
-        border: 0px; }
+        border: 0px;
+        padding-left: 3px; }
     .newEventModal .dateTime .endDate {
       margin-left: 5px; }
   .newEventModal .categoryCost {
@@ -224,7 +231,8 @@ $dark:                            #444 !default;
       background: -webkit-linear-gradient(top, #00380a, #00590f);
       background: -moz-linear-gradient(top, #00380a, #00590f);
       background: -ms-linear-gradient(top, #00380a, #00590f);
-      background: -o-linear-gradient(top, #00380a, #00590f); }
+      background: -o-linear-gradient(top, #00380a, #00590f);
+      border-top-color: #1b435e; }
 
 .transparent {
   background-color: transparent !important; }

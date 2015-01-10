@@ -89,6 +89,7 @@ $moneyGreen:				#038312;
 		height: 68%;
 		position: fixed;
 		@include border-radius(10px);
+		border-radius: 10px;
 		margin: -10px -10px;
 		z-index: -1;
 		opacity: 0.2;
@@ -111,12 +112,20 @@ $moneyGreen:				#038312;
 		resize: none;
 	}
 
-  .background {
-  	padding: 10px 10px;
-  	@include border-radius($modalRadius);
-		// background-color: $bgGray;
+	
+	#addPhotoButton {
+    width: 120px;
+    height: 120px;
+    padding-top: 38px;
+    padding-left: 2px;
+    margin-left: 20px;
+    text-align: center;
+    background-color: $placeholderGray;
+    cursor: pointer;
+    color: #aeaeae;
+    font-size: 18px;
   }
-
+  
   .textInput {
   	background-color: $inputBgGray;
   	color: $inputFillText;
@@ -231,6 +240,7 @@ $moneyGreen:				#038312;
 			.dateButton {
 				background-color: rgba(0,0,0,0);
 				border: 0px;
+				padding-left: 3px;
 			}
 
 		}
@@ -305,6 +315,7 @@ $moneyGreen:				#038312;
 		}
 		.postEventButton:active {
 		  @include background(#00380a, #00590f);
+		  border-top-color: #1b435e;
 		}	
 	}
 }
