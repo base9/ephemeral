@@ -162,6 +162,7 @@ $dark:                            #444 !default;
         -moz-border-radius: 5px;
         -ms-border-radius: 5px;
         border-radius: 5px;
+        border-radius: 5px;
         width: 136%; }
       .newEventModal .dateTime .date .dateButton {
         background-color: rgba(0, 0, 0, 0);
@@ -221,6 +222,9 @@ $dark:                            #444 !default;
       -webkit-border-radius: 9px;
       -moz-border-radius: 9px;
       -ms-border-radius: 9px;
+      border-radius: 9px;
+      -webkit-border-radius: 9px;
+      -moz-border-radius: 9px;
       border-radius: 9px;
       color: #e3e3e3;
       font-size: 15px;
