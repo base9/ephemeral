@@ -109,8 +109,6 @@ angular.module('radar')
 
 	/* NEW EVENT MODAL */
 
-	
-
 	$scope.getCurrentAddress = function() {
 		console.log("getting address");
 		Map.findCurrentLocation(function(coords) {	
@@ -159,19 +157,5 @@ angular.module('radar')
 		});
 	};
 
-	// $scope.startDateTime = new Date();
-	// $scope.endDateTime;
 
 }]);
-
-// angular.module('radar').controller('ModalCtrl', function ($scope, $modalInstance) {
-
-//   $scope.ok = function () {
-//     $modalInstance.close();
-//   };
-
-//   $scope.cancel = function () {
-//     $modalInstance.dismiss('cancel');
-//   };
-
-// });
