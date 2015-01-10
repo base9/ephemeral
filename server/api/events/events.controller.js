@@ -210,7 +210,7 @@ function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
   .then(function (res) {
     var body = JSON.parse(res[0].body);
     body.events.forEach(function(event){
-      console.log("**********EVENT************", event.ticket_classes[0]);
+      console.log("**********EVENT************", event.description.text);
       if (event.category === null) {
         event.category = {name: 'Other'};
       }
@@ -222,7 +222,7 @@ function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
             streetAddress1: event.venue.address.address_1,
             streetAddress2: (event.venue.address.address_2 ? event.venue.address.address_2 : ''),
             url: event.organizer.url,
-            lat: event.venue.latitude,  
+            lat: event.venue.latitude,
             lng: event.venue.longitude,
             startTime: Date.parse(event.start.utc),
             endTime: Date.parse(event.end.utc),
@@ -237,25 +237,25 @@ function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
         }
       });
     });
-    console.log("LIST OF CATEGORIES", categories);
   });
 }
 
 function categoryFilter(eventCategory) {
   if (eventCategory === 'Sports & Fitness' || eventCategory === 'Health & Wellness') {
-    return eventCategory = 'Fitness';
+    eventCategory = 'Fitness';
   } else if (eventCategory === 'Hobbies & Special Interest' || eventCategory === 'Home & Lifestyle') {
-    return eventCategory = 'Personal Interest';
+    eventCategory = 'Personal Interest';
   } else if (eventCategory === 'Music' || eventCategory === 'Film, Media & Entertainment' || eventCategory === 'Performing & Visual Arts') {
-    return eventCategory = 'Music and Entertainment';
+    eventCategory = 'Music and Entertainment';
   } else if (eventCategory === 'Community & Culture' || eventCategory === 'Charity & Causes') {
-    return eventCategory = 'Community and Culture';
+    eventCategory = 'Community and Culture';
   } else if (eventCategory === 'Food & Drink') {
-    return eventCategory = 'Food and Drink';
+    eventCategory = 'Food and Drink';
   } else if (eventCategory === 'Travel & Outdoor') {
-    return eventCategory = 'Travel and Outdoor';
+    eventCategory = 'Travel and Outdoor';
   } else {
-    return eventCategory = 'Other';
+    eventCategory = 'Other';
   }
+  return eventCategory;
 }
 

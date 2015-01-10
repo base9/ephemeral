@@ -1,12 +1,11 @@
 angular.module('radar')
 .factory('MarkerFactory', function() {
   var markerObj = {};
-  markers = [];
+  var markers = [];
 
   //filters is an object with properties popularity, category, distance, and keyword
   markerObj.placeMarkers = function(map, events, callback) {
 
-    markers = [];
     var bounds = new google.maps.LatLngBounds();
 
     if (events.length === 0) {
@@ -27,10 +26,10 @@ angular.module('radar')
   };
   //not using other above function because no callback is needed
   markerObj.filterMarkers = function(map, objFilters, filters) {
-
+    // debugger;
     // remove all existing markers
-    clearMarkers(markers);
-    var markers = [];
+    clearMarkers();
+
     var bounds = new google.maps.LatLngBounds();
 
     var events = objFilters.events;
@@ -43,7 +42,7 @@ angular.module('radar')
       if (filters.category) {
         events = filterCategory(events, filters.category);
       }
-      //filter.distance is number in miles
+      //filter.distance is a number in miles
       if (filters.distance) {
         events = filterDistance(events, objFilters.location, filters.distance);
       }
@@ -66,7 +65,7 @@ angular.module('radar')
       if (filters.time.now || filters.time.startTime || filters.time.endTime) {
         events = filterTime(events, filters.time.now, filters.time.startTime, filters.time.endTime);
       }
-
+      console.log("NEW EVENTS", events);
     }
 
     createMarkers(map, events, markers, bounds);
@@ -96,7 +95,7 @@ angular.module('radar')
         fillColor: 'green',
         fillOpacity: 0.35,
         center: position,
-        radius: Math.random()*150
+        radius: Math.random([0.2, 1])*150
       }));
 
       bounds.extend(position);
@@ -104,7 +103,7 @@ angular.module('radar')
   };
 
   //Removes all markers on the map
-  var clearMarkers = function(markers) {
+  var clearMarkers = function() {
     for (var i = 0; i < markers.length; i++) {
       markers[i].setMap(null);
     }
@@ -143,25 +142,33 @@ angular.module('radar')
 
   var filterKeyword = function(events, keywords) {
     var results = [];
-    for (var j = 0; j < keywords.length; j++) {
+    var count = 0;
+    for (var i = 0; i < events.length; i++) {
       var match = false;
-      for (var i = 0; i < events.length; i++) {
-        if (keywords[j] === events[i]) {
+      for (var j = 0; j < keywords.length; j++) {
+        if (events[i].info.search(keywords[j]) !== -1) {
+          console.log("MATCH");
           match = true;
           break;
         }
       }
-      if (!match) {
-        return {'foundMatch': false};
+      if (match) {
+        results.push(events[i]);
+        count++;
       }
     }
-    return {'foundMatch': true, 'results': results};
+    if (count > 0) {
+      return {'foundMatch': true, 'results': results}; 
+    } else {
+      return {'foundMatch': false};
+    }
   };
 
   var filterCost = function(events, lowCost, highCost) {
     var results = [];
     for (var i = 0; i < events.length; i++) {
-      if (events[i].cost >= lowCost && events[i].cost <= highCost) {
+      console.log(lowCost, events[i].price, highCost);
+      if (events[i].price >= lowCost && events[i].price <= highCost) {
         results.push(events[i]);
       }
     }

@@ -24,7 +24,7 @@ angular.module('radar')
 
     var map = Map.initialize();
 
-    var myMarker = Map.geoLocate(function(location) {
+    Map.geoLocate(function(location) {
       listOfMarkers.location = {'lat': location.latitude, 'lng': location.longitude};
       console.log("LIST OF MARKERS: ", listOfMarkers);
     });
@@ -59,8 +59,8 @@ angular.module('radar')
       });
     });
 
-    this.filter = function(filters) {
-      Marker.filterMarkers(map, listOfMarkers, filters);
-    };
+  this.filter = function(filters) {
+    Marker.filterMarkers(map, listOfMarkers, filters);
+  };
 
 }]);
