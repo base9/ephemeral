@@ -16,6 +16,7 @@ db.schema.hasTable('events').then(function (exists) {
       evnt.bigInteger('endTime', 255).index();
       evnt.decimal('price');
       // evnt.timestamp('revealTime', 255);
+      evnt.string('url', 255);
       evnt.string('info', 2000);
       evnt.string('category', 50);
       evnt.string('streetAddress1', 100);

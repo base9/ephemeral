@@ -49,9 +49,9 @@ function getOne(req, res) {
 }
 
 function addOne(req, res) {
-
   // TODO: if (!req.body.coords) -> Make util call for address string from coords.lat,coords.lng;
   // TODO: add result of above operation to req.body/query for addEventRecord call
+  console.log("Sending New Post to Database: ",req.body);
   utils.addEventRecord(req.body, res);
 }
 
@@ -113,7 +113,6 @@ function getLocal(req, res) {
     utils.sendResponse(utils.formatAndTrimEventRecords(collection),res);
   });
 }
-
 
 /************** Geocoding ******************/
 
@@ -188,6 +187,7 @@ function addEventFromKimono(event){
 
 /************** Eventbrite API functions ******************/
 
+var categories = [];
 
 function fetchBatchDataFromEventbriteAPI(){
   console.log('req received at eventbrite endpoint!');
@@ -210,14 +210,24 @@ function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
   .then(function (res) {
     var body = JSON.parse(res[0].body);
     body.events.forEach(function(event){
+      console.log("**********EVENT************", event.description.text);
+      if (event.category === null) {
+        event.category = {name: 'Other'};
+      }
+      categories.push(event.category.name);
       Event.where({title:event.name.text}).fetch().then(function (record) {
         if(!record){
           utils.addEventRecord({
             title: event.name.text,
-            lat: event.venue.latitude,  
+            streetAddress1: event.venue.address.address_1,
+            streetAddress2: (event.venue.address.address_2 ? event.venue.address.address_2 : ''),
+            url: event.organizer.url,
+            lat: event.venue.latitude,
             lng: event.venue.longitude,
             startTime: Date.parse(event.start.utc),
             endTime: Date.parse(event.end.utc),
+            category: categoryFilter(event.category.name),
+            price: (event.ticket_classes[0].free ? 0 : ((event.ticket_classes[0].cost.value / 100) + (event.ticket_classes[0].fee.value / 100))),
             info: ((event.description && event.description.text) ? event.description.text.slice(0,2000) : '')
             //TODO: user_id should be a special account reserved for Eventbrite_bot
             //TODO: do something better than a title match for preventing duplicate entries
@@ -230,6 +240,22 @@ function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
   });
 }
 
-
-
+function categoryFilter(eventCategory) {
+  if (eventCategory === 'Sports & Fitness' || eventCategory === 'Health & Wellness') {
+    eventCategory = 'Fitness';
+  } else if (eventCategory === 'Hobbies & Special Interest' || eventCategory === 'Home & Lifestyle') {
+    eventCategory = 'Personal Interest';
+  } else if (eventCategory === 'Music' || eventCategory === 'Film, Media & Entertainment' || eventCategory === 'Performing & Visual Arts') {
+    eventCategory = 'Music and Entertainment';
+  } else if (eventCategory === 'Community & Culture' || eventCategory === 'Charity & Causes') {
+    eventCategory = 'Community and Culture';
+  } else if (eventCategory === 'Food & Drink') {
+    eventCategory = 'Food and Drink';
+  } else if (eventCategory === 'Travel & Outdoor') {
+    eventCategory = 'Travel and Outdoor';
+  } else {
+    eventCategory = 'Other';
+  }
+  return eventCategory;
+}
 
