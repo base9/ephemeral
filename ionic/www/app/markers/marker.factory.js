@@ -84,18 +84,11 @@ angular.module('radar')
       var event = events[i];
       var position = new google.maps.LatLng(event.lat, event.lng);
 
-      markers.push(new google.maps.Circle({
+      markers.push(new RichMarker({
         map: map,
-        title: event.title,
-        // icon: image,
         position: position,
-        strokeColor: 'green',
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: 'green',
-        fillOpacity: 0.35,
-        center: position,
-        radius: Math.random([0.2, 1])*150
+        draggable: false,
+        content: '<div class="richmarker">Rich</div>'
       }));
 
       bounds.extend(position);
