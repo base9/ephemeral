@@ -186,3 +186,53 @@ $moneyGreen:				#038312;
 }
 
 
+.richmarker {
+  &.popularity-1 {
+    color: red;
+  }
+  &.popularity-2 {
+    color: orange;
+    // glow
+  }
+  &.popularity-3 {
+    color: yellow;
+    // glow
+  }
+  &.popularity-4 {
+    color: blue;
+    // glow
+  }
+  &.popularity-5 {
+    color: green;
+    font-size: 32px;
+    font-weight: bold;
+    // glow
+  }
+
+  &.now {
+    // radiating circles
+  }
+
+  // event types
+  &.fitness {
+    img {
+      content: url('/img/url/here');
+    }
+  }
+  &.party {
+    img {
+      
+    }
+  }
+  &.fitness {
+    img {
+      
+    }
+  }
+  &.fitness {
+    img {
+      
+    }
+  }
+
+}
