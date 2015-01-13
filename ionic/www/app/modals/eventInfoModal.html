@@ -1,42 +1,58 @@
-<ion-modal-view class="eventInfoWindow">
-  <ion-content>
+<i class="icon ion-ios7-close close-modal" ng-click="closeModal()"></i>
 
-  	<div class="headBar">
-	  	<img src="{{mainPhoto.url}}" class="mainPhoto"/>
-	  	<h1 class="title"> {{title}} </h1>
-	  	<img ng-show="!liked" src="./img/thumbs_up_grey.png"/>
-	  	<img ng-show="liked" src="./img/thumbs_up_green.png"/>
-	  	<h2>{{likes}}</h2>
-	    <h3 class="info"> {{info}} </h3>
+<ion-modal-view class="eventInfoWindow">
+	<!-- <div class="background"> -->
+  	<div class="mainInfo">
+  		<div class="photoContainer">
+		  	<img src="{{eventInfo.mainPhoto.url}}" class="mainPhoto"/>
+		  </div>
+	  	<h2 class="eventTitle"> {{eventInfo.title}} </h2>
+	  	<img ng-show="!liked" src="./img/thumbs_up_grey.png" class="likeButton" ng-click="liked=!liked; eventInfo.ratings = eventInfo.ratings+1" />
+	  	<img ng-show="liked" src="./img/thumbs_up_green.png" class="likeButton" ng-click="liked=!liked; eventInfo.ratings = eventInfo.ratings-1";  />
+		  <h3 class="eventLikes"> {{eventInfo.ratings}} </h3>
+	  	<span class="eventInfo">
+		    <h4> {{eventInfo.info}} </h4>
+		  </span>
 	  </div>
 
 	  <div class="details">
-	    <h3 class="time"> {{startTime}} - {{endTime}} </h3>
-	    <h2 class="price"> {{price}} </h2>
-	    <h3 class="address"> {{streetAddress1}} </h3>
-	    <h3 class="address"> {{streetAddress2}} </h3>
-	    <h3 class="address"> {{city}}, {{state}} </h3>
+	    <h3 class="eventTime"> {{eventInfo.startDate}} - {{eventInfo.endDate}} </h3>
+	    <h2 class="eventPrice"> {{eventInfo.price}} </h2>
+	    <h3 class="eventAddress"> {{eventInfo.streetAddress1}} </h3>
+	    <h3 class="eventAddress"> {{eventInfo.streetAddress2}} </h3>
+	    <h3 class="eventAddress"> {{eventInfo.city}}, {{eventInfo.state}} </h3>
 	    <button class="directions"> Get Directions </button>
 	  </div>
-	
+ 	
 	  <div class="photoComments">
 	   	<div class="photos">
-		   	<span ng-repeat="photo in photos">
-		   		<img src="{{photo.url}}" class="">
-		   	</span>
-		   	<span class="addPhoto">
-		   		<button class="addPhotoButton"> Add <br/> Photo </button>
-		   	</span>
+		   	<div ng-repeat="photo in eventInfo.photos" class="photoContainer">
+		   		<img src="{{photo.url}}" class="eventPhoto">
+		   	</div>
+		   	<div class="addPhoto photoContainer">
+		   	  <form action="" method="POST" enctype="multipart/form-data">
+		   	     <div id="addPhotoButton" ng-click="getFile()">Add<br>Photo</div>
+		   	     <div style='height: 0px;width:0px; overflow:hidden;'><input id="upfile" type="file" value="upload"/></div>
+		   	   </form>
+		   	</div>
 	   	</div>
-	   	<h2 class="commentsLabel"> Comments </h2>
 	   	<div class="comments">
-	   		<input type="text" maxlength="140" placeHolder="add a comment..." />
-	   		<button class="submitComment"> submit </button>
-	   		<span ng-repeat="comment in comments">
-	   			<h5> {{comment}} </h5>
-	   		</span>
+	   		<div class="commentsLabel">
+	   			<h2> Comments </h2>
+	   		</div>
+	   		<div class="commentsInputDisplay">
+		   		<div class="commentsInput">
+			   		<input type="text" ng-model="newComment" class="inputComment" maxlength="140" placeHolder="add a comment..." />
+			   		<button class="submitComment" ng-click="submitComment(newComment, eventInfo.id); newComment='' "> submit </button>
+			   	</div>
+			   	<div class="commentsDisplay">
+			   		<span ng-repeat="obj in eventInfo.comments">
+			   			<h5> {{obj.comment}} </h5>
+			   		</span>
+			   	</div>
+			  </div>
 	   	</div>
 	  </div>
 	  
-  </ion-content>
+  <!-- </div> -->
 </ion-modal-view>

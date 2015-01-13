@@ -217,6 +217,22 @@ angular.module('radar')
     });
   };
 
+
+  /************ EVENT INFO MODAL **************/
+  $scope.liked = false;
+  $scope.submitComment = function(comment, eventId) {
+  $scope.eventInfo.comments.unshift({comment: comment})
+    Http.addComment({
+      user_id: 1,
+      eventId: eventId,
+      comment: comment
+    }, function() {
+      Http.getOneEvent(eventId, function(eventInfo) {
+        // $scope.eventInfo.comments = eventInfo.comments.reverse();
+      })
+    })
+  }
+
   /*************  UI Bootstrap Datepicker Functions ************/
   $scope.today = function() {
     $scope.startDate = new Date();

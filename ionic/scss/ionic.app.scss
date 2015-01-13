@@ -40,13 +40,55 @@ $moneyGreen:				#038312;
 	background: -o-linear-gradient(top, $color1, $color2);
 }
 
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+/*********** POST NEW EVENT MODAL **********/
+
+#addPhotoButton {
+  width: 120px;
+  height: 120px;
+  padding-top: 38px;
+  padding-left: 2px;
+  text-align: center;
+  background-color: $placeholderGray;
+  cursor: pointer;
+  color: #aeaeae;
+  font-size: 18px;
+}
+
+::-webkit-input-placeholder {
+   color: $placeholderGray;
+   font-family: 'Muli', sans-serif;
+}
+::-webkit-input-placeholder {
+   color: $placeholderGray;
+   font-family: 'Muli', sans-serif;
+}
+:-moz-placeholder { /* Firefox 18- */
+   color: $placeholderGray;
+   font-family: 'Muli', sans-serif;  
+}
+::-moz-placeholder {  /* Firefox 19+ */
+   color: $placeholderGray;
+   font-family: 'Muli', sans-serif;  
+}
+:-ms-input-placeholder {  
+   color: $placeholderGray;
+   font-family: 'Muli', sans-serif;  
+}
+
 .newEventModal {
 
 	.bgImage, .bgSolid {
 		width: 100%;
 		height: 68%;
 		position: fixed;
-		border-radius: 10px;
+		@include border-radius(10px);
 		margin: -10px -10px;
 		z-index: -1;
 		opacity: 0.2;
@@ -57,54 +99,21 @@ $moneyGreen:				#038312;
 	}
 	
 	font-family: 'Muli', sans-serif;
-	border-radius: $modalRadius;
+	@include border-radius($modalRadius);
 	height: 100%;
 
-	::-webkit-input-placeholder {
-	   color: $placeholderGray;
-	   font-family: 'Muli', sans-serif;
-	}
-	::-webkit-input-placeholder {
-	   color: $placeholderGray;
-	   font-family: 'Muli', sans-serif;
-	}
-	:-moz-placeholder { /* Firefox 18- */
-	   color: $placeholderGray;
-	   font-family: 'Muli', sans-serif;  
-	}
-	::-moz-placeholder {  /* Firefox 19+ */
-	   color: $placeholderGray;
-	   font-family: 'Muli', sans-serif;  
-	}
-	:-ms-input-placeholder {  
-	   color: $placeholderGray;
-	   font-family: 'Muli', sans-serif;  
-	}
 
 	input, textarea {
-		border-radius: $buttonRadius;
+		@include border-radius($buttonRadius);
 		margin: 8px 10px;
 		padding-left: 10px;
 		padding-top: 12px;
 		resize: none;
 	}
-	
-	#addPhotoButton {
-    width: 120px;
-    height: 120px;
-    padding-top: 38px;
-    padding-left: 2px;
-    margin-left: 20px;
-    text-align: center;
-    background-color: $placeholderGray;
-    cursor: pointer;
-    color: #aeaeae;
-    font-size: 18px;
-  }
 
   .background {
   	padding: 10px 10px;
-  	border-radius: $modalRadius;
+  	@include border-radius($modalRadius);
 		// background-color: $bgGray;
   }
 
@@ -215,7 +224,7 @@ $moneyGreen:				#038312;
 
 			.textInput {
 				padding-left: 6px;
-				border-radius: 5px;
+				@include border-radius(5px);
 				width: 136%;
 			}
 
@@ -271,9 +280,7 @@ $moneyGreen:				#038312;
 		  border: 1px solid #b4b4b4;
 		  padding: 13.5px 26px;
 		  background-color: rgba(0,0,0,0);
-		  -webkit-border-radius: $buttonRadius + 5px;
-		  -moz-border-radius: $buttonRadius + 5px;
-		  border-radius: $buttonRadius + 5px;
+		  @include border-radius($buttonRadius + 5px);
 		  color: #b7b7b7;
 		  font-size: 15px;
 		  text-decoration: none;
@@ -290,17 +297,12 @@ $moneyGreen:				#038312;
 		  background: #00440b;
 		  @include background(#00af1d, #007513);
 		  padding: 13.5px 26px;
-		  -webkit-border-radius: $buttonRadius + 5px;
-		  -moz-border-radius: $buttonRadius + 5px;
-		  border-radius: $buttonRadius + 5px;
+		  @include border-radius($buttonRadius + 5px);
 		  color: #e3e3e3;
 		  font-size: 15px;
 		  text-decoration: none;
 		  vertical-align: middle;
 		}
-		.postEventButton:hover {
-		  border-top-color: #28597a;
-	  }
 		.postEventButton:active {
 		  @include background(#00380a, #00590f);
 		}	
@@ -309,6 +311,7 @@ $moneyGreen:				#038312;
 
 .transparent {
   background-color: transparent !important;
+
 }
 
 .close-modal {
@@ -324,6 +327,199 @@ $moneyGreen:				#038312;
   cursor: pointer;
   line-height: 0px;
   border: 0.5px solid #ddd;
+}
+
+
+/*********** EVENT INFO MODAL **********/
+
+.eventInfoWindow {
+	background-color: $bgGray;
+
+	::-webkit-input-placeholder {
+	   color: $placeholderGray;
+	   font-family: 'Muli', sans-serif;
+	}
+	::-webkit-input-placeholder {
+	   color: $placeholderGray;
+	   font-family: 'Muli', sans-serif;
+	}
+	:-moz-placeholder { /* Firefox 18- */
+	   color: $placeholderGray;
+	   font-family: 'Muli', sans-serif;  
+	}
+	::-moz-placeholder {  /* Firefox 19+ */
+	   color: $placeholderGray;
+	   font-family: 'Muli', sans-serif;  
+	}
+	:-ms-input-placeholder {  
+	   color: $placeholderGray;
+	   font-family: 'Muli', sans-serif;  
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		color: $textGray;
+  	font-family: 'Muli', sans-serif;
+	}
+
+	.background {
+  	padding: 20px 20px;
+  	@include border-radius($modalRadius);
+		background-color: $bgGray;
+		height: 100%;
+  }
+
+  .modal {
+		background-color: rgba(30,30,30,0.92);
+		padding: 20px;
+		border-radius: 15px;
+	}
+
+  .photoContainer {
+  	width: 120px; 
+  	height: 120px; 
+  	display: inline-block;
+  	margin-right: 10px;
+  	overflow: hidden;
+  	@include border-radius($buttonRadius);
+  }
+
+  .mainPhoto, .eventPhoto {
+  	height: 100%;
+  	display: inline-block;
+  	vertical-align: top;
+  }
+
+  .mainInfo {
+
+  	height: 145px;
+  	border-bottom: 1px solid #b4b4b4;
+
+	  .likeButton {
+	  	height: 22px;
+	  	vertical-align: top;
+	  	margin: 5px 4px 0 0;
+	  }
+
+
+	  .eventTitle {
+	  	display: inline-block;
+	  	vertical-align: top;
+	  	margin: 0 35px 0 0;
+	  }
+
+	  .eventLikes {
+	  	display: inline-block;
+	  	vertical-align: top;
+	  	margin-top: 4px;
+	  }
+
+	  .eventInfo {
+	  	height: 80px;
+			overflow: auto;
+			display: inline-block;
+			vertical-align: top;
+			margin: -86px 0 0 137px;
+			width: 60%;
+
+			h4 {
+				font-size: 15px;
+			}
+	  }
+	}
+
+	.details {
+		float: left;
+		width: 30%;
+		text-align: right;
+		padding: 20px;
+
+		.directions {
+		  border: 1px solid #b4b4b4;
+		  background: #00440b;
+		  @include background(#00478f, #00226f);
+		  padding: 13.5px 26px;
+		  @include border-radius($buttonRadius + 5px);
+		  color: #e3e3e3;
+		  font-size: 15px;
+		  text-decoration: none;
+		  vertical-align: middle;
+		  margin-top: 39px;
+		}
+		.directions:active {
+		  @include background(#00162c, #001c5c);
+		}
+
+		.eventTime {
+			font-size: 18px;
+		}	
+
+		.eventPrice {
+			font-size: 19px;
+			color: green;
+			line-height: 37px;
+		}
+
+		.eventAddress {
+			font-size: 16px;
+			line-height: 8px;	
+		}
+	}
+
+	.photoComments {
+		float: right;
+		width: 69%;
+		text-align: left;
+		padding: 20px;
+		border-left: 1px solid #b4b4b4;
+		margin-bottom: 20px;
+
+		.comments {
+			margin-top: 20px;
+		}
+
+		.commentsLabel {
+			display: inline-block;
+			width: 30%;
+			vertical-align: top;
+
+			h2 {
+				font-size: 22px;
+			}
+		}
+
+		.commentsInputDisplay {
+			display: inline-block;
+			width: 69%;
+
+			.commentsInput {
+
+				.inputComment {
+					background-color: $inputBgGray;
+			  	color: $inputFillText;
+			  	display: inline-block;
+			  	width: 50%;
+			  	@include border-radius($buttonRadius+3);
+			  	padding-left: 10px;
+				}
+
+				.submitComment {
+				  border: 1px solid #b4b4b4;
+				  padding: 7.5px 12px;
+				  background-color: rgba(0,0,0,0);
+				  @include border-radius($buttonRadius+3);
+				  color: #b7b7b7;
+				  font-size: 12px;
+				  text-decoration: none;
+				  vertical-align: middle;
+				}
+				.submitComment:active {
+				  background-color: #b7b7b7;
+				  color: rgb(30,30,30);
+				}
+			}
+		}
+	}
+
 }
 
 
