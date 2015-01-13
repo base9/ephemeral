@@ -10,8 +10,8 @@ db.schema.hasTable('events').then(function (exists) {
     db.schema.createTable('events', function (evnt) {
       evnt.increments('id').primary();
       evnt.integer('user_id').unsigned().references('users.id');
-      evnt.decimal('lat', 40).index();  
-      evnt.decimal('lng', 40).index();
+      evnt.decimal('lat', 13, 10).index();  
+      evnt.decimal('lng', 13, 10).index();
       evnt.string('title', 255);
       evnt.bigInteger('startTime', 255).index();
       evnt.bigInteger('endTime', 255).index();
