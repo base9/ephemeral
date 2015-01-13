@@ -29,6 +29,19 @@ angular.module('radar')
       console.log("LIST OF MARKERS: ", listOfMarkers);
     });
 
+    function isoDateToTimeString(date) {
+      var date = new Date(date);
+      var hours = date.getHours();
+      var mins = date.getMinutes();
+      var ampm;
+      (mins === 0) ? mins = ':00' : mins = ':' + mins;
+      (hours > 11) ? ampm = 'pm' : ampm = 'am';
+      if (hours > 12 || hours === 0) {
+        hours = Math.abs(hours-12);
+      }
+      return hours+mins+ampm
+    }
+
 
     Http.getMarkers(function(events) {
       Marker.placeMarkers(map, events, function(markers) {
@@ -43,24 +56,29 @@ angular.module('radar')
           //must invoke function in order to grab current marker, title, and rating
           google.maps.event.addListener(marker, 'click', (function(marker, event) {
             return function() {
+              Http.getOneEvent(event.id, function(res) {
+                $scope.eventInfo = res;
+                ($scope.eventInfo.price === "0.00") ? $scope.eventInfo.price = "Free" : $scope.eventInfo.price = '$'+ $scope.eventInfo.price;
+                $scope.eventInfo.startDate = isoDateToTimeString(parseInt($scope.eventInfo.startTime));
+                $scope.eventInfo.endDate = isoDateToTimeString(parseInt($scope.eventInfo.endTime));
+                $scope.eventInfo.mainPhoto = $scope.eventInfo.photos[0];
+                $scope.eventInfo.photos = $scope.eventInfo.photos.slice(1);
+                $scope.eventInfo.comments = $scope.eventInfo.comments.reverse();
+              })
               $ionicModal.fromTemplateUrl('./app/modals/eventInfoModal.html', {
                 scope: $scope,
               }).then(function(modal) {
                 $scope.modal = modal;
                 $scope.openModal();
               });
-              $scope.title = event.title;
-              $scope.info = event.info;
-              $scope.startTime = event.startTime;
-              $scope.endTime = event.endTime;
             };
           })(marker, event));
         }
       });
     });
 
-  this.filter = function(filters) {
-    Marker.filterMarkers(map, listOfMarkers, filters);
-  };
+    this.filter = function(filters) {
+      Marker.filterMarkers(map, listOfMarkers, filters);
+    };
 
 }]);

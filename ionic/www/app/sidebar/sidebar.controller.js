@@ -217,9 +217,26 @@ angular.module('radar')
     });
   };
 
+
+  /************ EVENT INFO MODAL **************/
+  $scope.liked = false;
+  $scope.submitComment = function(comment, eventId) {
+  $scope.eventInfo.comments.unshift({comment: comment})
+    Http.addComment({
+      user_id: 1,
+      eventId: eventId,
+      comment: comment
+    }, function() {
+      Http.getOneEvent(eventId, function(eventInfo) {
+        // $scope.eventInfo.comments = eventInfo.comments.reverse();
+      })
+    })
+  }
+
   /*************  UI Bootstrap Datepicker Functions ************/
   $scope.today = function() {
-    $scope.dt = new Date();
+    $scope.startDate = new Date();
+    $scope.endDate = new Date();
   };
   $scope.today();
 
@@ -249,8 +266,8 @@ angular.module('radar')
     startingDay: 1
   };
 
-  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-  $scope.format = $scope.formats[0];
+  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'MM.dd.yy', 'shortDate'];
+  $scope.format = $scope.formats[2];
 
 /*************  UI Bootstrap Timepicker Functions ************/
 
