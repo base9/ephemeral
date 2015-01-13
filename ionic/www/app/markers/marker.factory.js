@@ -44,8 +44,8 @@ angular.module('radar')
         events = filterDistance(events, objFilters.location, filters.distance);
       }
       //filters.keyword is an array of stringed keywords
-      if (filters.keywords) {
-        var temp = filterKeyword(events, filters.keywords);
+      if (filters.keyword) {
+        var temp = filterKeyword(events, filters.keyword);
         if (temp.foundMatch) {
           events = temp.results;
         } else {
@@ -55,7 +55,7 @@ angular.module('radar')
       }
       //filters.cost is an object with lowEnd and highEnd properties containing a number
       if (filters.cost) {
-        events = filterCost(events, filters.cost.lowEnd, filters.cost.highEnd);
+        events = filterCost(events, filters.cost);
       }
       //filters.time is an object with new, startTime, and endTime as a boolean, string, and string, respectively
       //The string must be capable of being parsed by Date.parse()
@@ -157,19 +157,12 @@ angular.module('radar')
     return results;
   };
 
-  var filterKeyword = function(events, keywords) {
+  var filterKeyword = function(events, keyword) {
     var results = [];
     var count = 0;
     for (var i = 0; i < events.length; i++) {
-      var match = false;
-      for (var j = 0; j < keywords.length; j++) {
-        if (events[i].info.search(keywords[j]) !== -1) {
-          console.log("MATCH");
-          match = true;
-          break;
-        }
-      }
-      if (match) {
+      if (events[i].info.search(keyword) !== -1) {
+        console.log("MATCH");
         results.push(events[i]);
         count++;
       }
@@ -181,11 +174,10 @@ angular.module('radar')
     }
   };
 
-  var filterCost = function(events, lowCost, highCost) {
+  var filterCost = function(events, cost) {
     var results = [];
     for (var i = 0; i < events.length; i++) {
-      console.log(lowCost, events[i].price, highCost);
-      if (events[i].price >= lowCost && events[i].price <= highCost) {
+      if (events[i].price <= cost) {
         results.push(events[i]);
       }
     }
@@ -221,7 +213,7 @@ angular.module('radar')
   };
 
   var latitudeLongitudeToDistanceConverter = function(lat, lng, d) {
-
+    console.log("LAT: ", lat, "LNG:", lng);
     Number.prototype.toRadians = function() {
       return this * Math.PI / 180;
     };
