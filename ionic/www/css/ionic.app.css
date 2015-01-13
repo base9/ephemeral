@@ -410,3 +410,18 @@ $dark:                            #444 !default;
       .eventInfoWindow .photoComments .commentsInputDisplay .commentsInput .submitComment:active {
         background-color: #b7b7b7;
         color: #1e1e1e; }
+
+.richmarker.popularity-1 {
+  color: red; }
+.richmarker.popularity-2 {
+  color: orange; }
+.richmarker.popularity-3 {
+  color: yellow; }
+.richmarker.popularity-4 {
+  color: blue; }
+.richmarker.popularity-5 {
+  color: green;
+  font-size: 32px;
+  font-weight: bold; }
+.richmarker.category-fitness img {
+  content: url('/img/url/here'); }
