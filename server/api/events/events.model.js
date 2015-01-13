@@ -2,6 +2,7 @@ var db = require('../../db/db.js');
 var User = require('../users/users.model.js');
 var Rating = require('../ratings/ratings.model.js');
 var Photo = require('../photos/photos.model.js');
+var Comment = require('../comments/comments.model.js');
 var bookshelf = require('bookshelf');
 
 db.schema.hasTable('events').then(function (exists) {
@@ -42,6 +43,9 @@ var Event = bookshelf(db).Model.extend({
   },
   rating: function() {
     return this.hasMany(Rating);
+  },
+  comments: function() {
+    return this.hasMany(Comment);
   }
 });
 

@@ -24,70 +24,115 @@ $dark:                            #444 !default;
 
 $bgGray:						rgba(30,30,30,0.92);
 $textGray: 					#b4b4b4;
-$inputGray: 				#868686;
+$inputBgGray: 			#c6c6c6;
+$inputFillText:			rgb(30,30,30);
 $placeholderGray: 	#555555;
 $inputRadius:				10px;
 $modalRadius:				15px;
 $buttonRadius:			4px;
 $moneyGreen:				#038312;
 
+@mixin background($color1, $color2) { 
+	background: -webkit-gradient(linear, left top, left bottom, from($color1), to($color2));
+	background: -webkit-linear-gradient(top, $color1, $color2);
+	background: -moz-linear-gradient(top, $color1, $color2);
+	background: -ms-linear-gradient(top, $color1, $color2);
+	background: -o-linear-gradient(top, $color1, $color2);
+}
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+/*********** POST NEW EVENT MODAL **********/
+
+#addPhotoButton {
+  width: 120px;
+  height: 120px;
+  padding-top: 38px;
+  padding-left: 2px;
+  text-align: center;
+  background-color: $placeholderGray;
+  cursor: pointer;
+  color: #aeaeae;
+  font-size: 18px;
+}
+
+::-webkit-input-placeholder {
+   color: $placeholderGray;
+   font-family: 'Muli', sans-serif;
+}
+::-webkit-input-placeholder {
+   color: $placeholderGray;
+   font-family: 'Muli', sans-serif;
+}
+:-moz-placeholder { /* Firefox 18- */
+   color: $placeholderGray;
+   font-family: 'Muli', sans-serif;  
+}
+::-moz-placeholder {  /* Firefox 19+ */
+   color: $placeholderGray;
+   font-family: 'Muli', sans-serif;  
+}
+:-ms-input-placeholder {  
+   color: $placeholderGray;
+   font-family: 'Muli', sans-serif;  
+}
 
 .newEventModal {
+
+	.bgImage, .bgSolid {
+		width: 100%;
+		height: 68%;
+		position: fixed;
+		@include border-radius(10px);
+		margin: -10px -10px;
+		z-index: -1;
+		opacity: 0.2;
+	}
+
+	.bgSolid {
+		opacity: 1;
+	}
 	
 	font-family: 'Muli', sans-serif;
-	border-radius: $modalRadius;
+	@include border-radius($modalRadius);
+	height: 100%;
 
-	::-webkit-input-placeholder {
-	   color: $placeholderGray;
-	   font-family: 'Muli', sans-serif;
-	}
-	::-webkit-input-placeholder {
-	   color: $placeholderGray;
-	   font-family: 'Muli', sans-serif;
-	}
-	:-moz-placeholder { /* Firefox 18- */
-	   color: $placeholderGray;
-	   font-family: 'Muli', sans-serif;  
-	}
-	::-moz-placeholder {  /* Firefox 19+ */
-	   color: $placeholderGray;
-	   font-family: 'Muli', sans-serif;  
-	}
-	:-ms-input-placeholder {  
-	   color: $placeholderGray;
-	   font-family: 'Muli', sans-serif;  
-	}
 
 	input, textarea {
-		border-radius: $buttonRadius;
+		@include border-radius($buttonRadius);
 		margin: 8px 10px;
 		padding-left: 10px;
 		padding-top: 12px;
 		resize: none;
 	}
-	
-	#addPhotoButton {
-   width: 120px;
-   height: 120px;
-   padding-top: 38px;
-   padding-left: 2px;
-   margin-left: 20px;
-   text-align: center;
-   background-color: $placeholderGray;
-   cursor: pointer;
-   color: #aeaeae;
-   font-size: 18px;
-  }
 
+	#addPhotoButton {
+    width: 120px;
+    height: 120px;
+    padding-top: 38px;
+    padding-left: 2px;
+    margin-left: 20px;
+    text-align: center;
+    background-color: $placeholderGray;
+    cursor: pointer;
+    color: #aeaeae;
+    font-size: 18px;
+  }
+  
   .background {
   	padding: 10px 10px;
-  	border-radius: $modalRadius;
-		background-color: $bgGray;
+  	@include border-radius($modalRadius);
+		// background-color: $bgGray;
   }
 
   .textInput {
-  	background-color: $inputGray;
-  	color: $placeholderGray;
+  	background-color: $inputBgGray;
+  	color: $inputFillText;
 
   }
 
@@ -107,7 +152,7 @@ $moneyGreen:				#038312;
 
   .addressForm {
   	width: 39.6%;
-  	margin-left: 16.6%;
+  	margin-left: 15.6%;
 
   	textarea {
   		height: 22px;
@@ -139,35 +184,149 @@ $moneyGreen:				#038312;
 
 		h4 {
 			font-size: 17px;
-			color: #b4b4b4;
+			color: $textGray;
+			display: inline-block;
+			margin-top: 13px;
+			position: fixed;
+		}
+
+		.timePickerDirective {
+			margin-left: 50px;
 			display: inline-block;
 		}
 
 		.timepick {
-			display: inline-block;
+
+			td {
+				margin-left: 10px;
+			}
 
 			input {
-				background-color: $inputGray;
+				background-color: $inputBgGray;
+				// width: 67%;
+				margin-top: 5px;
+				padding: 0px;
+				color: $inputFillText;
 			}
 
 			button {
-				background-color: $inputGray;
-				margin-left: 15px;
-				border: 1px solid $inputGray;	
+				background-color: $inputBgGray;
+				margin-left: 14px;
+				margin-top: -3px;
+				border: 1px solid $inputBgGray;	
 			}
-			
+
+			.textInput {
+					padding: 1px 0 0 4px;
+					background-color: $inputBgGray;
+					color: $inputFillText;
+			}
+
+			p {
+				button {
+					margin-top: -10px;
+				}
+			}
 		}
 
+		.date {
+			width: 112px;
+			display: inline-block;
+			position: fixed;
+			margin-top: -3px;
+
+			.textInput {
+				padding-left: 6px;
+				@include border-radius(5px);
+				width: 136%;
+			}
+
+			.dateButton {
+				background-color: rgba(0,0,0,0);
+				border: 0px;
+				padding-left: 3px;
+			}
+
+		}
+
+		.endDate {
+			margin-left: 5px;
+		}
 	}
 
+	.categoryCost {
+		width: 39.6%;
+  	margin-left: 16.6%;
 
+  	h4 {
+  		font-size: 17px;
+  		color: $textGray;
+  		display: inline-block;
+  	}
 
+  	select, .priceInput {
+  		background-color: $inputBgGray;
+  		border: 0px;
+  	}
 
+  	.cost {
+  		margin-left: 10px;
+
+  	}
+
+  	.priceInput {
+	  	width: 19%;
+	  	display: inline-block;
+	  	height: 20px;
+	  	padding-left: 4px;
+	  	margin-left: 2px;
+	  	margin-right: -10px;
+	  	margin-top: 1px;
+  	}
+	}
+
+	.postButtons {
+		margin-top: 15px;
+		width: 39.6%;
+		margin-left: 29%;
+
+		.cancelEventButton {
+		  border: 1px solid #b4b4b4;
+		  padding: 13.5px 26px;
+		  background-color: rgba(0,0,0,0);
+		  @include border-radius($buttonRadius + 5px);
+		  color: #b7b7b7;
+		  font-size: 15px;
+		  text-decoration: none;
+		  vertical-align: middle;
+		  margin-right: 15px;
+		}
+		.cancelEventButton:active {
+		  background-color: #b7b7b7;
+		  color: rgb(30,30,30);
+		}
+
+		.postEventButton {
+		  border: 0.6px solid #b4b4b4;
+		  background: #00440b;
+		  @include background(#00af1d, #007513);
+		  padding: 13.5px 26px;
+		  @include border-radius($buttonRadius + 5px);
+		  color: #e3e3e3;
+		  font-size: 15px;
+		  text-decoration: none;
+		  vertical-align: middle;
+		}
+		.postEventButton:active {
+		  @include background(#00380a, #00590f);
+		  border-top-color: #1b435e;
+		}	
+	}
 }
-
 
 .transparent {
   background-color: transparent !important;
+
 }
 
 .close-modal {
@@ -183,6 +342,199 @@ $moneyGreen:				#038312;
   cursor: pointer;
   line-height: 0px;
   border: 0.5px solid #ddd;
+}
+
+
+/*********** EVENT INFO MODAL **********/
+
+.eventInfoWindow {
+	background-color: $bgGray;
+
+	::-webkit-input-placeholder {
+	   color: $placeholderGray;
+	   font-family: 'Muli', sans-serif;
+	}
+	::-webkit-input-placeholder {
+	   color: $placeholderGray;
+	   font-family: 'Muli', sans-serif;
+	}
+	:-moz-placeholder { /* Firefox 18- */
+	   color: $placeholderGray;
+	   font-family: 'Muli', sans-serif;  
+	}
+	::-moz-placeholder {  /* Firefox 19+ */
+	   color: $placeholderGray;
+	   font-family: 'Muli', sans-serif;  
+	}
+	:-ms-input-placeholder {  
+	   color: $placeholderGray;
+	   font-family: 'Muli', sans-serif;  
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		color: $textGray;
+  	font-family: 'Muli', sans-serif;
+	}
+
+	.background {
+  	padding: 20px 20px;
+  	@include border-radius($modalRadius);
+		background-color: $bgGray;
+		height: 100%;
+  }
+
+  .modal {
+		background-color: rgba(30,30,30,0.92);
+		padding: 20px;
+		border-radius: 15px;
+	}
+
+  .photoContainer {
+  	width: 120px; 
+  	height: 120px; 
+  	display: inline-block;
+  	margin-right: 10px;
+  	overflow: hidden;
+  	@include border-radius($buttonRadius);
+  }
+
+  .mainPhoto, .eventPhoto {
+  	height: 100%;
+  	display: inline-block;
+  	vertical-align: top;
+  }
+
+  .mainInfo {
+
+  	height: 145px;
+  	border-bottom: 1px solid #b4b4b4;
+
+	  .likeButton {
+	  	height: 22px;
+	  	vertical-align: top;
+	  	margin: 5px 4px 0 0;
+	  }
+
+
+	  .eventTitle {
+	  	display: inline-block;
+	  	vertical-align: top;
+	  	margin: 0 35px 0 0;
+	  }
+
+	  .eventLikes {
+	  	display: inline-block;
+	  	vertical-align: top;
+	  	margin-top: 4px;
+	  }
+
+	  .eventInfo {
+	  	height: 80px;
+			overflow: auto;
+			display: inline-block;
+			vertical-align: top;
+			margin: -86px 0 0 137px;
+			width: 60%;
+
+			h4 {
+				font-size: 15px;
+			}
+	  }
+	}
+
+	.details {
+		float: left;
+		width: 30%;
+		text-align: right;
+		padding: 20px;
+
+		.directions {
+		  border: 1px solid #b4b4b4;
+		  background: #00440b;
+		  @include background(#00478f, #00226f);
+		  padding: 13.5px 26px;
+		  @include border-radius($buttonRadius + 5px);
+		  color: #e3e3e3;
+		  font-size: 15px;
+		  text-decoration: none;
+		  vertical-align: middle;
+		  margin-top: 39px;
+		}
+		.directions:active {
+		  @include background(#00162c, #001c5c);
+		}
+
+		.eventTime {
+			font-size: 18px;
+		}	
+
+		.eventPrice {
+			font-size: 19px;
+			color: green;
+			line-height: 37px;
+		}
+
+		.eventAddress {
+			font-size: 16px;
+			line-height: 8px;	
+		}
+	}
+
+	.photoComments {
+		float: right;
+		width: 69%;
+		text-align: left;
+		padding: 20px;
+		border-left: 1px solid #b4b4b4;
+		margin-bottom: 20px;
+
+		.comments {
+			margin-top: 20px;
+		}
+
+		.commentsLabel {
+			display: inline-block;
+			width: 30%;
+			vertical-align: top;
+
+			h2 {
+				font-size: 22px;
+			}
+		}
+
+		.commentsInputDisplay {
+			display: inline-block;
+			width: 69%;
+
+			.commentsInput {
+
+				.inputComment {
+					background-color: $inputBgGray;
+			  	color: $inputFillText;
+			  	display: inline-block;
+			  	width: 50%;
+			  	@include border-radius($buttonRadius+3);
+			  	padding-left: 10px;
+				}
+
+				.submitComment {
+				  border: 1px solid #b4b4b4;
+				  padding: 7.5px 12px;
+				  background-color: rgba(0,0,0,0);
+				  @include border-radius($buttonRadius+3);
+				  color: #b7b7b7;
+				  font-size: 12px;
+				  text-decoration: none;
+				  vertical-align: middle;
+				}
+				.submitComment:active {
+				  background-color: #b7b7b7;
+				  color: rgb(30,30,30);
+				}
+			}
+		}
+	}
+
 }
 
 

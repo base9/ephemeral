@@ -1,4 +1,5 @@
 var Comment = require('./comments.model.js');
+var seed = require('./comments.seed.js');
 
 
 module.exports = {
@@ -6,6 +7,7 @@ module.exports = {
 };
 
 function addOne(req, res) {
+  console.log(req.body);
   var newComment = new Comment({
     user_id: req.body.user_id,
     event_id: req.body.event_id,

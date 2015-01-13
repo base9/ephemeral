@@ -15,6 +15,17 @@ angular.module('radar')
       });
   };
 
+  httpObject.getOneEvent = function(eventId, callback) {
+    //get all events
+    $http.get('/api/events/' + eventId )
+      .success(function(data, status) {
+        callback(data);
+      })
+      .error(function(data, status) {
+        console.log("ERROR FOR API EVENTS");
+      });
+  };
+
   httpObject.getAddressForCoords = function(lat, lng, callback) {
     $http.get('/api/events/reversegeocode?lat=' + lat + '&lng=' + lng)
       .success(function(data, status) {
@@ -78,6 +89,21 @@ angular.module('radar')
       url: '/auth/signup',
       data: userData
     });
+  };
+
+  httpObject.addComment = function (commentData, callback) {
+    console.log("data: ", commentData)
+    return $http({
+      method: 'POST',
+      url: '/api/comments',
+      data: commentData
+    })
+    .success(function(data, status) {
+        callback;
+      })
+      .error(function(data, status) {
+        console.log("ERROR FOR API EVENTS");
+      });
   };
 
   return httpObject;

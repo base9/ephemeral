@@ -2,6 +2,7 @@ var User = require('../users/users.model.js');
 var Event = require('./events.model.js');
 var Photo = require('../photos/photos.model.js');
 var Rating = require('../ratings/ratings.model.js');
+var Comment = require('../comments/comments.model.js');
 var S3_BUCKET_NAME = 'base9photos';
 
 
@@ -87,6 +88,30 @@ function addDummyUserAndEvent(){
                 setTimeout(function(){
                   addDummyRating(userId,eventId);
                 },260);
+
+                new Comment({
+                  user_id: 1,
+                  event_id: event.id,
+                  comment: 'omg so STALE!'
+                })
+                .save();
+
+                new Comment({
+                  user_id: 1,
+                  event_id: event.id,
+                  comment: "Mine had a hole in it, what's the deal???"
+                })
+                .save();
+
+                new Comment({
+                  user_id: 1,
+                  event_id: event.id,
+                  comment: "Bagels Bagels bagels bagels bagels bagels bagels bagels. I hate them so much. Why did I come here?"
+                })
+                .save();
+                
+                console.log('added dummy comments for bagel event');
+
               });
             }
         });

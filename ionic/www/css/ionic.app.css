@@ -14,27 +14,64 @@ $assertive:                       #ef473a !default;
 $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
+/*********** POST NEW EVENT MODAL **********/
+#addPhotoButton {
+  width: 120px;
+  height: 120px;
+  padding-top: 38px;
+  padding-left: 2px;
+  text-align: center;
+  background-color: #555555;
+  cursor: pointer;
+  color: #aeaeae;
+  font-size: 18px; }
+
+::-webkit-input-placeholder {
+  color: #555555;
+  font-family: 'Muli', sans-serif; }
+
+::-webkit-input-placeholder {
+  color: #555555;
+  font-family: 'Muli', sans-serif; }
+
+:-moz-placeholder {
+  /* Firefox 18- */
+  color: #555555;
+  font-family: 'Muli', sans-serif; }
+
+::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #555555;
+  font-family: 'Muli', sans-serif; }
+
+:-ms-input-placeholder {
+  color: #555555;
+  font-family: 'Muli', sans-serif; }
+
 .newEventModal {
   font-family: 'Muli', sans-serif;
-  border-radius: 15px; }
-  .newEventModal ::-webkit-input-placeholder {
-    color: #555555;
-    font-family: 'Muli', sans-serif; }
-  .newEventModal ::-webkit-input-placeholder {
-    color: #555555;
-    font-family: 'Muli', sans-serif; }
-  .newEventModal :-moz-placeholder {
-    /* Firefox 18- */
-    color: #555555;
-    font-family: 'Muli', sans-serif; }
-  .newEventModal ::-moz-placeholder {
-    /* Firefox 19+ */
-    color: #555555;
-    font-family: 'Muli', sans-serif; }
-  .newEventModal :-ms-input-placeholder {
-    color: #555555;
-    font-family: 'Muli', sans-serif; }
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  border-radius: 15px;
+  height: 100%; }
+  .newEventModal .bgImage, .newEventModal .bgSolid {
+    width: 100%;
+    height: 68%;
+    position: fixed;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    border-radius: 10px;
+    margin: -10px -10px;
+    z-index: -1;
+    opacity: 0.2; }
+  .newEventModal .bgSolid {
+    opacity: 1; }
   .newEventModal input, .newEventModal textarea {
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
     border-radius: 4px;
     margin: 8px 10px;
     padding-left: 10px;
@@ -53,11 +90,13 @@ $dark:                            #444 !default;
     font-size: 18px; }
   .newEventModal .background {
     padding: 10px 10px;
-    border-radius: 15px;
-    background-color: rgba(30, 30, 30, 0.92); }
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    border-radius: 15px; }
   .newEventModal .textInput {
-    background-color: #868686;
-    color: #555555; }
+    background-color: #c6c6c6;
+    color: #1e1e1e; }
   .newEventModal .title {
     margin-top: 1px;
     height: 40px;
@@ -69,7 +108,7 @@ $dark:                            #444 !default;
     width: 50%; }
   .newEventModal .addressForm {
     width: 39.6%;
-    margin-left: 16.6%; }
+    margin-left: 15.6%; }
     .newEventModal .addressForm textarea {
       height: 22px;
       margin: 6px 10px;
@@ -93,15 +132,112 @@ $dark:                            #444 !default;
     .newEventModal .dateTime h4 {
       font-size: 17px;
       color: #b4b4b4;
+      display: inline-block;
+      margin-top: 13px;
+      position: fixed; }
+    .newEventModal .dateTime .timePickerDirective {
+      margin-left: 50px;
       display: inline-block; }
-    .newEventModal .dateTime .timepick {
+    .newEventModal .dateTime .timepick td {
+      margin-left: 10px; }
+    .newEventModal .dateTime .timepick input {
+      background-color: #c6c6c6;
+      margin-top: 5px;
+      padding: 0px;
+      color: #1e1e1e; }
+    .newEventModal .dateTime .timepick button {
+      background-color: #c6c6c6;
+      margin-left: 14px;
+      margin-top: -3px;
+      border: 1px solid #c6c6c6; }
+    .newEventModal .dateTime .timepick .textInput {
+      padding: 1px 0 0 4px;
+      background-color: #c6c6c6;
+      color: #1e1e1e; }
+    .newEventModal .dateTime .timepick p button {
+      margin-top: -10px; }
+    .newEventModal .dateTime .date {
+      width: 112px;
+      display: inline-block;
+      position: fixed;
+      margin-top: -3px; }
+      .newEventModal .dateTime .date .textInput {
+        padding-left: 6px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        border-radius: 5px;
+        width: 136%; }
+      .newEventModal .dateTime .date .dateButton {
+        background-color: rgba(0, 0, 0, 0);
+        border: 0px;
+        padding-left: 3px; }
+    .newEventModal .dateTime .endDate {
+      margin-left: 5px; }
+  .newEventModal .categoryCost {
+    width: 39.6%;
+    margin-left: 16.6%; }
+    .newEventModal .categoryCost h4 {
+      font-size: 17px;
+      color: #b4b4b4;
       display: inline-block; }
-      .newEventModal .dateTime .timepick input {
-        background-color: #868686; }
-      .newEventModal .dateTime .timepick button {
-        background-color: #868686;
-        margin-left: 15px;
-        border: 1px solid #868686; }
+    .newEventModal .categoryCost select, .newEventModal .categoryCost .priceInput {
+      background-color: #c6c6c6;
+      border: 0px; }
+    .newEventModal .categoryCost .cost {
+      margin-left: 10px; }
+    .newEventModal .categoryCost .priceInput {
+      width: 19%;
+      display: inline-block;
+      height: 20px;
+      padding-left: 4px;
+      margin-left: 2px;
+      margin-right: -10px;
+      margin-top: 1px; }
+  .newEventModal .postButtons {
+    margin-top: 15px;
+    width: 39.6%;
+    margin-left: 29%; }
+    .newEventModal .postButtons .cancelEventButton {
+      border: 1px solid #b4b4b4;
+      padding: 13.5px 26px;
+      background-color: rgba(0, 0, 0, 0);
+      -webkit-border-radius: 9px;
+      -moz-border-radius: 9px;
+      -ms-border-radius: 9px;
+      border-radius: 9px;
+      color: #b7b7b7;
+      font-size: 15px;
+      text-decoration: none;
+      vertical-align: middle;
+      margin-right: 15px; }
+    .newEventModal .postButtons .cancelEventButton:active {
+      background-color: #b7b7b7;
+      color: #1e1e1e; }
+    .newEventModal .postButtons .postEventButton {
+      border: 0.6px solid #b4b4b4;
+      background: #00440b;
+      background: -webkit-gradient(linear, left top, left bottom, from(#00af1d), to(#007513));
+      background: -webkit-linear-gradient(top, #00af1d, #007513);
+      background: -moz-linear-gradient(top, #00af1d, #007513);
+      background: -ms-linear-gradient(top, #00af1d, #007513);
+      background: -o-linear-gradient(top, #00af1d, #007513);
+      padding: 13.5px 26px;
+      -webkit-border-radius: 9px;
+      -moz-border-radius: 9px;
+      -ms-border-radius: 9px;
+      border-radius: 9px;
+      color: #e3e3e3;
+      font-size: 15px;
+      text-decoration: none;
+      vertical-align: middle; }
+    .newEventModal .postButtons .postEventButton:active {
+      background: -webkit-gradient(linear, left top, left bottom, from(#00380a), to(#00590f));
+      background: -webkit-linear-gradient(top, #00380a, #00590f);
+      background: -moz-linear-gradient(top, #00380a, #00590f);
+      background: -ms-linear-gradient(top, #00380a, #00590f);
+      background: -o-linear-gradient(top, #00380a, #00590f);
+      border-top-color: #1b435e; }
 
 .transparent {
   background-color: transparent !important; }
@@ -119,3 +255,173 @@ $dark:                            #444 !default;
   cursor: pointer;
   line-height: 0px;
   border: 0.5px solid #ddd; }
+
+/*********** EVENT INFO MODAL **********/
+.eventInfoWindow {
+  background-color: rgba(30, 30, 30, 0.92); }
+  .eventInfoWindow ::-webkit-input-placeholder {
+    color: #555555;
+    font-family: 'Muli', sans-serif; }
+  .eventInfoWindow ::-webkit-input-placeholder {
+    color: #555555;
+    font-family: 'Muli', sans-serif; }
+  .eventInfoWindow :-moz-placeholder {
+    /* Firefox 18- */
+    color: #555555;
+    font-family: 'Muli', sans-serif; }
+  .eventInfoWindow ::-moz-placeholder {
+    /* Firefox 19+ */
+    color: #555555;
+    font-family: 'Muli', sans-serif; }
+  .eventInfoWindow :-ms-input-placeholder {
+    color: #555555;
+    font-family: 'Muli', sans-serif; }
+  .eventInfoWindow h1, .eventInfoWindow h2, .eventInfoWindow h3, .eventInfoWindow h4, .eventInfoWindow h5, .eventInfoWindow h6 {
+    color: #b4b4b4;
+    font-family: 'Muli', sans-serif; }
+  .eventInfoWindow .background {
+    padding: 20px 20px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    border-radius: 15px;
+    background-color: rgba(30, 30, 30, 0.92);
+    height: 100%; }
+  .eventInfoWindow .modal {
+    background-color: rgba(30, 30, 30, 0.92);
+    padding: 20px;
+    border-radius: 15px; }
+  .eventInfoWindow .photoContainer {
+    width: 120px;
+    height: 120px;
+    display: inline-block;
+    margin-right: 10px;
+    overflow: hidden;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px; }
+  .eventInfoWindow .mainPhoto, .eventInfoWindow .eventPhoto {
+    height: 100%;
+    display: inline-block;
+    vertical-align: top; }
+  .eventInfoWindow .mainInfo {
+    height: 145px;
+    border-bottom: 1px solid #b4b4b4; }
+    .eventInfoWindow .mainInfo .likeButton {
+      height: 22px;
+      vertical-align: top;
+      margin: 5px 4px 0 0; }
+    .eventInfoWindow .mainInfo .eventTitle {
+      display: inline-block;
+      vertical-align: top;
+      margin: 0 35px 0 0; }
+    .eventInfoWindow .mainInfo .eventLikes {
+      display: inline-block;
+      vertical-align: top;
+      margin-top: 4px; }
+    .eventInfoWindow .mainInfo .eventInfo {
+      height: 80px;
+      overflow: auto;
+      display: inline-block;
+      vertical-align: top;
+      margin: -86px 0 0 137px;
+      width: 60%; }
+      .eventInfoWindow .mainInfo .eventInfo h4 {
+        font-size: 15px; }
+  .eventInfoWindow .details {
+    float: left;
+    width: 30%;
+    text-align: right;
+    padding: 20px; }
+    .eventInfoWindow .details .directions {
+      border: 1px solid #b4b4b4;
+      background: #00440b;
+      background: -webkit-gradient(linear, left top, left bottom, from(#00478f), to(#00226f));
+      background: -webkit-linear-gradient(top, #00478f, #00226f);
+      background: -moz-linear-gradient(top, #00478f, #00226f);
+      background: -ms-linear-gradient(top, #00478f, #00226f);
+      background: -o-linear-gradient(top, #00478f, #00226f);
+      padding: 13.5px 26px;
+      -webkit-border-radius: 9px;
+      -moz-border-radius: 9px;
+      -ms-border-radius: 9px;
+      border-radius: 9px;
+      color: #e3e3e3;
+      font-size: 15px;
+      text-decoration: none;
+      vertical-align: middle;
+      margin-top: 39px; }
+    .eventInfoWindow .details .directions:active {
+      background: -webkit-gradient(linear, left top, left bottom, from(#00162c), to(#001c5c));
+      background: -webkit-linear-gradient(top, #00162c, #001c5c);
+      background: -moz-linear-gradient(top, #00162c, #001c5c);
+      background: -ms-linear-gradient(top, #00162c, #001c5c);
+      background: -o-linear-gradient(top, #00162c, #001c5c); }
+    .eventInfoWindow .details .eventTime {
+      font-size: 18px; }
+    .eventInfoWindow .details .eventPrice {
+      font-size: 19px;
+      color: green;
+      line-height: 37px; }
+    .eventInfoWindow .details .eventAddress {
+      font-size: 16px;
+      line-height: 8px; }
+  .eventInfoWindow .photoComments {
+    float: right;
+    width: 69%;
+    text-align: left;
+    padding: 20px;
+    border-left: 1px solid #b4b4b4;
+    margin-bottom: 20px; }
+    .eventInfoWindow .photoComments .comments {
+      margin-top: 20px; }
+    .eventInfoWindow .photoComments .commentsLabel {
+      display: inline-block;
+      width: 30%;
+      vertical-align: top; }
+      .eventInfoWindow .photoComments .commentsLabel h2 {
+        font-size: 22px; }
+    .eventInfoWindow .photoComments .commentsInputDisplay {
+      display: inline-block;
+      width: 69%; }
+      .eventInfoWindow .photoComments .commentsInputDisplay .commentsInput .inputComment {
+        background-color: #c6c6c6;
+        color: #1e1e1e;
+        display: inline-block;
+        width: 50%;
+        -webkit-border-radius: 7px;
+        -moz-border-radius: 7px;
+        -ms-border-radius: 7px;
+        border-radius: 7px;
+        padding-left: 10px; }
+      .eventInfoWindow .photoComments .commentsInputDisplay .commentsInput .submitComment {
+        border: 1px solid #b4b4b4;
+        padding: 7.5px 12px;
+        background-color: rgba(0, 0, 0, 0);
+        -webkit-border-radius: 7px;
+        -moz-border-radius: 7px;
+        -ms-border-radius: 7px;
+        border-radius: 7px;
+        color: #b7b7b7;
+        font-size: 12px;
+        text-decoration: none;
+        vertical-align: middle; }
+      .eventInfoWindow .photoComments .commentsInputDisplay .commentsInput .submitComment:active {
+        background-color: #b7b7b7;
+        color: #1e1e1e; }
+
+.richmarker.popularity-1 {
+  color: red; }
+.richmarker.popularity-2 {
+  color: orange; }
+.richmarker.popularity-3 {
+  color: yellow; }
+.richmarker.popularity-4 {
+  color: blue; }
+.richmarker.popularity-5 {
+  color: green;
+  font-size: 32px;
+  font-weight: bold; }
+.richmarker.category-fitness img {
+  content: url('/img/url/here'); }
