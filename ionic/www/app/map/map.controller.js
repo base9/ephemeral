@@ -24,11 +24,6 @@ angular.module('radar')
 
     var map = Map.initialize();
 
-    Map.geoLocate(function(location) {
-      listOfMarkers.location = {'lat': location.latitude, 'lng': location.longitude};
-      console.log("LIST OF MARKERS: ", listOfMarkers);
-    });
-
     function isoDateToTimeString(date) {
       var date = new Date(date);
       var hours = date.getHours();
@@ -42,43 +37,64 @@ angular.module('radar')
       return hours+mins+ampm
     }
 
+    Map.geoLocate(function(location, bounds) {
+      listOfMarkers.location = {'lat': location.latitude, 'lng': location.longitude};
+      listOfMarkers.bounds = {ne: bounds.getNorthEast(), sw: bounds.getSouthWest()};
+      console.log("BOUNDS: ", listOfMarkers.bounds);
+      console.log("LIST OF MARKERS: ", listOfMarkers);
 
-    Http.getMarkers(function(events) {
-      Marker.placeMarkers(map, events, function(markers) {
-        console.log("EVENTS: ", events);
-        //store marker location and events inside scope for now
-        listOfMarkers.events = events;
+      Http.getMarkers(listOfMarkers.bounds, function(events) {
+        Marker.placeMarkers(map, events, function(markers) {
+          console.log("EVENTS: ", events);
+          //store marker location and events inside scope for now
+          listOfMarkers.events = events;
 
-        for (var i = 0; i < markers.length; i++) {
-          var title = events[i].title;
-          var marker = markers[i];
-          var event = events[i];
-          //must invoke function in order to grab current marker, title, and rating
-          google.maps.event.addListener(marker, 'click', (function(marker, event) {
-            return function() {
-              Http.getOneEvent(event.id, function(res) {
-                $scope.eventInfo = res;
-                ($scope.eventInfo.price === "0.00") ? $scope.eventInfo.price = "Free" : $scope.eventInfo.price = '$'+ $scope.eventInfo.price;
-                $scope.eventInfo.startDate = isoDateToTimeString(parseInt($scope.eventInfo.startTime));
-                $scope.eventInfo.endDate = isoDateToTimeString(parseInt($scope.eventInfo.endTime));
-                $scope.eventInfo.mainPhoto = $scope.eventInfo.photos[0];
-                $scope.eventInfo.photos = $scope.eventInfo.photos.slice(1);
-                $scope.eventInfo.comments = $scope.eventInfo.comments.reverse();
-              })
-              $ionicModal.fromTemplateUrl('./app/modals/eventInfoModal.html', {
-                scope: $scope,
-              }).then(function(modal) {
-                $scope.modal = modal;
-                $scope.openModal();
-              });
-            };
-          })(marker, event));
-        }
+          for (var i = 0; i < markers.length; i++) {
+            var title = events[i].title;
+            var marker = markers[i];
+            var event = events[i];
+            //must invoke function in order to grab current marker, title, and rating
+            google.maps.event.addListener(marker, 'click', (function(marker, event) {
+              return function() {
+                $ionicModal.fromTemplateUrl('./app/modals/eventInfoModal.html', {
+                  scope: $scope,
+                }).then(function(modal) {
+                  $scope.modal = modal;
+                  $scope.openModal();
+                });
+                $scope.title = event.title;
+                $scope.info = event.info;
+                $scope.startTime = event.startTime;
+                $scope.endTime = event.endTime;
+              };
+            })(marker, event));
+          }
+        });
       });
     });
 
-    this.filter = function(filters) {
-      Marker.filterMarkers(map, listOfMarkers, filters);
-    };
+  
+  this.filters = {distance: 0, popularity: 0, time: {now: false, startTime: null, endTime: null}, cost: 0, keyword: null};
+
+  this.filter = function() {
+    console.log("FILTERS", this.filters);
+    if (!this.show) {
+      this.filters.time.now = true;
+    }
+    if (this.filters.distance === 0) {
+      this.filters.distance = null;
+    }
+    if (this.filters.popularity === 0) {
+      this.filters.popularity = null;
+    }
+    Marker.filterMarkers(map, listOfMarkers, this.filters);
+    this.filters = {distance: 0, popularity: 0, time: {now: false, startTime: null, endTime: null}, cost: 0, keyword: null};
+  };
+
+  this.show = false;
+
+  this.showTime = function(show) {
+    this.show = show;
+  }
 
 }]);
