@@ -15,8 +15,6 @@ angular.module('radar')
     // create new markers for all events
     createMarkers(map, events, markers, bounds);
 
-    map.fitBounds(bounds);
-
     if (events.length) {
       map.setZoom(14);
     }
@@ -80,18 +78,39 @@ angular.module('radar')
 /********************* HELPER FUNCTIONS *********************/
   
   var createMarkers = function(map, events, markers, bounds) {
+    var timeNow = Date.now();
+    var happeningNow = '';
+    var eventCategory = '';
+    var popular = '';
+    var markup = '';
+
     for (var i = 0; i < events.length; i++) {
       var event = events[i];
       var position = new google.maps.LatLng(event.lat, event.lng);
+
+      // add 'happening-now' class if event is happening right now
+      if (event.startTime < timeNow && timeNow < event.endTime) {
+        happeningNow = 'happening-now ';
+      }
+
+      // add category and popularity classes to marker
+      eventCategory = 'category-' + event.category + ' ';
+      popularity = 'popularity-' + event.popularity + ' ';
+
+      // build marker markup
+      markup = 
+        '<div class="richmarker ' 
+        + happeningNow
+        + eventCategory
+        + popularity
+        + '"><img/>O</div>';
 
       markers.push(new RichMarker({
         map: map,
         position: position,
         draggable: false,
-        content: '<div class="richmarker">Rich</div>'
+        content: markup
       }));
-
-      bounds.extend(position);
     }
   };
 
