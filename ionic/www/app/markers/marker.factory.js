@@ -15,8 +15,6 @@ angular.module('radar')
     // create new markers for all events
     createMarkers(map, events, markers, bounds);
 
-    map.fitBounds(bounds);
-
     if (events.length) {
       map.setZoom(14);
     }
@@ -80,25 +78,39 @@ angular.module('radar')
 /********************* HELPER FUNCTIONS *********************/
   
   var createMarkers = function(map, events, markers, bounds) {
+    var timeNow = Date.now();
+    var happeningNow = '';
+    var eventCategory = '';
+    var popular = '';
+    var markup = '';
+
     for (var i = 0; i < events.length; i++) {
       var event = events[i];
       var position = new google.maps.LatLng(event.lat, event.lng);
 
-      markers.push(new google.maps.Circle({
-        map: map,
-        title: event.title,
-        // icon: image,
-        position: position,
-        strokeColor: 'green',
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: 'green',
-        fillOpacity: 0.35,
-        center: position,
-        radius: Math.random([0.2, 1])*150
-      }));
+      // add 'happening-now' class if event is happening right now
+      if (event.startTime < timeNow && timeNow < event.endTime) {
+        happeningNow = 'happening-now ';
+      }
 
-      bounds.extend(position);
+      // add category and popularity classes to marker
+      eventCategory = 'category-' + event.category + ' ';
+      popularity = 'popularity-' + event.popularity + ' ';
+
+      // build marker markup
+      markup = 
+        '<div class="richmarker ' 
+        + happeningNow
+        + eventCategory
+        + popularity
+        + '"><img/>O</div>';
+
+      markers.push(new RichMarker({
+        map: map,
+        position: position,
+        draggable: false,
+        content: markup
+      }));
     }
   };
 
