@@ -89,7 +89,6 @@ $moneyGreen:				#038312;
 		height: 68%;
 		position: fixed;
 		@include border-radius(10px);
-		border-radius: 10px;
 		margin: -10px -10px;
 		z-index: -1;
 		opacity: 0.2;
@@ -112,7 +111,6 @@ $moneyGreen:				#038312;
 		resize: none;
 	}
 
-	
 	#addPhotoButton {
     width: 120px;
     height: 120px;
@@ -126,6 +124,12 @@ $moneyGreen:				#038312;
     font-size: 18px;
   }
   
+  .background {
+  	padding: 10px 10px;
+  	@include border-radius($modalRadius);
+		// background-color: $bgGray;
+  }
+
   .textInput {
   	background-color: $inputBgGray;
   	color: $inputFillText;
@@ -234,7 +238,6 @@ $moneyGreen:				#038312;
 			.textInput {
 				padding-left: 6px;
 				@include border-radius(5px);
-				border-radius: 5px;
 				width: 136%;
 			}
 
@@ -309,9 +312,6 @@ $moneyGreen:				#038312;
 		  @include background(#00af1d, #007513);
 		  padding: 13.5px 26px;
 		  @include border-radius($buttonRadius + 5px);
-		  -webkit-border-radius: $buttonRadius + 5px;
-		  -moz-border-radius: $buttonRadius + 5px;
-		  border-radius: $buttonRadius + 5px;
 		  color: #e3e3e3;
 		  font-size: 15px;
 		  text-decoration: none;

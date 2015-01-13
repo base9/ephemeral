@@ -62,7 +62,10 @@ $dark:                            #444 !default;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
+<<<<<<< HEAD
     border-radius: 10px;
+=======
+>>>>>>> completes eventInfoWindow styling
     border-radius: 10px;
     margin: -10px -10px;
     z-index: -1;
@@ -78,6 +81,7 @@ $dark:                            #444 !default;
     padding-left: 10px;
     padding-top: 12px;
     resize: none; }
+<<<<<<< HEAD
   .newEventModal #addPhotoButton {
     width: 120px;
     height: 120px;
@@ -89,6 +93,14 @@ $dark:                            #444 !default;
     cursor: pointer;
     color: #aeaeae;
     font-size: 18px; }
+=======
+  .newEventModal .background {
+    padding: 10px 10px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    border-radius: 15px; }
+>>>>>>> completes eventInfoWindow styling
   .newEventModal .textInput {
     background-color: #c6c6c6;
     color: #1e1e1e; }
@@ -161,7 +173,10 @@ $dark:                            #444 !default;
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
         -ms-border-radius: 5px;
+<<<<<<< HEAD
         border-radius: 5px;
+=======
+>>>>>>> completes eventInfoWindow styling
         border-radius: 5px;
         width: 136%; }
       .newEventModal .dateTime .date .dateButton {
@@ -222,9 +237,12 @@ $dark:                            #444 !default;
       -webkit-border-radius: 9px;
       -moz-border-radius: 9px;
       -ms-border-radius: 9px;
+<<<<<<< HEAD
       border-radius: 9px;
       -webkit-border-radius: 9px;
       -moz-border-radius: 9px;
+=======
+>>>>>>> completes eventInfoWindow styling
       border-radius: 9px;
       color: #e3e3e3;
       font-size: 15px;
