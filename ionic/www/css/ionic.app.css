@@ -411,6 +411,7 @@ $dark:                            #444 !default;
         background-color: #b7b7b7;
         color: #1e1e1e; }
 
+/*********** MARKERS *************/
 .richmarker.popularity-1 {
   color: red; }
 .richmarker.popularity-2 {

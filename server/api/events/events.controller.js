@@ -242,19 +242,19 @@ function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
 
 function categoryFilter(eventCategory) {
   if (eventCategory === 'Sports & Fitness' || eventCategory === 'Health & Wellness') {
-    eventCategory = 'Fitness';
+    eventCategory = 'fitness';
   } else if (eventCategory === 'Hobbies & Special Interest' || eventCategory === 'Home & Lifestyle') {
-    eventCategory = 'Personal Interest';
+    eventCategory = 'hobbies';
   } else if (eventCategory === 'Music' || eventCategory === 'Film, Media & Entertainment' || eventCategory === 'Performing & Visual Arts') {
-    eventCategory = 'Music and Entertainment';
+    eventCategory = 'entertainment';
   } else if (eventCategory === 'Community & Culture' || eventCategory === 'Charity & Causes') {
-    eventCategory = 'Community and Culture';
+    eventCategory = 'culture';
   } else if (eventCategory === 'Food & Drink') {
-    eventCategory = 'Food and Drink';
+    eventCategory = 'drink';
   } else if (eventCategory === 'Travel & Outdoor') {
-    eventCategory = 'Travel and Outdoor';
+    eventCategory = 'outdoors';
   } else {
-    eventCategory = 'Other';
+    eventCategory = 'other';
   }
   return eventCategory;
 }
