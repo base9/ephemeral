@@ -4,7 +4,7 @@ bower_components/*
 
 node_modules/*
 
-client/assets/**/*
+ionic/www/css/**/*
 
 db.sqlite
 
