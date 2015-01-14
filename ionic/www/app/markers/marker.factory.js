@@ -83,6 +83,7 @@ angular.module('radar')
     var eventCategory = '';
     var popular = '';
     var markup = '';
+    var markerUrl = '';
 
     for (var i = 0; i < events.length; i++) {
       var event = events[i];
@@ -97,13 +98,16 @@ angular.module('radar')
       eventCategory = 'category-' + event.category + ' ';
       popularity = 'popularity-' + event.popularity + ' ';
 
+      // build marker image src url by category
+      markerUrl = "img/markers/" + event.category + "_marker.png";
+
       // build marker markup
       markup = 
         '<div class="richmarker ' 
         + happeningNow
         + eventCategory
         + popularity
-        + '"><img/>O</div>';
+        + '"><img src="'+markerUrl+ '" /></div>';
 
       markers.push(new RichMarker({
         map: map,
