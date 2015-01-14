@@ -53,6 +53,22 @@ $dark:                            #444 !default;
   font-family: 'Muli', sans-serif; }
 
 /*********** LOGIN/REGISTER MODALS **********/
+.formContainer {
+  width: 80%;
+  height: 50%;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0; }
+
+.registerForm .formContainer {
+  top: -60px;
+  left: 0;
+  bottom: 0;
+  right: 0; }
+
 .loginForm, .registerForm {
   text-align: center;
   font-family: 'Muli', sans-serif; }
@@ -60,7 +76,7 @@ $dark:                            #444 !default;
     color: #b4b4b4;
     text-align: center;
     font-size: 40px;
-    margin: 16px 0 30px 0; }
+    margin: 0 0 30px 0; }
   .loginForm .textInput, .registerForm .textInput {
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
