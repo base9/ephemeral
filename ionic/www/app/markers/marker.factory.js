@@ -161,7 +161,7 @@ angular.module('radar')
     var results = [];
     var count = 0;
     for (var i = 0; i < events.length; i++) {
-      if (events[i].info.search(keyword) !== -1) {
+      if (events[i].title.search(keyword) !== -1 || events[i].info.search(keyword) !== -1) {
         console.log("MATCH");
         results.push(events[i]);
         count++;

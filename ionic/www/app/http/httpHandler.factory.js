@@ -3,9 +3,12 @@ angular.module('radar')
 
   var httpObject = {};
 
-  httpObject.getMarkers = function(callback) {
+  httpObject.getMarkers = function(bounds, callback) {
+
+    var pathname = '/api/events/local?lat1=' + bounds.ne.lat() + '&lat2=' + bounds.sw.lat() + '&lng1=' + bounds.ne.lng() + '&lng2=' + bounds.sw.lng();
+
     //get all events
-    $http.get('/api/events')
+    $http.get(pathname)
       .success(function(data, status) {
         httpObject.events = data;
         callback(data);
