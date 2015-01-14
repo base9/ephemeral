@@ -131,7 +131,10 @@ angular.module('radar')
   var showMarkers = function(events, markers) {
     for (var i = 0; i < events.length; i++) {
       for (var j = 0; j < markers.length; j++) {
-        if (events[i].lat == markers[j].position.lat() && events[i].lng == markers[j].position.lng()) {
+        var temp = markers[j].position.lng();
+        temp = parseFloat(temp.toString().substring(0, 14));
+        console.log("TEMP", temp);
+        if (events[i].lat == markers[j].position.lat() && events[i].lng == temp) {
           console.log("MATCH");
           markers[j].setVisible(true);
         }
