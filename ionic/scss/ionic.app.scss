@@ -571,7 +571,7 @@ $moneyGreen:				#038312;
 
 		.eventAddress {
 			font-size: 16px;
-			line-height: 8px;	
+			margin-bottom: -7px;
 		}
 	}
 
@@ -674,19 +674,6 @@ $moneyGreen:				#038312;
 .popularity-5 {
   
 }
-  
-  &.category-fitness {
-    
-  }
-  &.category-party {
-    
-  }
-  &.category-music {
-    
-  }
-  &.category-food {
-    
-  }
 
 @-webkit-keyframes grow {
     from { 

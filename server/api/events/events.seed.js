@@ -27,8 +27,8 @@ function addDummyUserAndEvent(){
             console.log('creating seed event now with ratings and photos...');
             var newEvent = new Event({
                 title: 'Free Bagels at Outdoors',
-                startTime: 1420516800000,
-                endTime: 1420524000000,
+                startTime: 1421266817000,
+                endTime: 1451266817000,
                 lat: 37.7931290,
                 lng: -122.394200,
                 user_id: userId,
