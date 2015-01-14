@@ -9,7 +9,6 @@ angular.module('radar')
   function(Map, SearchBox, Marker, Http, $ionicModal, $scope) {
 
     var listOfEvents = {};
-    var matches;
   
     $scope.geoLocate = function(){
       console.log("LOCATING.......");
@@ -49,12 +48,10 @@ angular.module('radar')
           console.log("EVENTS: ", events);
           //store marker location and events inside scope for now
           listOfEvents.events = events;
-          matches = {};
           for (var i = 0; i < markers.length; i++) {
             var title = events[i].title;
             var marker = markers[i];
             var event = events[i];
-            matches[events[i]] = markers[i];
             //must invoke function in order to grab current marker, title, and rating
             google.maps.event.addListener(marker, 'click', (function(marker, event) {
               return function() {
@@ -95,7 +92,7 @@ angular.module('radar')
     if (this.filters.popularity === 0) {
       this.filters.popularity = null;
     }
-    Marker.filterMarkers(map, listOfEvents, this.filters, matches);
+    Marker.filterMarkers(map, listOfEvents, this.filters);
 
     this.filters = {distance: 0, popularity: 0, time: {now: false, startTime: null, endTime: null}, cost: 0, keyword: null};
   };
