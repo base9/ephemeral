@@ -99,7 +99,7 @@ angular.module('radar')
       popularity = 'popularity-' + event.popularity + ' ';
 
       // build marker image src url by category
-      markerUrl = "img/markers/" + "event.category" + "_marker.png";
+      markerUrl = "img/markers/" + event.category + "_marker.png";
 
       // build marker markup
       markup = 
