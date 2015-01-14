@@ -6,29 +6,24 @@ angular.module('radar')
   //filters is an object with properties popularity, category, distance, and keyword
   markerObj.placeMarkers = function(map, events, callback) {
 
-    var bounds = new google.maps.LatLngBounds();
+    // var bounds = new google.maps.LatLngBounds();
 
     if (events.length === 0) {
       return;
     }
 
     // create new markers for all events
-    createMarkers(map, events, markers, bounds);
+    createMarkers(map, events, markers);
 
-    if (events.length) {
-      map.setZoom(14);
-    }
-
-    // var ratings = event.ratings;
     callback(markers);
   };
   //not using other above function because no callback is needed
-  markerObj.filterMarkers = function(map, objFilters, filters) {
+  markerObj.filterMarkers = function(map, objFilters, filters, matches) {
     // debugger;
     // remove all existing markers
-    clearMarkers();
+    hideMarkers();
 
-    var bounds = new google.maps.LatLngBounds();
+    // var bounds = new google.maps.LatLngBounds();
 
     var events = objFilters.events;
     if (filters) {
@@ -66,18 +61,25 @@ angular.module('radar')
       console.log("NEW EVENTS", events);
     }
 
-    createMarkers(map, events, markers, bounds);
+    console.log("MARKERS1", markers);
+    console.log("MARKERS2", markers[0].position.lat());
+    console.log("MARKERS3", markers[0].position.k);
 
-    map.fitBounds(bounds);
+    // for (var i = 0; i < events.length; i++) {
+    //   if (events[i] in matches)
+    // };
 
-    if (events.length) {
-      map.setZoom(14);
-    }
+    showMarkers(events, markers);
+
+    // createMarkers(map, events, markers);
+
+    // callback(events, markers);
+
   };
 
 /********************* HELPER FUNCTIONS *********************/
   
-  var createMarkers = function(map, events, markers, bounds) {
+  var createMarkers = function(map, events, markers) {
     var timeNow = Date.now();
     var happeningNow = '';
     var eventCategory = '';
@@ -120,11 +122,22 @@ angular.module('radar')
   };
 
   //Removes all markers on the map
-  var clearMarkers = function() {
+  var hideMarkers = function() {
     for (var i = 0; i < markers.length; i++) {
-      markers[i].setMap(null);
+      markers[i].setVisible(false);
     }
   };
+
+  var showMarkers = function(events, markers) {
+    for (var i = 0; i < events.length; i++) {
+      for (var j = 0; j < markers.length; j++) {
+        if (events[i].lat == markers[j].position.lat() && events[i].lng == markers[j].position.lng()) {
+          console.log("MATCH");
+          markers[j].setVisible(true);
+        }
+      }
+    }
+  }
 
   var filterPopularity = function(events, popularity) {
     var results = [];
@@ -161,10 +174,11 @@ angular.module('radar')
     var results = [];
     var count = 0;
     for (var i = 0; i < events.length; i++) {
-      if (events[i].title.search(keyword) !== -1 || events[i].info.search(keyword) !== -1) {
-        console.log("MATCH");
-        results.push(events[i]);
-        count++;
+      if (events[i].title && events[i].info) {
+        if (events[i].title.search(keyword) !== -1 || events[i].info.search(keyword) !== -1) {
+          results.push(events[i]);
+          count++;
+        }
       }
     }
     if (count > 0) {
@@ -234,14 +248,6 @@ angular.module('radar')
     //find second longitude from 90º clockwise from North (needs lat2East to find second longitude)
     var lat2East = Math.asin(Math.sin(lat1) * Math.cos(d/R) + Math.cos(lat1) * Math.sin(d/R) * Math.cos(Math.PI / 2));
     var lng2East = lng1 + Math.atan2(Math.sin(Math.PI / 2) * Math.sin(d/R) * Math.cos(lat1), Math.cos(d/R) - Math.sin(lat1) * Math.sin(lat2East));
-
-    // var Δx = x2 - x1;
-    // var Δy = y2 - y1;
-
-    // //Haversine formula to find greatest circle distance between two points
-    // var a = Math.sin(Δx/2) * Math.sin(Δx/2) + Math.cos(x1) * Math.cos(x2) * Math.sin(Δy/2) * Math.sin(Δy/2);
-    // var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    // var d = R * c;
 
     return {'north': lat2North.toDegrees() - lat, 'east': lng2East.toDegrees() - lng};
   };

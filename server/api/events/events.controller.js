@@ -210,7 +210,7 @@ function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
   .then(function (res) {
     var body = JSON.parse(res[0].body);
     body.events.forEach(function(event){
-      console.log("**********EVENT************", event.description.text);
+      console.log("**********EVENT************", event.venue.latitude);
       if (event.category === null) {
         event.category = {name: 'Other'};
       }
