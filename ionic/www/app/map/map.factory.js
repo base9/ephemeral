@@ -9,22 +9,6 @@ angular.module('radar')
   mapObj.initialize = function() {
   
     function placeMarker(position) {
-      //Check if user is in "Place New Event" Mode
-      var newEventWindow = new google.maps.InfoWindow({
-        content: '<div class="newEventWindow" ng-controller="EventWindowController">'+
-        '<input type="text" placeholder="Add Event Title" ngModel="title"></input>'+
-        '<input type="text" placeHolder="Optional Info" ngModel="info"></input>'+
-        'start: <input type="time" ngModel="startTime"></input>'+
-        'end: <input type="time" ngModel="endTime"></input>'+
-        'category: <select name="category">'+
-        '<option value="Party">Party</option>'+
-        '<option value="Concert">Concert</option>'+
-        '<option value="Sports">Sports</option>'+
-        '<option value="Other">Other</option>'+
-        '</select><br>'+
-        '<button ng-click="saveNewEvent(title, info, startTime, endTime, category)">Save Event</button>'+
-        '</div>'
-      });
 
       var marker = new google.maps.Circle({
         map: map,
