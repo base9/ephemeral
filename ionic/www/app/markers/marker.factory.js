@@ -107,7 +107,7 @@ angular.module('radar')
         + happeningNow
         + eventCategory
         + popularity
-        + '"><img src="'+markerUrl+ '" /></div>';
+        + '"><img src="'+markerUrl+ '" class="marker" /></div>';
 
       markers.push(new RichMarker({
         map: map,

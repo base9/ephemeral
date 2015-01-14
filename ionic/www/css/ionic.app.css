@@ -412,17 +412,23 @@ $dark:                            #444 !default;
         color: #1e1e1e; }
 
 /*********** MARKERS *************/
-.richmarker.popularity-1 {
-  color: red; }
-.richmarker.popularity-2 {
-  color: orange; }
-.richmarker.popularity-3 {
-  color: yellow; }
-.richmarker.popularity-4 {
-  color: blue; }
-.richmarker.popularity-5 {
-  color: green;
-  font-size: 32px;
-  font-weight: bold; }
-.richmarker.category-fitness img {
-  content: url('/img/url/here'); }
+.marker {
+  height: 30px;
+  width: 30px; }
+
+.richmarker {
+  height: 10px; }
+  .richmarker.popularity-1 {
+    color: red; }
+  .richmarker.popularity-2 {
+    color: orange; }
+  .richmarker.popularity-3 {
+    color: yellow; }
+  .richmarker.popularity-4 {
+    color: blue; }
+  .richmarker.popularity-5 {
+    color: green;
+    font-size: 32px;
+    font-weight: bold; }
+  .richmarker.category-fitness img {
+    content: url('/img/url/here'); }

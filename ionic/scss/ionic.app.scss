@@ -539,8 +539,14 @@ $moneyGreen:				#038312;
 
 /*********** MARKERS *************/
 
+.marker {
+	height: 30px;
+	width: 30px;
+}
 
 .richmarker {
+	height: 10px;
+
   &.popularity-1 {
     color: red;
   }
