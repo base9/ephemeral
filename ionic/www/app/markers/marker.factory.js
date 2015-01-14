@@ -94,7 +94,7 @@ angular.module('radar')
 
       // add category and popularity classes to marker
       eventCategory = 'category-' + event.category + ' ';
-      popularity = 'popularity-' + event.popularity + ' ';
+      popularity = 'popularity-' + Math.floor(Math.random()*5) + ' ';
 
       // build marker image src url by category
       markerUrl = "img/markers/" + event.category + "_marker.png";
@@ -104,11 +104,10 @@ angular.module('radar')
       markup = 
         '<div class="richmarker ' 
         + eventCategory
-        + popularity
         + '">'
         + '<img src="' + ringUrl + '" class="ring '+ happeningNow + ' " /></div>'
         + '<img src="' + ringUrl + '" class="ring '+ happeningNow + '2 " /></div>'
-        + '<img src="' + markerUrl + '" class="marker" /></div>';
+        + '<img src="' + markerUrl + '" class="marker ' + popularity + '" /></div>';
 
       markers.push(new RichMarker({
         map: map,

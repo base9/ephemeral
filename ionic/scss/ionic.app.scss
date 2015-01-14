@@ -20,8 +20,9 @@ $dark:                            #444 !default;
 
 // Include all of Ionic
 
-//@import "../www/lib/ionic/scss/ionic";
+@import "../www/lib/ionic/scss/ionic";
 
+$positive:          gold !default;
 $bgGray:						rgba(30,30,30,0.92);
 $textGray: 					#b4b4b4;
 $inputBgGray: 			#c6c6c6;
@@ -88,6 +89,17 @@ $moneyGreen:				#038312;
       -ms-animation-timing-function: $timing;
           animation-timing-function: $timing;
 }
+
+
+/*********** OVERRIDE NAV-BAR **********/
+
+.bar.bar-positive {
+	border-color: rgb(60,60,60);
+	background-color: rgb(60,60,60);
+	// background-image: linear-gradient(0deg, #0c63ee, #0c63ee 50%, transparent 50%);
+	color: #fff;
+}
+
 
 /*********** POST NEW EVENT MODAL **********/
 
@@ -590,34 +602,6 @@ $moneyGreen:				#038312;
   -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
   filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
 
-  &.popularity-1 {
-    box-shadow: 0 0 44px rgba(255,255,255,1) , 0 0 20px rgba(255,255,255,1) , 0 0 30px rgba(255,255,255,1) , 0 0 74px #ff00de , 0 0 110px #ff00de , 0 0 148px #ff00de , 0 0 100px #ff00de ;
-  }
-  &.popularity-2 {
-    // glow
-  }
-  &.popularity-3 {
-    // glow
-  }
-  &.popularity-4 {
-    // glow
-  }
-  &.popularity-5 {
-    // glow
-  }
-  
-  &.category-fitness {
-    
-  }
-  &.category-party {
-    
-  }
-  &.category-music {
-    
-  }
-  &.category-food {
-    
-  }
 }
 
 .happening, .happening2 {
@@ -634,9 +618,34 @@ $moneyGreen:				#038312;
 	-webkit-animation-delay: 700ms;
 }
 
-.happening2 {
-
+.popularity-1 {
+  
 }
+.popularity-2 {
+  
+}
+.popularity-3 {
+  
+}
+.popularity-4 {
+  
+}
+.popularity-5 {
+  
+}
+  
+  &.category-fitness {
+    
+  }
+  &.category-party {
+    
+  }
+  &.category-music {
+    
+  }
+  &.category-food {
+    
+  }
 
 @-webkit-keyframes grow {
     from { 
