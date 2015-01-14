@@ -6,8 +6,6 @@ angular.module('radar')
   //filters is an object with properties popularity, category, distance, and keyword
   markerObj.placeMarkers = function(map, events, callback) {
 
-    // var bounds = new google.maps.LatLngBounds();
-
     if (events.length === 0) {
       return;
     }
@@ -17,12 +15,10 @@ angular.module('radar')
 
     callback(markers);
   };
-  //not using other above function because no callback is needed
-  markerObj.filterMarkers = function(map, objFilters, filters) {
-    // remove all existing markers
-    hideMarkers();
 
-    // var bounds = new google.maps.LatLngBounds();
+  markerObj.filterMarkers = function(map, objFilters, filters) {
+
+    hideMarkers();
 
     var events = objFilters.events;
     if (filters) {
@@ -45,7 +41,6 @@ angular.module('radar')
           events = temp.results;
         } else {
           events = [];
-          //return that the keywords do not match any event
         }
       }
       //filters.cost is an object with lowEnd and highEnd properties containing a number
@@ -60,19 +55,7 @@ angular.module('radar')
       console.log("NEW EVENTS", events);
     }
 
-    console.log("MARKERS1", markers);
-    console.log("MARKERS2", markers[0].position.lat());
-    console.log("MARKERS3", markers[0].position.k);
-
-    // for (var i = 0; i < events.length; i++) {
-    //   if (events[i] in matches)
-    // };
-
     showMarkers(events, markers);
-
-    // createMarkers(map, events, markers);
-
-    // callback(events, markers);
 
   };
 
