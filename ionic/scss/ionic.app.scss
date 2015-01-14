@@ -47,6 +47,13 @@ $moneyGreen:				#038312;
           border-radius: $radius;
 }
 
+@mixin box-shadow($shadow) {
+  -webkit-box-shadow: $shadow;
+     -moz-box-shadow: $shadow;
+      -ms-box-shadow: $shadow;
+          box-shadow: $shadow;
+}
+
 /*********** POST NEW EVENT MODAL **********/
 
 #addPhotoButton {
@@ -540,12 +547,22 @@ $moneyGreen:				#038312;
 /*********** MARKERS *************/
 
 .marker {
-	height: 30px;
-	width: 30px;
+	height: 50px;
+	cursor: pointer;
+	-webkit-filter: drop-shadow(3px 4px 6px rgba(0,0,0,0.65));
+  filter: url(#drop-shadow);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
+  filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
+	position: relative;
+	top: -50px;
+	left: -25px;
+
 }
 
 .richmarker {
-	height: 10px;
+	position: relative;
+	height: 1px;
+	width: 1px;
 
   &.popularity-1 {
     color: red;

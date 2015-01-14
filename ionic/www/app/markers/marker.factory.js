@@ -24,7 +24,6 @@ angular.module('radar')
   };
   //not using other above function because no callback is needed
   markerObj.filterMarkers = function(map, objFilters, filters) {
-    // debugger;
     // remove all existing markers
     clearMarkers();
 
@@ -107,7 +106,8 @@ angular.module('radar')
         + happeningNow
         + eventCategory
         + popularity
-        + '"><img src="'+markerUrl+ '" class="marker" /></div>';
+        + '">' +
+        '<img src="'+markerUrl+ '" class="marker" /></div>';
 
       markers.push(new RichMarker({
         map: map,

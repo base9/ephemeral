@@ -8,25 +8,6 @@ angular.module('radar')
 
   mapObj.initialize = function() {
   
-    function placeMarker(position) {
-
-      var marker = new google.maps.Circle({
-        map: map,
-        title: event.title,
-        position: position,
-        strokeColor: 'green',
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: 'green',
-        fillOpacity: 0.35,
-        center: position,
-        radius: 20
-      });
-      
-      newEventWindow.open(map, marker);
-
-
-    }
     var mapOptions = {
       zoom: 14,
       mapTypeId: google.maps.MapTypeId.ROADMAP,

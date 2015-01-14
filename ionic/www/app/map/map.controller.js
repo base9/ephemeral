@@ -57,6 +57,7 @@ angular.module('radar')
           google.maps.event.addListener(marker, 'click', (function(marker, event) {
             return function() {
               Http.getOneEvent(event.id, function(res) {
+                console.log(res);
                 $scope.eventInfo = res;
                 ($scope.eventInfo.price === "0.00") ? $scope.eventInfo.price = "Free" : $scope.eventInfo.price = '$'+ $scope.eventInfo.price;
                 $scope.eventInfo.startDate = isoDateToTimeString(parseInt($scope.eventInfo.startTime));
