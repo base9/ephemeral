@@ -1,27 +1,13 @@
-<ion-modal-view>
-  <ion-header-bar>
-    <h1 class="title">Register</h1>
-  </ion-header-bar>
-  <ion-content>
-    <form ng-submit="">
-      <div class="list">
-        <label class="item item-input item-floating-label">
-          <span class="input-label">Email</span>
-          <input ng-model="userEmail" type="text" placeholder="Email">
-        </label>
-        <label class="item item-input item-floating-label">
-          <span class="input-label">Password</span>
-          <input ng-model="userPassword" type="password" placeholder="Password">
-        </label>
-        <label class="item item-input item-floating-label">
-          <span class="input-label">Confirm Password</span>
-          <input ng-model="confirmPassword" type="password" placeholder="Confirm Password">
-        </label>
-      </div>
-
-      <button type="submit" class="button button-block button-positive" ng-click="handleSignup(userEmail, userPassword, confirmPassword)">
-        Signup
+<ion-modal-view class="loginForm">
+  <div class="formContainer">
+    <p class="title">Register</p>
+    <form ng-submit="handleSignup(userEmail, userPassword)">
+      <input class="textInput" ng-model="userEmail" type="text" placeholder="Email">
+      <input class="textInput" ng-model="userPassword" type="password" placeholder="Password">
+      <input class="textInput" ng-model="confirmPassword" type="password" placeholder="Confirm Password">
+      <button type="submit" class="button button-block button-positive submitButton" ng-click="handleSignup(userEmail, userPassword, confirmPassword)">
+      Sign Up
       </button>
     </form>
-  </ion-content>
+  </div>
 </ion-modal-view>

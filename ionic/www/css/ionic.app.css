@@ -20,17 +20,15 @@ $dark:                            #444 !default;
   background-color: #3c3c3c;
   color: #fff; }
 
-/*********** POST NEW EVENT MODAL **********/
-#addPhotoButton {
-  width: 120px;
-  height: 120px;
-  padding-top: 38px;
-  padding-left: 2px;
-  text-align: center;
-  background-color: #555555;
-  cursor: pointer;
-  color: #aeaeae;
-  font-size: 18px; }
+.textInput {
+  background-color: #c6c6c6;
+  color: #1e1e1e; }
+
+/*********** ALL MODALS **********/
+.modal {
+  background-color: rgba(30, 30, 30, 0.92);
+  padding: 20px;
+  border-radius: 15px; }
 
 ::-webkit-input-placeholder {
   color: #555555;
@@ -53,6 +51,41 @@ $dark:                            #444 !default;
 :-ms-input-placeholder {
   color: #555555;
   font-family: 'Muli', sans-serif; }
+
+/*********** LOGIN/REGISTER MODALS **********/
+.loginForm, .registerForm {
+  text-align: center;
+  font-family: 'Muli', sans-serif; }
+  .loginForm .title, .registerForm .title {
+    color: #b4b4b4;
+    text-align: center;
+    font-size: 40px;
+    margin: 16px 0 30px 0; }
+  .loginForm .textInput, .registerForm .textInput {
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
+    height: 50px;
+    width: 60%;
+    margin: 20px auto;
+    padding-left: 20px;
+    font-size: 17px; }
+  .loginForm .submitButton, .registerForm .submitButton {
+    width: 60%;
+    margin: 10px auto; }
+
+/*********** POST NEW EVENT MODAL **********/
+#addPhotoButton {
+  width: 120px;
+  height: 120px;
+  padding-top: 38px;
+  padding-left: 2px;
+  text-align: center;
+  background-color: #555555;
+  cursor: pointer;
+  color: #aeaeae;
+  font-size: 18px; }
 
 .newEventModal {
   font-family: 'Muli', sans-serif;
@@ -100,9 +133,6 @@ $dark:                            #444 !default;
     -moz-border-radius: 15px;
     -ms-border-radius: 15px;
     border-radius: 15px; }
-  .newEventModal .textInput {
-    background-color: #c6c6c6;
-    color: #1e1e1e; }
   .newEventModal .title {
     margin-top: 1px;
     height: 40px;
@@ -293,10 +323,6 @@ $dark:                            #444 !default;
     border-radius: 15px;
     background-color: rgba(30, 30, 30, 0.92);
     height: 100%; }
-  .eventInfoWindow .modal {
-    background-color: rgba(30, 30, 30, 0.92);
-    padding: 20px;
-    border-radius: 15px; }
   .eventInfoWindow .photoContainer {
     width: 120px;
     height: 120px;
