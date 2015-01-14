@@ -83,15 +83,14 @@ angular.module('radar')
     var popular = '';
     var markup = '';
     var markerUrl = '';
+    var ringUrl = '';
 
     for (var i = 0; i < events.length; i++) {
       var event = events[i];
       var position = new google.maps.LatLng(event.lat, event.lng);
 
       // add 'happening-now' class if event is happening right now
-      if (event.startTime < timeNow && timeNow < event.endTime) {
-        happeningNow = 'happening-now ';
-      }
+      (event.startTime < timeNow && timeNow < event.endTime) ? happeningNow = 'happening' : happeningNow = 'notHappening';
 
       // add category and popularity classes to marker
       eventCategory = 'category-' + event.category + ' ';
@@ -99,15 +98,16 @@ angular.module('radar')
 
       // build marker image src url by category
       markerUrl = "img/markers/" + event.category + "_marker.png";
+      ringUrl = "img/rings/" + event.category + ".png";
 
       // build marker markup
       markup = 
         '<div class="richmarker ' 
-        + happeningNow
         + eventCategory
         + popularity
-        + '">' +
-        '<img src="'+markerUrl+ '" class="marker" /></div>';
+        + '">'
+        + '<img src="' + ringUrl + '" class="ring '+ happeningNow + ' " /></div>'
+        + '<img src="' + markerUrl + '" class="marker" /></div>';
 
       markers.push(new RichMarker({
         map: map,

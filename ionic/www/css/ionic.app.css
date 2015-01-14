@@ -423,21 +423,28 @@ $dark:                            #444 !default;
   top: -50px;
   left: -25px; }
 
+.happening {
+  position: relative;
+  top: -50px;
+  left: -50px;
+  -webkit-animation-name: grow;
+  -webkit-animation-duration: 1000ms;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear; }
+
+@-webkit-keyframes grow {
+  from {
+    -webkit-transform: scale(0);
+    opacity: 1; }
+
+  to {
+    -webkit-transform: scale(0.8);
+    opacity: 0; } }
+
+.notHappening {
+  height: 0px; }
+
 .richmarker {
   position: relative;
   height: 1px;
   width: 1px; }
-  .richmarker.popularity-1 {
-    color: red; }
-  .richmarker.popularity-2 {
-    color: orange; }
-  .richmarker.popularity-3 {
-    color: yellow; }
-  .richmarker.popularity-4 {
-    color: blue; }
-  .richmarker.popularity-5 {
-    color: green;
-    font-size: 32px;
-    font-weight: bold; }
-  .richmarker.category-fitness img {
-    content: url('/img/url/here'); }

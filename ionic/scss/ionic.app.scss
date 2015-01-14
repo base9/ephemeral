@@ -54,6 +54,13 @@ $moneyGreen:				#038312;
           box-shadow: $shadow;
 }
 
+@mixin transform($scale) {
+  -webkit-transform: $scale;
+     -moz-transform: $scale;
+      -ms-transform: $scale;
+          transform: $scale;
+}
+
 /*********** POST NEW EVENT MODAL **********/
 
 #addPhotoButton {
@@ -557,59 +564,63 @@ $moneyGreen:				#038312;
 	top: -50px;
 	left: -25px;
 
+  &.popularity-1 {
+    // glow
+  }
+  &.popularity-2 {
+    // glow
+  }
+  &.popularity-3 {
+    // glow
+  }
+  &.popularity-4 {
+    // glow
+  }
+  &.popularity-5 {
+    // glow
+  }
+  
+  &.category-fitness {
+    
+  }
+  &.category-party {
+    
+  }
+  &.category-music {
+    
+  }
+  &.category-food {
+    
+  }
+}
+
+.happening {
+	position: relative;
+	top: -50px;
+	left: -50px;
+	-webkit-animation-name: grow;
+	-webkit-animation-duration: 1000ms;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+}
+
+@-webkit-keyframes grow {
+    from { 
+    	-webkit-transform: scale(0);
+    	opacity: 1; 
+    }
+    to { 
+    	-webkit-transform: scale(0.8); 
+    	opacity: 0;
+    }
+}
+
+.notHappening {
+	height: 0px;
 }
 
 .richmarker {
 	position: relative;
 	height: 1px;
-	width: 1px;
-
-  &.popularity-1 {
-    color: red;
-  }
-  &.popularity-2 {
-    color: orange;
-    // glow
-  }
-  &.popularity-3 {
-    color: yellow;
-    // glow
-  }
-  &.popularity-4 {
-    color: blue;
-    // glow
-  }
-  &.popularity-5 {
-    color: green;
-    font-size: 32px;
-    font-weight: bold;
-    // glow
-  }
-
-  &.happening-now {
-    // radiating circles
-  }
-
-  // event types
-  &.category-fitness {
-    img {
-      content: url('/img/url/here');
-    }
-  }
-  &.category-party {
-    img {
-      
-    }
-  }
-  &.category-music {
-    img {
-      
-    }
-  }
-  &.category-food {
-    img {
-      
-    }
-  }
-
+	width: 1px;    
 }
