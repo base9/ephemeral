@@ -113,7 +113,8 @@ angular.module('radar')
         map: map,
         position: position,
         draggable: false,
-        content: markup
+        content: markup,
+        shadow: 'none'
       }));
     }
   };
