@@ -14,6 +14,12 @@ $assertive:                       #ef473a !default;
 $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
+/*********** OVERRIDE NAV-BAR **********/
+.bar.bar-positive {
+  border-color: #3c3c3c;
+  background-color: #3c3c3c;
+  color: #fff; }
+
 /*********** POST NEW EVENT MODAL **********/
 #addPhotoButton {
   width: 120px;
@@ -412,17 +418,46 @@ $dark:                            #444 !default;
         color: #1e1e1e; }
 
 /*********** MARKERS *************/
-.richmarker.popularity-1 {
-  color: red; }
-.richmarker.popularity-2 {
-  color: orange; }
-.richmarker.popularity-3 {
-  color: yellow; }
-.richmarker.popularity-4 {
-  color: blue; }
-.richmarker.popularity-5 {
-  color: green;
-  font-size: 32px;
-  font-weight: bold; }
-.richmarker.category-fitness img {
-  content: url('/img/url/here'); }
+.marker {
+  height: 50px;
+  position: absolute;
+  cursor: pointer;
+  -webkit-filter: drop-shadow(3px 4px 6px rgba(0, 0, 0, 0.65));
+  filter: url(#drop-shadow);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
+  filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')"; }
+
+.happening, .happening2 {
+  position: absolute;
+  top: 46px;
+  left: -25px;
+  -webkit-animation-name: grow;
+  -webkit-animation-duration: 1400ms;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear; }
+
+.happening {
+  -webkit-animation-delay: 700ms; }
+
+@-webkit-keyframes grow {
+  from {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+    opacity: 1; }
+
+  to {
+    -webkit-transform: scale(0.7);
+    -moz-transform: scale(0.7);
+    -ms-transform: scale(0.7);
+    transform: scale(0.7);
+    opacity: 0; } }
+
+.notHappening, .notHappening2 {
+  height: 0px; }
+
+.richmarker {
+  position: relative;
+  height: 50px;
+  width: 50px; }

@@ -26,14 +26,14 @@ function addDummyUserAndEvent(){
           if(!event){
             console.log('creating seed event now with ratings and photos...');
             var newEvent = new Event({
-                title: 'Free Bagels at 8pm',
+                title: 'Free Bagels at Outdoors',
                 startTime: 1420516800000,
                 endTime: 1420524000000,
                 lat: 37.7931290,
                 lng: -122.394200,
                 user_id: userId,
                 info: 'Bespoke pork belly Helvetica, fanny pack craft beer DIY heirloom banjo church-key yr. Williamsburg viral trust fund whatever. Mumblecore fashion axe sustainable salvia. Etsy meggings leggings, post-ironic Williamsburg occupy sartorial semiotics Blue Bottle lumbersexual cronut Truffaut ugh asymmetrical. Locavore YOLO wayfarers Wes Anderson skateboard, tilde quinoa. Quinoa ennui forage gentrify, cred Shoreditch sartorial chillwave asymmetrical master cleanse hella synth vegan typewriter. Bushwick shabby chic pop-up chia organic literally.Single-origin coffee chia aesthetic tousled cronut. XOXO gentrify twee tofu craft beer, try-hard butcher. Sriracha Pitchfork biodiesel, post-ironic disrupt butcher Neutra vinyl you probably havent heard of them bespoke swag messenger bag. Tofu gentrify small batch, migas salvia Echo Park whatever master cleanse narwhal normcore Odd Future. Fixie post-ironic mixtape Helvetica Williamsburg semiotics, Marfa cred pour-over. Tumblr tousled taxidermy next level art party bicycle rights. Typewriter craft beer put a bird on it blog Carles leggings.',
-                category: 'Party',
+                category: 'outdoors',
                 streetAddress1: '1 Embarcadero Blvd',
                 streetAddress2: 'Suite 101',
                 city: 'San Francisco',

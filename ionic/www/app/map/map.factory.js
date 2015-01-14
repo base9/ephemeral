@@ -8,25 +8,6 @@ angular.module('radar')
 
   mapObj.initialize = function() {
   
-    function placeMarker(position) {
-
-      var marker = new google.maps.Circle({
-        map: map,
-        title: event.title,
-        position: position,
-        strokeColor: 'green',
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: 'green',
-        fillOpacity: 0.35,
-        center: position,
-        radius: 20
-      });
-      
-      newEventWindow.open(map, marker);
-
-
-    }
     var mapOptions = {
       zoom: 14,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -35,52 +16,106 @@ angular.module('radar')
   
     var styles = [
     {
-        "featureType": "landscape.man_made",
-        "elementType": "geometry",
+        "featureType": "administrative",
+        "elementType": "labels.text.fill",
         "stylers": [
             {
-                "color": "#f7f1df"
+                "color": "#444444"
             }
         ]
     },
     {
-        "featureType": "landscape.natural",
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "color": "#d0e3b4"
-            }
-        ]
-    },
-    {
-        "featureType": "landscape.natural.terrain",
-        "elementType": "geometry",
+        "featureType": "administrative.country",
+        "elementType": "geometry.fill",
         "stylers": [
             {
                 "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative.country",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative.country",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative.country",
+        "elementType": "labels.text.fill",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative.country",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative.country",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative.province",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative.province",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative.locality",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "landscape",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#f2f2f2"
             }
         ]
     },
     {
         "featureType": "poi",
-        "elementType": "labels",
-        "stylers": [
-            {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "poi.attraction",
-        "elementType": "labels.text",
-        "stylers": [
-            {
-                "visibility": "on"
-            }
-        ]
-    },
-    {
-        "featureType": "poi.business",
         "elementType": "all",
         "stylers": [
             {
@@ -89,34 +124,16 @@ angular.module('radar')
         ]
     },
     {
-        "featureType": "poi.medical",
-        "elementType": "geometry",
+        "featureType": "poi.attraction",
+        "elementType": "labels",
         "stylers": [
             {
-                "color": "#fbd3da"
+                "visibility": "on"
             }
         ]
     },
     {
-        "featureType": "poi.park",
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "color": "#bde6ab"
-            }
-        ]
-    },
-    {
-        "featureType": "road",
-        "elementType": "geometry.stroke",
-        "stylers": [
-            {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "road",
+        "featureType": "poi.business",
         "elementType": "labels",
         "stylers": [
             {
@@ -125,11 +142,95 @@ angular.module('radar')
         ]
     },
     {
+        "featureType": "poi.business",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.park",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.park",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#81bb78"
+            },
+            {
+                "lightness": "25"
+            },
+            {
+                "saturation": "1"
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "all",
+        "stylers": [
+            {
+                "saturation": -100
+            },
+            {
+                "lightness": 45
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "lightness": "-7"
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
         "featureType": "road.highway",
         "elementType": "geometry.fill",
         "stylers": [
             {
-                "color": "#ffe15f"
+                "visibility": "on"
+            },
+            {
+                "saturation": "52"
+            },
+            {
+                "color": "#ecf949"
+            },
+            {
+                "lightness": "-20"
             }
         ]
     },
@@ -138,67 +239,80 @@ angular.module('radar')
         "elementType": "geometry.stroke",
         "stylers": [
             {
-                "color": "#efd151"
+                "visibility": "on"
+            },
+            {
+                "lightness": "44"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "visibility": "off"
             }
         ]
     },
     {
         "featureType": "road.arterial",
-        "elementType": "geometry.fill",
+        "elementType": "labels.icon",
         "stylers": [
             {
-                "color": "#ffffff"
-            }, 
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "transit",
+        "elementType": "all",
+        "stylers": [
             {
                 "visibility": "on"
             }
         ]
     },
     {
-        "featureType": "road.arterial",
+        "featureType": "transit",
         "elementType": "labels.text",
         "stylers": [
             {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "transit.station",
+        "elementType": "all",
+        "stylers": [
+            {
                 "visibility": "on"
             }
         ]
     },
     {
-        "featureType": "road.local",
-        "elementType": "geometry.fill",
-        "stylers": [
-            {
-                "color": "black"
-            }
-        ]
-    },
-    {
-        "featureType": "road.local",
+        "featureType": "transit.station",
         "elementType": "labels.text",
         "stylers": [
             {
-                "visibility": "on"
-            }
-        ]
-    },
-    {
-        "featureType": "transit.station.airport",
-        "elementType": "geometry.fill",
-        "stylers": [
-            {
-                "color": "#cfb2db"
+                "visibility": "off"
             }
         ]
     },
     {
         "featureType": "water",
-        "elementType": "geometry",
+        "elementType": "all",
         "stylers": [
             {
-                "color": "#a2daf2"
+                "color": "#5177af"
+            },
+            {
+                "visibility": "on"
             }
         ]
-    }];
+    }
+];
 
     var styledMap = new google.maps.StyledMapType(styles, {name: "Styled Map"});
 

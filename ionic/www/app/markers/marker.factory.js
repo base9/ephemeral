@@ -24,7 +24,6 @@ angular.module('radar')
   };
   //not using other above function because no callback is needed
   markerObj.filterMarkers = function(map, objFilters, filters) {
-    // debugger;
     // remove all existing markers
     clearMarkers();
 
@@ -84,30 +83,31 @@ angular.module('radar')
     var popular = '';
     var markup = '';
     var markerUrl = '';
+    var ringUrl = '';
 
     for (var i = 0; i < events.length; i++) {
       var event = events[i];
       var position = new google.maps.LatLng(event.lat, event.lng);
 
       // add 'happening-now' class if event is happening right now
-      if (event.startTime < timeNow && timeNow < event.endTime) {
-        happeningNow = 'happening-now ';
-      }
+      (event.startTime < timeNow && timeNow < event.endTime) ? happeningNow = 'happening' : happeningNow = 'notHappening';
 
       // add category and popularity classes to marker
       eventCategory = 'category-' + event.category + ' ';
-      popularity = 'popularity-' + event.popularity + ' ';
+      popularity = 'popularity-' + Math.floor(Math.random()*5) + ' ';
 
       // build marker image src url by category
       markerUrl = "img/markers/" + event.category + "_marker.png";
+      ringUrl = "img/rings/" + event.category + ".png";
 
       // build marker markup
       markup = 
         '<div class="richmarker ' 
-        + happeningNow
         + eventCategory
-        + popularity
-        + '"><img src="'+markerUrl+ '" /></div>';
+        + '">'
+        + '<img src="' + ringUrl + '" class="ring '+ happeningNow + ' " /></div>'
+        + '<img src="' + ringUrl + '" class="ring '+ happeningNow + '2 " /></div>'
+        + '<img src="' + markerUrl + '" class="marker ' + popularity + '" /></div>';
 
       markers.push(new RichMarker({
         map: map,

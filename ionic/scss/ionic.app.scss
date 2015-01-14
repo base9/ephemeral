@@ -20,8 +20,6 @@ $dark:                            #444 !default;
 
 // Include all of Ionic
 
-//@import "../www/lib/ionic/scss/ionic";
-
 $bgGray:						rgba(30,30,30,0.92);
 $textGray: 					#b4b4b4;
 $inputBgGray: 			#c6c6c6;
@@ -46,6 +44,59 @@ $moneyGreen:				#038312;
       -ms-border-radius: $radius;
           border-radius: $radius;
 }
+
+@mixin box-shadow($shadow) {
+  -webkit-box-shadow: $shadow;
+     -moz-box-shadow: $shadow;
+      -ms-box-shadow: $shadow;
+          box-shadow: $shadow;
+}
+
+@mixin transform($scale) {
+  -webkit-transform: $scale;
+     -moz-transform: $scale;
+      -ms-transform: $scale;
+          transform: $scale;
+}
+
+@mixin animation-name($name) {
+	-webkit-animation-name: $name;
+     -moz-animation-name: $name;
+      -ms-animation-name: $name;
+          animation-name: $name;
+}
+
+@mixin animation-duration($duration) {
+	-webkit-animation-duration: $duration;
+     -moz-animation-duration: $duration;
+      -ms-animation-duration: $duration;
+          animation-duration: $duration;
+}
+
+@mixin animation-iteration-count($count) {
+	-webkit-animation-iteration-count: count;
+     -moz-animation-iteration-count: count;
+      -ms-animation-iteration-count: count;
+          animation-iteration-count: count;
+}
+
+@mixin animation-timing-function($timing) {
+	-webkit-animation-timing-function: $timing;
+     -moz-animation-timing-function: $timing;
+      -ms-animation-timing-function: $timing;
+          animation-timing-function: $timing;
+}
+
+
+/*********** OVERRIDE NAV-BAR **********/
+
+.bar.bar-positive {
+	border-color: rgb(60,60,60);
+	background-color: rgb(60,60,60);
+	// background-image: linear-gradient(0deg, #0c63ee, #0c63ee 50%, transparent 50%);
+	color: #fff;
+}
+
 
 /*********** POST NEW EVENT MODAL **********/
 
@@ -539,54 +590,77 @@ $moneyGreen:				#038312;
 
 /*********** MARKERS *************/
 
+.marker {
+	height: 50px;
+	position: absolute;
+	cursor: pointer;
+	-webkit-filter: drop-shadow(3px 4px 6px rgba(0,0,0,0.65));
+  filter: url(#drop-shadow);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
+  filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
 
-.richmarker {
-  &.popularity-1 {
-    color: red;
-  }
-  &.popularity-2 {
-    color: orange;
-    // glow
-  }
-  &.popularity-3 {
-    color: yellow;
-    // glow
-  }
-  &.popularity-4 {
-    color: blue;
-    // glow
-  }
-  &.popularity-5 {
-    color: green;
-    font-size: 32px;
-    font-weight: bold;
-    // glow
-  }
+}
 
-  &.happening-now {
-    // radiating circles
-  }
+.happening, .happening2 {
+	position: absolute;
+	top: 46px;
+	left: -25px;
+	-webkit-animation-name: grow;
+	-webkit-animation-duration: 1400ms;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+}
 
-  // event types
+.happening {
+	-webkit-animation-delay: 700ms;
+}
+
+.popularity-1 {
+  
+}
+.popularity-2 {
+  
+}
+.popularity-3 {
+  
+}
+.popularity-4 {
+  
+}
+.popularity-5 {
+  
+}
+  
   &.category-fitness {
-    img {
-      content: url('/img/url/here');
-    }
+    
   }
   &.category-party {
-    img {
-      
-    }
+    
   }
   &.category-music {
-    img {
-      
-    }
+    
   }
   &.category-food {
-    img {
-      
-    }
+    
   }
 
+@-webkit-keyframes grow {
+    from { 
+    	@include transform(scale(0));
+    	opacity: 1; 
+    }
+    to { 
+    	@include transform(scale(0.7)); 
+    	opacity: 0;
+    }
+}
+
+.notHappening, .notHappening2 {
+	height: 0px;
+}
+
+.richmarker {
+	position: relative;
+	height: 50px;
+	width: 50px;    
 }
