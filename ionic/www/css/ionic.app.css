@@ -414,37 +414,46 @@ $dark:                            #444 !default;
 /*********** MARKERS *************/
 .marker {
   height: 50px;
+  position: absolute;
   cursor: pointer;
   -webkit-filter: drop-shadow(3px 4px 6px rgba(0, 0, 0, 0.65));
   filter: url(#drop-shadow);
   -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
-  filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
-  position: relative;
-  top: -50px;
-  left: -25px; }
+  filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')"; }
+  .marker.popularity-1 {
+    box-shadow: 0 0 44px white, 0 0 20px white, 0 0 30px white, 0 0 74px #ff00de, 0 0 110px #ff00de, 0 0 148px #ff00de, 0 0 100px #ff00de; }
 
-.happening {
-  position: relative;
-  top: -50px;
-  left: -50px;
+.happening, .happening2 {
+  position: absolute;
+  top: 46px;
+  left: -25px;
   -webkit-animation-name: grow;
-  -webkit-animation-duration: 1000ms;
+  -webkit-animation-duration: 1400ms;
   -webkit-animation-iteration-count: infinite;
   -webkit-animation-timing-function: linear; }
+
+.happening {
+  -webkit-animation-delay: 700ms; }
 
 @-webkit-keyframes grow {
   from {
     -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
     opacity: 1; }
 
   to {
-    -webkit-transform: scale(0.8);
+    -webkit-transform: scale(0.7);
+    -moz-transform: scale(0.7);
+    -ms-transform: scale(0.7);
+    transform: scale(0.7);
     opacity: 0; } }
 
-.notHappening {
+.notHappening, .notHappening2 {
   height: 0px; }
 
 .richmarker {
   position: relative;
-  height: 1px;
-  width: 1px; }
+  height: 50px;
+  width: 50px; }

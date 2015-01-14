@@ -107,6 +107,7 @@ angular.module('radar')
         + popularity
         + '">'
         + '<img src="' + ringUrl + '" class="ring '+ happeningNow + ' " /></div>'
+        + '<img src="' + ringUrl + '" class="ring '+ happeningNow + '2 " /></div>'
         + '<img src="' + markerUrl + '" class="marker" /></div>';
 
       markers.push(new RichMarker({
