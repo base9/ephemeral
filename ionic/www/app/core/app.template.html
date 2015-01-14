@@ -1,123 +1,125 @@
-<ion-side-menus  ng-controller="MapController as mapCtrl">
-  <ion-side-menu-content>
-    <ion-nav-bar class="bar bar-positive" delegate-handle="navBar" align-title="center">
-      <ion-nav-buttons side="right">
-        <button class="button button-icon button-clear ion-navicon" menu-toggle="right">
-        </button>
-      </ion-nav-buttons>
-      <ion-nav-buttons side="left">
-        <form ng-submit="mapCtrl.filter()">
-          <div class="bar bar-header item-input-inset searchBar">
-            <label class="item-input-wrapper">
-              <i class="icon ion-ios7-search placeholder-icon"></i>
-              <input type="search" placeholder="Search events by name" ng-model="mapCtrl.filters.keyword">
+<ion-side-menus ng-controller="MenuController">
+  <div ng-controller="MapController as mapCtrl">
+    <ion-side-menu-content>
+      <ion-nav-bar class="bar bar-positive" delegate-handle="navBar" align-title="center">
+        <ion-nav-buttons side="right">
+          <button class="button button-icon button-clear ion-navicon" menu-toggle="right">
+          </button>
+        </ion-nav-buttons>
+        <ion-nav-buttons side="left">
+          <form ng-submit="mapCtrl.filter()">
+            <div class="bar bar-header item-input-inset searchBar">
+              <label class="item-input-wrapper">
+                <i class="icon ion-ios7-search placeholder-icon"></i>
+                <input type="search" placeholder="Search events by name" ng-model="mapCtrl.filters.keyword">
+              </label>
+            </div>
+          </form>
+        </ion-nav-buttons>
+      </ion-nav-bar>
+      <ion-content class="mapCanvas has-header">
+        <ion-nav-view></ion-nav-view>
+        <div id="map" data-tap-disabled="true"></div>
+        <button id="GeoButton" ng-click="geoLocate()"><i class="icon ion-android-locate"></i></button>
+      </ion-content> 
+    </ion-side-menu-content>
+
+    <ion-side-menu class="rightMenu" side="right">
+      <header class="bar bar-dark bar-header rightMenuHeader">
+        <h1 class="title">OPTIONS</h1>
+      </header>
+      <ion-content class="has-header">
+        <ion-nav-view name="OPTIONS"></ion-nav-view>
+        
+        <!-- Greeting for logged in user - start -->
+        <div class="button-bar logReg" ng-show="loggedIn">
+          <a class="button" ng-click="">Hi {{loggedInEmail}}</a>
+        </div>
+        <!-- Greeting - end -->
+
+        <div class="button-bar logReg" ng-show="!loggedIn">
+          <a class="button" ng-click="login()">Login</a>
+          <a class="button" ng-click="register()">Register</a>
+        </div>
+        <div class="button-bar logReg" ng-show="loggedIn">
+          <a class="button" ng-click="logout()">Logout</a>
+        </div>
+        <div class="button-bar">
+          <a class="button" ng-click="postNewEvent()">Post Event</a>
+        </div>
+        <div class="button-bar">
+          <a class="button" ng-click="toggleFilter = !toggleFilter">Filters</a>
+        </div>
+
+        <form name="filterForm" ng-submit="mapCtrl.filter()">
+          <div class="list list-inset filterPane" ng-show="toggleFilter">
+
+            <label class="item item-input item-select">
+              <div class="input-label">
+                Category
+              </div>
+              <select ng-model="mapCtrl.filters.category">
+                <option>Community and Culture</option>
+                <option>Fitness</option>
+                <option>Food and Drink</option>
+                <option>Music and Entertainment</option>
+                <option>Personal Interest</option>
+                <option>Travel and Outdoor</option>
+                <option>Other</option>
+              </select>
             </label>
+
+            <div class="distance item range range-positive">
+              Distance<input type="range" name="distance" min="0" max="10" value="0" ng-model="mapCtrl.filters.distance">
+              {{mapCtrl.filters.distance}}
+            </div>
+
+            <div class="popularity item range range-positive">
+              Popularity
+              <input type="range" name="distance" min="0" max="5" value="0" ng-model="mapCtrl.filters.popularity">
+              {{mapCtrl.filters.popularity}}
+            </div>
+
+            <div class="item range range-positive">
+              Cost
+              <input type="range" name="cost" min="0" max="100" value="0" ng-model="mapCtrl.filters.cost">
+              ${{mapCtrl.filters.cost}}
+            </div>
+
+            <div class="list">
+              <label class="item item-radio">
+                <input type="radio" name="group" ng-click="mapCtrl.showTime(false)">
+                <div class="item-content">
+                  Now!
+                </div>
+                <i class="radio-icon ion-checkmark"></i>
+              </label>
+              <label class="item item-radio">
+                <input type="radio" name="group" ng-click="mapCtrl.showTime(true)">
+                <div class="item-content">
+                  Specify time
+                </div>
+                <i class="radio-icon ion-checkmark"></i>
+              </label>
+              <label ng-show="mapCtrl.show" class="item item-input">
+              <!-- TODO: Fix time display to show only hours and minutes  -->
+                <span class="input-label">Start Time</span>
+                <input type="time" ng-model="mapCtrl.filters.time.startTime">
+              </label>
+              <label ng-show="mapCtrl.show" class="item item-input">
+              <!-- TODO: Make default value end of day/3AM next day  -->
+                <span class="input-label">End Time</span>
+                <input type="time" ng-model="mapCtrl.filters.time.endTime">
+              </label>
+            </div>
+
+            <button class="button" type="submit">
+              Filter
+            </button>
+
           </div>
         </form>
-      </ion-nav-buttons>
-    </ion-nav-bar>
-    <ion-content class="mapCanvas has-header">
-      <ion-nav-view></ion-nav-view>
-      <div id="map" data-tap-disabled="true"></div>
-      <button id="GeoButton" ng-click="geoLocate()"><i class="icon ion-android-locate"></i></button>
-    </ion-content> 
-  </ion-side-menu-content>
-
-  <ion-side-menu class="rightMenu" side="right">
-    <header class="bar bar-dark bar-header rightMenuHeader">
-      <h1 class="title">OPTIONS</h1>
-    </header>
-    <ion-content class="has-header">
-      <ion-nav-view name="OPTIONS"></ion-nav-view>
-      
-      <!-- Greeting for logged in user - start -->
-      <div class="button-bar logReg" ng-show="loggedIn">
-        <a class="button" ng-click="">Hi {{loggedInEmail}}</a>
-      </div>
-      <!-- Greeting - end -->
-
-      <div class="button-bar logReg" ng-show="!loggedIn">
-        <a class="button" ng-click="login()">Login</a>
-        <a class="button" ng-click="register()">Register</a>
-      </div>
-      <div class="button-bar logReg" ng-show="loggedIn">
-        <a class="button" ng-click="logout()">Logout</a>
-      </div>
-      <div class="button-bar">
-        <a class="button" ng-click="postNewEvent()">Post Event</a>
-      </div>
-      <div class="button-bar">
-        <a class="button" ng-click="toggleFilter = !toggleFilter">Filters</a>
-      </div>
-
-      <form name="filterForm" ng-submit="mapCtrl.filter()">
-        <div class="list list-inset filterPane" ng-show="toggleFilter">
-
-          <label class="item item-input item-select">
-            <div class="input-label">
-              Category
-            </div>
-            <select ng-model="mapCtrl.filters.category">
-              <option>Community and Culture</option>
-              <option>Fitness</option>
-              <option>Food and Drink</option>
-              <option>Music and Entertainment</option>
-              <option>Personal Interest</option>
-              <option>Travel and Outdoor</option>
-              <option>Other</option>
-            </select>
-          </label>
-
-          <div class="distance item range range-positive">
-            Distance<input type="range" name="distance" min="0" max="10" value="0" ng-model="mapCtrl.filters.distance">
-            {{mapCtrl.filters.distance}}
-          </div>
-
-          <div class="popularity item range range-positive">
-            Popularity
-            <input type="range" name="distance" min="0" max="5" value="0" ng-model="mapCtrl.filters.popularity">
-            {{mapCtrl.filters.popularity}}
-          </div>
-
-          <div class="item range range-positive">
-            Cost
-            <input type="range" name="cost" min="0" max="100" value="0" ng-model="mapCtrl.filters.cost">
-            ${{mapCtrl.filters.cost}}
-          </div>
-
-          <div class="list">
-            <label class="item item-radio">
-              <input type="radio" name="group" ng-click="mapCtrl.showTime(false)">
-              <div class="item-content">
-                Now!
-              </div>
-              <i class="radio-icon ion-checkmark"></i>
-            </label>
-            <label class="item item-radio">
-              <input type="radio" name="group" ng-click="mapCtrl.showTime(true)">
-              <div class="item-content">
-                Specify time
-              </div>
-              <i class="radio-icon ion-checkmark"></i>
-            </label>
-            <label ng-show="mapCtrl.show" class="item item-input">
-            <!-- TODO: Fix time display to show only hours and minutes  -->
-              <span class="input-label">Start Time</span>
-              <input type="time" ng-modal="mapCtrl.filters.time.startTime">
-            </label>
-            <label ng-show="mapCtrl.show" class="item item-input">
-            <!-- TODO: Make default value end of day/3AM next day  -->
-              <span class="input-label">End Time</span>
-              <input type="time" ng-modal="mapCtrl.filters.time.endTime">
-            </label>
-          </div>
-
-          <button class="button" type="submit">
-            Filter
-          </button>
-
-        </div>
-      </form>
-    </ion-content>
-  </ion-side-menu>
+      </ion-content>
+    </ion-side-menu>
+  </div>
 </ion-side-menus>
