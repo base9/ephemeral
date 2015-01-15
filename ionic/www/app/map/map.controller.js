@@ -6,7 +6,8 @@ angular.module('radar')
   'HttpHandler', 
   '$ionicModal',
   '$scope', 
-  function(Map, SearchBox, Marker, Http, $ionicModal, $scope) {
+  '$log',
+  function(Map, SearchBox, Marker, Http, $ionicModal, $scope, $log) {
 
     var listOfMarkers = {};
   
@@ -42,6 +43,14 @@ angular.module('radar')
       return hours+mins+ampm
     }
 
+    $scope.closeModalAndGetDirections = function () {
+      var pos = {
+        lat: 37.784541,
+        lng: -122.404272
+      };
+      Map.getDirections(pos);
+      $scope.closeModal();
+    }
 
     Http.getMarkers(function(events) {
       Marker.placeMarkers(map, events, function(markers) {
@@ -49,30 +58,32 @@ angular.module('radar')
         //store marker location and events inside scope for now
         listOfMarkers.events = events;
 
+        var addListener = function(marker, event) {
+          return function() {
+            Http.getOneEvent(event.id, function(res) {
+              $scope.eventInfo = res;
+              ($scope.eventInfo.price === "0.00") ? $scope.eventInfo.price = "Free" : $scope.eventInfo.price = '$'+ $scope.eventInfo.price;
+              $scope.eventInfo.startDate = isoDateToTimeString(parseInt($scope.eventInfo.startTime));
+              $scope.eventInfo.endDate = isoDateToTimeString(parseInt($scope.eventInfo.endTime));
+              $scope.eventInfo.mainPhoto = $scope.eventInfo.photos[0];
+              $scope.eventInfo.photos = $scope.eventInfo.photos.slice(1);
+              $scope.eventInfo.comments = $scope.eventInfo.comments.reverse();
+            })
+            $ionicModal.fromTemplateUrl('./app/modals/eventInfoModal.html', {
+              scope: $scope,
+            }).then(function(modal) {
+              $scope.modal = modal;
+              $scope.openModal();
+            });
+          };
+        }
+
         for (var i = 0; i < markers.length; i++) {
           var title = events[i].title;
           var marker = markers[i];
           var event = events[i];
           //must invoke function in order to grab current marker, title, and rating
-          google.maps.event.addListener(marker, 'click', (function(marker, event) {
-            return function() {
-              Http.getOneEvent(event.id, function(res) {
-                $scope.eventInfo = res;
-                ($scope.eventInfo.price === "0.00") ? $scope.eventInfo.price = "Free" : $scope.eventInfo.price = '$'+ $scope.eventInfo.price;
-                $scope.eventInfo.startDate = isoDateToTimeString(parseInt($scope.eventInfo.startTime));
-                $scope.eventInfo.endDate = isoDateToTimeString(parseInt($scope.eventInfo.endTime));
-                $scope.eventInfo.mainPhoto = $scope.eventInfo.photos[0];
-                $scope.eventInfo.photos = $scope.eventInfo.photos.slice(1);
-                $scope.eventInfo.comments = $scope.eventInfo.comments.reverse();
-              })
-              $ionicModal.fromTemplateUrl('./app/modals/eventInfoModal.html', {
-                scope: $scope,
-              }).then(function(modal) {
-                $scope.modal = modal;
-                $scope.openModal();
-              });
-            };
-          })(marker, event));
+          google.maps.event.addListener(marker, 'click', addListener(marker, event));
         }
       });
     });

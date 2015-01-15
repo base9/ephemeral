@@ -85,7 +85,7 @@ angular.module('radar')
     var markerUrl = '';
     var ringUrl = '';
 
-    for (var i = 0; i < events.length; i++) {
+    for (var i = 0; i < 50; i++) {
       var event = events[i];
       var position = new google.maps.LatLng(event.lat, event.lng);
 
