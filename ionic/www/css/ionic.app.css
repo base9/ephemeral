@@ -483,13 +483,17 @@ $dark:                            #444 !default;
   position: absolute;
   top: 46px;
   left: -25px;
+  display: none; }
+
+.happening.circle-animation, .happening2.circle-animation {
+  display: block;
   -webkit-animation-name: grow;
   -webkit-animation-duration: 1400ms;
   -webkit-animation-iteration-count: infinite;
   -webkit-animation-timing-function: linear; }
 
-.happening {
-  -webkit-animation-delay: 700ms; }
+.circle-animation-delay {
+  -webkit-animation-delay: -700ms; }
 
 @-webkit-keyframes grow {
   from {
