@@ -191,16 +191,17 @@ $dark:                            #444 !default;
         margin-right: 0px;
         margin-left: 0px; }
   .newEventModal .dateTime {
-    width: 39.6%;
-    margin-left: 16.6%; }
-    .newEventModal .dateTime h4 {
+    width: 100%; }
+    .newEventModal .dateTime .startsText, .newEventModal .dateTime .endsText {
       font-size: 17px;
       color: #b4b4b4;
       display: inline-block;
-      margin-top: 13px;
-      position: fixed; }
+      vertical-align: top; }
+    .newEventModal .dateTime .endsText {
+      margin-right: 6px; }
+    .newEventModal .dateTime .starts, .newEventModal .dateTime .ends {
+      margin-left: 10px; }
     .newEventModal .dateTime .timePickerDirective {
-      margin-left: 50px;
       display: inline-block; }
     .newEventModal .dateTime .timepick td {
       margin-left: 10px; }
@@ -239,17 +240,17 @@ $dark:                            #444 !default;
     .newEventModal .dateTime .endDate {
       margin-left: 5px; }
   .newEventModal .categoryCost {
-    width: 39.6%;
-    margin-left: 16.6%; }
-    .newEventModal .categoryCost h4 {
+    width: 100%;
+    margin-left: 10px; }
+    .newEventModal .categoryCost .categoryCostText {
       font-size: 17px;
       color: #b4b4b4;
       display: inline-block; }
+    .newEventModal .categoryCost .category {
+      margin-right: 15px; }
     .newEventModal .categoryCost select, .newEventModal .categoryCost .priceInput {
       background-color: #c6c6c6;
       border: 0px; }
-    .newEventModal .categoryCost .cost {
-      margin-left: 10px; }
     .newEventModal .categoryCost .priceInput {
       width: 19%;
       display: inline-block;
@@ -259,9 +260,7 @@ $dark:                            #444 !default;
       margin-right: -10px;
       margin-top: 1px; }
   .newEventModal .postButtons {
-    margin-top: 15px;
-    width: 39.6%;
-    margin-left: 29%; }
+    margin: 15px auto 0 0; }
     .newEventModal .postButtons .cancelEventButton {
       border: 1px solid #b4b4b4;
       padding: 13.5px 26px;
@@ -303,9 +302,6 @@ $dark:                            #444 !default;
       background: -o-linear-gradient(top, #00380a, #00590f);
       border-top-color: #1b435e; }
 
-.transparent {
-  background-color: transparent !important; }
-
 .close-modal {
   position: absolute;
   right: 19.5%;
@@ -340,7 +336,7 @@ $dark:                            #444 !default;
   .eventInfoWindow :-ms-input-placeholder {
     color: #555555;
     font-family: 'Muli', sans-serif; }
-  .eventInfoWindow h1, .eventInfoWindow h2, .eventInfoWindow h3, .eventInfoWindow h4, .eventInfoWindow h5, .eventInfoWindow h6 {
+  .eventInfoWindow h1, .eventInfoWindow h2, .eventInfoWindow h3, .eventInfoWindow h4, .eventInfoWindow h5, .eventInfoWindow h6, .eventInfoWindow p {
     color: #b4b4b4;
     font-family: 'Muli', sans-serif; }
   .eventInfoWindow .background {
@@ -373,6 +369,8 @@ $dark:                            #444 !default;
       display: inline-block;
       vertical-align: top;
       width: calc(80% - 120px);
+      width: -moz-calc(80% - 120px);
+      width: -webkit-calc(80% - 120px);
       height: 95%; }
       .eventInfoWindow .mainInfo .titleScroll .eventInfo {
         width: 60%; }

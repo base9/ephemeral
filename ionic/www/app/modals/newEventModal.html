@@ -33,34 +33,38 @@
       </div>
     </div>
     <div class="dateTime">
-      <h4> starts: </h4>
-      <div class=timePickerDirective>
-        <timepicker class="timepick" ng-model="startTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
-      </div>
-      <div class="date">
-        <p class="input-group">
-          <input type="text" class="textInput form-control" datepicker-popup="{{format}}" ng-model="startDate" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-          <span class="input-group-btn">
-            <button type="button" class="dateButton btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-          </span>
-        </p>
-      </div>
-      <h4> ends: </h4>
-      <div class=timePickerDirective>
-        <timepicker class="timepick" ng-model="endTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
-      </div>
-      <div class="date endDate">
+      <div class="starts">
+        <h5 class="startsText"> starts: </h5>
+        <div class=timePickerDirective>
+          <timepicker class="timepick" ng-model="startTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+        </div>
+        <div class="date">
           <p class="input-group">
-            <input type="text" class="textInput form-control" datepicker-popup="{{format}}" ng-model="endDate" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+            <input type="text" class="textInput form-control" datepicker-popup="{{format}}" ng-model="startDate" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
             <span class="input-group-btn">
               <button type="button" class="dateButton btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
             </span>
           </p>
+        </div>
+      </div>
+      <div class="ends">
+        <h5 class="endsText"> ends: </h5>
+        <div class=timePickerDirective>
+          <timepicker class="timepick" ng-model="endTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+        </div>
+        <div class="date endDate">
+            <p class="input-group">
+              <input type="text" class="textInput form-control" datepicker-popup="{{format}}" ng-model="endDate" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="dateButton btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
+        </div>
       </div>
     </div>
     <div class="categoryCost">
-      <h4> category: </h4> 
-      <select name="category" ng-model="newPostData.category">
+      <h6 class="categoryCostText"> category: </h6> 
+      <select class="category" name="category" ng-model="newPostData.category">
         <option value="entertainment">Entertainment</option>
         <option value="drink">Food/Drink</option>
         <option value="culture">Culture</option>
@@ -69,7 +73,7 @@
         <option value="hobbies">Hobbies</option>
         <option value="other">Other</option>
       </select>
-        <h4 class="cost"> cost: $ </h4>
+        <h6 class="categoryCostText"> cost: $ </h6>
         <input class="priceInput" type="number" ng-model="price"> 
     </div>
     <div class="postButtons">

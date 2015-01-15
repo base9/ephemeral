@@ -295,19 +295,24 @@ $moneyGreen:				#038312;
 	}
 
 	.dateTime {
-		width: 39.6%;
-  	margin-left: 16.6%;
+		width: 100%;
 
-		h4 {
+		.startsText, .endsText {
 			font-size: 17px;
 			color: $textGray;
 			display: inline-block;
-			margin-top: 13px;
-			position: fixed;
+			vertical-align: top;
 		}
 
+		.endsText {
+			margin-right: 6px;
+		}
+
+		.starts, .ends {
+			margin-left: 10px;
+		}
+		
 		.timePickerDirective {
-			margin-left: 50px;
 			display: inline-block;
 		}
 
@@ -371,23 +376,22 @@ $moneyGreen:				#038312;
 	}
 
 	.categoryCost {
-		width: 39.6%;
-  	margin-left: 16.6%;
+		width: 100%;
+		margin-left: 10px;
 
-  	h4 {
+  	.categoryCostText {
   		font-size: 17px;
   		color: $textGray;
   		display: inline-block;
   	}
 
+  	.category {
+  		margin-right: 15px;
+  	}
+
   	select, .priceInput {
   		background-color: $inputBgGray;
   		border: 0px;
-  	}
-
-  	.cost {
-  		margin-left: 10px;
-
   	}
 
   	.priceInput {
@@ -402,9 +406,7 @@ $moneyGreen:				#038312;
 	}
 
 	.postButtons {
-		margin-top: 15px;
-		width: 39.6%;
-		margin-left: 29%;
+		margin: 15px auto 0 0;
 
 		.cancelEventButton {
 		  border: 1px solid #b4b4b4;
@@ -440,10 +442,10 @@ $moneyGreen:				#038312;
 	}
 }
 
-.transparent {
-  background-color: transparent !important;
+// .transparent {
+//   background-color: transparent !important;
 
-}
+// }
 
 .close-modal {
   position: absolute;
@@ -487,7 +489,7 @@ $moneyGreen:				#038312;
 	   font-family: 'Muli', sans-serif;  
 	}
 
-	h1, h2, h3, h4, h5, h6 {
+	h1, h2, h3, h4, h5, h6, p {
 		color: $textGray;
   	font-family: 'Muli', sans-serif;
 	}
@@ -524,6 +526,8 @@ $moneyGreen:				#038312;
 			display: inline-block;
 	  	vertical-align: top;
 	  	width: calc(80% - 120px);
+	  	width: -moz-calc(80% - 120px);
+	  	width: -webkit-calc(80% - 120px);
 	  	height: 95%;
 		  
 		  .eventTitle {
