@@ -342,9 +342,7 @@ angular.module('radar')
       navigator.geolocation.getCurrentPosition(function(pos) {
         var currentLocation = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
         map.setCenter(currentLocation);
-        map.setZoom(14);
         var bounds = map.getBounds();
-        console.log("BOUNDS IN MAP FACTORY", bounds);
         callback(pos.coords, bounds);
 
         mapObj.myMarker = new google.maps.Marker({
