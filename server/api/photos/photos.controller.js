@@ -94,7 +94,7 @@ function getUploadParams(req,res){
       {"bucket": "base9photos"}, 
       ["starts-with", "$key", ""],
       {"acl": "private"},
-      {"success_action_redirect": "http://localhost/"},
+      {"success_action_redirect": "https://s3-us-west-1.amazonaws.com/base9photos/testupload1.jpg"},
       ["starts-with", "$Content-Type", ""],
       ["content-length-range", 0, 3130576]
     ]
