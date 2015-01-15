@@ -490,9 +490,29 @@ $dark:                            #444 !default;
   -webkit-animation-name: grow;
   -webkit-animation-duration: 1400ms;
   -webkit-animation-iteration-count: infinite;
-  -webkit-animation-timing-function: linear; }
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-name: grow;
+  -moz-animation-name: grow;
+  -ms-animation-name: grow;
+  animation-name: grow;
+  -webkit-animation-duration: 1400ms;
+  -moz-animation-duration: 1400ms;
+  -ms-animation-duration: 1400ms;
+  animation-duration: 1400ms;
+  -webkit-animation-iteration-count: infinite;
+  -moz-animation-iteration-count: infinite;
+  -ms-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  -moz-animation-timing-function: linear;
+  -ms-animation-timing-function: linear;
+  animation-timing-function: linear; }
 
+<<<<<<< HEAD
 .circle-animation-delay {
+=======
+.happening {
+>>>>>>> adds animation mixins
   -webkit-animation-delay: -700ms; }
 
 @-webkit-keyframes grow {
