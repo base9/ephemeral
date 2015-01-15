@@ -94,19 +94,15 @@ function getUploadParams(req,res){
       {"bucket": "base9photos"}, 
       ["starts-with", "$key", ""],
       {"acl": "private"},
-      {"success_action_redirect": "https://s3-us-west-1.amazonaws.com/base9photos/testupload1.jpg"},
+      // {"success_action_redirect": "https://s3-us-west-1.amazonaws.com/base9photos/testupload1.jpg"},
       ["starts-with", "$Content-Type", ""],
       ["content-length-range", 0, 3130576]
     ]
   };
    
   var policyBase64 = new Buffer(JSON.stringify(policy), 'utf8').toString('base64');
-  console.log("Policy Base64:");
-  console.log(policyBase64);
    
   var signature = crypto.createHmac('sha1', process.env.AWS_SECRET_ACCESS_KEY).update(policyBase64).digest('base64');
-  console.log("Signature:");
-  console.log(signature);
 
   res.json({
     bucket: 'base9photos', 
