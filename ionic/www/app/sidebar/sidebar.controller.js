@@ -329,10 +329,13 @@ angular.module('radar')
     console.log("PREVIEW: ", preview)
     var file    = document.querySelector('input[type=file]').files[0];
     console.log("FILE: ", file)
+    $scope.photoFileTestFormat1 = file;
+    $scope.totallySecretTestVariable = 'yes, $scope shared between previewFile and HttpHandler';
     var reader  = new FileReader();
 
     reader.onloadend = function () {
       preview.src = reader.result;
+      $scope.photoFileTestFormat1 = reader.result;
     }
 
     if (file) {

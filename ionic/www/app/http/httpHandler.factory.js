@@ -112,7 +112,13 @@ angular.module('radar')
 
 
   httpObject.uploadPhoto = function(file, fileName){         
+    console.log('http handler attempting to upload photo!');
+    console.log('$scope.totallySecretTestVariable');
     
+    $scope.photoFileTestFormat1;
+    $scope.photoFileTestFormat2;
+
+
     function formDataObject() {
       return function(data) {
         var fd = new FormData();
@@ -123,23 +129,23 @@ angular.module('radar')
       };
     }
 
-    $http({
-      method: ‘POST’,
-      url: 'https://base9photos.s3.amazonaws.com/',
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      },
-      data: {
-        'file': file,
-        'key': fileName,
-        'AWSAccessKeyId': 'AKIAIWPJUAIHVGA6VNSA',
-        'acl': 'private',
-        'policy': 'eyJleHBpcmF0aW9uIjoiMjAxNi0wMS0wMVQwMDowMDowMFoiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJiYXNlOXBob3RvcyJ9LFsic3RhcnRzLXdpdGgiLCIka2V5IiwiIl0seyJhY2wiOiJwcml2YXRlIn0sWyJzdGFydHMtd2l0aCIsIiRDb250ZW50LVR5cGUiLCIiXSxbImNvbnRlbnQtbGVuZ3RoLXJhbmdlIiwwLDMxMzA1NzZdXX0=',
-        'signature': 'Aw6j1mlYJeC4OawIqe6thbZREEc=',
-        'Content-Type': 'image/jpeg'
-      },
-      transformRequest: formDataObject
-    });
+    // $http({
+    //   method: ‘POST’,
+    //   url: 'https://base9photos.s3.amazonaws.com/',
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data'
+    //   },
+    //   data: {
+    //     'file': file,
+    //     'key': fileName,
+    //     'AWSAccessKeyId': 'AKIAIWPJUAIHVGA6VNSA',
+    //     'acl': 'private',
+    //     'policy': 'eyJleHBpcmF0aW9uIjoiMjAxNi0wMS0wMVQwMDowMDowMFoiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJiYXNlOXBob3RvcyJ9LFsic3RhcnRzLXdpdGgiLCIka2V5IiwiIl0seyJhY2wiOiJwcml2YXRlIn0sWyJzdGFydHMtd2l0aCIsIiRDb250ZW50LVR5cGUiLCIiXSxbImNvbnRlbnQtbGVuZ3RoLXJhbmdlIiwwLDMxMzA1NzZdXX0=',
+    //     'signature': 'Aw6j1mlYJeC4OawIqe6thbZREEc=',
+    //     'Content-Type': 'image/jpeg'
+    //   },
+    //   transformRequest: formDataObject
+    // });
   }
 
 
