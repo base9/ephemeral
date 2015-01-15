@@ -6,8 +6,8 @@ angular.module('radar')
   'HttpHandler', 
   '$ionicModal',
   '$scope', 
-  '$log',
-  function(Map, SearchBox, Marker, Http, $ionicModal, $scope, $log) {
+  '$window',
+  function(Map, SearchBox, Marker, Http, $ionicModal, $scope, $window) {
 
     var listOfEvents = {};
   
@@ -38,15 +38,16 @@ angular.module('radar')
       return hours+mins+ampm
     }
 
-    $scope.closeModalAndGetDirections = function (event) {
-      console.log(event);
-
-      var pos = {
-        lat: 37.784541,
-        lng: -122.404272
-      };
-      Map.getDirections(pos);
-      $scope.closeModal();
+    $scope.closeModalAndGetDirections = function () {
+      var event;
+      if (event = $window.eventInfo) {
+        var pos = {
+          lat: event.lat,
+          lng: event.lng
+        };
+        Map.getDirections(pos);
+        $scope.closeModal();
+      }
     }
 
     Map.geoLocate(function(location, bounds) {
@@ -75,6 +76,8 @@ angular.module('radar')
                   $scope.eventInfo.mainPhoto = $scope.eventInfo.photos[0];
                   $scope.eventInfo.photos = $scope.eventInfo.photos.slice(1);
                   $scope.eventInfo.comments = $scope.eventInfo.comments.reverse();
+                  // hack to pass data
+                  $window.eventInfo = $scope.eventInfo;
                 });
                 $ionicModal.fromTemplateUrl('./app/modals/eventInfoModal.html', {
                   scope: $scope,
