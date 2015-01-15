@@ -233,7 +233,10 @@ angular.module('radar')
     });
 
     //TODO: make sure the photo file object is actually available as $scope.file.
-    Http.uploadPhoto($scope.file, photoFileName);
+    Http.uploadPhoto($scope.photoFileTestFormat1, 
+                     $scope.photoFileTestFormat2, 
+                     photoFileName
+                     );
 
   };
 
@@ -335,7 +338,7 @@ angular.module('radar')
 
     reader.onloadend = function () {
       preview.src = reader.result;
-      $scope.photoFileTestFormat1 = reader.result;
+      $scope.photoFileTestFormat2 = reader.result;
     }
 
     if (file) {

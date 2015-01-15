@@ -27,7 +27,8 @@ module.exports = {
   fetchBatchDataFromEventbriteAPI: fetchBatchDataFromEventbriteAPI,
   getCoordsFromAddress: getCoordsFromAddress,
   getAddressFromCoords: getAddressFromCoords,
-  addManySpoofs: addManySpoofs
+  addManySpoofs: addManySpoofs,
+  logReq: logReq
 };
 
 /******************** Generic DB interactions **********************/
@@ -53,6 +54,12 @@ function addOne(req, res) {
   // TODO: add result of above operation to req.body/query for addEventRecord call
   console.log("Sending New Post to Database: ",req.body);
   utils.addEventRecord(req.body, res);
+}
+
+function logReq(req, res) {
+  console.log('****************************************');
+  console.log(req);
+  console.log('****************************************');
 }
 
 function addManySpoofs(req,res){
