@@ -7,7 +7,7 @@ angular.module('radar')
   var watchId;
   var currentLocation;
   var directionsService = new google.maps.DirectionsService();
-  var directionsDisplay;
+  var directionsDisplay = new google.maps.DirectionsRenderer();
   mapObj.initialize = function() {
   
     var mapOptions = {
@@ -380,7 +380,6 @@ angular.module('radar')
       };
       directionsService.route(request, function(result, status) {
         if (status == google.maps.DirectionsStatus.OK) {
-          directionsDisplay = new google.maps.DirectionsRenderer();
           directionsDisplay.setMap(map);
           directionsDisplay.setOptions( { suppressMarkers: true } );
           directionsDisplay.setDirections(result);

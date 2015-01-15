@@ -43,7 +43,9 @@ angular.module('radar')
       return hours+mins+ampm
     }
 
-    $scope.closeModalAndGetDirections = function () {
+    $scope.closeModalAndGetDirections = function (event) {
+      console.log(event);
+
       var pos = {
         lat: 37.784541,
         lng: -122.404272
