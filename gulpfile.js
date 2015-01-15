@@ -11,7 +11,7 @@ var path = {
   cssRoot: './ionic/www/css',
   server: './server/index.js',
   serverSideJs: './server/**/*.js',
-  client: 'ionic/www/**/*',
+  client: 'ionic/www/**/*.js',
   test: './test/**/*.js',
   clientSideJs: './ionic/www/js/**/*.js'
 }

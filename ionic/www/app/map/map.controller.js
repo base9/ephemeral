@@ -26,6 +26,46 @@ angular.module('radar')
 
     var map = Map.initialize();
 
+    Map.geoLocate(function(location, bounds) {
+      listOfEvents.location = {'lat': location.latitude, 'lng': location.longitude};
+      listOfEvents.bounds = {ne: bounds.getNorthEast(), sw: bounds.getSouthWest()};
+      console.log("LIST OF MARKERS: ", listOfEvents);
+
+      Http.getMarkers(listOfEvents.bounds, function(events) {
+        createMarkers(events);
+      });
+    });
+  
+    this.filters = {distance: 0, popularity: 0, time: {now: false, startTime: null, endTime: null}, cost: 0, keyword: null};
+
+    this.filter = function() {
+      console.log("FILTERS", this.filters);
+      if (!this.show) {
+        this.filters.time.now = true;
+      }
+      if (this.filters.distance === 0) {
+        this.filters.distance = null;
+      }
+      if (this.filters.popularity === 0) {
+        this.filters.popularity = null;
+      }
+      if (this.filters.time.startTime && this.filters.time.endTime) {
+        var today = new Date().setHours(0, 0, 0, 0);
+        var offset = new Date().getTimezoneOffset() * 60000;
+        console.log("TODAY: ", today, Date.parse(this.filters.time.startTime));
+        this.filters.time.startTime = today + Date.parse(this.filters.time.startTime) - offset;
+      }
+      Marker.filterMarkers(map, listOfEvents, this.filters);
+
+      this.filters = {distance: 0, popularity: 0, time: {now: false, startTime: null, endTime: null}, cost: 0, keyword: null};
+    };
+
+    this.show = false;
+
+    this.showTime = function(show) {
+      this.show = show;
+    }
+
     function isoDateToTimeString(date) {
       var date = new Date(date);
       var hours = date.getHours();
@@ -97,36 +137,6 @@ angular.module('radar')
         }
       });
     }
-  
-    this.filters = {distance: 0, popularity: 0, time: {now: false, startTime: null, endTime: null}, cost: 0, keyword: null};
-
-    this.filter = function() {
-      console.log("FILTERS", this.filters);
-      if (!this.show) {
-        this.filters.time.now = true;
-      }
-      if (this.filters.distance === 0) {
-        this.filters.distance = null;
-      }
-      if (this.filters.popularity === 0) {
-        this.filters.popularity = null;
-      }
-      if (this.filters.time.startTime && this.filters.time.endTime) {
-        var today = new Date().setHours(0, 0, 0, 0);
-        var offset = new Date().getTimezoneOffset() * 60000;
-        console.log("TODAY: ", today, Date.parse(this.filters.time.startTime));
-        this.filters.time.startTime = today + Date.parse(this.filters.time.startTime) - offset;
-      }
-      Marker.filterMarkers(map, listOfEvents, this.filters);
-
-      this.filters = {distance: 0, popularity: 0, time: {now: false, startTime: null, endTime: null}, cost: 0, keyword: null};
-    };
-
-    this.show = false;
-
-    this.showTime = function(show) {
-      this.show = show;
-    }
 
     google.maps.event.addListener(map, 'zoom_changed', function() {
       reloadToEventChange();
@@ -137,7 +147,7 @@ angular.module('radar')
       clearTimeout(timeoutID);
       timeoutID = setTimeout(function() {
         reloadToEventChange();
-      }, 200)
+      }, 200);
     });
 
     var reloadToEventChange = function() {
