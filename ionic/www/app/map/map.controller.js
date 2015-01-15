@@ -80,6 +80,7 @@ angular.module('radar')
                 $scope.eventInfo.mainPhoto = $scope.eventInfo.photos[0];
                 $scope.eventInfo.photos = $scope.eventInfo.photos.slice(1);
                 $scope.eventInfo.comments = $scope.eventInfo.comments.reverse();
+                if ($scope.eventInfo.city) { $scope.eventInfo.city += ',' }
               });
               $ionicModal.fromTemplateUrl('./app/modals/eventInfoModal.html', {
                 scope: $scope,

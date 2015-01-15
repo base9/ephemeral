@@ -5,13 +5,15 @@
 		<div class="photoContainer">
 	  	<img src="{{eventInfo.mainPhoto.url}}" class="mainPhoto"/>
 	  </div>
-  	<h2 class="eventTitle"> {{eventInfo.title}} </h2>
+	  <span class="titleScroll">
+  		<h2 class="eventTitle"> {{eventInfo.title}} </h2>
+	  	<span class="eventInfo">
+		    <h4> {{eventInfo.info}} </h4>
+		  </span>
+  	</span>
   	<img ng-show="!liked" src="./img/thumbs_up_grey.png" class="likeButton" ng-click="liked=!liked; eventInfo.ratings = eventInfo.ratings+1" />
   	<img ng-show="liked" src="./img/thumbs_up_green.png" class="likeButton" ng-click="liked=!liked; eventInfo.ratings = eventInfo.ratings-1";  />
 	  <h3 class="eventLikes"> {{eventInfo.ratings}} </h3>
-  	<span class="eventInfo">
-	    <h4> {{eventInfo.info}} </h4>
-	  </span>
   </div>
 
   <div class="details">
@@ -19,7 +21,7 @@
     <h2 class="eventPrice"> {{eventInfo.price}} </h2>
     <h3 class="eventAddress"> {{eventInfo.streetAddress1}} </h3>
     <h3 class="eventAddress"> {{eventInfo.streetAddress2}} </h3>
-    <h3 class="eventAddress"> {{eventInfo.city}}, {{eventInfo.state}} </h3>
+    <h3 class="eventAddress"> {{eventInfo.city}} {{eventInfo.state}} </h3>
     <button ng-click="closeModalAndGetDirections()" class="directions"> Get Directions </button>
   </div>
 	
@@ -30,8 +32,13 @@
 	   	</div>
 	   	<div class="addPhoto photoContainer">
 	   	  <form action="" method="POST" enctype="multipart/form-data">
-	   	     <div id="addPhotoButton" ng-click="getFile()">Add<br>Photo</div>
-	   	     <div style='height: 0px;width:0px; overflow:hidden;'><input id="upfile" type="file" value="upload"/></div>
+	   	     <div id="addPhotoButton" ng-click="getFile()" ng-show="!photoUploaded">Add<br>Photo</div>
+	   	     <div class="photoContainer" ng-show="photoUploaded">
+	   	       <img id="photoPreview" class="eventPhoto" src="" alt="Image preview...">
+	   	     </div>
+	   	     <div style='height: 0px;width:0px; overflow:hidden;'>
+	   	     	<input id="upfile" type="file" value="upload" onchange="angular.element(this).scope().previewFile()" />
+	   	     </div>
 	   	   </form>
 	   	</div>
    	</div>

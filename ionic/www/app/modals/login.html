@@ -1,37 +1,12 @@
-<!-- <ion-modal-view>
-  <ion-header-bar>
-    <h1 class="title">Login</h1>
-  </ion-header-bar>
-  <ion-content>
-    <form ng-submit="">
-      <div class="list">
-        <label class="item item-input item-floating-label">
-          <span class="input-label">Email</span>
-          <input ng-model="userEmail" type="text" placeholder="Email">
-        </label>
-        <label class="item item-input item-floating-label">
-          <span class="input-label">Password</span>
-          <input ng-model="userPassword" type="password" placeholder="Password">
-        </label>
-      </div>
-
-      <button type="submit" class="button button-block button-positive" ng-click="handleLogin(userEmail, userPassword)">
-        Login
+<ion-modal-view class="loginForm">
+  <div class="formContainer">
+    <p class="title">Log In</p>
+    <form ng-submit="handleLogin(userEmail, userPassword)">
+      <input class="textInput" ng-model="userEmail" type="text" placeholder="Email">
+      <input class="textInput" ng-model="userPassword" type="password" placeholder="Password">
+      <button type="submit" class="button button-block button-positive submitButton" ng-click="handleLogin(userEmail, userPassword)">
+      Log In
       </button>
     </form>
-  </ion-content>
-</ion-modal-view>
- -->
-
-
-<div class="modal transparent">
-  <div class="card">
-    <i class="icon ion-ios7-close close-modal" ng-click="closeModal()"></i>
-    <div class="item item-divider">
-      Header 1
-    </div> 
-    <div class="item item-text-wrap">
-       Hello from Modal 1
-    </div>
   </div>
-</div>
+</ion-modal-view>

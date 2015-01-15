@@ -105,8 +105,7 @@ angular.module('radar')
     $scope.showSearch = !$scope.showSearch;
   };
 
-  /* NEW EVENT MODAL */
-
+/************* NEW EVENT MODAL **************/
 
   // HOPEFULLY REMOVE THIS FUNCTION
   function getDateTime() {
@@ -148,7 +147,7 @@ angular.module('radar')
         $scope.newPostData.state = address.state;
         $scope.newPostData.zipCode = address.zipCode;
       });
-    }); // TODO: Promisify
+    }); 
   };
 
   $scope.postNewEvent = function() {
@@ -197,6 +196,9 @@ angular.module('radar')
         category: '',
         coords: {lat: undefined, lng: undefined}
       };
+
+    $scope.photoUploaded = false;
+
     $ionicModal.fromTemplateUrl('app/modals/newEventModal.html', {
       scope: $scope,
     }).then(function(modal) {
@@ -298,8 +300,30 @@ angular.module('radar')
   };
 
 /*************  Input type="file" Custom Functionality ************/
+
   $scope.getFile = function(){
       document.getElementById("upfile").click();
+  }
+
+  $scope.previewFile = function() {
+    console.log("PREVIEW FILE")
+    var preview = document.querySelector('#photoPreview');
+    console.log("PREVIEW: ", preview)
+    var file    = document.querySelector('input[type=file]').files[0];
+    console.log("FILE: ", file)
+    var reader  = new FileReader();
+
+    reader.onloadend = function () {
+      preview.src = reader.result;
+    }
+
+    if (file) {
+      $scope.photoUploaded = true;
+      reader.readAsDataURL(file);
+      $scope.$apply();
+    } else {
+      preview.src = "";
+    }
   }
 
   $scope.sub = function(obj){
@@ -313,15 +337,3 @@ angular.module('radar')
 
 
 }]);
-
-// angular.module('radar').controller('ModalCtrl', function ($scope, $modalInstance) {
-
-//   $scope.ok = function () {
-//     $modalInstance.close();
-//   };
-
-//   $scope.cancel = function () {
-//     $modalInstance.dismiss('cancel');
-//   };
-
-// });
