@@ -44,26 +44,5 @@
     <script src="lib/ionic/js/angular-bootstrap/ui-bootstrap.js"></script>
     <script src="lib/ionic/js/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 
-    <script type="text/javascript">
-      function previewFile() {
-        console.log("PREVIEW FILE")
-        var preview = document.querySelector('.mainPhoto');
-        console.log("PREVIEW: ", preview)
-        var file    = document.querySelector('input[type=file]').files[0];
-        console.log("FILE: ", file)
-        var reader  = new FileReader();
-
-        reader.onloadend = function () {
-          preview.src = reader.result;
-        }
-
-        if (file) {
-          reader.readAsDataURL(file);
-        } else {
-          preview.src = "";
-        }
-      }
-    </script>
-
   </body>
 </html>
