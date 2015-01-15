@@ -9,6 +9,7 @@ angular.module('radar')
   function(Map, SearchBox, Marker, Http, $ionicModal, $scope) {
 
     var listOfEvents = {};
+    $scope.eventInfo = {};
   
     $scope.geoLocate = function(){
       console.log("LOCATING.......");
@@ -35,6 +36,18 @@ angular.module('radar')
         hours = Math.abs(hours-12);
       }
       return hours+mins+ampm
+    }
+
+    $scope.closeModalAndGetDirections = function () {
+      var event;
+      if (event = $scope.eventInfo) {
+        var pos = {
+          lat: event.lat,
+          lng: event.lng
+        };
+        Map.getDirections(pos);
+        $scope.closeModal();
+      }
     }
 
     Map.geoLocate(function(location, bounds) {

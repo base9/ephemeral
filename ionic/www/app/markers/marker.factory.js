@@ -76,6 +76,7 @@ angular.module('radar')
     var markerUrl = '';
     var ringUrl = '';
 
+    // i < events.length
     for (var i = 0; i < events.length; i++) {
       var event = events[i];
       var position = new google.maps.LatLng(event.lat, event.lng);

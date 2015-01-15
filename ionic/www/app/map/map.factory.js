@@ -5,7 +5,9 @@ angular.module('radar')
 
   var map;
   var watchId;
-
+  var currentLocation;
+  var directionsService = new google.maps.DirectionsService();
+  var directionsDisplay = new google.maps.DirectionsRenderer();
   mapObj.initialize = function() {
   
     var mapOptions = {
@@ -340,7 +342,7 @@ angular.module('radar')
   mapObj.geoLocate = function(callback) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(pos) {
-        var currentLocation = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+        currentLocation = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
         map.setCenter(currentLocation);
         var bounds = map.getBounds();
         callback(pos.coords, bounds);
@@ -368,6 +370,24 @@ angular.module('radar')
       handleNoGeolocation(true);
     }
   };
+
+  mapObj.getDirections = function (event) {
+    if (currentLocation) {
+      var request = {
+        origin: currentLocation,
+        destination: new google.maps.LatLng(event.lat, event.lng),
+        travelMode: google.maps.DirectionsTravelMode.DRIVING
+      };
+      directionsService.route(request, function(result, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+          directionsDisplay.setMap(map);
+          directionsDisplay.setOptions( { suppressMarkers: true } );
+          directionsDisplay.setDirections(result);
+        }
+      })
+    }
+
+  }
 
   mapObj.geoCenter = function() {
     if (navigator.geolocation) {

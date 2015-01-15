@@ -20,7 +20,7 @@
     <h3 class="eventAddress"> {{eventInfo.streetAddress1}} </h3>
     <h3 class="eventAddress"> {{eventInfo.streetAddress2}} </h3>
     <h3 class="eventAddress"> {{eventInfo.city}}, {{eventInfo.state}} </h3>
-    <button class="directions"> Get Directions </button>
+    <button ng-click="closeModalAndGetDirections()" class="directions"> Get Directions </button>
   </div>
 	
   <div class="photoComments">
