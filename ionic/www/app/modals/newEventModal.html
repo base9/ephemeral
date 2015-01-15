@@ -12,8 +12,13 @@
   <div class="headBar row">
     <span class="addPhoto">
       <form action="" method="POST" enctype="multipart/form-data">
-         <div id="addPhotoButton" ng-click="getFile()">Add<br>Photo</div>
-         <div style='height: 0px;width:0px; overflow:hidden;'><input id="upfile" type="file" value="upload"/></div>
+        <div id="addPhotoButton" ng-click="getFile()" ng-show="!photoUploaded">Add<br>Photo</div>
+        <div class="photoContainer" ng-show="photoUploaded">
+          <img id="photoPreview" class="mainPhoto" src="" alt="Image preview...">
+        </div>
+        <div style='height: 0px;width:0px; overflow:hidden;'>
+          <input id="upfile" type="file" onchange="angular.element(this).scope().previewFile()" value="upload"/>
+        </div>
        </form>
     </span>
     <div class="col-80">

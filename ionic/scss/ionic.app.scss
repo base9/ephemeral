@@ -231,6 +231,21 @@ $moneyGreen:				#038312;
     font-size: 18px;
   }
   
+  .photoContainer {
+  	width: 120px; 
+  	height: 120px; 
+  	display: inline-block;
+  	margin-right: 10px;
+  	overflow: hidden;
+  	@include border-radius($buttonRadius);
+  }
+
+  .mainPhoto {
+  	height: 100%;
+  	display: inline-block;
+  	vertical-align: top;
+  }
+
   .background {
   	padding: 10px 10px;
   	@include border-radius($modalRadius);

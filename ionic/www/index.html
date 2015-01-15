@@ -11,10 +11,6 @@
     <link href="css/style.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Muli:300,400' rel='stylesheet' type='text/css'>
 
-
-    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
-    <link href="css/ionic.app.css" rel="stylesheet">
-    -->
   </head>
   <body ng-app="radar">
     
@@ -29,7 +25,7 @@
     <script src="lib/js-rich-marker/src/richmarker-compiled.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
-    <!-- // <script src="cordova.js"></script> -->
+    <!-- <script src="cordova.js"></script> -->
 
     <!-- All app js -->
     <script src="app/core/app.js"></script>
@@ -47,6 +43,27 @@
     <!-- Bootstrap -->
     <script src="lib/ionic/js/angular-bootstrap/ui-bootstrap.js"></script>
     <script src="lib/ionic/js/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+
+    <script type="text/javascript">
+      function previewFile() {
+        console.log("PREVIEW FILE")
+        var preview = document.querySelector('.mainPhoto');
+        console.log("PREVIEW: ", preview)
+        var file    = document.querySelector('input[type=file]').files[0];
+        console.log("FILE: ", file)
+        var reader  = new FileReader();
+
+        reader.onloadend = function () {
+          preview.src = reader.result;
+        }
+
+        if (file) {
+          reader.readAsDataURL(file);
+        } else {
+          preview.src = "";
+        }
+      }
+    </script>
 
   </body>
 </html>

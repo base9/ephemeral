@@ -143,6 +143,20 @@ $dark:                            #444 !default;
     cursor: pointer;
     color: #aeaeae;
     font-size: 18px; }
+  .newEventModal .photoContainer {
+    width: 120px;
+    height: 120px;
+    display: inline-block;
+    margin-right: 10px;
+    overflow: hidden;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px; }
+  .newEventModal .mainPhoto {
+    height: 100%;
+    display: inline-block;
+    vertical-align: top; }
   .newEventModal .background {
     padding: 10px 10px;
     -webkit-border-radius: 15px;
