@@ -30,6 +30,17 @@ $dark:                            #444 !default;
   padding: 20px;
   border-radius: 15px; }
 
+#addPhotoButton {
+  width: 120px;
+  height: 120px;
+  padding-top: 38px;
+  padding-left: 2px;
+  text-align: center;
+  background-color: #555555;
+  cursor: pointer;
+  color: #aeaeae;
+  font-size: 18px; }
+
 ::-webkit-input-placeholder {
   color: #555555;
   font-family: 'Muli', sans-serif; }
@@ -92,24 +103,21 @@ $dark:                            #444 !default;
     margin: 10px auto; }
 
 /*********** POST NEW EVENT MODAL **********/
-#addPhotoButton {
-  width: 120px;
-  height: 120px;
-  padding-top: 38px;
-  padding-left: 2px;
-  text-align: center;
-  background-color: #555555;
-  cursor: pointer;
-  color: #aeaeae;
-  font-size: 18px; }
-
 .newEventModal {
   font-family: 'Muli', sans-serif;
   -webkit-border-radius: 15px;
   -moz-border-radius: 15px;
   -ms-border-radius: 15px;
-  border-radius: 15px;
-  height: 100%; }
+  border-radius: 15px; }
+  .newEventModal input, .newEventModal textarea {
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
+    margin: 8px 10px;
+    padding-left: 10px;
+    padding-top: 12px;
+    resize: none; }
   .newEventModal .bgImage, .newEventModal .bgSolid {
     width: 100%;
     height: 68%;
@@ -123,75 +131,65 @@ $dark:                            #444 !default;
     opacity: 0.2; }
   .newEventModal .bgSolid {
     opacity: 1; }
-  .newEventModal input, .newEventModal textarea {
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    -ms-border-radius: 4px;
-    border-radius: 4px;
-    margin: 8px 10px;
-    padding-left: 10px;
-    padding-top: 12px;
-    resize: none; }
-  .newEventModal #addPhotoButton {
+  .newEventModal .addPhotoDiv {
     width: 120px;
-    height: 120px;
-    padding-top: 38px;
-    padding-left: 2px;
-    margin-left: 20px;
-    text-align: center;
-    background-color: #555555;
-    cursor: pointer;
-    color: #aeaeae;
-    font-size: 18px; }
-  .newEventModal .photoContainer {
-    width: 120px;
-    height: 120px;
-    display: inline-block;
-    margin-right: 10px;
-    overflow: hidden;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    -ms-border-radius: 4px;
-    border-radius: 4px; }
-  .newEventModal .mainPhoto {
     height: 100%;
     display: inline-block;
     vertical-align: top; }
-  .newEventModal .background {
-    padding: 10px 10px;
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    -ms-border-radius: 15px;
-    border-radius: 15px; }
-  .newEventModal .title {
-    margin-top: 1px;
-    height: 40px;
-    font-size: 30px;
-    width: 50%; }
-  .newEventModal .info {
-    height: 70px;
-    font-size: 14px;
-    width: 50%; }
-  .newEventModal .addressForm {
-    width: 39.6%;
-    margin-left: 15.6%; }
-    .newEventModal .addressForm textarea {
-      height: 22px;
-      margin: 6px 10px;
-      padding-left: 10px;
-      padding-top: 4px;
-      font-size: 15px; }
-    .newEventModal .addressForm .city {
-      width: 85%;
+    .newEventModal .addPhotoDiv #addPhotoButton {
+      width: 120px;
+      height: 120px;
+      padding-top: 38px;
+      padding-left: 2px;
+      text-align: center;
+      background-color: #555555;
+      cursor: pointer;
+      color: #aeaeae;
+      font-size: 18px; }
+    .newEventModal .addPhotoDiv .photoContainer {
+      width: 120px;
+      height: 120px;
       display: inline-block;
-      margin-right: 0px;
-      margin-top: 0px; }
-    .newEventModal .addressForm .state {
-      width: 12%;
+      margin-right: 10px;
+      overflow: hidden;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -ms-border-radius: 4px;
+      border-radius: 4px; }
+    .newEventModal .addPhotoDiv .mainPhoto {
+      height: 100%;
       display: inline-block;
-      margin-right: -12px;
-      margin-left: 5px;
-      margin-top: 0px; }
+      vertical-align: top; }
+  .newEventModal .inputForm {
+    width: 50%;
+    display: inline-block; }
+    .newEventModal .inputForm .title {
+      margin-top: 1px;
+      height: 40px;
+      font-size: 30px; }
+    .newEventModal .inputForm .info {
+      height: 70px;
+      font-size: 14px; }
+    .newEventModal .inputForm .addressForm {
+      width: 100%; }
+      .newEventModal .inputForm .addressForm .textInput {
+        height: 22px;
+        margin: 6px 10px;
+        padding-left: 10px;
+        padding-top: 4px;
+        font-size: 15px; }
+      .newEventModal .inputForm .addressForm .cityState {
+        margin-top: -5px; }
+      .newEventModal .inputForm .addressForm .city {
+        width: 82%;
+        display: inline-block;
+        margin-right: 0px; }
+      .newEventModal .inputForm .addressForm .state {
+        width: 14%;
+        display: inline-block;
+        float: right;
+        margin-right: 0px;
+        margin-left: 0px; }
   .newEventModal .dateTime {
     width: 39.6%;
     margin-left: 16.6%; }
@@ -370,27 +368,24 @@ $dark:                            #444 !default;
   .eventInfoWindow .mainInfo {
     height: 145px;
     border-bottom: 1px solid #b4b4b4; }
+    .eventInfoWindow .mainInfo .titleScroll {
+      overflow: auto;
+      display: inline-block;
+      vertical-align: top;
+      width: calc(80% - 120px);
+      height: 95%; }
+      .eventInfoWindow .mainInfo .titleScroll .eventInfo {
+        width: 60%; }
+        .eventInfoWindow .mainInfo .titleScroll .eventInfo h4 {
+          font-size: 15px; }
     .eventInfoWindow .mainInfo .likeButton {
       height: 22px;
       vertical-align: top;
       margin: 5px 4px 0 0; }
-    .eventInfoWindow .mainInfo .eventTitle {
-      display: inline-block;
-      vertical-align: top;
-      margin: 0 35px 0 0; }
     .eventInfoWindow .mainInfo .eventLikes {
       display: inline-block;
       vertical-align: top;
       margin-top: 4px; }
-    .eventInfoWindow .mainInfo .eventInfo {
-      height: 80px;
-      overflow: auto;
-      display: inline-block;
-      vertical-align: top;
-      margin: -86px 0 0 137px;
-      width: 60%; }
-      .eventInfoWindow .mainInfo .eventInfo h4 {
-        font-size: 15px; }
   .eventInfoWindow .details {
     float: left;
     width: 30%;
@@ -435,7 +430,10 @@ $dark:                            #444 !default;
     text-align: left;
     padding: 20px;
     border-left: 1px solid #b4b4b4;
-    margin-bottom: 20px; }
+    margin-bottom: 20px;
+    overflow: auto;
+    vertical-align: top;
+    height: 60%; }
     .eventInfoWindow .photoComments .comments {
       margin-top: 20px; }
     .eventInfoWindow .photoComments .commentsLabel {

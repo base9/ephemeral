@@ -1,15 +1,14 @@
 <i class="icon ion-ios7-close close-modal" ng-click="closeModal()"></i>
 
-<ion-modal-view class="newEventModal transparent">
-  <img src="img/background.jpg" class="bgSolid" />
-  <img src="img/entertainment.jpg" class="bgImage" ng-show="newPostData.category==='entertainment'" />
+<ion-modal-view class="newEventModal">
+<!--   <img src="img/entertainment.jpg" class="bgImage" ng-show="newPostData.category==='entertainment'" />
   <img src="img/drink.jpg" class="bgImage" ng-show="newPostData.category==='drink'" />
   <img src="img/culture.jpg" class="bgImage" ng-show="newPostData.category==='culture'" />
   <img src="img/fitness.jpg" class="bgImage" ng-show="newPostData.category==='fitness'" />
   <img src="img/outdoors.jpg" class="bgImage" ng-show="newPostData.category==='outdoors'" />
   <img src="img/hobbies.jpg" class="bgImage" ng-show="newPostData.category==='hobbies'" />
-  <img src="img/other.jpg" class="bgImage" ng-show="newPostData.category==='other'" />
-  <div class="headBar row">
+  <img src="img/other.jpg" class="bgImage" ng-show="newPostData.category==='other'" /> -->
+  <div class="addPhotoDiv">
     <span class="addPhoto">
       <form action="" method="POST" enctype="multipart/form-data">
         <div id="addPhotoButton" ng-click="getFile()" ng-show="!photoUploaded">Add<br>Photo</div>
@@ -21,59 +20,61 @@
         </div>
        </form>
     </span>
-    <div class="col-80">
-      <textarea class="textInput title" maxlength="30" placeholder="Title..." ng-model="newPostData.title" required />
-      <textarea class="textInput info" maxlength="200" placeHolder="optional info..." ng-model="newPostData.info" />
-    </div>
   </div>
-  <div class="addressForm">
-    <textarea class="textInput street1" placeHolder="Street Address 1" ng-model="newPostData.streetAddress1" required />
-    <textarea class="textInput street2" placeHolder="apt, room, floor #" ng-model="newPostData.streetAddress2" />
-    <textarea class="textInput city" placeHolder="City" ng-model="newPostData.city" required />
-    <textarea class="textInput state" placeHolder="St" ng-model="newPostData.state" required />
-  </div>
-  <div class="dateTime">
-    <h4> starts: </h4>
-    <div class=timePickerDirective>
-      <timepicker class="timepick" ng-model="startTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+  <div class="inputForm">
+    <textarea class="textInput title" maxlength="30" placeholder="Title..." ng-model="newPostData.title" required />
+    <textarea class="textInput info" maxlength="200" placeHolder="optional info..." ng-model="newPostData.info" />
+    <div class="addressForm">
+      <textarea class="textInput street1" placeHolder="Street Address 1" ng-model="newPostData.streetAddress1" required />
+      <textarea class="textInput street2" placeHolder="apt, room, floor #" ng-model="newPostData.streetAddress2" />
+      <div class="cityState">
+        <textarea class="textInput city" placeHolder="City" ng-model="newPostData.city" required />
+        <textarea class="textInput state" placeHolder="St" ng-model="newPostData.state" required />
+      </div>
     </div>
-    <div class="date">
-      <p class="input-group">
-        <input type="text" class="textInput form-control" datepicker-popup="{{format}}" ng-model="startDate" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-        <span class="input-group-btn">
-          <button type="button" class="dateButton btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-        </span>
-      </p>
-    </div><br>
-    <h4> ends: </h4>
-    <div class=timePickerDirective>
-      <timepicker class="timepick" ng-model="endTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
-    </div>
-    <div class="date endDate">
+    <div class="dateTime">
+      <h4> starts: </h4>
+      <div class=timePickerDirective>
+        <timepicker class="timepick" ng-model="startTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+      </div>
+      <div class="date">
         <p class="input-group">
-          <input type="text" class="textInput form-control" datepicker-popup="{{format}}" ng-model="endDate" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+          <input type="text" class="textInput form-control" datepicker-popup="{{format}}" ng-model="startDate" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
           <span class="input-group-btn">
             <button type="button" class="dateButton btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
           </span>
         </p>
+      </div>
+      <h4> ends: </h4>
+      <div class=timePickerDirective>
+        <timepicker class="timepick" ng-model="endTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+      </div>
+      <div class="date endDate">
+          <p class="input-group">
+            <input type="text" class="textInput form-control" datepicker-popup="{{format}}" ng-model="endDate" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+            <span class="input-group-btn">
+              <button type="button" class="dateButton btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </p>
+      </div>
     </div>
-  </div>
-  <div class="categoryCost">
-    <h4> category: </h4> 
-    <select name="category" ng-model="newPostData.category">
-      <option value="entertainment">Entertainment</option>
-      <option value="drink">Food/Drink</option>
-      <option value="culture">Culture</option>
-      <option value="fitness">Fitness</option>
-      <option value="outdoors">Outdoors</option>
-      <option value="hobbies">Hobbies</option>
-      <option value="other">Other</option>
-    </select>
-      <h4 class="cost"> cost: $ </h4>
-      <input class="priceInput" type="number" ng-model="price"> 
-  </div>
-  <div class="postButtons">
-    <button class="cancelEventButton" ng-click="closeModal()">Cancel</button>
-    <button class="postEventButton" ng-click="saveNewEvent()">Post Event</button>
+    <div class="categoryCost">
+      <h4> category: </h4> 
+      <select name="category" ng-model="newPostData.category">
+        <option value="entertainment">Entertainment</option>
+        <option value="drink">Food/Drink</option>
+        <option value="culture">Culture</option>
+        <option value="fitness">Fitness</option>
+        <option value="outdoors">Outdoors</option>
+        <option value="hobbies">Hobbies</option>
+        <option value="other">Other</option>
+      </select>
+        <h4 class="cost"> cost: $ </h4>
+        <input class="priceInput" type="number" ng-model="price"> 
+    </div>
+    <div class="postButtons">
+      <button class="cancelEventButton" ng-click="closeModal()">Cancel</button>
+      <button class="postEventButton" ng-click="saveNewEvent()">Post Event</button>
+    </div>
   </div>
 </ion-modal-view>

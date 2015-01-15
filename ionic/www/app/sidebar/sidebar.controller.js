@@ -34,7 +34,6 @@ angular.module('radar')
 /* MODALS */
 
   $scope.openModal = function() {
-    $scope.photoUploaded = false;
     $scope.modal.show();
   };
   $scope.closeModal = function() {

@@ -107,11 +107,22 @@ $moneyGreen:				#038312;
 /*********** ALL MODALS **********/
 
 .modal {
-	background-color: rgba(30,30,30,0.92);
+	background-color: $bgGray;
 	padding: 20px;
 	border-radius: 15px;
 }
 
+#addPhotoButton {
+  width: 120px;
+  height: 120px;
+  padding-top: 38px;
+  padding-left: 2px;
+  text-align: center;
+  background-color: $placeholderGray;
+  cursor: pointer;
+  color: #aeaeae;
+  font-size: 18px;
+}
 
 ::-webkit-input-placeholder {
    color: $placeholderGray;
@@ -177,19 +188,17 @@ $moneyGreen:				#038312;
 
 /*********** POST NEW EVENT MODAL **********/
 
-#addPhotoButton {
-  width: 120px;
-  height: 120px;
-  padding-top: 38px;
-  padding-left: 2px;
-  text-align: center;
-  background-color: $placeholderGray;
-  cursor: pointer;
-  color: #aeaeae;
-  font-size: 18px;
-}
-
 .newEventModal {
+	font-family: 'Muli', sans-serif;
+	@include border-radius($modalRadius);
+
+	input, textarea {
+		@include border-radius($buttonRadius);
+		margin: 8px 10px;
+		padding-left: 10px;
+		padding-top: 12px;
+		resize: none;
+	}
 
 	.bgImage, .bgSolid {
 		width: 100%;
@@ -205,93 +214,84 @@ $moneyGreen:				#038312;
 		opacity: 1;
 	}
 	
-	font-family: 'Muli', sans-serif;
-	@include border-radius($modalRadius);
-	height: 100%;
+	.addPhotoDiv {
+		width: 120px;
+		height: 100%;
+		display: inline-block;
+		vertical-align: top;
 
+		#addPhotoButton {
+	    width: 120px;
+	    height: 120px;
+	    padding-top: 38px;
+	    padding-left: 2px;
+	    text-align: center;
+	    background-color: $placeholderGray;
+	    cursor: pointer;
+	    color: #aeaeae;
+	    font-size: 18px;
+	  }
+	  
+	  .photoContainer {
+	  	width: 120px; 
+	  	height: 120px; 
+	  	display: inline-block;
+	  	margin-right: 10px;
+	  	overflow: hidden;
+	  	@include border-radius($buttonRadius);
+	  }
 
-	input, textarea {
-		@include border-radius($buttonRadius);
-		margin: 8px 10px;
-		padding-left: 10px;
-		padding-top: 12px;
-		resize: none;
+	  .mainPhoto {
+	  	height: 100%;
+	  	display: inline-block;
+	  	vertical-align: top;
+	  }
 	}
 
-	#addPhotoButton {
-    width: 120px;
-    height: 120px;
-    padding-top: 38px;
-    padding-left: 2px;
-    margin-left: 20px;
-    text-align: center;
-    background-color: $placeholderGray;
-    cursor: pointer;
-    color: #aeaeae;
-    font-size: 18px;
-  }
-  
-  .photoContainer {
-  	width: 120px; 
-  	height: 120px; 
-  	display: inline-block;
-  	margin-right: 10px;
-  	overflow: hidden;
-  	@include border-radius($buttonRadius);
-  }
+	.inputForm {
+		width: 50%;
+		display: inline-block;
 
-  .mainPhoto {
-  	height: 100%;
-  	display: inline-block;
-  	vertical-align: top;
-  }
+		.title {
+			margin-top: 1px;
+			height: 40px;
+			font-size: 30px;
+		}
 
-  .background {
-  	padding: 10px 10px;
-  	@include border-radius($modalRadius);
-		// background-color: $bgGray;
-  }
+		.info {
+			height: 70px;
+			font-size: 14px;
+		}
 
-  .title {
-  	margin-top: 1px;
-  	height: 40px;
-  	font-size: 30px;
-  	width: 50%;
-  	// line-height: ;
-  }
+	  .addressForm {
+	  	width: 100%;
 
-  .info {
-  	height: 70px;
-  	font-size: 14px;
-  	width: 50%;
-  }
+	  	.textInput {
+	  		height: 22px;
+	  		margin: 6px 10px;
+	  		padding-left: 10px;
+				padding-top: 4px;
+				font-size: 15px;
+	  	}
 
-  .addressForm {
-  	width: 39.6%;
-  	margin-left: 15.6%;
+	  	.cityState {
+	  		margin-top: -5px;
+	  	}
 
-  	textarea {
-  		height: 22px;
-  		margin: 6px 10px;
-  		padding-left: 10px;
-			padding-top: 4px;
-			font-size: 15px;
-  	}
-
-  	.city {
-  		width: 85%;
-			display: inline-block;
-			margin-right: 0px;
-			margin-top: 0px;
-  	}
-	  
-	  .state {
-  		width: 12%;
-			display: inline-block;
-			margin-right: -12px;
-			margin-left: 5px;
-			margin-top: 0px;
-	  }
+	  	.city {
+	  		width: 82%;
+				display: inline-block;
+				margin-right: 0px;
+	  	}
+		  
+		  .state {
+	  		width: 14%;
+				display: inline-block;
+				float: right;
+				margin-right: 0px;
+				margin-left: 0px;
+		  }
+		}
 	}
 
 	.dateTime {
@@ -519,17 +519,31 @@ $moneyGreen:				#038312;
   	height: 145px;
   	border-bottom: 1px solid #b4b4b4;
 
+  	.titleScroll {
+			overflow: auto;
+			display: inline-block;
+	  	vertical-align: top;
+	  	width: calc(80% - 120px);
+	  	height: 95%;
+		  
+		  .eventTitle {
+		  	// margin: 0 35px 0 0;
+		  }
+		  
+		  .eventInfo {
+				width: 60%;
+
+				h4 {
+					font-size: 15px;
+				}
+		  }
+  	}
+  	
+
 	  .likeButton {
 	  	height: 22px;
 	  	vertical-align: top;
 	  	margin: 5px 4px 0 0;
-	  }
-
-
-	  .eventTitle {
-	  	display: inline-block;
-	  	vertical-align: top;
-	  	margin: 0 35px 0 0;
 	  }
 
 	  .eventLikes {
@@ -538,18 +552,6 @@ $moneyGreen:				#038312;
 	  	margin-top: 4px;
 	  }
 
-	  .eventInfo {
-	  	height: 80px;
-			overflow: auto;
-			display: inline-block;
-			vertical-align: top;
-			margin: -86px 0 0 137px;
-			width: 60%;
-
-			h4 {
-				font-size: 15px;
-			}
-	  }
 	}
 
 	.details {
@@ -597,6 +599,9 @@ $moneyGreen:				#038312;
 		padding: 20px;
 		border-left: 1px solid #b4b4b4;
 		margin-bottom: 20px;
+		overflow: auto;
+  	vertical-align: top;
+  	height: 60%;
 
 		.comments {
 			margin-top: 20px;

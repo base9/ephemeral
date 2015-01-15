@@ -5,13 +5,15 @@
 		<div class="photoContainer">
 	  	<img src="{{eventInfo.mainPhoto.url}}" class="mainPhoto"/>
 	  </div>
-  	<h2 class="eventTitle"> {{eventInfo.title}} </h2>
+	  <span class="titleScroll">
+  		<h2 class="eventTitle"> {{eventInfo.title}} </h2>
+	  	<span class="eventInfo">
+		    <h4> {{eventInfo.info}} </h4>
+		  </span>
+  	</span>
   	<img ng-show="!liked" src="./img/thumbs_up_grey.png" class="likeButton" ng-click="liked=!liked; eventInfo.ratings = eventInfo.ratings+1" />
   	<img ng-show="liked" src="./img/thumbs_up_green.png" class="likeButton" ng-click="liked=!liked; eventInfo.ratings = eventInfo.ratings-1";  />
 	  <h3 class="eventLikes"> {{eventInfo.ratings}} </h3>
-  	<span class="eventInfo">
-	    <h4> {{eventInfo.info}} </h4>
-	  </span>
   </div>
 
   <div class="details">
