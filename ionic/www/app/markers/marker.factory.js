@@ -93,12 +93,13 @@ angular.module('radar')
       ringUrl = "img/rings/" + event.category + ".png";
 
       // build marker markup
+      // TODO: div tag is being closed thrice but only opened once
       markup = 
         '<div class="richmarker ' 
         + eventCategory
         + '">'
-        + '<img src="' + ringUrl + '" class="ring '+ happeningNow + ' " /></div>'
-        + '<img src="' + ringUrl + '" class="ring '+ happeningNow + '2 " /></div>'
+        + '<img src="' + ringUrl + '" class="ring circle-animation '+ happeningNow + ' " /></div>'
+        + '<img src="' + ringUrl + '" class="ring circle-animation circle-animation-delay '+ happeningNow + '2 " /></div>'
         + '<img src="' + markerUrl + '" class="marker ' + popularity + '" /></div>';
 
       markers.push(new RichMarker({

@@ -673,14 +673,22 @@ $moneyGreen:				#038312;
 	position: absolute;
 	top: 46px;
 	left: -25px;
+  display: none;
+}
+
+.happening.circle-animation, .happening2.circle-animation {
+  display: block;
 	-webkit-animation-name: grow;
 	-webkit-animation-duration: 1400ms;
 	-webkit-animation-iteration-count: infinite;
 	-webkit-animation-timing-function: linear;
 }
 
+.circle-animation-delay {
+	-webkit-animation-delay: -700ms;
+}
+
 .happening {
-	-webkit-animation-delay: 700ms;
 }
 
 .popularity-1 {
