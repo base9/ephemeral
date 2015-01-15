@@ -8,9 +8,8 @@ angular.module('radar')
   'MapFactory', 
   'MarkerFactory', 
   'HttpHandler', 
-  '$scope', 
   '$upload',
-  function($scope, $ionicSideMenuDelegate, $ionicNavBarDelegate, $timeout, $ionicModal, Map, Marker, Http) {
+  function($scope, $ionicSideMenuDelegate, $ionicNavBarDelegate, $timeout, $ionicModal, Map, Marker, Http, $upload) {
 
 
   $scope.showSearch = false;
@@ -244,13 +243,13 @@ angular.module('radar')
               acl: 'private',
               policy: 'eyJleHBpcmF0aW9uIjoiMjAxNi0wMS0wMVQwMDowMDowMFoiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJiYXNlOXBob3RvcyJ9LFsic3RhcnRzLXdpdGgiLCIka2V5IiwiIl0seyJhY2wiOiJwcml2YXRlIn0sWyJzdGFydHMtd2l0aCIsIiRDb250ZW50LVR5cGUiLCIiXSxbImNvbnRlbnQtbGVuZ3RoLXJhbmdlIiwwLDMxMzA1NzZdXX0=',
               signature: 'Aw6j1mlYJeC4OawIqe6thbZREEc=',
-              Content-Type: 'application/octet-stream'
+              'Content-Type': 'application/octet-stream',
               filename: photoFileName // this is needed for Flash polyfill IE8-9
             };
 
     console.log('uploading now');
     $upload.upload({
-            url: $'https://base9photos.s3.amazonaws.com/', //S3 upload url including bucket name
+            url: 'https://base9photos.s3.amazonaws.com/', //S3 upload url including bucket name
             method: 'POST',
             data : uploadParameters,
             file: $scope.photoFileTestFormat1,
