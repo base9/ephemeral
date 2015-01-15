@@ -6,6 +6,12 @@ angular.module('radar')
   //filters is an object with properties popularity, category, distance, and keyword
   markerObj.placeMarkers = function(map, events, callback) {
 
+    for (var i = 0; i < markers.length; i++) {
+      markers[i].setMap(null);
+    };
+
+    markers = [];
+
     if (events.length === 0) {
       return;
     }
@@ -116,7 +122,6 @@ angular.module('radar')
       for (var j = 0; j < markers.length; j++) {
         var temp = markers[j].position.lng();
         temp = parseFloat(temp.toString().substring(0, 14));
-        console.log("TEMP", temp);
         if (events[i].lat == markers[j].position.lat() && events[i].lng == temp) {
           console.log("MATCH");
           markers[j].setVisible(true);
