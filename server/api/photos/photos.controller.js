@@ -6,13 +6,32 @@ var AWS = require('aws-sdk');
 var s3 = new AWS.S3();
 var fs = require('fs');
 var S3_BUCKET_NAME = 'base9photos';
+var crypto = require('crypto');
+
 
 //POSTING A PHOTO: intended process
-//client sends a GET to api/phots/addnew.  includes user id, event name, file extension, other details.
-//server creates an entry in photos table. generates and returns presigned S3 URL to client.
-//client then uses presigned URL to upload the photo to S3.
-//if successful upload: just say 'photo uploaded!'
-//if error: notify client that upload failed, and notify server so it can drop that recently created record.
+
+
+//Option 1: authenticated uploads only
+  //client sends a GET to api/phots/addnew.  includes user id, event name, file extension, other details.
+  //server creates an entry in photos table. generates and returns presigned S3 URL to client.
+  //client then uses presigned URL to upload the photo to S3.
+  //if successful upload: just say 'photo uploaded!'
+  //if error: notify client that upload failed, and notify server so it can drop that recently created record.
+
+
+
+//Option 2: anyone can upload photos.
+  //client generates its own hashed filename, e.g. 'FEaef873SJF.jpg'
+  //uploads photo to S3 with that filename
+  //POSTs to our server with the filename, event id, and user id so that server knows about that photo
+
+
+//uploading photos while posting a new event:
+  //wait until user clicks 'create event' to add photo to S3?  
+  //or upload immediately when they add photo to the New Event window?  <---- this is simpler.
+     //form submission would then include the filename of photo that has already been pushed to S3.
+
 
 //TODO: photo bucket currently allows anonymous read/write access.  refactor this.
 //should allow credentialed read-write access (for dev environment - have api keys cached on dev machine)
@@ -21,10 +40,39 @@ var S3_BUCKET_NAME = 'base9photos';
 //images can be viewed by the client very simply, like this: 
 //<img src='https://s3-us-west-1.amazonaws.com/base9photos/UNIQUE_FILE_NAME.jpg'></img>
 
+
+
+
+/* S3 bucket policy:
+{
+  "Version": "2008-10-17",
+  "Statement": [
+    {
+      "Sid": "Stmt1420487341628",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "*"
+      },
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject"
+      ],
+      "Resource": "arn:aws:s3:::base9photos/*"
+    }
+  ]
+}
+
+
+*/
+
+
 module.exports = {
   addOne: addOne,
-  deleteOne: deleteOne
+  deleteOne: deleteOne,
+  getUploadParams: getUploadParams
 };
+
+
 
 function addOne(req,res){
   new Photo(req.body)
@@ -38,6 +86,38 @@ function addOne(req,res){
     res.status(201).json(signedUrl);
   });
 }
+
+function getUploadParams(req,res){
+  var policy = {
+    "expiration": "2016-01-01T00:00:00Z",
+    "conditions": [ 
+      {"bucket": "base9photos"}, 
+      ["starts-with", "$key", ""],
+      {"acl": "private"},
+      {"success_action_redirect": "http://localhost/"},
+      ["starts-with", "$Content-Type", ""],
+      ["content-length-range", 0, 3130576]
+    ]
+  };
+   
+  var policyBase64 = new Buffer(JSON.stringify(policy), 'utf8').toString('base64');
+  console.log("Policy Base64:");
+  console.log(policyBase64);
+   
+  var signature = crypto.createHmac('sha1', process.env.AWS_SECRET_ACCESS_KEY).update(policyBase64).digest('base64');
+  console.log("Signature:");
+  console.log(signature);
+
+  res.json({
+    bucket: 'base9photos', 
+    awsKey: process.env.AWS_ACCESS_KEY_ID, 
+    policy: policyBase64, 
+    signature: signature
+  });
+}
+
+
+
 
 //deletes a photo record from the DB, if it exists and the request
 //is coming from that photo's owner. does NOT do anything to 
