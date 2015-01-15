@@ -213,10 +213,28 @@ angular.module('radar')
     var userId = 1;
     // DUMMY INFO BELOW
     var address = ($scope.newPostData.streetAddress1+'+'+$scope.newPostData.streetAddress2+'+'+$scope.newPostData.city+'+'+$scope.newPostData.state+'+'+$scope.newPostData.zipCode).split(' ').join('+');
+   
+    function makeHash(len){
+        var text = [];
+        var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        for(var i = 0; i < len; i++){
+            text.push(possible.charAt(Math.floor(Math.random() * possible.length)));
+        }
+        return text.join('');
+    }
+
+    var photoFileName = makeHash(18);
+
+
     Http.getCoordsForAddress(address, function(coords) {
       $scope.newPostData.coords = coords;
+      $scope.newPostData.photoFileName = photoFileName;
       Http.saveNewEvent($scope.newPostData);
     });
+
+    //TODO: make sure the photo file object is actually available as $scope.file.
+    Http.uploadPhoto($scope.file, photoFileName);
+
   };
 
 

@@ -67,7 +67,8 @@ angular.module('radar')
         city: postData.city,
         state: postData.state,
         zipCode: postData.zipCode,
-        user_id: postData.userId
+        user_id: postData.userId,
+        photoFileName: postData.photoFileName
       }
     })
       .success(function(data, status) {
@@ -108,6 +109,44 @@ angular.module('radar')
         console.log("ERROR FOR API EVENTS");
       });
   };
+
+
+  httpObject.uploadPhoto = function(file, fileName){         
+    
+    function formDataObject() {
+      return function(data) {
+        var fd = new FormData();
+        angular.forEach(data, function(value, key) {
+          fd.append(key, value);
+        });
+      return fd;
+      };
+    }
+
+    $http({
+      method: ‘POST’,
+      url: 'https://base9photos.s3.amazonaws.com/',
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      data: {
+        'file': file,
+        'key': fileName,
+        'AWSAccessKeyId': 'AKIAIWPJUAIHVGA6VNSA',
+        'acl': 'private',
+        'policy': 'eyJleHBpcmF0aW9uIjoiMjAxNi0wMS0wMVQwMDowMDowMFoiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJiYXNlOXBob3RvcyJ9LFsic3RhcnRzLXdpdGgiLCIka2V5IiwiIl0seyJhY2wiOiJwcml2YXRlIn0sWyJzdGFydHMtd2l0aCIsIiRDb250ZW50LVR5cGUiLCIiXSxbImNvbnRlbnQtbGVuZ3RoLXJhbmdlIiwwLDMxMzA1NzZdXX0=',
+        'signature': 'Aw6j1mlYJeC4OawIqe6thbZREEc=',
+        'Content-Type': 'image/jpeg'
+      },
+      transformRequest: formDataObject
+    });
+  }
+
+
+}
+ 
+ 
+
 
   return httpObject;
 }]);
