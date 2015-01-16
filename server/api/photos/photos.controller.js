@@ -73,19 +73,15 @@ module.exports = {
 };
 
 
-
+//expects req.body to have the following properties: user_id, event_id, and url.
 function addOne(req,res){
+  console.log('creating new photo record with these parameters:', req.body);
   new Photo(req.body)
-  .save()
-  .then(function(record){
-    var fileName = makeHash(24) + '.jpg';
-    var params = {Bucket: S3_BUCKET_NAME, Key: fileName};
-    var photoUrl = 'https://' + S3_BUCKET_NAME + '.s3-' + process.env.AWS_REGION + '.amazonaws.com/' + fileName;
-    var signedUrl = s3.getSignedUrl('putObject', params);
-    record.save({url: photoUrl}, {patch: true});
-    res.status(201).json(signedUrl);
-  });
+   .save();
+  res.status(201).end();
 }
+
+
 
 function getUploadParams(req,res){
   var policy = {
@@ -110,6 +106,20 @@ function getUploadParams(req,res){
     policy: policyBase64, 
     signature: signature
   });
+
+
+  //RE-IMPLEMENT THIS LATER? This code block is for generating S3 presigned URLs.
+  //
+  // .then(function(record){
+  //   var fileName = makeHash(24) + '.jpg';
+  //   var params = {Bucket: S3_BUCKET_NAME, Key: fileName};
+  //   var photoUrl = 'https://' + S3_BUCKET_NAME + '.s3-' + process.env.AWS_REGION + '.amazonaws.com/' + fileName;
+  //   var signedUrl = s3.getSignedUrl('putObject', params);
+  //   record.save({url: photoUrl}, {patch: true});
+  //   res.status(201).json(signedUrl);
+  // });
+
+
 }
 
 
@@ -138,20 +148,4 @@ function deleteOne(req,res){
       }
   });
 }
-
-
-
-function makeHash(length){
-    var text = [];
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    for( var i=0; i < length; i++ )
-        text.push(possible.charAt(Math.floor(Math.random() * possible.length)));
-
-    return text.join('');
-}
-
-
-
-
 

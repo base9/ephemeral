@@ -113,7 +113,7 @@ angular.module('radar')
 
   httpObject.uploadPhoto = function(photo, photoFileName){         
     console.log('uploading now');
-    
+
     var uploadParameters = {
       key: photoFileName,
       AWSAccessKeyId: 'AKIAIWPJUAIHVGA6VNSA',
@@ -134,10 +134,27 @@ angular.module('radar')
         console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :'+ evt.config.file.name);
       }).success(function(data, status, headers, config) {
         console.log('file ' + photoFileName + ' is uploaded successfully. Response: ', status, data);
+        linkPhotoToEventRecord(photoFileName);
       }).error(function(data, status, headers, config) {
         console.log('file ' + photoFileName + ' failed to upload. Response: ', status, data);
       });
+
+    function linkPhotoToEventRecord(photoFileName){
+      console.log('now apprising main server of photo upload.')
+      $http({
+            method: 'POST',
+            url: '/api/photos/addOne',
+            data: {
+              user_id: 1,     //TODO: get actual event ID from the server (response from posting the event)
+              event_id: 1,    //TODO: get actual user ID from auth
+              url: 'https://s3-us-west-1.amazonaws.com/base9photos/' + photoFileName
+            }
+          });
+    }
+
   }
+
+
 
 
 
