@@ -50,7 +50,6 @@
     "knex": "^0.7.3",
     "mocha": "^2.1.0",
     "morgan": "^1.5.0",
-    "node-crontab": "0.0.8",
     "passport": "^0.2.1",
     "passport-local": "^1.0.0",
     "pg": "^4.1.1",
