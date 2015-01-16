@@ -11,10 +11,11 @@ setTimeout(function(){
 },50);
 
 function addDummyUserAndEvent(){
-  User.where({name:'Steve Erwin'}).fetch().then(function (user) {
-    if(!user){
-      var newUser = new User({
-        name: 'Steve Erwin',
+  User.where({name:'Steve Erwin'}).fetch()
+   .then(function (user) {
+    if(!user){  
+      var newUser = new User({    
+        name: 'Steve Erwin',    
         email: 'steve@outbackadventures.com',
         bio: 'global explorer and animal lover'
       })
@@ -133,20 +134,5 @@ function addDummyPhoto(userId, eventId, slug){
     console.log('added dummy photo');
   });
 }
-
-
-
-
-
-function addDummyRating(userId,eventId){
-  var newRating = new Rating({
-    user_id: userId,
-    event_id: eventId,
-  })
-  .save();
-  console.log('added dummy rating');
-}
-
-
 
 
