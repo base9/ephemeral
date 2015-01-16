@@ -73,6 +73,13 @@ $moneyGreen:				#038312;
           animation-duration: $duration;
 }
 
+@mixin animation-delay($delay) {
+	-webkit-animation-delay: $delay;
+     -moz-animation-delay: $delay;
+      -ms-animation-delay: $delay;
+          animation-delay: $delay;
+}
+
 @mixin animation-iteration-count($count) {
 	-webkit-animation-iteration-count: $count;
      -moz-animation-iteration-count: $count;
@@ -200,14 +207,14 @@ $moneyGreen:				#038312;
 		resize: none;
 	}
 
-	.bgImage, .bgSolid {
+	.bgImage {
 		width: 100%;
-		height: 68%;
-		position: fixed;
+		height: 135%;
+		position: absolute;
 		@include border-radius(10px);
-		margin: -10px -10px;
+		margin: -20px -20px;
 		z-index: -1;
-		opacity: 0.2;
+		opacity: 0.3;
 	}
 
 	.bgSolid {
@@ -351,7 +358,7 @@ $moneyGreen:				#038312;
 		}
 
 		.date {
-			width: 112px;
+			width: 110px;
 			display: inline-block;
 			position: fixed;
 			margin-top: -3px;
@@ -360,18 +367,18 @@ $moneyGreen:				#038312;
 				padding-left: 6px;
 				@include border-radius(5px);
 				width: 136%;
+				padding-top: 4px;
 			}
 
 			.dateButton {
 				background-color: rgba(0,0,0,0);
 				border: 0px;
-				padding-left: 3px;
 			}
 
-		}
+			.dropdown-menu {
+				z-index: 20;
+			}
 
-		.endDate {
-			margin-left: 5px;
 		}
 	}
 
@@ -398,10 +405,8 @@ $moneyGreen:				#038312;
 	  	width: 19%;
 	  	display: inline-block;
 	  	height: 20px;
-	  	padding-left: 4px;
-	  	margin-left: 2px;
-	  	margin-right: -10px;
-	  	margin-top: 1px;
+	  	padding: 0px 0 0 4px;
+	  	margin: 1px -10px 2px 0;
   	}
 	}
 

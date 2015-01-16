@@ -1,13 +1,11 @@
-<i class="icon ion-ios7-close close-modal" ng-click="closeModal()"></i>
-
 <ion-modal-view class="newEventModal">
-<!--   <img src="img/entertainment.jpg" class="bgImage" ng-show="newPostData.category==='entertainment'" />
+  <img src="img/entertainment.jpg" class="bgImage" ng-show="newPostData.category==='entertainment'" />
   <img src="img/drink.jpg" class="bgImage" ng-show="newPostData.category==='drink'" />
   <img src="img/culture.jpg" class="bgImage" ng-show="newPostData.category==='culture'" />
   <img src="img/fitness.jpg" class="bgImage" ng-show="newPostData.category==='fitness'" />
   <img src="img/outdoors.jpg" class="bgImage" ng-show="newPostData.category==='outdoors'" />
   <img src="img/hobbies.jpg" class="bgImage" ng-show="newPostData.category==='hobbies'" />
-  <img src="img/other.jpg" class="bgImage" ng-show="newPostData.category==='other'" /> -->
+  <img src="img/other.jpg" class="bgImage" ng-show="newPostData.category==='other'" />
   <div class="addPhotoDiv">
     <span class="addPhoto">
       <form action="" method="POST" enctype="multipart/form-data">
@@ -40,9 +38,9 @@
         </div>
         <div class="date">
           <p class="input-group">
-            <input type="text" class="textInput form-control" datepicker-popup="{{format}}" ng-model="startDate" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+            <input type="text" class="textInput form-control" datepicker-popup="{{format}}" ng-model="startDateTime" is-open="openedStart" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
             <span class="input-group-btn">
-              <button type="button" class="dateButton btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              <button type="button" class="dateButton btn btn-default" ng-click="openStart($event)"><i class="glyphicon glyphicon-calendar"></i></button>
             </span>
           </p>
         </div>
@@ -54,9 +52,9 @@
         </div>
         <div class="date endDate">
             <p class="input-group">
-              <input type="text" class="textInput form-control" datepicker-popup="{{format}}" ng-model="endDate" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+              <input type="text" class="textInput form-control" datepicker-popup="{{format}}" ng-model="endDateTime" is-open="openedEnd" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
               <span class="input-group-btn">
-                <button type="button" class="dateButton btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                <button type="button" class="dateButton btn btn-default" ng-click="openEnd($event)"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>
             </p>
         </div>
@@ -80,5 +78,8 @@
       <button class="cancelEventButton" ng-click="closeModal()">Cancel</button>
       <button class="postEventButton" ng-click="saveNewEvent()">Post Event</button>
     </div>
+  </div>
+  <div class="closeModal">
+    <button class="closeModalButton" ng-click="closeModal()">X</button>
   </div>
 </ion-modal-view>

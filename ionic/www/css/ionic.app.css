@@ -118,17 +118,17 @@ $dark:                            #444 !default;
     padding-left: 10px;
     padding-top: 12px;
     resize: none; }
-  .newEventModal .bgImage, .newEventModal .bgSolid {
+  .newEventModal .bgImage {
     width: 100%;
-    height: 68%;
-    position: fixed;
+    height: 135%;
+    position: absolute;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
     border-radius: 10px;
-    margin: -10px -10px;
+    margin: -20px -20px;
     z-index: -1;
-    opacity: 0.2; }
+    opacity: 0.3; }
   .newEventModal .bgSolid {
     opacity: 1; }
   .newEventModal .addPhotoDiv {
@@ -222,7 +222,7 @@ $dark:                            #444 !default;
     .newEventModal .dateTime .timepick p button {
       margin-top: -10px; }
     .newEventModal .dateTime .date {
-      width: 112px;
+      width: 110px;
       display: inline-block;
       position: fixed;
       margin-top: -3px; }
@@ -232,13 +232,13 @@ $dark:                            #444 !default;
         -moz-border-radius: 5px;
         -ms-border-radius: 5px;
         border-radius: 5px;
-        width: 136%; }
+        width: 136%;
+        padding-top: 4px; }
       .newEventModal .dateTime .date .dateButton {
         background-color: rgba(0, 0, 0, 0);
-        border: 0px;
-        padding-left: 3px; }
-    .newEventModal .dateTime .endDate {
-      margin-left: 5px; }
+        border: 0px; }
+      .newEventModal .dateTime .date .dropdown-menu {
+        z-index: 20; }
   .newEventModal .categoryCost {
     width: 100%;
     margin-left: 10px; }
@@ -255,10 +255,8 @@ $dark:                            #444 !default;
       width: 19%;
       display: inline-block;
       height: 20px;
-      padding-left: 4px;
-      margin-left: 2px;
-      margin-right: -10px;
-      margin-top: 1px; }
+      padding: 0px 0 0 4px;
+      margin: 1px -10px 2px 0; }
   .newEventModal .postButtons {
     margin: 15px auto 0 0; }
     .newEventModal .postButtons .cancelEventButton {
@@ -508,14 +506,44 @@ $dark:                            #444 !default;
   -ms-animation-timing-function: linear;
   animation-timing-function: linear; }
 
-<<<<<<< HEAD
 .circle-animation-delay {
-=======
-.happening {
->>>>>>> adds animation mixins
-  -webkit-animation-delay: -700ms; }
+  -webkit-animation-delay: -700ms;
+  -webkit-animation-delay: -700ms;
+  -moz-animation-delay: -700ms;
+  -ms-animation-delay: -700ms;
+  animation-delay: -700ms; }
 
 @-webkit-keyframes grow {
+  from {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+    opacity: 1; }
+
+  to {
+    -webkit-transform: scale(0.7);
+    -moz-transform: scale(0.7);
+    -ms-transform: scale(0.7);
+    transform: scale(0.7);
+    opacity: 0; } }
+
+@-moz-keyframes grow {
+  from {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+    opacity: 1; }
+
+  to {
+    -webkit-transform: scale(0.7);
+    -moz-transform: scale(0.7);
+    -ms-transform: scale(0.7);
+    transform: scale(0.7);
+    opacity: 0; } }
+
+@-ms-keyframes grow {
   from {
     -webkit-transform: scale(0);
     -moz-transform: scale(0);
