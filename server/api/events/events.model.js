@@ -7,25 +7,25 @@ var bookshelf = require('bookshelf');
 
 db.schema.hasTable('events').then(function (exists) {
   if (!exists) {
-    db.schema.createTable('events', function (evnt) {
-      evnt.increments('id').primary();
-      evnt.integer('user_id').unsigned().references('users.id');
-      evnt.decimal('lat', 13, 10).index();  
-      evnt.decimal('lng', 13, 10).index();
-      evnt.string('title', 255);
-      evnt.bigInteger('startTime', 255).index();
-      evnt.bigInteger('endTime', 255).index();
-      evnt.decimal('price');
-      // evnt.timestamp('revealTime', 255);
-      evnt.string('url', 255);
-      evnt.string('info', 2000);
-      evnt.string('category', 50);
-      evnt.string('streetAddress1', 100);
-      evnt.string('streetAddress2', 100);
-      evnt.string('city', 100);
-      evnt.string('state', 20);
-      evnt.string('zipCode', 40);
-      evnt.timestamps();
+    db.schema.createTable('events', function (event) {
+      event.increments('id').primary();
+      event.integer('user_id').unsigned().references('users.id');
+      event.decimal('lat', 13, 10).index();  
+      event.decimal('lng', 13, 10).index();
+      event.string('title', 255);
+      event.bigInteger('startTime', 255).index();
+      event.bigInteger('endTime', 255).index();
+      event.integer('popularity');
+      event.decimal('price');
+      event.string('url', 255);
+      event.string('info', 2000);
+      event.string('category', 50);
+      event.string('streetAddress1', 100);
+      event.string('streetAddress2', 100);
+      event.string('city', 100);
+      event.string('state', 20);
+      event.string('zipCode', 40);
+      event.timestamps();
     }).then(function (){
       console.log('Created table: events');
     });

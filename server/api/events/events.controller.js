@@ -34,18 +34,22 @@ module.exports = {
 /******************** Generic DB interactions **********************/
 
 function getAll(req, res) {
-  Event.fetchAll({
-      withRelated: ['user','rating']
-  }).then(function (collection) {
+  Event.fetchAll()
+  .then(function (collection) {
     utils.sendResponse(utils.formatAndTrimEventRecords(collection),res);
   });
 }
 
 function getOne(req, res) {
   Event.where({id:req.params.id}).fetch({
-      withRelated: ['user','rating','photos', 'comments']
+      withRelated: ['user', 'photos', 'comments']
     }).then(function (record) {
-      utils.sendResponse(utils.formatAndTrimEventRecords([record])[0],res);
+      if(record){
+        utils.sendResponse(utils.formatAndTrimEventRecords([record])[0],res);
+      } else {
+        res.status(404).end('No event with that id.')
+      }
+
   });
 }
 
@@ -108,9 +112,8 @@ function getLocal(req, res) {
       .andWhere('endTime', '>', currentTime)
       .orWhere('endTime', null);
   })
-  .fetchAll({
-     withRelated: ['user','rating']
-  }).then(function (collection) {
+  .fetchAll()
+  .then(function (collection) {
     utils.sendResponse(utils.formatAndTrimEventRecords(collection),res);
   });
 }
