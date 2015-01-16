@@ -101,7 +101,7 @@ angular.module('radar')
     };
 
     this.reset = function() {
-      this.filters = {distance: 1, popularity: 1, time: {now: false, startTime: null, endTime: null}, cost: 50, keyword: null};
+      this.filters = {distance: 1, popularity: 1, category: null, time: {now: false, startTime: null, endTime: null}, cost: 50, keyword: null};
     }
 
     function isoDateToTimeString(date) {

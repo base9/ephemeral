@@ -125,14 +125,17 @@ angular.module('radar')
     }
   };
 
+  //Matches the events to the right markers by long and lat coordinates
   var showMarkers = function(events, markers) {
     for (var i = 0; i < events.length; i++) {
       for (var j = 0; j < markers.length; j++) {
         var temp = markers[j].position.lng();
-        temp = parseFloat(temp.toString().substring(0, 14));
+        temp = parseFloat(temp.toString().substring(0, 13));
+        temp = (Math.round(temp * 10000000) / 10000000);
         if (events[i].lat == markers[j].position.lat() && events[i].lng == temp) {
           console.log("MATCH");
           markers[j].setVisible(true);
+          break;
         }
       }
     }
@@ -189,10 +192,17 @@ angular.module('radar')
 
   var filterCost = function(events, cost) {
     var results = [];
+    console.log("COST: ", cost);
     for (var i = 0; i < events.length; i++) {
       var price = parseFloat(events[i].price);
-      if (price <= cost) {
-        results.push(events[i]);
+      if (cost === 100) {
+        if (price >= cost) {
+          results.push(events[i]);
+        }
+      } else {
+        if (price <= cost) {
+          results.push(events[i]);
+        }
       }
     }
     return results;
