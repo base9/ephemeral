@@ -50,7 +50,6 @@ function getUploadParams(req,res){
     signature: signature
   });
 
-
   //RE-IMPLEMENT THIS LATER? This code block is for generating S3 presigned URLs.
   //
   // .then(function(record){
@@ -64,9 +63,6 @@ function getUploadParams(req,res){
 
 
 }
-
-
-
 
 //deletes a photo record from the DB, if it exists and the request
 //is coming from that photo's owner. does NOT do anything to 

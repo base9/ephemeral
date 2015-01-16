@@ -233,8 +233,8 @@ angular.module('radar')
 
     
     //if photo exists: upload photo by calling HTTP funciton.
-    if($scope.photoFileTestFormat1){
-      Http.uploadPhoto($scope.photoFileTestFormat1, photoFileName);
+    if($scope.photoUploaded){
+      Http.uploadPhoto($scope.photoFile, photoFileName);
     } else {
       console.log('no photo attached, skipping photo upload protocol.')
     }
@@ -332,13 +332,11 @@ angular.module('radar')
     console.log("PREVIEW: ", preview)
     var file    = document.querySelector('input[type=file]').files[0];
     console.log("FILE: ", file)
-    $scope.photoFileTestFormat1 = file;
-    $scope.totallySecretTestVariable = 'yes, $scope shared between previewFile and HttpHandler';
+    $scope.photoFile = file;
     var reader  = new FileReader();
 
     reader.onloadend = function () {
       preview.src = reader.result;
-      $scope.photoFileTestFormat2 = reader.result;
     }
 
     if (file) {

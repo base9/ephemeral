@@ -114,6 +114,7 @@ angular.module('radar')
   httpObject.uploadPhoto = function(photo, photoFileName){         
     console.log('uploading now');
 
+    //TODO: fetch this stuff via HTTP request, instead of hardcoding here.
     var uploadParameters = {
       key: photoFileName,
       AWSAccessKeyId: 'AKIAIWPJUAIHVGA6VNSA',
@@ -121,11 +122,10 @@ angular.module('radar')
       policy: 'eyJleHBpcmF0aW9uIjoiMjAxNi0wMS0wMVQwMDowMDowMFoiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJiYXNlOXBob3RvcyJ9LFsic3RhcnRzLXdpdGgiLCIka2V5IiwiIl0seyJhY2wiOiJwcml2YXRlIn0sWyJzdGFydHMtd2l0aCIsIiRDb250ZW50LVR5cGUiLCIiXSxbImNvbnRlbnQtbGVuZ3RoLXJhbmdlIiwwLDMxMzA1NzZdXX0=',
       signature: 'Aw6j1mlYJeC4OawIqe6thbZREEc=',
       'Content-Type': 'application/octet-stream'
-      // filename: photoFileName // this is needed for Flash polyfill IE8-9
     };
 
     $upload.upload({
-            url: 'https://base9photos.s3.amazonaws.com/', //S3 upload url including bucket name
+            url: 'https://base9photos.s3.amazonaws.com/',
             method: 'POST',
             data : uploadParameters,
             file: photo,
