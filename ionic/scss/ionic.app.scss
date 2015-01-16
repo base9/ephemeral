@@ -73,11 +73,18 @@ $moneyGreen:				#038312;
           animation-duration: $duration;
 }
 
+@mixin animation-delay($delay) {
+	-webkit-animation-delay: $delay;
+     -moz-animation-delay: $delay;
+      -ms-animation-delay: $delay;
+          animation-delay: $delay;
+}
+
 @mixin animation-iteration-count($count) {
-	-webkit-animation-iteration-count: count;
-     -moz-animation-iteration-count: count;
-      -ms-animation-iteration-count: count;
-          animation-iteration-count: count;
+	-webkit-animation-iteration-count: $count;
+     -moz-animation-iteration-count: $count;
+      -ms-animation-iteration-count: $count;
+          animation-iteration-count: $count;
 }
 
 @mixin animation-timing-function($timing) {
@@ -105,6 +112,10 @@ $moneyGreen:				#038312;
 
 
 /*********** ALL MODALS **********/
+
+input, button, select, textarea {
+	font-family: 'Muli', sans-serif;
+}
 
 .modal {
 	background-color: $bgGray;
@@ -143,6 +154,29 @@ $moneyGreen:				#038312;
 :-ms-input-placeholder {  
    color: $placeholderGray;
    font-family: 'Muli', sans-serif;  
+}
+
+.wholeModal {
+	height: 100%;
+	width: 100%;
+}
+
+.closeModal {
+	position: absolute;
+	color: $textGray;
+	top: 10px;
+	right: 10px;	
+
+	.closeModalButton {
+		vertical-align: top;
+		background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+		font-size: 20px;
+	}
 }
 
 
@@ -200,14 +234,14 @@ $moneyGreen:				#038312;
 		resize: none;
 	}
 
-	.bgImage, .bgSolid {
+	.bgImage {
 		width: 100%;
-		height: 68%;
-		position: fixed;
+		height: 135%;
+		position: absolute;
 		@include border-radius(10px);
-		margin: -10px -10px;
+		margin: -20px -20px;
 		z-index: -1;
-		opacity: 0.2;
+		opacity: 0.3;
 	}
 
 	.bgSolid {
@@ -351,7 +385,7 @@ $moneyGreen:				#038312;
 		}
 
 		.date {
-			width: 112px;
+			width: 110px;
 			display: inline-block;
 			position: fixed;
 			margin-top: -3px;
@@ -360,18 +394,18 @@ $moneyGreen:				#038312;
 				padding-left: 6px;
 				@include border-radius(5px);
 				width: 136%;
+				padding-top: 4px;
 			}
 
 			.dateButton {
 				background-color: rgba(0,0,0,0);
 				border: 0px;
-				padding-left: 3px;
 			}
 
-		}
+			.dropdown-menu {
+				z-index: 20;
+			}
 
-		.endDate {
-			margin-left: 5px;
 		}
 	}
 
@@ -398,10 +432,8 @@ $moneyGreen:				#038312;
 	  	width: 19%;
 	  	display: inline-block;
 	  	height: 20px;
-	  	padding-left: 4px;
-	  	margin-left: 2px;
-	  	margin-right: -10px;
-	  	margin-top: 1px;
+	  	padding: 0px 0 0 4px;
+	  	margin: 1px -10px 2px 0;
   	}
 	}
 
@@ -441,27 +473,6 @@ $moneyGreen:				#038312;
 		}	
 	}
 }
-
-// .transparent {
-//   background-color: transparent !important;
-
-// }
-
-.close-modal {
-  position: absolute;
-  right: 19.5%;
-  top: 18.4%;
-  font-size: 1.8em;
-  text-align: center;
-  z-index: 20;
-  background-color: #f5f5f5;
-  border-radius: 30px;
-  width: 26px;
-  cursor: pointer;
-  line-height: 0px;
-  border: 0.5px solid #ddd;
-}
-
 
 /*********** EVENT INFO MODAL **********/
 
@@ -674,6 +685,7 @@ $moneyGreen:				#038312;
 	top: 46px;
 	left: -25px;
   display: none;
+  z-index: -1;
 }
 
 .happening.circle-animation, .happening2.circle-animation {
@@ -682,13 +694,15 @@ $moneyGreen:				#038312;
 	-webkit-animation-duration: 1400ms;
 	-webkit-animation-iteration-count: infinite;
 	-webkit-animation-timing-function: linear;
+	@include animation-name(grow);
+	@include animation-duration(1400ms);
+	@include animation-iteration-count(infinite);
+	@include animation-timing-function(linear);
 }
 
 .circle-animation-delay {
 	-webkit-animation-delay: -700ms;
-}
-
-.happening {
+	@include animation-delay(-700ms);
 }
 
 .popularity-1 {
@@ -708,6 +722,28 @@ $moneyGreen:				#038312;
 }
 
 @-webkit-keyframes grow {
+    from { 
+    	@include transform(scale(0));
+    	opacity: 1; 
+    }
+    to { 
+    	@include transform(scale(0.7)); 
+    	opacity: 0;
+    }
+}
+
+@-moz-keyframes grow {
+    from { 
+    	@include transform(scale(0));
+    	opacity: 1; 
+    }
+    to { 
+    	@include transform(scale(0.7)); 
+    	opacity: 0;
+    }
+}
+
+@-ms-keyframes grow {
     from { 
     	@include transform(scale(0));
     	opacity: 1; 

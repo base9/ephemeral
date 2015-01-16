@@ -5,8 +5,9 @@ angular.module('radar')
   'MarkerFactory', 
   'HttpHandler', 
   '$ionicModal',
-  '$scope', 
-  function(Map, SearchBox, Marker, Http, $ionicModal, $scope) {
+  '$scope',
+  '$rootScope', 
+  function(Map, SearchBox, Marker, Http, $ionicModal, $scope, $rootScope) {
 
     var listOfEvents = {};
     $scope.eventInfo = {};
@@ -55,14 +56,14 @@ angular.module('radar')
       listOfEvents.bounds = {ne: bounds.getNorthEast(), sw: bounds.getSouthWest()};
       console.log("LIST OF MARKERS: ", listOfEvents);
 
-      Http.getMarkers(listOfEvents.bounds, function(events) {
+      Http.getEvents(listOfEvents.bounds, function(events) {
+        events.sort(function(a,b) { return b.lat-a.lat; })
         createMarkers(events);
       });
     });
 
     var createMarkers = function(events) {
       Marker.placeMarkers(map, events, function(markers) {
-        console.log("EVENTS: ", events.length, markers.length);
         //store marker location and events inside scope for now
         listOfEvents.events = events;
         for (var i = 0; i < markers.length; i++) {
@@ -74,10 +75,12 @@ angular.module('radar')
             return function() {
               Http.getOneEvent(event.id, function(res) {
                 $scope.eventInfo = res;
+                $rootScope.photoUploaded = false;
                 ($scope.eventInfo.price === "0.00") ? $scope.eventInfo.price = "Free" : $scope.eventInfo.price = '$'+ $scope.eventInfo.price;
                 $scope.eventInfo.startDate = isoDateToTimeString(parseInt($scope.eventInfo.startTime));
                 $scope.eventInfo.endDate = isoDateToTimeString(parseInt($scope.eventInfo.endTime));
-                $scope.eventInfo.mainPhoto = $scope.eventInfo.photos[0];
+                $scope.eventInfo.mainPhoto = $scope.eventInfo.photos[0] || 
+                  {url: './img/thumbnails/' + $scope.eventInfo.category + '.jpg'};
                 $scope.eventInfo.photos = $scope.eventInfo.photos.slice(1);
                 $scope.eventInfo.comments = $scope.eventInfo.comments.reverse();
                 if ($scope.eventInfo.city) { $scope.eventInfo.city += ',' }
@@ -141,8 +144,9 @@ angular.module('radar')
       var temp = map.getBounds();
       var bounds = {ne: temp.getNorthEast(), sw: temp.getSouthWest()};
       console.log("BOUNDS: ", bounds);
-      Http.getMarkers(bounds, function(events) {
+      Http.getEvents(bounds, function(events) {
         console.log("EVENTS IN LISTENER: ", events);
+        events.sort(function(a,b) { return b.lat-a.lat; })
         createMarkers(events);
       });
     };

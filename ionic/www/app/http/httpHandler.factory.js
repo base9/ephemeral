@@ -3,7 +3,7 @@ angular.module('radar')
 
   var httpObject = {};
 
-  httpObject.getMarkers = function(bounds, callback) {
+  httpObject.getEvents = function(bounds, callback) {
 
     var pathname = '/api/events/local?lat1=' + bounds.ne.lat() + '&lat2=' + bounds.sw.lat() + '&lng1=' + bounds.ne.lng() + '&lng2=' + bounds.sw.lng();
 
@@ -30,13 +30,20 @@ angular.module('radar')
   };
 
   httpObject.getAddressForCoords = function(lat, lng, callback) {
-    $http.get('/api/events/reversegeocode?lat=' + lat + '&lng=' + lng)
-      .success(function(data, status) {
-        callback(data);
-      })
-      .error(function(data, status) {
-        console.log("ERROR FOR API EVENTS");
-      });
+    var geocoder;
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(lat,lng);
+    geocoder.geocode({'latLng': latlng}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        if (results[0]) {
+          callback(results[0].formatted_address);
+        } else {
+          console.log('No results found');
+        }
+      } else {
+        console.log('Geocoder failed due to: ' + status);
+      }
+    });
   };
 
   httpObject.getCoordsForAddress = function(address, callback) {

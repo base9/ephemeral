@@ -1,6 +1,7 @@
 angular.module('radar')
 .controller('MenuController', [
   '$scope',
+  '$rootScope',
   '$ionicSideMenuDelegate',
   '$ionicNavBarDelegate',
   '$timeout',
@@ -8,16 +9,10 @@ angular.module('radar')
   'MapFactory', 
   'MarkerFactory', 
   'HttpHandler', 
-  function($scope, $ionicSideMenuDelegate, $ionicNavBarDelegate, $timeout, $ionicModal, Map, Marker, Http) {
+  function($scope, $rootScope, $ionicSideMenuDelegate, $ionicNavBarDelegate, $timeout, $ionicModal, Map, Marker, Http) {
 
 
   $scope.showSearch = false;
-
-// FILTER MENU
-  $scope.toggleFilter = false;
-  $scope.partyCheck = true;
-  $scope.concertCheck = true;
-  $scope.happyHourCheck = true;
 
 // This is an ugly hack -- Figure out real angular/ionic ready function
   $timeout(function() {
@@ -25,9 +20,6 @@ angular.module('radar')
     $ionicNavBarDelegate.title('Ephemeral');
   }, 150);
 
-  // $scope.test = function() {
-  //  console.log("seearchtext")
-  // }
   $scope.loggedIn = false;
 
 /* MODALS */
@@ -106,6 +98,25 @@ angular.module('radar')
 
 /************* NEW EVENT MODAL **************/
 
+  function getCurrentAddress() {
+    console.log("Getting address...");
+    Map.findCurrentLocation(function(coords) {  
+      var address = Http.getAddressForCoords(coords.lat, coords.lng, function(address) {
+        address = address.split(',');
+        $scope.newPostData.streetAddress1 = address[0];
+        $scope.newPostData.city = address[1];
+        $scope.newPostData.state = address[2].substring(1,3);
+        $scope.$apply();
+      });
+    }); 
+  };
+
+//set end time to 2 hours after start time on every change
+  function setEndDateTime() {
+    $scope.endDateTime = $scope.startDateTime.setHours($scope.startDateTime.getHours()+2);
+    $scope.startDateTime = $scope.startDateTime.setHours($scope.startDateTime.getHours());
+  }
+
   // HOPEFULLY REMOVE THIS FUNCTION
   function getDateTime() {
     var dateString = (new Date()).toString().split(' ');
@@ -135,53 +146,11 @@ angular.module('radar')
     }
     return dateTime;
   }
+  
 
-  $scope.getCurrentAddress = function() {
-    console.log("getting address");
-    Map.findCurrentLocation(function(coords) {  
-      var address = Http.getAddressForCoords(coords.lat, coords.lng, function(address) {
-        console.log(address);
-        $scope.newPostData.streetAddress1 = address.streetAddress1;
-        $scope.newPostData.city = address.city;
-        $scope.newPostData.state = address.state;
-        $scope.newPostData.zipCode = address.zipCode;
-      });
-    }); 
-  };
-
-  $scope.postNewEvent = function() {
+  $scope.openNewEventModal = function() {
     // TODO: Check for authentication. If authenticated, proceed. Else "Please Login or register to post events"
-    var dateTime = getDateTime();
-    var startHours = parseFloat(dateTime.hours)
-    var endAMPM = dateTime.AMPM;
-    var endHours = startHours + 2;
-    if (endHours > 12) {
-      endHours -= 12;
-      endAMPM === "AM" ? endAMPM = "PM" : endAMPM = "AM";
-    }
-    if (endHours > 0 && endHours < 10) {
-      endHours = "0" + endHours.toString();
-    } else {
-      endHours = endHours.toString();
-    }
-
-
-    console.log(dateTime)
-    $scope.dateTime = {
-      startDay: dateTime.day,
-      startMonth: dateTime.month,
-      startYear: dateTime.year, 
-      startHours: dateTime.hours,
-      startMinutes: dateTime.minutes,
-      startAMPM: dateTime.AMPM,
-      endDay: dateTime.day,
-      endMonth: dateTime.month,
-      endYear: dateTime.year, 
-      endHours: endHours.toString(),
-      endMinutes: dateTime.minutes,
-      endAMPM: endAMPM
-    }
-
+    // $scope.startTime = new Date();
     $scope.newPostData = {
         title: '',
         info: '',
@@ -196,7 +165,11 @@ angular.module('radar')
         coords: {lat: undefined, lng: undefined}
       };
 
-    $scope.photoUploaded = false;
+    $scope.startDateTime = new Date();
+    $scope.endDateTime = new Date();
+    setEndDateTime();
+    getCurrentAddress()
+    $rootScope.photoUploaded = false;
 
     $ionicModal.fromTemplateUrl('app/modals/newEventModal.html', {
       scope: $scope,
@@ -223,8 +196,11 @@ angular.module('radar')
     }
 
     var photoFileName = makeHash(18) + '.jpg';
-
-
+    var userId = 1
+    var address = ($scope.newPostData.streetAddress1+'+'+$scope.newPostData.streetAddress2+'+'+$scope.newPostData.city+'+'+$scope.newPostData.state+'+'+$scope.newPostData.zipCode).split(' ').join('+')
+    var timeZone = getDateTime().timeZone;
+    $scope.newPostData.startDateTime = '';
+    $scope.newPostData.endDateTime ='';
     Http.getCoordsForAddress(address, function(coords) {
       $scope.newPostData.coords = coords;
       $scope.newPostData.photoFileName = photoFileName;
@@ -233,13 +209,12 @@ angular.module('radar')
 
     
     //if photo exists: upload photo by calling HTTP funciton.
-    if($scope.photoUploaded){
+    if($rootScope.photoUploaded){
       Http.uploadPhoto($scope.photoFile, photoFileName);
     } else {
       console.log('no photo attached, skipping photo upload protocol.')
     }
   };
-
 
   /************ EVENT INFO MODAL **************/
   $scope.liked = false;
@@ -257,19 +232,13 @@ angular.module('radar')
   }
 
   /*************  UI Bootstrap Datepicker Functions ************/
-  $scope.today = function() {
-    $scope.startDate = new Date();
-    $scope.endDate = new Date();
-  };
-  $scope.today();
 
   $scope.clear = function () {
     $scope.dt = null;
   };
 
-  // Disable weekend selection
   $scope.disabled = function(date, mode) {
-    return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+    // return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
   };
 
   $scope.toggleMin = function() {
@@ -277,11 +246,18 @@ angular.module('radar')
   };
   $scope.toggleMin();
 
-  $scope.open = function($event) {
+  $scope.openStart = function($event) {
     $event.preventDefault();
     $event.stopPropagation();
 
-    $scope.opened = true;
+    $scope.openedStart = true;
+  };
+
+  $scope.openEnd = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    $scope.openedEnd = true;
   };
 
   $scope.dateOptions = {
@@ -289,12 +265,10 @@ angular.module('radar')
     startingDay: 1
   };
 
-  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'MM.dd.yy', 'shortDate'];
+  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'MM/dd/yy', 'shortDate'];
   $scope.format = $scope.formats[2];
 
 /*************  UI Bootstrap Timepicker Functions ************/
-
-  $scope.startTime = new Date();
 
   $scope.hstep = 1;
   $scope.mstep = 10;
@@ -340,7 +314,7 @@ angular.module('radar')
     }
 
     if (file) {
-      $scope.photoUploaded = true;
+      $rootScope.photoUploaded = true;
       reader.readAsDataURL(file);
       $scope.$apply();
     } else {
@@ -355,7 +329,5 @@ angular.module('radar')
      document.myForm.submit();
      event.preventDefault();
   }
-
-
 
 }]);

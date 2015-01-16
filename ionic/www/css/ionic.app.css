@@ -25,6 +25,9 @@ $dark:                            #444 !default;
   color: #1e1e1e; }
 
 /*********** ALL MODALS **********/
+input, button, select, textarea {
+  font-family: 'Muli', sans-serif; }
+
 .modal {
   background-color: rgba(30, 30, 30, 0.92);
   padding: 20px;
@@ -62,6 +65,25 @@ $dark:                            #444 !default;
 :-ms-input-placeholder {
   color: #555555;
   font-family: 'Muli', sans-serif; }
+
+.wholeModal {
+  height: 100%;
+  width: 100%; }
+
+.closeModal {
+  position: absolute;
+  color: #b4b4b4;
+  top: 10px;
+  right: 10px; }
+  .closeModal .closeModalButton {
+    vertical-align: top;
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    font-size: 20px; }
 
 /*********** LOGIN/REGISTER MODALS **********/
 .formContainer {
@@ -118,17 +140,17 @@ $dark:                            #444 !default;
     padding-left: 10px;
     padding-top: 12px;
     resize: none; }
-  .newEventModal .bgImage, .newEventModal .bgSolid {
+  .newEventModal .bgImage {
     width: 100%;
-    height: 68%;
-    position: fixed;
+    height: 135%;
+    position: absolute;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
     border-radius: 10px;
-    margin: -10px -10px;
+    margin: -20px -20px;
     z-index: -1;
-    opacity: 0.2; }
+    opacity: 0.3; }
   .newEventModal .bgSolid {
     opacity: 1; }
   .newEventModal .addPhotoDiv {
@@ -222,7 +244,7 @@ $dark:                            #444 !default;
     .newEventModal .dateTime .timepick p button {
       margin-top: -10px; }
     .newEventModal .dateTime .date {
-      width: 112px;
+      width: 110px;
       display: inline-block;
       position: fixed;
       margin-top: -3px; }
@@ -232,13 +254,13 @@ $dark:                            #444 !default;
         -moz-border-radius: 5px;
         -ms-border-radius: 5px;
         border-radius: 5px;
-        width: 136%; }
+        width: 136%;
+        padding-top: 4px; }
       .newEventModal .dateTime .date .dateButton {
         background-color: rgba(0, 0, 0, 0);
-        border: 0px;
-        padding-left: 3px; }
-    .newEventModal .dateTime .endDate {
-      margin-left: 5px; }
+        border: 0px; }
+      .newEventModal .dateTime .date .dropdown-menu {
+        z-index: 20; }
   .newEventModal .categoryCost {
     width: 100%;
     margin-left: 10px; }
@@ -255,10 +277,8 @@ $dark:                            #444 !default;
       width: 19%;
       display: inline-block;
       height: 20px;
-      padding-left: 4px;
-      margin-left: 2px;
-      margin-right: -10px;
-      margin-top: 1px; }
+      padding: 0px 0 0 4px;
+      margin: 1px -10px 2px 0; }
   .newEventModal .postButtons {
     margin: 15px auto 0 0; }
     .newEventModal .postButtons .cancelEventButton {
@@ -301,20 +321,6 @@ $dark:                            #444 !default;
       background: -ms-linear-gradient(top, #00380a, #00590f);
       background: -o-linear-gradient(top, #00380a, #00590f);
       border-top-color: #1b435e; }
-
-.close-modal {
-  position: absolute;
-  right: 19.5%;
-  top: 18.4%;
-  font-size: 1.8em;
-  text-align: center;
-  z-index: 20;
-  background-color: #f5f5f5;
-  border-radius: 30px;
-  width: 26px;
-  cursor: pointer;
-  line-height: 0px;
-  border: 0.5px solid #ddd; }
 
 /*********** EVENT INFO MODAL **********/
 .eventInfoWindow {
@@ -483,19 +489,70 @@ $dark:                            #444 !default;
   position: absolute;
   top: 46px;
   left: -25px;
-  display: none; }
+  display: none;
+  z-index: -1; }
 
 .happening.circle-animation, .happening2.circle-animation {
   display: block;
   -webkit-animation-name: grow;
   -webkit-animation-duration: 1400ms;
   -webkit-animation-iteration-count: infinite;
-  -webkit-animation-timing-function: linear; }
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-name: grow;
+  -moz-animation-name: grow;
+  -ms-animation-name: grow;
+  animation-name: grow;
+  -webkit-animation-duration: 1400ms;
+  -moz-animation-duration: 1400ms;
+  -ms-animation-duration: 1400ms;
+  animation-duration: 1400ms;
+  -webkit-animation-iteration-count: infinite;
+  -moz-animation-iteration-count: infinite;
+  -ms-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  -moz-animation-timing-function: linear;
+  -ms-animation-timing-function: linear;
+  animation-timing-function: linear; }
 
 .circle-animation-delay {
-  -webkit-animation-delay: -700ms; }
+  -webkit-animation-delay: -700ms;
+  -webkit-animation-delay: -700ms;
+  -moz-animation-delay: -700ms;
+  -ms-animation-delay: -700ms;
+  animation-delay: -700ms; }
 
 @-webkit-keyframes grow {
+  from {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+    opacity: 1; }
+
+  to {
+    -webkit-transform: scale(0.7);
+    -moz-transform: scale(0.7);
+    -ms-transform: scale(0.7);
+    transform: scale(0.7);
+    opacity: 0; } }
+
+@-moz-keyframes grow {
+  from {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+    opacity: 1; }
+
+  to {
+    -webkit-transform: scale(0.7);
+    -moz-transform: scale(0.7);
+    -ms-transform: scale(0.7);
+    transform: scale(0.7);
+    opacity: 0; } }
+
+@-ms-keyframes grow {
   from {
     -webkit-transform: scale(0);
     -moz-transform: scale(0);
