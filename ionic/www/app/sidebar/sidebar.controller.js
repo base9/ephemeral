@@ -133,7 +133,6 @@ angular.module('radar')
       }
     }
     var minutes = Math.ceil(parseFloat(dateString[4][1])/5)*5;
-    console.log("MINUTES: ", minutes)
 
     var dateTime = {
       month: dateString[1],
@@ -150,7 +149,6 @@ angular.module('radar')
 
   $scope.openNewEventModal = function() {
     // TODO: Check for authentication. If authenticated, proceed. Else "Please Login or register to post events"
-    // $scope.startTime = new Date();
     $scope.newPostData = {
         title: '',
         info: '',
@@ -162,6 +160,7 @@ angular.module('radar')
         startDateTime: '',
         endDateTime: '',
         category: '',
+        price: 0,
         coords: {lat: undefined, lng: undefined}
       };
 
@@ -180,34 +179,36 @@ angular.module('radar')
     });
   };
 
+  function makeHash(len){
+      var text = [];
+      var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      for(var i = 0; i < len; i++){
+          text.push(possible.charAt(Math.floor(Math.random() * possible.length)));
+      }
+      return text.join('');
+  }
+
   $scope.saveNewEvent = function() {
     // TODO: Get userId from Auth, pass it into http call below
-    var userId = 1;
-    // DUMMY INFO BELOW
-    var address = ($scope.newPostData.streetAddress1+'+'+$scope.newPostData.streetAddress2+'+'+$scope.newPostData.city+'+'+$scope.newPostData.state+'+'+$scope.newPostData.zipCode).split(' ').join('+');
-   
-    function makeHash(len){
-        var text = [];
-        var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        for(var i = 0; i < len; i++){
-            text.push(possible.charAt(Math.floor(Math.random() * possible.length)));
-        }
-        return text.join('');
-    }
+    $scope.newPostData.userId = 1;
 
     var photoFileName = makeHash(18) + '.jpg';
-    var userId = 1
     var address = ($scope.newPostData.streetAddress1+'+'+$scope.newPostData.streetAddress2+'+'+$scope.newPostData.city+'+'+$scope.newPostData.state+'+'+$scope.newPostData.zipCode).split(' ').join('+')
     var timeZone = getDateTime().timeZone;
-    $scope.newPostData.startDateTime = '';
-    $scope.newPostData.endDateTime ='';
+
     Http.getCoordsForAddress(address, function(coords) {
       $scope.newPostData.coords = coords;
-      $scope.newPostData.photoFileName = photoFileName;
-      Http.saveNewEvent($scope.newPostData);
+      if (photoFileName) { $scope.newPostData.photoFileName = photoFileName; }
+      $ionicModal.fromTemplateUrl('app/modals/postSuccess.html', {
+        scope: $scope,
+      }).then(function(modal) {
+        $scope.modal = modal;
+        $scope.openModal();
+      });
+      Http.saveNewEvent($scope.newPostData, function(res) {
+        //Should be event id - Pass to photo for upload
+      });
     });
-
-    
     //if photo exists: upload photo by calling HTTP funciton.
     if($rootScope.photoUploaded){
       Http.uploadPhoto($scope.photoFile, photoFileName);

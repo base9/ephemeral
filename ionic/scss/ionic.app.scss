@@ -180,6 +180,27 @@ input, button, select, textarea {
 }
 
 
+/*********** POST SUCCESS MODAL **********/
+
+.postSuccess {
+	height: 300px;
+	text-align: center;
+
+	.messageContainer {
+		height: 100%;
+	}
+
+	.message { 
+		position: absolute;
+		font-size: 50px;
+		color: $textGray;
+		font-family: 'Muli', sans-serif;
+		top: calc(50% - 15px);
+		left: calc(50% - 170px);
+	}
+
+}
+
 /*********** LOGIN/REGISTER MODALS **********/
 
 .formContainer {

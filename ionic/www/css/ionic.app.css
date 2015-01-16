@@ -85,6 +85,20 @@ input, button, select, textarea {
     outline: none;
     font-size: 20px; }
 
+/*********** POST SUCCESS MODAL **********/
+.postSuccess {
+  height: 300px;
+  text-align: center; }
+  .postSuccess .messageContainer {
+    height: 100%; }
+  .postSuccess .message {
+    position: absolute;
+    font-size: 50px;
+    color: #b4b4b4;
+    font-family: 'Muli', sans-serif;
+    top: calc(50% - 15px);
+    left: calc(50% - 170px); }
+
 /*********** LOGIN/REGISTER MODALS **********/
 .formContainer {
   width: 80%;

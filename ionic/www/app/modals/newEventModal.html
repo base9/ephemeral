@@ -73,11 +73,11 @@
           <option value="other">Other</option>
         </select>
           <h6 class="categoryCostText"> cost: $ </h6>
-          <input class="priceInput" type="number" ng-model="price"> 
+          <input class="priceInput" type="number" ng-model="newPostData.price" min="0"> 
       </div>
       <div class="postButtons">
         <button class="cancelEventButton" ng-click="closeModal()">Cancel</button>
-        <button class="postEventButton" ng-click="saveNewEvent()">Post Event</button>
+        <button class="postEventButton" ng-click="saveNewEvent(); closeModal()">Post Event</button>
       </div>
     </div>
   </div>
