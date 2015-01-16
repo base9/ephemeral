@@ -9,7 +9,5 @@ angular.module('radar').controller('NewEventModalController', [
       console.log("SAVING NEW EVENT");
     };
 
-    $scope.test = "HELLO";
-
 
 }]);

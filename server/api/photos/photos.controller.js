@@ -6,38 +6,62 @@ var AWS = require('aws-sdk');
 var s3 = new AWS.S3();
 var fs = require('fs');
 var S3_BUCKET_NAME = 'base9photos';
+var crypto = require('crypto');
 
-//POSTING A PHOTO: intended process
-//client sends a GET to api/phots/addnew.  includes user id, event name, file extension, other details.
-//server creates an entry in photos table. generates and returns presigned S3 URL to client.
-//client then uses presigned URL to upload the photo to S3.
-//if successful upload: just say 'photo uploaded!'
-//if error: notify client that upload failed, and notify server so it can drop that recently created record.
-
-//TODO: photo bucket currently allows anonymous read/write access.  refactor this.
-//should allow credentialed read-write access (for dev environment - have api keys cached on dev machine)
-//'When deploying, you should change the ‘AllowedOrigin’ to only accept requests from your domain.''
-
-//images can be viewed by the client very simply, like this: 
-//<img src='https://s3-us-west-1.amazonaws.com/base9photos/UNIQUE_FILE_NAME.jpg'></img>
 
 module.exports = {
   addOne: addOne,
-  deleteOne: deleteOne
+  deleteOne: deleteOne,
+  getUploadParams: getUploadParams
 };
 
+
+//expects req.body to have the following properties: user_id, event_id, and url.
 function addOne(req,res){
+  console.log('creating new photo record with these parameters:', req.body);
   new Photo(req.body)
-  .save()
-  .then(function(record){
-    var fileName = record.attributes.id.toString() + '.jpg';
-    var params = {Bucket: S3_BUCKET_NAME, Key: fileName};
-    var photoUrl = 'https://' + S3_BUCKET_NAME + '.s3-' + process.env.AWS_REGION + '.amazonaws.com/' + fileName;
-    console.log(photoUrl);
-    var signedUrl = s3.getSignedUrl('putObject', params);
-    record.save({url: photoUrl}, {patch: true});
-    res.status(201).json(signedUrl);
+   .save();
+  res.status(201).end();
+}
+
+
+
+function getUploadParams(req,res){
+  var policy = {
+    "expiration": "2016-01-01T00:00:00Z",
+    "conditions": [ 
+      {"bucket": "base9photos"}, 
+      ["starts-with", "$key", ""],
+      {"acl": "private"},
+      // {"success_action_redirect": "https://s3-us-west-1.amazonaws.com/base9photos/testupload1.jpg"},
+      ["starts-with", "$Content-Type", ""],
+      ["content-length-range", 0, 3130576]
+    ]
+  };
+   
+  var policyBase64 = new Buffer(JSON.stringify(policy), 'utf8').toString('base64');
+   
+  var signature = crypto.createHmac('sha1', process.env.AWS_SECRET_ACCESS_KEY).update(policyBase64).digest('base64');
+
+  res.json({
+    bucket: 'base9photos', 
+    awsKey: process.env.AWS_ACCESS_KEY_ID, 
+    policy: policyBase64, 
+    signature: signature
   });
+
+  //RE-IMPLEMENT THIS LATER? This code block is for generating S3 presigned URLs.
+  //
+  // .then(function(record){
+  //   var fileName = makeHash(24) + '.jpg';
+  //   var params = {Bucket: S3_BUCKET_NAME, Key: fileName};
+  //   var photoUrl = 'https://' + S3_BUCKET_NAME + '.s3-' + process.env.AWS_REGION + '.amazonaws.com/' + fileName;
+  //   var signedUrl = s3.getSignedUrl('putObject', params);
+  //   record.save({url: photoUrl}, {patch: true});
+  //   res.status(201).json(signedUrl);
+  // });
+
+
 }
 
 //deletes a photo record from the DB, if it exists and the request
@@ -63,11 +87,4 @@ function deleteOne(req,res){
       }
   });
 }
-
-
-
-
-
-
-
 

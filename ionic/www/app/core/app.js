@@ -1,6 +1,7 @@
 angular.module('radar', [
   'ionic',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'angularFileUpload'
   ])
 .config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/')

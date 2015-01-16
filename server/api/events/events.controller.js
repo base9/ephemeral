@@ -120,7 +120,6 @@ function getLocal(req, res) {
 //var coords = JSON.parse(res[0].body);
 //coords will be a lat, lng tuple like [44.5, -122.67]
 function getCoordsFromAddress(address) {
-  console.log("GEOCODE REQUEST ADDRESS: ", address);
   return request('https://base9geocode.herokuapp.com/geo/geocode?address=' + address);
 }
 
@@ -128,7 +127,6 @@ function getCoordsFromAddress(address) {
 //var address = JSON.parse(res[0].body);
 //'address' will be an object with fields like addressLine1, city, state, zipCode, etc.
 function getAddressFromCoords(coords) {
-  console.log("REVERSE GEOCODE REQUEST QUERY: ", coords);
   return request('https://base9geocode.herokuapp.com/geo/reverseGeocode?lat=' + coords[0] + '&lng=' + coords[1]);
 }
 

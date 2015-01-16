@@ -123,16 +123,14 @@ function addDummyUserAndEvent(){
 
 
 function addDummyPhoto(userId, eventId, slug){
-  new Photo({user_id:userId, event_id:eventId})
+  var fileName = slug + '.jpg';
+  var params = {Bucket: S3_BUCKET_NAME, Key: fileName};
+  var photoUrl = 'https://' + S3_BUCKET_NAME + '.s3-' + process.env.AWS_REGION + '.amazonaws.com/' + fileName;
+  
+  new Photo({user_id:userId, event_id:eventId,url: photoUrl})
   .save()
   .then(function(record){
-    var fileName = slug + '.jpg';
-    var params = {Bucket: S3_BUCKET_NAME, Key: fileName};
-    var photoUrl = 'https://' + S3_BUCKET_NAME + '.s3-' + process.env.AWS_REGION + '.amazonaws.com/' + fileName;
-    //var signedUrl = s3.getSignedUrl('putObject', params);
-    record.save({url: photoUrl}, {patch: true});
     console.log('added dummy photo');
-    console.log(userId, eventId, fileName);
   });
 }
 

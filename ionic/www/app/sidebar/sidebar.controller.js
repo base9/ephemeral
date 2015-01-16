@@ -8,7 +8,6 @@ angular.module('radar')
   'MapFactory', 
   'MarkerFactory', 
   'HttpHandler', 
-  '$scope', 
   function($scope, $ionicSideMenuDelegate, $ionicNavBarDelegate, $timeout, $ionicModal, Map, Marker, Http) {
 
 
@@ -213,10 +212,32 @@ angular.module('radar')
     var userId = 1;
     // DUMMY INFO BELOW
     var address = ($scope.newPostData.streetAddress1+'+'+$scope.newPostData.streetAddress2+'+'+$scope.newPostData.city+'+'+$scope.newPostData.state+'+'+$scope.newPostData.zipCode).split(' ').join('+');
+   
+    function makeHash(len){
+        var text = [];
+        var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        for(var i = 0; i < len; i++){
+            text.push(possible.charAt(Math.floor(Math.random() * possible.length)));
+        }
+        return text.join('');
+    }
+
+    var photoFileName = makeHash(18) + '.jpg';
+
+
     Http.getCoordsForAddress(address, function(coords) {
       $scope.newPostData.coords = coords;
+      $scope.newPostData.photoFileName = photoFileName;
       Http.saveNewEvent($scope.newPostData);
     });
+
+    
+    //if photo exists: upload photo by calling HTTP funciton.
+    if($scope.photoUploaded){
+      Http.uploadPhoto($scope.photoFile, photoFileName);
+    } else {
+      console.log('no photo attached, skipping photo upload protocol.')
+    }
   };
 
 
@@ -311,6 +332,7 @@ angular.module('radar')
     console.log("PREVIEW: ", preview)
     var file    = document.querySelector('input[type=file]').files[0];
     console.log("FILE: ", file)
+    $scope.photoFile = file;
     var reader  = new FileReader();
 
     reader.onloadend = function () {
