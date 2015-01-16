@@ -77,7 +77,8 @@ angular.module('radar')
                 ($scope.eventInfo.price === "0.00") ? $scope.eventInfo.price = "Free" : $scope.eventInfo.price = '$'+ $scope.eventInfo.price;
                 $scope.eventInfo.startDate = isoDateToTimeString(parseInt($scope.eventInfo.startTime));
                 $scope.eventInfo.endDate = isoDateToTimeString(parseInt($scope.eventInfo.endTime));
-                $scope.eventInfo.mainPhoto = $scope.eventInfo.photos[0];
+                $scope.eventInfo.mainPhoto = $scope.eventInfo.photos[0] || 
+                  {url: './img/thumbnails/' + $scope.eventInfo.category + '.jpg'}
                 $scope.eventInfo.photos = $scope.eventInfo.photos.slice(1);
                 $scope.eventInfo.comments = $scope.eventInfo.comments.reverse();
                 if ($scope.eventInfo.city) { $scope.eventInfo.city += ',' }
