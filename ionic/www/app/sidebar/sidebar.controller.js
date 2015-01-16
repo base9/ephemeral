@@ -110,11 +110,10 @@ angular.module('radar')
     }); 
   };
 
-  // HOPEFULLY REMOVE THIS FUNCTION
-  var AMPM;
+  var ampm;
   function getAMPM(hours) {
-    (hours > -1 && hours < 12) ? AMPM = "AM" : AMPM = "PM";
-    return AMPM;
+    (hours > -1 && hours < 12) ? ampm = "AM" : ampm = "PM";
+    return ampm;
   }
 
   function getTwelveHours(hours) {
@@ -133,48 +132,66 @@ angular.module('radar')
     var endAMPM = getAMPM(endDate.getHours());
     
     $scope.dateTime = {
-      startMonth: startDate.getMonth(),
-      startDay: startDate.getDay(),
-      startHours: getTwelveHours(startDate.getHours()),
-      startMinutes: Math.floor(startDate.getMinutes()/15)*15,
-      startAMPM: startAMPM,
-      startYear: 2015,
-      endMonth: endDate.getMonth(),
-      endDay: endDate.getDay(),
-      endHours: getTwelveHours(endDate.getHours()),
-      endMinutes: Math.floor(startDate.getMinutes()/15)*15,
-      endAMPM: endAMPM,
-      endYear: 2015
+      start: {
+        month: startDate.getMonth(),
+        day: startDate.getDate(),
+        hours: getTwelveHours(startDate.getHours()),
+        minutes: Math.floor(startDate.getMinutes()/15)*15,
+        ampm: startAMPM,
+        year: 2015,
+      },
+      end: {
+        month: endDate.getMonth(),
+        day: endDate.getDate(),
+        hours: getTwelveHours(endDate.getHours()),
+        minutes: Math.floor(startDate.getMinutes()/15)*15,
+        ampm: endAMPM,
+        year: 2015
+      }
     };   
-
-    console.log($scope.dateTime);
   }
-  
+
+  function combineDateTimeInputs(startEnd) {
+    var time = new Date();
+    time.setHours(get24Hours($scope.dateTime[startEnd].hours, $scope.dateTime[startEnd].ampm));
+    time.setMinutes($scope.dateTime[startEnd].minutes);
+    time.setDate($scope.dateTime[startEnd].day);
+    time.setMonth($scope.dateTime[startEnd].month);
+    time.setYear($scope.dateTime[startEnd].year);
+
+    console.log(time);
+    return Date.parse(time);
+  }
+
+  function get24Hours(hours, ampm) {
+    if (ampm === "AM" && hours === "12") { return 0 };
+    return (ampm === "AM") ? hours : hours + 12;
+  }
+
   $scope.changeAMPM = function(startEnd) {
-    $scope.dateTime[startEnd] === "AM" ? $scope.dateTime[startEnd] = "PM" : $scope.dateTime[startEnd] = "AM";
+    $scope.dateTime[startEnd].ampm === "AM" ? $scope.dateTime[startEnd].ampm = "PM" : $scope.dateTime[startEnd].ampm = "AM";
   }
 
   var startHours;
 
   $scope.changeEndHours = function() {
-    startHours = parseInt($scope.dateTime.startHours);
-    $scope.dateTime.endHours = getTwelveHours(startHours+2);
+    startHours = parseInt($scope.dateTime.start.hours);
+    $scope.dateTime.end.hours = getTwelveHours(startHours+2);
     $scope.updateEndAMPM();
   }
 
   $scope.updateEndAMPM = function() {
-    startHours = parseInt($scope.dateTime.startHours);
-    console.log("UPDATING AMPM: ", startHours)
+    startHours = parseInt($scope.dateTime.start.hours);
     if (startHours >= 10) {  
-      $scope.dateTime.startAMPM === "AM" ? $scope.dateTime.endAMPM = "PM" : $scope.dateTime.endAMPM = "AM";
+      $scope.dateTime.start.ampm === "AM" ? $scope.dateTime.end.ampm = "PM" : $scope.dateTime.end.ampm = "AM";
     }
     if (startHours <= 9) {  
-      $scope.dateTime.endAMPM = $scope.dateTime.startAMPM;
+      $scope.dateTime.end.ampm = $scope.dateTime.start.ampm;
     }
   }
 
   $scope.changeEndMinutes = function() {
-    $scope.dateTime.endMinutes = $scope.dateTime.startMinutes;
+    $scope.dateTime.end.minutes = $scope.dateTime.start.minutes;
   }
 
   $scope.openNewEventModal = function() {
@@ -222,11 +239,12 @@ angular.module('radar')
 
     var photoFileName = makeHash(18) + '.jpg';
     var address = ($scope.newPostData.streetAddress1+'+'+$scope.newPostData.streetAddress2+'+'+$scope.newPostData.city+'+'+$scope.newPostData.state+'+'+$scope.newPostData.zipCode).split(' ').join('+')
-    var timeZone = getDateTime().timeZone;
 
     Http.getCoordsForAddress(address, function(coords) {
       $scope.newPostData.coords = coords;
       $scope.newPostData.photoFileName = photoFileName;
+      $scope.newPostData.startTime = combineDateTimeInputs('start');
+      $scope.newPostData.endTime = combineDateTimeInputs('end');
       $ionicModal.fromTemplateUrl('app/modals/postSuccess.html', {
         scope: $scope,
       }).then(function(modal) {
@@ -234,7 +252,7 @@ angular.module('radar')
         $scope.openModal();
       });
       Http.saveNewEvent($scope.newPostData, function(res) {
-        //Should be event id - Pass to photo for upload
+        //TODO: Should be event id - Pass to photo for upload
       });
     });
     //if photo exists: upload photo by calling HTTP funciton.
