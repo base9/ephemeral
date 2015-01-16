@@ -4,6 +4,7 @@ var Promise = require('bluebird');
 var request = Promise.promisify(require('request'));
 var utils = require('./utils.js');
 var crontab = require('node-crontab');
+var commentController = require('../comments/comments.controller.js');
 
 
 /****************** scheduled function calls *****************/
@@ -33,18 +34,22 @@ module.exports = {
 /******************** Generic DB interactions **********************/
 
 function getAll(req, res) {
-  Event.fetchAll({
-      withRelated: ['user','rating']
-  }).then(function (collection) {
+  Event.fetchAll()
+  .then(function (collection) {
     utils.sendResponse(utils.formatAndTrimEventRecords(collection),res);
   });
 }
 
 function getOne(req, res) {
   Event.where({id:req.params.id}).fetch({
-      withRelated: ['user','rating','photos', 'comments']
+      withRelated: ['user', 'photos', 'comments']
     }).then(function (record) {
-      utils.sendResponse(utils.formatAndTrimEventRecords([record])[0],res);
+      if(record){
+        utils.sendResponse(utils.formatAndTrimEventRecords([record])[0],res);
+      } else {
+        res.status(404).end('No event with that id.')
+      }
+
   });
 }
 
@@ -107,9 +112,8 @@ function getLocal(req, res) {
       .andWhere('endTime', '>', currentTime)
       .orWhere('endTime', null);
   })
-  .fetchAll({
-     withRelated: ['user','rating']
-  }).then(function (collection) {
+  .fetchAll()
+  .then(function (collection) {
     utils.sendResponse(utils.formatAndTrimEventRecords(collection),res);
   });
 }
@@ -208,7 +212,6 @@ function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
   .then(function (res) {
     var body = JSON.parse(res[0].body);
     body.events.forEach(function(event){
-      console.log("**********EVENT************", event.venue.latitude);
       if (event.category === null) {
         event.category = {name: 'Other'};
       }
@@ -226,9 +229,12 @@ function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
             endTime: Date.parse(event.end.utc),
             category: categoryFilter(event.category.name),
             price: (event.ticket_classes[0].free ? 0 : ((event.ticket_classes[0].cost.value / 100) + (event.ticket_classes[0].fee.value / 100))),
-            info: ((event.description && event.description.text) ? event.description.text.slice(0,2000) : '')
+            info: ((event.description && event.description.text) ? event.description.text.slice(0,2000) : ''),
+            popularity: Math.floor(Math.random()*100)
             //TODO: user_id should be a special account reserved for Eventbrite_bot
             //TODO: do something better than a title match for preventing duplicate entries
+          }).then(function(event_id){
+            commentController.addDummyComments(1, event_id, 6);
           });
         } else {
           console.log("event with that title already exists; skipping.");

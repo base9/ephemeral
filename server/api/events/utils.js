@@ -20,7 +20,7 @@ module.exports = {
 //will use a validation helper before adding to the table.
 function addEventRecord(params, res){
   var validatedParams = validateEventRecord(params);
-  new Event(validatedParams)
+  return new Event(validatedParams)
     .save()
     .then(function(model){
       if(res){
@@ -75,12 +75,14 @@ function validateEventRecord(params){
 
 function formatAndTrimEventRecords(collection){
   var trimmed = collection.map(function(event){
-    if(event.relations.rating){
-      event.attributes.ratings = event.relations.rating.length;
-      event.attributes.popularity = getPopularity(event.attributes.ratings);
+    if(event.relations && event.relations.rating){
+      
+      //THESE LINES DEPRECATED: ratings table not in use.
+      // event.attributes.ratings = event.relations.rating.length;
+      // event.attributes.popularity = getPopularity(event.attributes.ratings);
       delete event.relations.rating;
     }
-    if(event.relations.user){
+    if(event.relations && event.relations.user){
       event.attributes.creator = event.relations.user.attributes.name;
       delete event.relations.user;
     }
