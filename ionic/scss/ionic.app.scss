@@ -180,6 +180,27 @@ input, button, select, textarea {
 }
 
 
+/*********** POST SUCCESS MODAL **********/
+
+.postSuccess {
+	height: 300px;
+	text-align: center;
+
+	.messageContainer {
+		height: 100%;
+	}
+
+	.message { 
+		position: absolute;
+		font-size: 50px;
+		color: $textGray;
+		font-family: 'Muli', sans-serif;
+		top: calc(50% - 15px);
+		left: calc(50% - 170px);
+	}
+
+}
+
 /*********** LOGIN/REGISTER MODALS **********/
 
 .formContainer {
@@ -677,12 +698,14 @@ input, button, select, textarea {
   filter: url(#drop-shadow);
   -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
   filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
+  top: 0px;
+  left: 0px;
 
 }
 
 .happening, .happening2 {
 	position: absolute;
-	top: 46px;
+	top: 0px;
 	left: -25px;
   display: none;
   z-index: -1;
@@ -706,7 +729,7 @@ input, button, select, textarea {
 }
 
 .popularity-1 {
-  
+	
 }
 .popularity-2 {
   

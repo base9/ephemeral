@@ -2,6 +2,7 @@ angular.module('radar')
 .factory('HttpHandler', ['$http', '$upload', function($http, $upload) {
 
   var httpObject = {};
+  var geocoder;
 
   httpObject.getEvents = function(bounds, callback) {
 
@@ -30,7 +31,6 @@ angular.module('radar')
   };
 
   httpObject.getAddressForCoords = function(lat, lng, callback) {
-    var geocoder;
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(lat,lng);
     geocoder.geocode({'latLng': latlng}, function(results, status) {
@@ -47,16 +47,20 @@ angular.module('radar')
   };
 
   httpObject.getCoordsForAddress = function(address, callback) {
-    $http.get('/api/events/geocode?address=' + address)
-      .success(function(data, status) {
-        callback(data);
-      })
-      .error(function(data, status) {
-        console.log("ERROR FOR API EVENTS");
-      });
+    geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ 'address': address }, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        var coords = {
+          lat: results[0].geometry.location.k,
+          lng: results[0].geometry.location.D
+        }
+        console.log(coords);
+        callback(coords);
+      };
+    })
   };
 
-  httpObject.saveNewEvent = function(postData) {
+  httpObject.saveNewEvent = function(postData, callback) {
     console.log(postData);
     $http({
       method: 'POST',
@@ -73,13 +77,12 @@ angular.module('radar')
         streetAddress2: postData.streetAddress2,
         city: postData.city,
         state: postData.state,
-        zipCode: postData.zipCode,
         user_id: postData.userId,
         photoFileName: postData.photoFileName
       }
     })
       .success(function(data, status) {
-        console.log("posted new event");
+        callback(data);
       })
       .error(function(data, status) {
         console.log("ERROR FOR API EVENTS");
@@ -149,21 +152,17 @@ angular.module('radar')
     function linkPhotoToEventRecord(photoFileName){
       console.log('now apprising main server of photo upload.')
       $http({
-            method: 'POST',
-            url: '/api/photos/addOne',
-            data: {
-              user_id: 1,     //TODO: get actual event ID from the server (response from posting the event)
-              event_id: 1,    //TODO: get actual user ID from auth
-              url: 'https://s3-us-west-1.amazonaws.com/base9photos/' + photoFileName
-            }
-          });
+        method: 'POST',
+        url: '/api/photos/addOne',
+        data: {
+          user_id: 1,     //TODO: get actual event ID from the server (response from posting the event)
+          event_id: 1,    //TODO: get actual user ID from auth
+          url: 'https://s3-us-west-1.amazonaws.com/base9photos/' + photoFileName
+        }
+      });
     }
 
   }
-
-
-
-
 
   return httpObject;
 }]);

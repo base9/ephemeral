@@ -11,7 +11,6 @@ angular.module('radar')
   'HttpHandler', 
   function($scope, $rootScope, $ionicSideMenuDelegate, $ionicNavBarDelegate, $timeout, $ionicModal, Map, Marker, Http) {
 
-
   $scope.showSearch = false;
 
 // This is an ugly hack -- Figure out real angular/ionic ready function
@@ -133,7 +132,6 @@ angular.module('radar')
       }
     }
     var minutes = Math.ceil(parseFloat(dateString[4][1])/5)*5;
-    console.log("MINUTES: ", minutes)
 
     var dateTime = {
       month: dateString[1],
@@ -150,7 +148,6 @@ angular.module('radar')
 
   $scope.openNewEventModal = function() {
     // TODO: Check for authentication. If authenticated, proceed. Else "Please Login or register to post events"
-    // $scope.startTime = new Date();
     $scope.newPostData = {
         title: '',
         info: '',
@@ -162,6 +159,7 @@ angular.module('radar')
         startDateTime: '',
         endDateTime: '',
         category: '',
+        price: 0,
         coords: {lat: undefined, lng: undefined}
       };
 
@@ -180,34 +178,36 @@ angular.module('radar')
     });
   };
 
+  function makeHash(len){
+      var text = [];
+      var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      for(var i = 0; i < len; i++){
+          text.push(possible.charAt(Math.floor(Math.random() * possible.length)));
+      }
+      return text.join('');
+  }
+
   $scope.saveNewEvent = function() {
     // TODO: Get userId from Auth, pass it into http call below
-    var userId = 1;
-    // DUMMY INFO BELOW
-    var address = ($scope.newPostData.streetAddress1+'+'+$scope.newPostData.streetAddress2+'+'+$scope.newPostData.city+'+'+$scope.newPostData.state+'+'+$scope.newPostData.zipCode).split(' ').join('+');
-   
-    function makeHash(len){
-        var text = [];
-        var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        for(var i = 0; i < len; i++){
-            text.push(possible.charAt(Math.floor(Math.random() * possible.length)));
-        }
-        return text.join('');
-    }
+    $scope.newPostData.userId = 1;
 
     var photoFileName = makeHash(18) + '.jpg';
-    var userId = 1
     var address = ($scope.newPostData.streetAddress1+'+'+$scope.newPostData.streetAddress2+'+'+$scope.newPostData.city+'+'+$scope.newPostData.state+'+'+$scope.newPostData.zipCode).split(' ').join('+')
     var timeZone = getDateTime().timeZone;
-    $scope.newPostData.startDateTime = '';
-    $scope.newPostData.endDateTime ='';
+
     Http.getCoordsForAddress(address, function(coords) {
       $scope.newPostData.coords = coords;
       $scope.newPostData.photoFileName = photoFileName;
-      Http.saveNewEvent($scope.newPostData);
+      $ionicModal.fromTemplateUrl('app/modals/postSuccess.html', {
+        scope: $scope,
+      }).then(function(modal) {
+        $scope.modal = modal;
+        $scope.openModal();
+      });
+      Http.saveNewEvent($scope.newPostData, function(res) {
+        //Should be event id - Pass to photo for upload
+      });
     });
-
-    
     //if photo exists: upload photo by calling HTTP funciton.
     if($rootScope.photoUploaded){
       Http.uploadPhoto($scope.photoFile, photoFileName);
@@ -300,24 +300,30 @@ angular.module('radar')
       document.getElementById("upfile").click();
   }
 
+  var preview;
+  var file;
+  var reader;
   $scope.previewFile = function() {
-    console.log("PREVIEW FILE")
-    var preview = document.querySelector('#photoPreview');
+    preview = document.getElementsByClassName('photoPreview');
+    preview = preview[preview.length-1];
     console.log("PREVIEW: ", preview)
-    var file    = document.querySelector('input[type=file]').files[0];
+    file = document.querySelector('input[type=file]').files[0];
     console.log("FILE: ", file)
     $scope.photoFile = file;
-    var reader  = new FileReader();
+    reader = new FileReader();
 
     reader.onloadend = function () {
       preview.src = reader.result;
+      console.log("LOADEND: ", preview.src)
     }
 
     if (file) {
+      console.log("FOUND FILE")
       $rootScope.photoUploaded = true;
       reader.readAsDataURL(file);
       $scope.$apply();
     } else {
+      console.log("ERROR! NO FILE!")
       preview.src = "";
     }
   }
