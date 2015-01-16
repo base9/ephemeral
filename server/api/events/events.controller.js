@@ -228,7 +228,7 @@ function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
             startTime: Date.parse(event.start.utc),
             endTime: Date.parse(event.end.utc),
             category: categoryFilter(event.category.name),
-            price: (event.ticket_classes[0].free ? 0 : ((event.ticket_classes[0].cost.value / 100) + (event.ticket_classes[0].fee.value / 100))),
+            price: getEventbritePrice(event),
             info: ((event.description && event.description.text) ? event.description.text.slice(0,2000) : ''),
             ratings: Math.floor(Math.random()*100)
             //TODO: user_id should be a special account reserved for Eventbrite_bot
@@ -261,5 +261,14 @@ function categoryFilter(eventCategory) {
     eventCategory = 'other';
   }
   return eventCategory;
+}
+
+function getEventbritePrice(event){
+  if(event.ticket_classes[0]){
+    if(!event.ticket_classes[0].free){
+      return (event.ticket_classes[0].cost.value + event.ticket_classes[0].fee.value) / 100;
+    } 
+  }
+  return 0;
 }
 
