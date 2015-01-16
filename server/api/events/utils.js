@@ -79,13 +79,13 @@ function formatAndTrimEventRecords(collection){
       
       //THESE LINES DEPRECATED: ratings table not in use.
       // event.attributes.ratings = event.relations.rating.length;
-      // event.attributes.popularity = getPopularity(event.attributes.ratings);
       delete event.relations.rating;
     }
     if(event.relations && event.relations.user){
       event.attributes.creator = event.relations.user.attributes.name;
       delete event.relations.user;
     }
+    event.attributes.popularity = getPopularity(event.attributes.ratings);
     return event;
   });
   return trimmed;

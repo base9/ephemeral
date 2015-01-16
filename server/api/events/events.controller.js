@@ -230,7 +230,7 @@ function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
             category: categoryFilter(event.category.name),
             price: (event.ticket_classes[0].free ? 0 : ((event.ticket_classes[0].cost.value / 100) + (event.ticket_classes[0].fee.value / 100))),
             info: ((event.description && event.description.text) ? event.description.text.slice(0,2000) : ''),
-            popularity: Math.floor(Math.random()*100)
+            ratings: Math.floor(Math.random()*100)
             //TODO: user_id should be a special account reserved for Eventbrite_bot
             //TODO: do something better than a title match for preventing duplicate entries
           }).then(function(event_id){
