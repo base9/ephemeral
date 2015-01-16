@@ -8,8 +8,6 @@ router.get('/reversegeocode', controller.getAddressFromCoords);
 
 router.get('/local', controller.getLocal);
 
-router.post('/logReq', controller.logReq);
-
 router.get('/spoof', controller.addManySpoofs);
 
 //these two endpoints (kimono and eventbrite) are for dev testing purposes only.
