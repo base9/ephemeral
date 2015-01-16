@@ -55,7 +55,7 @@
           <div class="list list-inset filterPane" ng-show="toggleFilter">
             <button class="button button-light" style="width:100%" ng-click="mapCtrl.toggleCategory()">Categories</button>
             <div ng-show="mapCtrl.showCategory" class="list">
-              <ion-checkbox>Community and Culture</ion-checkbox>
+              <ion-checkbox ng-click="">Community and Culture</ion-checkbox>
               <ion-checkbox>Fitness</ion-checkbox>
               <ion-checkbox>Food and Drink</ion-checkbox>
               <ion-checkbox>Music and Entertainment</ion-checkbox>
@@ -84,8 +84,8 @@
               <label class="checkbox" ng-click="mapCtrl.toggleDistance()">
                 <input type="checkbox">
               </label>
-              <input type="range" name="distance" min="1" max="10" value="0" ng-model="mapCtrl.filters.distance">
-               {mapCtrl.filters.distance}} (mi.)
+              <input type="range" name="distance" min="1" max="10" value="0" step="0.5" ng-model="mapCtrl.filters.distance">
+               {{mapCtrl.filters.distance}}
             </div>       
 
             <div>Min Popularity</div>
@@ -102,10 +102,10 @@
               <label class="checkbox" ng-click="mapCtrl.toggleCost()">
                 <input type="checkbox">
               </label>
-              <input type="range" name="cost" min="0" max="100" value="100" ng-model="mapCtrl.filters.cost">
-              {{mapCtrl.filters.cost}}
+              <input type="range" name="cost" min="0" max="100" value="50" ng-model="mapCtrl.filters.cost">
+              {{mapCtrl.filters.cost | cost}}
             </div>
-
+            
             {{mapCtrl.activateDistance}} {{mapCtrl.activatePopularity}} {{mapCtrl.activateCost}}
             
             <ion-checkbox id="Now" ng-click="mapCtrl.showTime(false)"> Now! </ion-checkbox>

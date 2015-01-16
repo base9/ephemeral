@@ -1,4 +1,15 @@
 angular.module('radar')
+.filter('cost', function() {
+  return function(input) {
+    if (input === '100') {
+      return input + '+';
+    } else if (input === '0') {
+      return 'FREE';
+    } else {
+      return input;
+    }
+  }
+})
 .controller('MapController', [
   'MapFactory', 
   'MapSearchFactory', 
@@ -59,7 +70,7 @@ angular.module('radar')
       // }
     }
   
-    this.filters = {distance: 1, popularity: 1, category: null, time: {now: false, startTime: null, endTime: null}, cost: 100, keyword: null};
+    this.filters = {distance: 1, popularity: 1, category: null, time: {now: false, startTime: null, endTime: null}, cost: 50, keyword: null};
 
     this.filter = function() {
       console.log("BEFORE FILTERS", this.filters);
@@ -90,7 +101,7 @@ angular.module('radar')
     };
 
     this.reset = function() {
-      this.filters = {distance: 1, popularity: 1, time: {now: false, startTime: null, endTime: null}, cost: 100, keyword: null};
+      this.filters = {distance: 1, popularity: 1, time: {now: false, startTime: null, endTime: null}, cost: 50, keyword: null};
     }
 
     function isoDateToTimeString(date) {
@@ -183,7 +194,7 @@ angular.module('radar')
       console.log("BOUNDS: ", bounds);
       Http.getEvents(bounds, function(events) {
         console.log("EVENTS IN LISTENER: ", events);
-        events.sort(function(a,b) { return b.lat-a.lat; })
+        events.sort(function(a,b) { return b.lat-a.lat; });
         createMarkers(events);
       });
     };
