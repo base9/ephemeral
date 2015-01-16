@@ -110,41 +110,89 @@ angular.module('radar')
     }); 
   };
 
-//set end time to 2 hours after start time on every change
-  function setEndDateTime() {
-    $scope.endDateTime = $scope.startDateTime.setHours($scope.startDateTime.getHours()+2);
-    $scope.startDateTime = $scope.startDateTime.setHours($scope.startDateTime.getHours());
+  var ampm;
+  function getAMPM(hours) {
+    (hours > -1 && hours < 12) ? ampm = "AM" : ampm = "PM";
+    return ampm;
   }
 
-  // HOPEFULLY REMOVE THIS FUNCTION
-  function getDateTime() {
-    var dateString = (new Date()).toString().split(' ');
-    dateString[4] = dateString[4].split(':');
-    var hours = parseFloat(dateString[4][0])
-    var AMPM;
-    (hours > -1 && hours < 12) ? AMPM = "AM" : AMPM = "PM";
+  function getTwelveHours(hours) {
     if (hours > 12 || hours === 0) {
       hours = Math.abs(hours-12)
-      if (hours > 0 && hours < 10) {
-        hours = "0" + hours.toString();
-      } else {
-        hours = hours.toString();
-      }
     }
-    var minutes = Math.ceil(parseFloat(dateString[4][1])/5)*5;
-
-    var dateTime = {
-      month: dateString[1],
-      day: dateString[2],
-      year: dateString[3],
-      hours: hours,
-      minutes: minutes.toString(),
-      timeZone: dateString[5],
-      AMPM: AMPM
-    }
-    return dateTime;
+    return hours;
   }
-  
+
+  function getDateTime() {
+    var startDate = new Date();
+    var endDate = new Date();
+    endDate.setHours(endDate.getHours()+2);
+
+    var startAMPM = getAMPM(startDate.getHours());
+    var endAMPM = getAMPM(endDate.getHours());
+    
+    $scope.dateTime = {
+      start: {
+        month: startDate.getMonth(),
+        day: startDate.getDate(),
+        hours: getTwelveHours(startDate.getHours()),
+        minutes: Math.floor(startDate.getMinutes()/15)*15,
+        ampm: startAMPM,
+        year: 2015,
+      },
+      end: {
+        month: endDate.getMonth(),
+        day: endDate.getDate(),
+        hours: getTwelveHours(endDate.getHours()),
+        minutes: Math.floor(startDate.getMinutes()/15)*15,
+        ampm: endAMPM,
+        year: 2015
+      }
+    };   
+  }
+
+  function combineDateTimeInputs(startEnd) {
+    var time = new Date();
+    time.setHours(get24Hours($scope.dateTime[startEnd].hours, $scope.dateTime[startEnd].ampm));
+    time.setMinutes($scope.dateTime[startEnd].minutes);
+    time.setDate($scope.dateTime[startEnd].day);
+    time.setMonth($scope.dateTime[startEnd].month);
+    time.setYear($scope.dateTime[startEnd].year);
+
+    console.log(time);
+    return Date.parse(time);
+  }
+
+  function get24Hours(hours, ampm) {
+    if (ampm === "AM" && hours === "12") { return 0 };
+    return (ampm === "AM") ? hours : hours + 12;
+  }
+
+  $scope.changeAMPM = function(startEnd) {
+    $scope.dateTime[startEnd].ampm === "AM" ? $scope.dateTime[startEnd].ampm = "PM" : $scope.dateTime[startEnd].ampm = "AM";
+  }
+
+  var startHours;
+
+  $scope.changeEndHours = function() {
+    startHours = parseInt($scope.dateTime.start.hours);
+    $scope.dateTime.end.hours = getTwelveHours(startHours+2);
+    $scope.updateEndAMPM();
+  }
+
+  $scope.updateEndAMPM = function() {
+    startHours = parseInt($scope.dateTime.start.hours);
+    if (startHours >= 10) {  
+      $scope.dateTime.start.ampm === "AM" ? $scope.dateTime.end.ampm = "PM" : $scope.dateTime.end.ampm = "AM";
+    }
+    if (startHours <= 9) {  
+      $scope.dateTime.end.ampm = $scope.dateTime.start.ampm;
+    }
+  }
+
+  $scope.changeEndMinutes = function() {
+    $scope.dateTime.end.minutes = $scope.dateTime.start.minutes;
+  }
 
   $scope.openNewEventModal = function() {
     // TODO: Check for authentication. If authenticated, proceed. Else "Please Login or register to post events"
@@ -163,9 +211,7 @@ angular.module('radar')
         coords: {lat: undefined, lng: undefined}
       };
 
-    $scope.startDateTime = new Date();
-    $scope.endDateTime = new Date();
-    setEndDateTime();
+    getDateTime();
     getCurrentAddress()
     $rootScope.photoUploaded = false;
 
@@ -193,11 +239,12 @@ angular.module('radar')
 
     var photoFileName = makeHash(18) + '.jpg';
     var address = ($scope.newPostData.streetAddress1+'+'+$scope.newPostData.streetAddress2+'+'+$scope.newPostData.city+'+'+$scope.newPostData.state+'+'+$scope.newPostData.zipCode).split(' ').join('+')
-    var timeZone = getDateTime().timeZone;
 
     Http.getCoordsForAddress(address, function(coords) {
       $scope.newPostData.coords = coords;
       $scope.newPostData.photoFileName = photoFileName;
+      $scope.newPostData.startTime = combineDateTimeInputs('start');
+      $scope.newPostData.endTime = combineDateTimeInputs('end');
       $ionicModal.fromTemplateUrl('app/modals/postSuccess.html', {
         scope: $scope,
       }).then(function(modal) {
@@ -205,7 +252,7 @@ angular.module('radar')
         $scope.openModal();
       });
       Http.saveNewEvent($scope.newPostData, function(res) {
-        //Should be event id - Pass to photo for upload
+        //TODO: Should be event id - Pass to photo for upload
       });
     });
     //if photo exists: upload photo by calling HTTP funciton.
@@ -230,69 +277,6 @@ angular.module('radar')
       })
     })
   }
-
-  /*************  UI Bootstrap Datepicker Functions ************/
-
-  $scope.clear = function () {
-    $scope.dt = null;
-  };
-
-  $scope.disabled = function(date, mode) {
-    // return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
-  };
-
-  $scope.toggleMin = function() {
-    $scope.minDate = $scope.minDate ? null : new Date();
-  };
-  $scope.toggleMin();
-
-  $scope.openStart = function($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-
-    $scope.openedStart = true;
-  };
-
-  $scope.openEnd = function($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-
-    $scope.openedEnd = true;
-  };
-
-  $scope.dateOptions = {
-    formatYear: 'yy',
-    startingDay: 1
-  };
-
-  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'MM/dd/yy', 'shortDate'];
-  $scope.format = $scope.formats[2];
-
-/*************  UI Bootstrap Timepicker Functions ************/
-
-  $scope.hstep = 1;
-  $scope.mstep = 10;
-
-  $scope.options = {
-    hstep: [1, 2, 3],
-    mstep: [1, 5, 10, 15, 25, 30]
-  };
-
-  $scope.ismeridian = true;
-  $scope.toggleMode = function() {
-    $scope.ismeridian = ! $scope.ismeridian;
-  };
-
-  $scope.update = function() {
-    var d = new Date();
-    d.setHours( 14 );
-    d.setMinutes( 0 );
-    $scope.mytime = d;
-  };
-
-  $scope.clear = function() {
-    $scope.mytime = null;
-  };
 
 /*************  Input type="file" Custom Functionality ************/
 

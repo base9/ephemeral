@@ -352,81 +352,55 @@ input, button, select, textarea {
 	.dateTime {
 		width: 100%;
 
-		.startsText, .endsText {
-			font-size: 17px;
-			color: $textGray;
+		.startText, .endText {
 			display: inline-block;
-			vertical-align: top;
-		}
-
-		.endsText {
-			margin-right: 6px;
+			color: $textGray;
+			font-size: 17px;
 		}
 
 		.starts, .ends {
 			margin-left: 10px;
 		}
+
+		.hours {
+			text-align: right;
+		}
+
+		.endHours {
+			margin-left: 6px;
+		}
+
+		input, select {
+			background-color: $inputBgGray;
+			padding: 0px;
+			color: $inputFillText;
+			height: 26px;
+			display: inline-block;
+		}
+
+		.ampm {
+			background-color: $inputBgGray;
+			border: 1px solid $inputBgGray;
+			@include border-radius($buttonRadius);
+			width: 40px;
+		}
+
+		.month {
+			margin-left: 35px;
+		}
+
+		.day {
+			width: 37px;
+			height: 25px;
+			text-align: center;
+			margin: 0px;
+		}
 		
-		.timePickerDirective {
-			display: inline-block;
-		}
-
-		.timepick {
-
-			td {
-				margin-left: 10px;
-			}
-
-			input {
-				background-color: $inputBgGray;
-				// width: 67%;
-				margin-top: 5px;
-				padding: 0px;
-				color: $inputFillText;
-			}
-
-			button {
-				background-color: $inputBgGray;
-				margin-left: 14px;
-				margin-top: -3px;
-				border: 1px solid $inputBgGray;	
-			}
-
-			.textInput {
-					padding: 1px 0 0 4px;
-					background-color: $inputBgGray;
-					color: $inputFillText;
-			}
-
-			p {
-				button {
-					margin-top: -10px;
-				}
-			}
-		}
-
-		.date {
-			width: 110px;
-			display: inline-block;
-			position: fixed;
-			margin-top: -3px;
-
-			.textInput {
-				padding-left: 6px;
-				@include border-radius(5px);
-				width: 136%;
-				padding-top: 4px;
-			}
-
-			.dateButton {
-				background-color: rgba(0,0,0,0);
-				border: 0px;
-			}
-
-			.dropdown-menu {
-				z-index: 20;
-			}
-
+		.year {
+			width: 60px;
+			height: 25px;
+			text-align: center;
+			margin: 0px;
 		}
 	}
 
@@ -701,6 +675,11 @@ input, button, select, textarea {
   top: 0px;
   left: 0px;
 
+}
+
+.marker.notHappeningMarker {
+	top: 0px;
+	left: 46px;
 }
 
 .happening, .happening2 {
