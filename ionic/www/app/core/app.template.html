@@ -51,10 +51,20 @@
           <a class="button" ng-click="toggleFilter = !toggleFilter">Filters</a>
         </div>
 
-        <form name="filterForm" ng-submit="mapCtrl.filter()">
+        <form name="filterForm">
           <div class="list list-inset filterPane" ng-show="toggleFilter">
+            <button class="button button-light" style="width:100%" ng-click="mapCtrl.toggleCategory()">Categories</button>
+            <div ng-show="mapCtrl.showCategory" class="list">
+              <ion-checkbox>Community and Culture</ion-checkbox>
+              <ion-checkbox>Fitness</ion-checkbox>
+              <ion-checkbox>Food and Drink</ion-checkbox>
+              <ion-checkbox>Music and Entertainment</ion-checkbox>
+              <ion-checkbox>Personal Interest</ion-checkbox>
+              <ion-checkbox>Travel and Outdoor</ion-checkbox>
+              <ion-checkbox>Other</ion-checkbox>
+            </div>
 
-            <label class="item item-input item-select">
+<!--             <label class="item item-input item-select">
               <div class="input-label">
                 Category
               </div>
@@ -67,53 +77,70 @@
                 <option>Travel and Outdoor</option>
                 <option>Other</option>
               </select>
+            </label> -->
+            
+            <div>Max Distance</div>
+            <div class="item item-checkbox">
+              <label class="checkbox" ng-click="mapCtrl.toggleDistance()">
+                <input type="checkbox">
+              </label>
+              <input type="range" name="distance" min="1" max="10" value="0" ng-model="mapCtrl.filters.distance">
+               {mapCtrl.filters.distance}} (mi.)
+            </div>       
+
+            <div>Min Popularity</div>
+            <div class="item item-checkbox">
+              <label class="checkbox" ng-click="mapCtrl.togglePopularity()">
+                <input type="checkbox">
+              </label>
+              <input type="range" name="distance" min="1" max="5" value="0" ng-model="mapCtrl.filters.popularity">
+               {{mapCtrl.filters.popularity}}
+            </div>
+
+            <div>Max Cost</div>
+            <div class="item item-checkbox">
+              <label class="checkbox" ng-click="mapCtrl.toggleCost()">
+                <input type="checkbox">
+              </label>
+              <input type="range" name="cost" min="0" max="100" value="100" ng-model="mapCtrl.filters.cost">
+              {{mapCtrl.filters.cost}}
+            </div>
+
+            {{mapCtrl.activateDistance}} {{mapCtrl.activatePopularity}} {{mapCtrl.activateCost}}
+            
+            <ion-checkbox id="Now" ng-click="mapCtrl.showTime(false)"> Now! </ion-checkbox>
+            <ion-checkbox id="Specify" ng-click="mapCtrl.showTime(true)"> Specify Time </ion-checkbox>
+
+            <!-- <label class="item item-radio">
+              <input type="radio" name="group" ng-click="mapCtrl.showTime(false)">
+              <div class="item-content">
+                Now!
+              </div>
+              <i class="radio-icon ion-checkmark"></i>
             </label>
+            <label class="item item-radio">
+              <input type="radio" name="group" ng-click="mapCtrl.showTime(true)">
+              <div class="item-content">
+                Specify time
+              </div>
+              <i class="radio-icon ion-checkmark"></i>
+            </label> -->
+            <label ng-show="mapCtrl.show" class="item item-input">
+            <!-- TODO: Fix time display to show only hours and minutes  -->
+              <span class="input-label">Start Time</span>
+              <input type="time" ng-model="mapCtrl.filters.time.startTime">
+            </label>
+            <label ng-show="mapCtrl.show" class="item item-input">
+            <!-- TODO: Make default value end of day/3AM next day  -->
+              <span class="input-label">End Time</span>
+              <input type="time" ng-model="mapCtrl.filters.time.endTime">
+            </label>
+            
+            <button class="button" ng-click="mapCtrl.reset()">
+              Reset
+            </button>
 
-            <div class="distance item range range-positive">
-              Distance<input type="range" name="distance" min="0" max="10" value="0" ng-model="mapCtrl.filters.distance">
-              {{mapCtrl.filters.distance}}
-            </div>
-
-            <div class="popularity item range range-positive">
-              Popularity
-              <input type="range" name="distance" min="0" max="5" value="0" ng-model="mapCtrl.filters.popularity">
-              {{mapCtrl.filters.popularity}}
-            </div>
-
-            <div class="item range range-positive">
-              Cost
-              <input type="range" name="cost" min="0" max="100" value="0" ng-model="mapCtrl.filters.cost">
-              ${{mapCtrl.filters.cost}}
-            </div>
-
-            <div class="list">
-              <label class="item item-radio">
-                <input type="radio" name="group" ng-click="mapCtrl.showTime(false)">
-                <div class="item-content">
-                  Now!
-                </div>
-                <i class="radio-icon ion-checkmark"></i>
-              </label>
-              <label class="item item-radio">
-                <input type="radio" name="group" ng-click="mapCtrl.showTime(true)">
-                <div class="item-content">
-                  Specify time
-                </div>
-                <i class="radio-icon ion-checkmark"></i>
-              </label>
-              <label ng-show="mapCtrl.show" class="item item-input">
-              <!-- TODO: Fix time display to show only hours and minutes  -->
-                <span class="input-label">Start Time</span>
-                <input type="time" ng-model="mapCtrl.filters.time.startTime">
-              </label>
-              <label ng-show="mapCtrl.show" class="item item-input">
-              <!-- TODO: Make default value end of day/3AM next day  -->
-                <span class="input-label">End Time</span>
-                <input type="time" ng-model="mapCtrl.filters.time.endTime">
-              </label>
-            </div>
-
-            <button class="button" type="submit">
+            <button class="button" ng-click="mapCtrl.filter()">
               Filter
             </button>
 

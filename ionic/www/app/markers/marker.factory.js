@@ -30,18 +30,22 @@ angular.module('radar')
     if (filters) {
       //filter.popularity is a number
       if (filters.popularity) {
+        console.log("POP FILT");
         events = filterPopularity(events, filters.popularity);
       }
       //filter.category is a string
       if (filters.category) {
+        console.log("CAT FILT");
         events = filterCategory(events, filters.category);
       }
       //filter.distance is a number in miles
       if (filters.distance) {
+        console.log("DIST FILT");
         events = filterDistance(events, objFilters.location, filters.distance);
       }
       //filters.keyword is an array of stringed keywords
       if (filters.keyword) {
+        console.log("KEY FILT");
         var temp = filterKeyword(events, filters.keyword);
         if (temp.foundMatch) {
           events = temp.results;
@@ -51,11 +55,13 @@ angular.module('radar')
       }
       //filters.cost is an object with lowEnd and highEnd properties containing a number
       if (filters.cost) {
+        console.log("COST FILT");
         events = filterCost(events, filters.cost);
       }
       //filters.time is an object with new, startTime, and endTime as a boolean, string, and string, respectively
       //The string must be capable of being parsed by Date.parse()
       if (filters.time.now || filters.time.startTime || filters.time.endTime) {
+        console.log("TIME FILT");
         events = filterTime(events, filters.time.now, filters.time.startTime, filters.time.endTime);
       }
       console.log("NEW EVENTS", events);
@@ -184,7 +190,8 @@ angular.module('radar')
   var filterCost = function(events, cost) {
     var results = [];
     for (var i = 0; i < events.length; i++) {
-      if (events[i].price <= cost) {
+      var price = parseFloat(events[i].price);
+      if (price <= cost) {
         results.push(events[i]);
       }
     }

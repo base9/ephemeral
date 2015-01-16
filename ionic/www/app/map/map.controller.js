@@ -26,44 +26,71 @@ angular.module('radar')
 
     var map = Map.initialize();
 
-    Map.geoLocate(function(location, bounds) {
-      listOfEvents.location = {'lat': location.latitude, 'lng': location.longitude};
-      listOfEvents.bounds = {ne: bounds.getNorthEast(), sw: bounds.getSouthWest()};
-      console.log("LIST OF MARKERS: ", listOfEvents);
+    this.activateDistance = false;
+    this.activatePopularity = false;
+    this.activateCost = false;
+    this.toggleDistance = function() {
+      this.activateDistance = !this.activateDistance;
+    };
+    this.togglePopularity = function() {
+      this.activatePopularity = !this.activatePopularity;
+    };
+    this.toggleCost = function() {
+      this.activateCost = !this.activateCost;
+    };
 
-      Http.getMarkers(listOfEvents.bounds, function(events) {
-        createMarkers(events);
-      });
-    });
+    this.showCategory = false;
+    this.toggleCategory = function() {
+      this.showCategory = !this.showCategory;
+    };
+
+    //
+    this.show = false;
+    this.triggerNow = false;
+    this.showTime = function(show) {
+      this.show = show;
+      this.triggerNow = true;
+      // if (!show) {
+      //   var element = angular.element('#Now');
+      //   element.removeClass('')
+      // } 
+      // if (show) {
+      //   var element = angular.element('#Specify');
+      // }
+    }
   
-    this.filters = {distance: 0, popularity: 0, time: {now: false, startTime: null, endTime: null}, cost: 0, keyword: null};
+    this.filters = {distance: 1, popularity: 1, category: null, time: {now: false, startTime: null, endTime: null}, cost: 100, keyword: null};
 
     this.filter = function() {
-      console.log("FILTERS", this.filters);
-      if (!this.show) {
+      console.log("BEFORE FILTERS", this.filters);
+      if (!this.show && this.triggerNow) {
         this.filters.time.now = true;
       }
-      if (this.filters.distance === 0) {
+      if (!this.activateDistance) {
         this.filters.distance = null;
       }
-      if (this.filters.popularity === 0) {
+      if (!this.activatePopularity) {
         this.filters.popularity = null;
+      }
+      if (!this.activateCost) {
+        this.filters.cost = null;
       }
       if (this.filters.time.startTime && this.filters.time.endTime) {
         var today = new Date().setHours(0, 0, 0, 0);
         var offset = new Date().getTimezoneOffset() * 60000;
-        console.log("TODAY: ", today, Date.parse(this.filters.time.startTime));
-        this.filters.time.startTime = today + Date.parse(this.filters.time.startTime) - offset;
+        this.filters.time.startTime = new Date(today + Date.parse(this.filters.time.startTime) - offset);
+        this.filters.time.endTime = new Date(today + Date.parse(this.filters.time.endTime) - offset);
       }
+      if (this.filters.category) {
+        this.filters.category = categoryFilter(this.filters.category);
+      }
+      console.log("AFTER FILTERS", this.filters);
       Marker.filterMarkers(map, listOfEvents, this.filters);
 
-      this.filters = {distance: 0, popularity: 0, time: {now: false, startTime: null, endTime: null}, cost: 0, keyword: null};
     };
 
-    this.show = false;
-
-    this.showTime = function(show) {
-      this.show = show;
+    this.reset = function() {
+      this.filters = {distance: 1, popularity: 1, time: {now: false, startTime: null, endTime: null}, cost: 100, keyword: null};
     }
 
     function isoDateToTimeString(date) {
@@ -160,5 +187,24 @@ angular.module('radar')
         createMarkers(events);
       });
     };
+
+    function categoryFilter(eventCategory) {
+      if (eventCategory === 'Fitness') {
+        eventCategory = 'fitness';
+      } else if (eventCategory === 'Personal Interest') {
+        eventCategory = 'hobbies';
+      } else if (eventCategory === 'Music and Entertainment') {
+        eventCategory = 'entertainment';
+      } else if (eventCategory === 'Community and Culture') {
+        eventCategory = 'culture';
+      } else if (eventCategory === 'Food and Drink') {
+        eventCategory = 'drink';
+      } else if (eventCategory === 'Travel and Outdoor') {
+        eventCategory = 'outdoors';
+      } else {
+        eventCategory = 'other';
+      }
+      return eventCategory;
+    }
 
 }]);
