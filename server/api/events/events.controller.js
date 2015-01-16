@@ -4,6 +4,7 @@ var Promise = require('bluebird');
 var request = Promise.promisify(require('request'));
 var utils = require('./utils.js');
 var crontab = require('node-crontab');
+var commentController = require('../comments/comments.controller.js');
 
 
 /****************** scheduled function calls *****************/
@@ -208,7 +209,6 @@ function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
   .then(function (res) {
     var body = JSON.parse(res[0].body);
     body.events.forEach(function(event){
-      console.log("**********EVENT************", event.venue.latitude);
       if (event.category === null) {
         event.category = {name: 'Other'};
       }
@@ -229,6 +229,8 @@ function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
             info: ((event.description && event.description.text) ? event.description.text.slice(0,2000) : '')
             //TODO: user_id should be a special account reserved for Eventbrite_bot
             //TODO: do something better than a title match for preventing duplicate entries
+          }).then(function(event_id){
+            commentController.addDummyComments(1, event_id, 6);
           });
         } else {
           console.log("event with that title already exists; skipping.");

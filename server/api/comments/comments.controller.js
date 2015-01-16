@@ -4,7 +4,7 @@ var seed = require('./comments.seed.js');
 
 module.exports = {
   addOne: addOne,
-  addDummyComment: addDummyComment
+  addDummyComments: addDummyComments
 };
 
 function addOne(req, res) {
@@ -21,13 +21,14 @@ function addOne(req, res) {
 
 
 
-function addDummyComment(userId,eventId){
-  var newComment = new Comment({
-    user_id: userId,
-    event_id: eventId,
-    comment: getRandomComment()
-  })
-  .save();
+function addDummyComments(userId,eventId, number){
+  for (var i = 0; i < number; i++) {
+    new Comment({
+      user_id: userId,
+      event_id: eventId,
+      comment: getRandomComment()
+    }).save();
+  };
 }
 
 

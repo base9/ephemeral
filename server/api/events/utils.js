@@ -20,7 +20,7 @@ module.exports = {
 //will use a validation helper before adding to the table.
 function addEventRecord(params, res){
   var validatedParams = validateEventRecord(params);
-  new Event(validatedParams)
+  return new Event(validatedParams)
     .save()
     .then(function(model){
       if(res){
