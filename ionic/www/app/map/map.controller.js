@@ -55,14 +55,14 @@ angular.module('radar')
       listOfEvents.bounds = {ne: bounds.getNorthEast(), sw: bounds.getSouthWest()};
       console.log("LIST OF MARKERS: ", listOfEvents);
 
-      Http.getMarkers(listOfEvents.bounds, function(events) {
+      Http.getEvents(listOfEvents.bounds, function(events) {
+        events.sort(function(a,b) { return b.lat-a.lat; })
         createMarkers(events);
       });
     });
 
     var createMarkers = function(events) {
       Marker.placeMarkers(map, events, function(markers) {
-        console.log("EVENTS: ", events.length, markers.length);
         //store marker location and events inside scope for now
         listOfEvents.events = events;
         for (var i = 0; i < markers.length; i++) {
@@ -142,8 +142,16 @@ angular.module('radar')
       var temp = map.getBounds();
       var bounds = {ne: temp.getNorthEast(), sw: temp.getSouthWest()};
       console.log("BOUNDS: ", bounds);
-      Http.getMarkers(bounds, function(events) {
+      Http.getEvents(bounds, function(events) {
         console.log("EVENTS IN LISTENER: ", events);
+        events.sort(function(a,b) { return b.lat-a.lat; })
+        console.log(events[0].lat)
+        console.log(events[1].lat)
+        console.log(events[2].lat)
+        console.log(events[3].lat)
+        console.log(events[4].lat)
+        console.log(events[5].lat)
+        console.log(events[6].lat)
         createMarkers(events);
       });
     };
