@@ -8,8 +8,7 @@ angular.module('radar')
   'MapFactory', 
   'MarkerFactory', 
   'HttpHandler', 
-  '$upload',
-  function($scope, $ionicSideMenuDelegate, $ionicNavBarDelegate, $timeout, $ionicModal, Map, Marker, Http, $upload) {
+  function($scope, $ionicSideMenuDelegate, $ionicNavBarDelegate, $timeout, $ionicModal, Map, Marker, Http) {
 
 
   $scope.showSearch = false;
@@ -232,30 +231,13 @@ angular.module('radar')
       Http.saveNewEvent($scope.newPostData);
     });
 
-    var uploadParameters = {
-              key: photoFileName,
-              AWSAccessKeyId: 'AKIAIWPJUAIHVGA6VNSA',
-              acl: 'private',
-              policy: 'eyJleHBpcmF0aW9uIjoiMjAxNi0wMS0wMVQwMDowMDowMFoiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJiYXNlOXBob3RvcyJ9LFsic3RhcnRzLXdpdGgiLCIka2V5IiwiIl0seyJhY2wiOiJwcml2YXRlIn0sWyJzdGFydHMtd2l0aCIsIiRDb250ZW50LVR5cGUiLCIiXSxbImNvbnRlbnQtbGVuZ3RoLXJhbmdlIiwwLDMxMzA1NzZdXX0=',
-              signature: 'Aw6j1mlYJeC4OawIqe6thbZREEc=',
-              'Content-Type': 'application/octet-stream'
-              // filename: photoFileName // this is needed for Flash polyfill IE8-9
-            };
-
-    console.log('uploading now');
-    $upload.upload({
-            url: 'https://base9photos.s3.amazonaws.com/', //S3 upload url including bucket name
-            method: 'POST',
-            data : uploadParameters,
-            file: $scope.photoFileTestFormat1,
-          })
-      .progress(function(evt) {
-        console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :'+ evt.config.file.name);
-      }).success(function(data, status, headers, config) {
-        console.log('file ' + photoFileName + ' is uploaded successfully. Response: ', status, data);
-      }).error(function(data, status, headers, config) {
-        console.log('file ' + photoFileName + ' failed to upload. Response: ', status, data);
-      });
+    
+    //if photo exists: upload photo by calling HTTP funciton.
+    if($scope.photoFileTestFormat1){
+      Http.uploadPhoto($scope.photoFileTestFormat1, photoFileName);
+    } else {
+      console.log('no photo attached, skipping photo upload protocol.')
+    }
   };
 
 

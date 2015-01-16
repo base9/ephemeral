@@ -1,5 +1,5 @@
 angular.module('radar')
-.factory('HttpHandler', ['$http', function($http) {
+.factory('HttpHandler', ['$http', '$upload', function($http, $upload) {
 
   var httpObject = {};
 
@@ -111,45 +111,32 @@ angular.module('radar')
   };
 
 
-  httpObject.uploadPhoto = function(file, altFile, fileName){         
-    console.log('http handler attempting to upload photo!');
-    console.log('file method 1:', file);
-    console.log('file method 2:', altFile);
+  httpObject.uploadPhoto = function(photo, photoFileName){         
+    console.log('uploading now');
+    
+    var uploadParameters = {
+      key: photoFileName,
+      AWSAccessKeyId: 'AKIAIWPJUAIHVGA6VNSA',
+      acl: 'private',
+      policy: 'eyJleHBpcmF0aW9uIjoiMjAxNi0wMS0wMVQwMDowMDowMFoiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJiYXNlOXBob3RvcyJ9LFsic3RhcnRzLXdpdGgiLCIka2V5IiwiIl0seyJhY2wiOiJwcml2YXRlIn0sWyJzdGFydHMtd2l0aCIsIiRDb250ZW50LVR5cGUiLCIiXSxbImNvbnRlbnQtbGVuZ3RoLXJhbmdlIiwwLDMxMzA1NzZdXX0=',
+      signature: 'Aw6j1mlYJeC4OawIqe6thbZREEc=',
+      'Content-Type': 'application/octet-stream'
+      // filename: photoFileName // this is needed for Flash polyfill IE8-9
+    };
 
-    function formDataObject() {
-      return function(data) {
-        var fd = new FormData();
-        angular.forEach(data, function(value, key) {
-          fd.append(key, value);
-        });
-      return fd;
-      };
-    }
-    console.log('uploading now, with filename:', fileName);
-
-    $http.uploadFile({
-      method: 'POST',
-      url: 'https://base9photos.s3.amazonaws.com/',
-      // headers: {'Content-Type': 'multipart/form-data' },
-      data: {
-        'key': fileName,
-        'AWSAccessKeyId': 'AKIAIWPJUAIHVGA6VNSA',
-        'acl': 'private',
-        'policy': 'eyJleHBpcmF0aW9uIjoiMjAxNi0wMS0wMVQwMDowMDowMFoiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJiYXNlOXBob3RvcyJ9LFsic3RhcnRzLXdpdGgiLCIka2V5IiwiIl0seyJhY2wiOiJwcml2YXRlIn0sWyJzdGFydHMtd2l0aCIsIiRDb250ZW50LVR5cGUiLCIiXSxbImNvbnRlbnQtbGVuZ3RoLXJhbmdlIiwwLDMxMzA1NzZdXX0=',
-        'signature': 'Aw6j1mlYJeC4OawIqe6thbZREEc=',
-        'Content-Type': 'image/jpeg'
-      },
-      file: file
-      // transformRequest: formDataObject
-    })
-    .progress(function(evt) {
-        console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
-    }).then(function(data, status, headers, config) {
-        // file is uploaded successfully
-        console.log(status, data);
-    });
-
-    ;
+    $upload.upload({
+            url: 'https://base9photos.s3.amazonaws.com/', //S3 upload url including bucket name
+            method: 'POST',
+            data : uploadParameters,
+            file: photo,
+          })
+      .progress(function(evt) {
+        console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :'+ evt.config.file.name);
+      }).success(function(data, status, headers, config) {
+        console.log('file ' + photoFileName + ' is uploaded successfully. Response: ', status, data);
+      }).error(function(data, status, headers, config) {
+        console.log('file ' + photoFileName + ' failed to upload. Response: ', status, data);
+      });
   }
 
 
