@@ -703,6 +703,11 @@ input, button, select, textarea {
 
 }
 
+.marker.notHappeningMarker {
+	top: 0px;
+	left: 46px;
+}
+
 .happening, .happening2 {
 	position: absolute;
 	top: 0px;
