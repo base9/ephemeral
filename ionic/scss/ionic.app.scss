@@ -685,6 +685,7 @@ input, button, select, textarea {
 	top: 46px;
 	left: -25px;
   display: none;
+  z-index: -1;
 }
 
 .happening.circle-animation, .happening2.circle-animation {
