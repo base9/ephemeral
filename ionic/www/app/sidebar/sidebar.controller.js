@@ -197,7 +197,7 @@ angular.module('radar')
 
     Http.getCoordsForAddress(address, function(coords) {
       $scope.newPostData.coords = coords;
-      if (photoFileName) { $scope.newPostData.photoFileName = photoFileName; }
+      $scope.newPostData.photoFileName = photoFileName;
       $ionicModal.fromTemplateUrl('app/modals/postSuccess.html', {
         scope: $scope,
       }).then(function(modal) {
