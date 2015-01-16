@@ -113,6 +113,10 @@ $moneyGreen:				#038312;
 
 /*********** ALL MODALS **********/
 
+input, button, select, textarea {
+	font-family: 'Muli', sans-serif;
+}
+
 .modal {
 	background-color: $bgGray;
 	padding: 20px;
@@ -150,6 +154,29 @@ $moneyGreen:				#038312;
 :-ms-input-placeholder {  
    color: $placeholderGray;
    font-family: 'Muli', sans-serif;  
+}
+
+.wholeModal {
+	height: 100%;
+	width: 100%;
+}
+
+.closeModal {
+	position: absolute;
+	color: $textGray;
+	top: 10px;
+	right: 10px;	
+
+	.closeModalButton {
+		vertical-align: top;
+		background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+		font-size: 20px;
+	}
 }
 
 
@@ -446,27 +473,6 @@ $moneyGreen:				#038312;
 		}	
 	}
 }
-
-// .transparent {
-//   background-color: transparent !important;
-
-// }
-
-.close-modal {
-  position: absolute;
-  right: 19.5%;
-  top: 18.4%;
-  font-size: 1.8em;
-  text-align: center;
-  z-index: 20;
-  background-color: #f5f5f5;
-  border-radius: 30px;
-  width: 26px;
-  cursor: pointer;
-  line-height: 0px;
-  border: 0.5px solid #ddd;
-}
-
 
 /*********** EVENT INFO MODAL **********/
 

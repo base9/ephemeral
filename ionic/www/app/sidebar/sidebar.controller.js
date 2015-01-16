@@ -104,7 +104,7 @@ angular.module('radar')
         address = address.split(',');
         $scope.newPostData.streetAddress1 = address[0];
         $scope.newPostData.city = address[1];
-        $scope.newPostData.state = address[2];
+        $scope.newPostData.state = address[2].substring(1,3);
         $scope.$apply();
       });
     }); 
