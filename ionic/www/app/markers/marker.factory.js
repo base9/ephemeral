@@ -1,5 +1,5 @@
 angular.module('radar')
-.factory('MarkerFactory', function() {
+.factory('MarkerFactory', function($rootScope) {
   var markerObj = {};
   var markers = [];
 

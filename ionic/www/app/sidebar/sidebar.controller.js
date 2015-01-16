@@ -1,6 +1,7 @@
 angular.module('radar')
 .controller('MenuController', [
   '$scope',
+  '$rootScope',
   '$ionicSideMenuDelegate',
   '$ionicNavBarDelegate',
   '$timeout',
@@ -8,7 +9,7 @@ angular.module('radar')
   'MapFactory', 
   'MarkerFactory', 
   'HttpHandler', 
-  function($scope, $ionicSideMenuDelegate, $ionicNavBarDelegate, $timeout, $ionicModal, Map, Marker, Http) {
+  function($scope, $rootScope, $ionicSideMenuDelegate, $ionicNavBarDelegate, $timeout, $ionicModal, Map, Marker, Http) {
 
 
   $scope.showSearch = false;
@@ -168,7 +169,7 @@ angular.module('radar')
     $scope.endDateTime = new Date();
     setEndDateTime();
     getCurrentAddress()
-    $scope.photoUploaded = false;
+    $rootScope.photoUploaded = false;
 
     $ionicModal.fromTemplateUrl('app/modals/newEventModal.html', {
       scope: $scope,
@@ -208,7 +209,7 @@ angular.module('radar')
 
     
     //if photo exists: upload photo by calling HTTP funciton.
-    if($scope.photoUploaded){
+    if($rootScope.photoUploaded){
       Http.uploadPhoto($scope.photoFile, photoFileName);
     } else {
       console.log('no photo attached, skipping photo upload protocol.')
@@ -313,7 +314,7 @@ angular.module('radar')
     }
 
     if (file) {
-      $scope.photoUploaded = true;
+      $rootScope.photoUploaded = true;
       reader.readAsDataURL(file);
       $scope.$apply();
     } else {

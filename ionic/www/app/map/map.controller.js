@@ -5,8 +5,9 @@ angular.module('radar')
   'MarkerFactory', 
   'HttpHandler', 
   '$ionicModal',
-  '$scope', 
-  function(Map, SearchBox, Marker, Http, $ionicModal, $scope) {
+  '$scope',
+  '$rootScope', 
+  function(Map, SearchBox, Marker, Http, $ionicModal, $scope, $rootScope) {
 
     var listOfEvents = {};
     $scope.eventInfo = {};
@@ -74,11 +75,12 @@ angular.module('radar')
             return function() {
               Http.getOneEvent(event.id, function(res) {
                 $scope.eventInfo = res;
+                $rootScope.photoUploaded = false;
                 ($scope.eventInfo.price === "0.00") ? $scope.eventInfo.price = "Free" : $scope.eventInfo.price = '$'+ $scope.eventInfo.price;
                 $scope.eventInfo.startDate = isoDateToTimeString(parseInt($scope.eventInfo.startTime));
                 $scope.eventInfo.endDate = isoDateToTimeString(parseInt($scope.eventInfo.endTime));
                 $scope.eventInfo.mainPhoto = $scope.eventInfo.photos[0] || 
-                  {url: './img/thumbnails/' + $scope.eventInfo.category + '.jpg'}
+                  {url: './img/thumbnails/' + $scope.eventInfo.category + '.jpg'};
                 $scope.eventInfo.photos = $scope.eventInfo.photos.slice(1);
                 $scope.eventInfo.comments = $scope.eventInfo.comments.reverse();
                 if ($scope.eventInfo.city) { $scope.eventInfo.city += ',' }
@@ -145,13 +147,6 @@ angular.module('radar')
       Http.getEvents(bounds, function(events) {
         console.log("EVENTS IN LISTENER: ", events);
         events.sort(function(a,b) { return b.lat-a.lat; })
-        console.log(events[0].lat)
-        console.log(events[1].lat)
-        console.log(events[2].lat)
-        console.log(events[3].lat)
-        console.log(events[4].lat)
-        console.log(events[5].lat)
-        console.log(events[6].lat)
         createMarkers(events);
       });
     };
