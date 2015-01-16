@@ -228,53 +228,42 @@ input, button, select, textarea {
         margin-left: 0px; }
   .newEventModal .dateTime {
     width: 100%; }
-    .newEventModal .dateTime .startsText, .newEventModal .dateTime .endsText {
-      font-size: 17px;
-      color: #b4b4b4;
+    .newEventModal .dateTime .startText, .newEventModal .dateTime .endText {
       display: inline-block;
-      vertical-align: top; }
-    .newEventModal .dateTime .endsText {
-      margin-right: 6px; }
+      color: #b4b4b4;
+      font-size: 17px; }
     .newEventModal .dateTime .starts, .newEventModal .dateTime .ends {
       margin-left: 10px; }
-    .newEventModal .dateTime .timePickerDirective {
-      display: inline-block; }
-    .newEventModal .dateTime .timepick td {
-      margin-left: 10px; }
-    .newEventModal .dateTime .timepick input {
+    .newEventModal .dateTime .hours {
+      text-align: right; }
+    .newEventModal .dateTime .endHours {
+      margin-left: 6px; }
+    .newEventModal .dateTime input, .newEventModal .dateTime select {
       background-color: #c6c6c6;
-      margin-top: 5px;
       padding: 0px;
-      color: #1e1e1e; }
-    .newEventModal .dateTime .timepick button {
+      color: #1e1e1e;
+      height: 26px;
+      display: inline-block; }
+    .newEventModal .dateTime .ampm {
       background-color: #c6c6c6;
-      margin-left: 14px;
-      margin-top: -3px;
-      border: 1px solid #c6c6c6; }
-    .newEventModal .dateTime .timepick .textInput {
-      padding: 1px 0 0 4px;
-      background-color: #c6c6c6;
-      color: #1e1e1e; }
-    .newEventModal .dateTime .timepick p button {
-      margin-top: -10px; }
-    .newEventModal .dateTime .date {
-      width: 110px;
-      display: inline-block;
-      position: fixed;
-      margin-top: -3px; }
-      .newEventModal .dateTime .date .textInput {
-        padding-left: 6px;
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-        -ms-border-radius: 5px;
-        border-radius: 5px;
-        width: 136%;
-        padding-top: 4px; }
-      .newEventModal .dateTime .date .dateButton {
-        background-color: rgba(0, 0, 0, 0);
-        border: 0px; }
-      .newEventModal .dateTime .date .dropdown-menu {
-        z-index: 20; }
+      border: 1px solid #c6c6c6;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -ms-border-radius: 4px;
+      border-radius: 4px;
+      width: 40px; }
+    .newEventModal .dateTime .month {
+      margin-left: 35px; }
+    .newEventModal .dateTime .day {
+      width: 37px;
+      height: 25px;
+      text-align: center;
+      margin: 0px; }
+    .newEventModal .dateTime .year {
+      width: 60px;
+      height: 25px;
+      text-align: center;
+      margin: 0px; }
   .newEventModal .categoryCost {
     width: 100%;
     margin-left: 10px; }

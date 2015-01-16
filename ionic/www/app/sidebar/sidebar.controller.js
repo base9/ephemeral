@@ -110,41 +110,72 @@ angular.module('radar')
     }); 
   };
 
-//set end time to 2 hours after start time on every change
-  function setEndDateTime() {
-    $scope.endDateTime = $scope.startDateTime.setHours($scope.startDateTime.getHours()+2);
-    $scope.startDateTime = $scope.startDateTime.setHours($scope.startDateTime.getHours());
+  // HOPEFULLY REMOVE THIS FUNCTION
+  var AMPM;
+  function getAMPM(hours) {
+    (hours > -1 && hours < 12) ? AMPM = "AM" : AMPM = "PM";
+    return AMPM;
   }
 
-  // HOPEFULLY REMOVE THIS FUNCTION
-  function getDateTime() {
-    var dateString = (new Date()).toString().split(' ');
-    dateString[4] = dateString[4].split(':');
-    var hours = parseFloat(dateString[4][0])
-    var AMPM;
-    (hours > -1 && hours < 12) ? AMPM = "AM" : AMPM = "PM";
+  function getTwelveHours(hours) {
     if (hours > 12 || hours === 0) {
       hours = Math.abs(hours-12)
-      if (hours > 0 && hours < 10) {
-        hours = "0" + hours.toString();
-      } else {
-        hours = hours.toString();
-      }
     }
-    var minutes = Math.ceil(parseFloat(dateString[4][1])/5)*5;
+    return hours;
+  }
 
-    var dateTime = {
-      month: dateString[1],
-      day: dateString[2],
-      year: dateString[3],
-      hours: hours,
-      minutes: minutes.toString(),
-      timeZone: dateString[5],
-      AMPM: AMPM
-    }
-    return dateTime;
+  function getDateTime() {
+    var startDate = new Date();
+    var endDate = new Date();
+    endDate.setHours(endDate.getHours()+2);
+
+    var startAMPM = getAMPM(startDate.getHours());
+    var endAMPM = getAMPM(endDate.getHours());
+    
+    $scope.dateTime = {
+      startMonth: startDate.getMonth(),
+      startDay: startDate.getDay(),
+      startHours: getTwelveHours(startDate.getHours()),
+      startMinutes: Math.floor(startDate.getMinutes()/15)*15,
+      startAMPM: startAMPM,
+      startYear: 2015,
+      endMonth: endDate.getMonth(),
+      endDay: endDate.getDay(),
+      endHours: getTwelveHours(endDate.getHours()),
+      endMinutes: Math.floor(startDate.getMinutes()/15)*15,
+      endAMPM: endAMPM,
+      endYear: 2015
+    };   
+
+    console.log($scope.dateTime);
   }
   
+  $scope.changeAMPM = function(startEnd) {
+    $scope.dateTime[startEnd] === "AM" ? $scope.dateTime[startEnd] = "PM" : $scope.dateTime[startEnd] = "AM";
+  }
+
+  var startHours;
+
+  $scope.changeEndHours = function() {
+    startHours = parseInt($scope.dateTime.startHours);
+    $scope.dateTime.endHours = getTwelveHours(startHours+2);
+    $scope.updateEndAMPM();
+  }
+
+  $scope.updateEndAMPM = function() {
+    startHours = parseInt($scope.dateTime.startHours);
+    console.log("UPDATING AMPM: ", startHours)
+    if (startHours >= 10) {  
+      $scope.dateTime.startAMPM === "AM" ? $scope.dateTime.endAMPM = "PM" : $scope.dateTime.endAMPM = "AM";
+    }
+    if (startHours <= 9) {  
+      $scope.dateTime.endAMPM = $scope.dateTime.startAMPM;
+    }
+  }
+
+  $scope.changeEndMinutes = function() {
+    $scope.dateTime.endMinutes = $scope.dateTime.startMinutes;
+  }
 
   $scope.openNewEventModal = function() {
     // TODO: Check for authentication. If authenticated, proceed. Else "Please Login or register to post events"
@@ -163,9 +194,7 @@ angular.module('radar')
         coords: {lat: undefined, lng: undefined}
       };
 
-    $scope.startDateTime = new Date();
-    $scope.endDateTime = new Date();
-    setEndDateTime();
+    getDateTime();
     getCurrentAddress()
     $rootScope.photoUploaded = false;
 
@@ -230,69 +259,6 @@ angular.module('radar')
       })
     })
   }
-
-  /*************  UI Bootstrap Datepicker Functions ************/
-
-  $scope.clear = function () {
-    $scope.dt = null;
-  };
-
-  $scope.disabled = function(date, mode) {
-    // return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
-  };
-
-  $scope.toggleMin = function() {
-    $scope.minDate = $scope.minDate ? null : new Date();
-  };
-  $scope.toggleMin();
-
-  $scope.openStart = function($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-
-    $scope.openedStart = true;
-  };
-
-  $scope.openEnd = function($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-
-    $scope.openedEnd = true;
-  };
-
-  $scope.dateOptions = {
-    formatYear: 'yy',
-    startingDay: 1
-  };
-
-  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'MM/dd/yy', 'shortDate'];
-  $scope.format = $scope.formats[2];
-
-/*************  UI Bootstrap Timepicker Functions ************/
-
-  $scope.hstep = 1;
-  $scope.mstep = 10;
-
-  $scope.options = {
-    hstep: [1, 2, 3],
-    mstep: [1, 5, 10, 15, 25, 30]
-  };
-
-  $scope.ismeridian = true;
-  $scope.toggleMode = function() {
-    $scope.ismeridian = ! $scope.ismeridian;
-  };
-
-  $scope.update = function() {
-    var d = new Date();
-    d.setHours( 14 );
-    d.setMinutes( 0 );
-    $scope.mytime = d;
-  };
-
-  $scope.clear = function() {
-    $scope.mytime = null;
-  };
 
 /*************  Input type="file" Custom Functionality ************/
 

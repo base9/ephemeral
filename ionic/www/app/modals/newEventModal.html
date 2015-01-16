@@ -32,32 +32,94 @@
       </div>
       <div class="dateTime">
         <div class="starts">
-          <h5 class="startsText"> starts: </h5>
-          <div class=timePickerDirective>
-            <timepicker class="timepick" ng-model="startTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
-          </div>
-          <div class="date">
-            <p class="input-group">
-              <input type="text" class="textInput form-control" datepicker-popup="{{format}}" ng-model="startDateTime" is-open="openedStart" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-              <span class="input-group-btn">
-                <button type="button" class="dateButton btn btn-default" ng-click="openStart($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-            </p>
-          </div>
+        <h6 class="startText">start: </h6>
+
+          <select class="hours" ng-change="changeEndHours()" ng-model="dateTime.startHours">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+          </select>
+
+          <select class="minutes" ng-change="changeEndMinutes()" ng-model="dateTime.startMinutes">
+            <option value="0">00</option>
+            <option value="15">15</option>
+            <option value="30">30</option>
+            <option value="45">45</option>
+          </select>
+
+          <button class="ampm" ng-model="dateTime.startAMPM" ng-click="changeAMPM('startAMPM'); updateEndAMPM()">{{dateTime.startAMPM}}</button>
+
+          <select class="month" ng-model="dateTime.startMonth">
+            <option value="0">Jan</option>
+            <option value="1">Feb</option>
+            <option value="2">Mar</option>
+            <option value="3">Apr</option>
+            <option value="4">May</option>
+            <option value="5">Jun</option>
+            <option value="6">Jul</option>
+            <option value="7">Aug</option>
+            <option value="8">Sep</option>
+            <option value="9">Oct</option>
+            <option value="10">Nov</option>
+            <option value="11">Dec</option>
+          </select>
+
+          <input type="number" min="1" max="31" class="day" ng-model="dateTime.startDay">
+          <input type="number" min="2015" max="2017" class="year" ng-model="dateTime.startYear">
         </div>
         <div class="ends">
-          <h5 class="endsText"> ends: </h5>
-          <div class=timePickerDirective>
-            <timepicker class="timepick" ng-model="endTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
-          </div>
-          <div class="date endDate">
-              <p class="input-group">
-                <input type="text" class="textInput form-control" datepicker-popup="{{format}}" ng-model="endDateTime" is-open="openedEnd" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-                <span class="input-group-btn">
-                  <button type="button" class="dateButton btn btn-default" ng-click="openEnd($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                </span>
-              </p>
-          </div>
+          <h6 class="endText">end: </h6>
+
+          <select class="hours endHours" ng-model="dateTime.endHours">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+          </select>
+
+          <select class="minutes" ng-model="dateTime.endMinutes">
+            <option value="0">00</option>
+            <option value="15">15</option>
+            <option value="30">30</option>
+            <option value="45">45</option>
+          </select>
+
+          <button class="ampm" ng-model="dateTime.endAMPM" ng-click="changeAMPM('endAMPM')">{{dateTime.endAMPM}}</button>
+
+          <select class="month" ng-model="dateTime.endMonth">
+            <option value="0">Jan</option>
+            <option value="1">Feb</option>
+            <option value="2">Mar</option>
+            <option value="3">Apr</option>
+            <option value="4">May</option>
+            <option value="5">Jun</option>
+            <option value="6">Jul</option>
+            <option value="7">Aug</option>
+            <option value="8">Sep</option>
+            <option value="9">Oct</option>
+            <option value="10">Nov</option>
+            <option value="11">Dec</option>
+          </select>
+
+          <input type="number" min="1" max="31" class="day" ng-model="dateTime.endDay">
+          <input type="number" min="2015" max="2017" class="year" ng-model="dateTime.endYear">
         </div>
       </div>
       <div class="categoryCost">
