@@ -223,7 +223,7 @@ angular.module('radar')
         return text.join('');
     }
 
-    var photoFileName = makeHash(18);
+    var photoFileName = makeHash(18) + '.jpg';
 
 
     Http.getCoordsForAddress(address, function(coords) {
@@ -232,19 +232,14 @@ angular.module('radar')
       Http.saveNewEvent($scope.newPostData);
     });
 
-    //TODO: make sure the photo file object is actually available as $scope.file.
-    // Http.uploadPhoto($scope.photoFileTestFormat1, 
-    //                  $scope.photoFileTestFormat2, 
-    //                  photoFileName
-    //                  );
     var uploadParameters = {
-              key: photoFileName, // the key to store the file on S3, could be file name or customized
+              key: photoFileName,
               AWSAccessKeyId: 'AKIAIWPJUAIHVGA6VNSA',
               acl: 'private',
               policy: 'eyJleHBpcmF0aW9uIjoiMjAxNi0wMS0wMVQwMDowMDowMFoiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJiYXNlOXBob3RvcyJ9LFsic3RhcnRzLXdpdGgiLCIka2V5IiwiIl0seyJhY2wiOiJwcml2YXRlIn0sWyJzdGFydHMtd2l0aCIsIiRDb250ZW50LVR5cGUiLCIiXSxbImNvbnRlbnQtbGVuZ3RoLXJhbmdlIiwwLDMxMzA1NzZdXX0=',
               signature: 'Aw6j1mlYJeC4OawIqe6thbZREEc=',
-              'Content-Type': 'application/octet-stream',
-              filename: photoFileName // this is needed for Flash polyfill IE8-9
+              'Content-Type': 'application/octet-stream'
+              // filename: photoFileName // this is needed for Flash polyfill IE8-9
             };
 
     console.log('uploading now');
@@ -257,15 +252,10 @@ angular.module('radar')
       .progress(function(evt) {
         console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :'+ evt.config.file.name);
       }).success(function(data, status, headers, config) {
-        console.log('success callback');
-        console.log('file ' + config.file.name + 'is uploaded successfully. Response: ' + data);
-      })
-      .then(function(data, status, headers, config) {
-        console.log('.then callback');
-        // file is uploaded successfully
-        console.log(status, data);
-    });
-
+        console.log('file ' + photoFileName + ' is uploaded successfully. Response: ', status, data);
+      }).error(function(data, status, headers, config) {
+        console.log('file ' + photoFileName + ' failed to upload. Response: ', status, data);
+      });
   };
 
 

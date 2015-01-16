@@ -7,13 +7,12 @@
 
   <body> 
 
-    <form action="localhost:9000/api/events/logReq" method="post" enctype="multipart/form-data">
+    <form action="https://base9photos.s3.amazonaws.com/" method="post" enctype="multipart/form-data">
       
-      <!-- TODO: replace hardcoded filename with a random hash, which gets posted to the server later -->
       <input type="hidden" name="key" value="testupload1.jpg">
       <input type="hidden" name="AWSAccessKeyId" value="AKIAIWPJUAIHVGA6VNSA"> 
       <input type="hidden" name="acl" value="private"> 
-    <!--    <input type="hidden" name="success_action_redirect" value="https://s3-us-west-1.amazonaws.com/base9photos/testupload1.jpg"> -->
+       <input type="hidden" name="success_action_redirect" value="https://s3-us-west-1.amazonaws.com/base9photos/testupload1.jpg">
       <input type="hidden" name="policy" value="eyJleHBpcmF0aW9uIjoiMjAxNi0wMS0wMVQwMDowMDowMFoiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJiYXNlOXBob3RvcyJ9LFsic3RhcnRzLXdpdGgiLCIka2V5IiwiIl0seyJhY2wiOiJwcml2YXRlIn0sWyJzdGFydHMtd2l0aCIsIiRDb250ZW50LVR5cGUiLCIiXSxbImNvbnRlbnQtbGVuZ3RoLXJhbmdlIiwwLDMxMzA1NzZdXX0=">
       <input type="hidden" name="signature" value="Aw6j1mlYJeC4OawIqe6thbZREEc=">
       <input type="hidden" name="Content-Type" value="image/jpeg">
@@ -22,6 +21,8 @@
       <br> 
       <input type="submit" value="Upload File"> 
     </form>
+
+    <img src = 'https://s3-us-west-1.amazonaws.com/base9photos/qdFsmcyp4TGbWhHIIj.jpg'/>
  
   </body>
 </html>
