@@ -1,7 +1,7 @@
 
 var Event = require('./events.model.js');
-var Promise = require('bluebird');
-var request = Promise.promisify(require('request'));
+var Bluebird = require('bluebird');
+var request = Bluebird.promisify(require('request'));
 var utils = require('./utils.js');
 var crontab = require('node-crontab');
 var commentController = require('../comments/comments.controller.js');
@@ -47,7 +47,7 @@ function getOne(req, res) {
       if(record){
         utils.sendResponse(utils.formatAndTrimEventRecords([record])[0],res);
       } else {
-        res.status(404).end('No event with that id.')
+        res.status(404).end('No event with that id.');
       }
 
   });
@@ -216,7 +216,9 @@ function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
         event.category = {name: 'Other'};
       }
       categories.push(event.category.name);
-      Event.where({title:event.name.text}).fetch().then(function (record) {
+      var trimmedId = event.id % 100000000;
+      
+      Event.where({id:trimmedId}).fetch().then(function (record) {
         if(!record){
           utils.addEventRecord({
             title: event.name.text,
@@ -228,16 +230,17 @@ function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
             startTime: Date.parse(event.start.utc),
             endTime: Date.parse(event.end.utc),
             category: categoryFilter(event.category.name),
-            price: (event.ticket_classes[0].free ? 0 : ((event.ticket_classes[0].cost.value / 100) + (event.ticket_classes[0].fee.value / 100))),
+            price: getEventbritePrice(event),
             info: ((event.description && event.description.text) ? event.description.text.slice(0,2000) : ''),
-            popularity: Math.floor(Math.random()*100)
+            ratings: Math.floor(Math.random()*100),
+            id: trimmedId
             //TODO: user_id should be a special account reserved for Eventbrite_bot
             //TODO: do something better than a title match for preventing duplicate entries
           }).then(function(event_id){
             commentController.addDummyComments(1, event_id, 6);
           });
         } else {
-          console.log("event with that title already exists; skipping.");
+          console.log("event with that ID already exists; skipping.");
         }
       });
     });
@@ -261,5 +264,14 @@ function categoryFilter(eventCategory) {
     eventCategory = 'other';
   }
   return eventCategory;
+}
+
+function getEventbritePrice(event){
+  if(event.ticket_classes[0]){
+    if(!event.ticket_classes[0].free){
+      return (event.ticket_classes[0].cost.value + event.ticket_classes[0].fee.value) / 100;
+    } 
+  }
+  return 0;
 }
 

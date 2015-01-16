@@ -15,7 +15,7 @@ db.schema.hasTable('events').then(function (exists) {
       event.string('title', 255);
       event.bigInteger('startTime', 255).index();
       event.bigInteger('endTime', 255).index();
-      event.integer('popularity');
+      event.integer('ratings');
       event.decimal('price');
       event.string('url', 255);
       event.string('info', 2000);

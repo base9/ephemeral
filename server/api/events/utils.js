@@ -20,8 +20,7 @@ module.exports = {
 //will use a validation helper before adding to the table.
 function addEventRecord(params, res){
   var validatedParams = validateEventRecord(params);
-  return new Event(validatedParams)
-    .save()
+  return new Event().save(validatedParams,{method:"insert"})
     .then(function(model){
       if(res){
         res.status(201).end(model.attributes.id.toString());
@@ -79,13 +78,13 @@ function formatAndTrimEventRecords(collection){
       
       //THESE LINES DEPRECATED: ratings table not in use.
       // event.attributes.ratings = event.relations.rating.length;
-      // event.attributes.popularity = getPopularity(event.attributes.ratings);
       delete event.relations.rating;
     }
     if(event.relations && event.relations.user){
       event.attributes.creator = event.relations.user.attributes.name;
       delete event.relations.user;
     }
+    event.attributes.popularity = getPopularity(event.attributes.ratings);
     return event;
   });
   return trimmed;

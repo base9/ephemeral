@@ -44,7 +44,7 @@ function addDummyUserAndEvent(){
           state: 'CA',
           zipCode: '94102',
           price: 0,
-          popularity: 88
+          ratings: 88
         })
         .save()
         .then(function(event){
