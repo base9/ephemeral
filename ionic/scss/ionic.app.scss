@@ -698,12 +698,14 @@ input, button, select, textarea {
   filter: url(#drop-shadow);
   -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
   filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
+  top: 0px;
+  left: 0px;
 
 }
 
 .happening, .happening2 {
 	position: absolute;
-	top: 46px;
+	top: 0px;
 	left: -25px;
   display: none;
   z-index: -1;
@@ -727,7 +729,7 @@ input, button, select, textarea {
 }
 
 .popularity-1 {
-  
+	
 }
 .popularity-2 {
   
