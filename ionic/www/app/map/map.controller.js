@@ -207,23 +207,4 @@ angular.module('radar')
       });
     };
 
-    function categoryFilter(eventCategory) {
-      if (eventCategory === 'Fitness') {
-        eventCategory = 'fitness';
-      } else if (eventCategory === 'Personal Interest') {
-        eventCategory = 'hobbies';
-      } else if (eventCategory === 'Music and Entertainment') {
-        eventCategory = 'entertainment';
-      } else if (eventCategory === 'Community and Culture') {
-        eventCategory = 'culture';
-      } else if (eventCategory === 'Food and Drink') {
-        eventCategory = 'drink';
-      } else if (eventCategory === 'Travel and Outdoor') {
-        eventCategory = 'outdoors';
-      } else {
-        eventCategory = 'other';
-      }
-      return eventCategory;
-    }
-
 }]);
