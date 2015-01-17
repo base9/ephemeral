@@ -6,14 +6,6 @@ var utils = require('./utils.js');
 var commentController = require('../comments/comments.controller.js');
 
 
-//revision notes:
-  //delete crontab req and section
-  //delete kimono and eventbrite stuff
-  //delete most of utils
-  //refactor addOne, kimono, eventbrite to forward req to the other guy.  store that url as an env variable.
-  //update api keys and change its name to env variables.  send out new version tonight.
-
-
 /********************* Module.exports *************************/
 
 module.exports = {
@@ -148,8 +140,16 @@ function getAddressFromCoords(coords) {
 
 function fetchBatchDataFromKimonoAPI(req, res) {
   request( process.env.PARSER_SERVER_URL + 'api/events/kimono')
-  .then(function(res){
-    console.log('got a response from parser; I should do something about that...')
+  .then(function(response){
+    if(response[0].statusCode == 201){
+      var msg = 'parser acknowledges request to run Kimono fetching';
+      console.log(msg);
+      res.status(201).end(msg);
+    } else {
+      var errorMsg = 'parser reports error regarding Kimono fetch request';
+      console.log(errorMsg);
+      res.status(400).end(errorMsg);
+    }
   });
 }
   
@@ -159,17 +159,17 @@ function fetchBatchDataFromKimonoAPI(req, res) {
 
 function fetchBatchDataFromEventbriteAPI(req, res){
   request( process.env.PARSER_SERVER_URL + 'api/events/eventbrite')
-  .then(function(res){
-    console.log('got a response from parser; I should do something about that...')
+  .then(function(response){
+    if(response[0].statusCode == 201){
+      var msg = 'parser acknowledges request to run Eventbrite fetching';
+      console.log(msg);
+      res.status(201).end(msg);
+    } else {
+      var errorMsg = 'parser reports error regarding Eventbrite fetch request';
+      console.log(errorMsg);
+      res.status(400).end(errorMsg);
+    }
   });
 }
 
-
-
-
-
-
-
-
-  
 
