@@ -3,18 +3,7 @@ var Event = require('./events.model.js');
 var Bluebird = require('bluebird');
 var request = Bluebird.promisify(require('request'));
 var utils = require('./utils.js');
-var crontab = require('node-crontab');
 var commentController = require('../comments/comments.controller.js');
-
-
-/****************** scheduled function calls *****************/
-
-//these scrapers run 5x a day, at 12:01, 4:01, 8:01, etc
-var cronJob = crontab.scheduleJob("1 */4 * * *", function () {
-  console.log("****************it's cron time!******************");
-  fetchBatchDataFromEventbriteAPI();
-  fetchBatchDataFromKimonoAPI();
-});
 
 
 /********************* Module.exports *************************/
@@ -54,11 +43,22 @@ function getOne(req, res) {
 }
 
 function addOne(req, res) {
-  // TODO: if (!req.body.coords) -> Make util call for address string from coords.lat,coords.lng;
-  // TODO: add result of above operation to req.body/query for addEventRecord call
-  console.log("Sending New Post to Database: ",req.body);
-  utils.addEventRecord(req.body, res);
+  request(
+    { method: 'POST',
+      uri: process.env.PARSER_SERVER_URL + 'api/events/',
+      form: req.body, 
+    })
+  .then(function (response) {
+    if(response[0].statusCode == 201){
+      console.log('parser reports event saved.');
+      res.status(201).end('event added.')
+    } else {
+      console.log('error: '+ response[0].statusCode);
+    }
+  });
 }
+
+
 
 function addManySpoofs(req,res){
   res.status(200).end();
@@ -124,154 +124,52 @@ function getLocal(req, res) {
 //var coords = JSON.parse(res[0].body);
 //coords will be a lat, lng tuple like [44.5, -122.67]
 function getCoordsFromAddress(address) {
-  return request('https://base9geocode.herokuapp.com/geo/geocode?address=' + address);
+  return request( process.env.GEOCODING_SERVER_URL + 'geo/geocode?address=' + address);
 }
 
 //returns a promise of an http response.  parse the response like this:
 //var address = JSON.parse(res[0].body);
 //'address' will be an object with fields like addressLine1, city, state, zipCode, etc.
 function getAddressFromCoords(coords) {
-  return request('https://base9geocode.herokuapp.com/geo/reverseGeocode?lat=' + coords[0] + '&lng=' + coords[1]);
+  return request( process.env.GEOCODING_SERVER_URL + 'geo/reverseGeocode?lat=' + coords[0] + '&lng=' + coords[1]);
 }
 
 
 /************** Kimono API functions ******************/
 
-//this function expects a large JSON object of events, that will be sent
-//periodically by a Kimono Labs scraper.  Function will parse the events
-//and add them to our DB.
-function fetchBatchDataFromKimonoAPI() {
-  request('https://www.kimonolabs.com/api/9djxfaym?apikey=' + process.env.KIMONO_API_KEY)
-  .then(function(res){
-    console.log('response received from kimono');
-    var events = JSON.parse(res[0].body).results.collection1; //split results and collection1 with if statements
-    var throttledAddEventFromKimono = utils.makeThrottledFunction(addEventFromKimono,2000);
-    for (var i = 0; i < events.length; i++) {
-      throttledAddEventFromKimono(events[i]);
+
+function fetchBatchDataFromKimonoAPI(req, res) {
+  request( process.env.PARSER_SERVER_URL + 'api/events/kimono')
+  .then(function(response){
+    if(response[0].statusCode == 201){
+      var msg = 'parser acknowledges request to run Kimono fetching';
+      console.log(msg);
+      res.status(201).end(msg);
+    } else {
+      var errorMsg = 'parser reports error regarding Kimono fetch request';
+      console.log(errorMsg);
+      res.status(400).end(errorMsg);
     }
   });
 }
-
-function addEventFromKimono(event){
-  if(!event.date){
-    console.log('event has no date field; skipping');
-  } else {
-    Event.where({title:event.title}).fetch()
-    .then(function (record) {
-      if(!record){
-        var params = {};
-        if(event.info){
-          params.info = event.info.text;
-        }
-        params.title = event.title;
-
-        getCoordsFromAddress(event.address.text? event.address.text : event.address)
-          .then(function(res){
-            var coords = JSON.parse(res[0].body);
-            params.lat = coords[0];
-            params.lng = coords[1];
-            
-            console.log("BEFORE: ", event.date.text, event.duration);
-            startEndTimes = utils.getStartEndTimes(event.date.text,event.duration);
-            params.startTime = startEndTimes[0];
-            params.endTime = startEndTimes[1];
-            console.log("AFTER: ", "START", params.startTime, "END", params.endTime);
-
-            utils.addEventRecord(params);
-          });
-      } else {
-        console.log('event already exists in DB; skipping');
-      }
-   });
-  }
-}
-
+  
 
 /************** Eventbrite API functions ******************/
 
-var categories = [];
 
-function fetchBatchDataFromEventbriteAPI(){
-  console.log('req received at eventbrite endpoint!');
-  var throttledFetchPageFromEventbriteAPI = utils.makeThrottledFunction(fetchPageFromEventbriteAPI,1500);
-  var reqUrl = 'https://www.eventbriteapi.com/v3/events/search/?token=' + process.env.EVENTBRITE_API_TOKEN + '&start_date.keyword=today&venue.country=US';
-  request(reqUrl)
-  .then(function (res) {
-    var pages = JSON.parse(res[0].body).pagination.page_count;
-    console.log('initial package received from eventbrite... beginning batch fetch. ' + pages + ' total pages to fetch.');
-    
-    for (var i = 1; i <= pages; i++) {
-      throttledFetchPageFromEventbriteAPI(reqUrl, i);
+function fetchBatchDataFromEventbriteAPI(req, res){
+  request( process.env.PARSER_SERVER_URL + 'api/events/eventbrite')
+  .then(function(response){
+    if(response[0].statusCode == 201){
+      var msg = 'parser acknowledges request to run Eventbrite fetching';
+      console.log(msg);
+      res.status(201).end(msg);
+    } else {
+      var errorMsg = 'parser reports error regarding Eventbrite fetch request';
+      console.log(errorMsg);
+      res.status(400).end(errorMsg);
     }
   });
 }
 
-function fetchPageFromEventbriteAPI(reqUrl,pageNumber){
-  console.log("fetching page " + pageNumber);
-  request(reqUrl + '&page=' + pageNumber)
-  .then(function (res) {
-    var body = JSON.parse(res[0].body);
-    body.events.forEach(function(event){
-      if (event.category === null) {
-        event.category = {name: 'Other'};
-      }
-      categories.push(event.category.name);
-      var trimmedId = event.id % 100000000;
-      
-      Event.where({id:trimmedId}).fetch().then(function (record) {
-        if(!record){
-          utils.addEventRecord({
-            title: event.name.text,
-            streetAddress1: event.venue.address.address_1,
-            streetAddress2: (event.venue.address.address_2 ? event.venue.address.address_2 : ''),
-            url: event.organizer.url,
-            lat: event.venue.latitude,
-            lng: event.venue.longitude,
-            startTime: Date.parse(event.start.utc),
-            endTime: Date.parse(event.end.utc),
-            category: categoryFilter(event.category.name),
-            price: getEventbritePrice(event),
-            info: ((event.description && event.description.text) ? event.description.text.slice(0,2000) : ''),
-            ratings: Math.floor(Math.random()*100),
-            id: trimmedId
-            //TODO: user_id should be a special account reserved for Eventbrite_bot
-            //TODO: do something better than a title match for preventing duplicate entries
-          }).then(function(event_id){
-            commentController.addDummyComments(1, event_id, 6);
-          });
-        } else {
-          console.log("event with that ID already exists; skipping.");
-        }
-      });
-    });
-  });
-}
-
-function categoryFilter(eventCategory) {
-  if (eventCategory === 'Sports & Fitness' || eventCategory === 'Health & Wellness') {
-    eventCategory = 'fitness';
-  } else if (eventCategory === 'Hobbies & Special Interest' || eventCategory === 'Home & Lifestyle') {
-    eventCategory = 'hobbies';
-  } else if (eventCategory === 'Music' || eventCategory === 'Film, Media & Entertainment' || eventCategory === 'Performing & Visual Arts') {
-    eventCategory = 'entertainment';
-  } else if (eventCategory === 'Community & Culture' || eventCategory === 'Charity & Causes') {
-    eventCategory = 'culture';
-  } else if (eventCategory === 'Food & Drink') {
-    eventCategory = 'drink';
-  } else if (eventCategory === 'Travel & Outdoor') {
-    eventCategory = 'outdoors';
-  } else {
-    eventCategory = 'other';
-  }
-  return eventCategory;
-}
-
-function getEventbritePrice(event){
-  if(event.ticket_classes[0]){
-    if(!event.ticket_classes[0].free){
-      return (event.ticket_classes[0].cost.value + event.ticket_classes[0].fee.value) / 100;
-    } 
-  }
-  return 0;
-}
 
