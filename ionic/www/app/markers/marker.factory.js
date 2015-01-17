@@ -128,7 +128,7 @@ angular.module('radar')
     }
   };
 
-  //Matches the events to the right markers by long and lat coordinates
+  //Matches the events to the right markers by latitude and longitude coordinates
   var showMarkers = function(events, markers) {
     for (var i = 0; i < events.length; i++) {
       for (var j = 0; j < markers.length; j++) {
@@ -142,7 +142,7 @@ angular.module('radar')
         }
       }
     }
-  }
+  };
 
   var filterPopularity = function(events, popularity) {
     var results = [];
