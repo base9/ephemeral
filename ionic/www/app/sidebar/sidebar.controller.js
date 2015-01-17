@@ -259,15 +259,13 @@ angular.module('radar')
 
   /************ EVENT INFO MODAL **************/
   $scope.liked = false;
-  $scope.submitComment = function(comment, eventId) {
-    $scope.eventInfo.comments.unshift({comment: comment})
+  $scope.submitComment = function(comment) {
     Http.addComment({
       user_id: 1,
-      eventId: eventId,
+      event_id: $rootScope.eventId,
       comment: comment
     }, function() {
-      Http.getOneEvent(eventId, function(eventInfo) {
-        // $scope.eventInfo.comments = eventInfo.comments.reverse();
+      Http.getOneEvent($rootScope.eventId, function(eventInfo) {
       })
     })
   }

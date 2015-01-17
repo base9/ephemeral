@@ -46,8 +46,8 @@
    		</div>
    		<div class="commentsInputDisplay">
 	   		<div class="commentsInput">
-		   		<input type="text" ng-model="newComment" class="inputComment" maxlength="140" placeHolder="add a comment..." />
-		   		<button class="submitComment" ng-click="submitComment(newComment, eventInfo.id); newComment='' "> submit </button>
+		   		<input type="text" ng-model="newComment" class="inputComment" maxlength="140" placeHolder="add a comment..." ng-enter="submitComment(newComment, eventInfo.id); eventInfo.comments.unshift({comment: newComment}); newComment='' " />
+		   		<button class="submitComment" ng-click="submitComment(newComment, eventInfo.id); eventInfo.comments.unshift({comment: newComment}); newComment='' "> submit </button>
 		   	</div>
 		   	<div class="commentsDisplay">
 		   		<span ng-repeat="obj in eventInfo.comments">
