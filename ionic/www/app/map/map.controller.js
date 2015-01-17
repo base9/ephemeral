@@ -35,6 +35,16 @@ angular.module('radar')
       $scope.modal.hide();
     };
 
+    $scope.$on('$destroy', function() {
+      $scope.modal.remove();
+    });
+    $scope.$on('modal.hidden', function() {
+      $rootScope.inEvent = false;
+    });
+    $scope.$on('modal.removed', function() {
+      $rootScope.inEvent = false;
+    });
+
     var map = Map.initialize();
 
     this.activateDistance = false;
@@ -160,8 +170,10 @@ angular.module('radar')
           google.maps.event.addListener(marker, 'click', (function(marker, event) {
             return function() {
               Http.getOneEvent(event.id, function(res) {
-                $scope.eventInfo = res;
+                $rootScope.inEvent = true;
                 $rootScope.photoUploaded = false;
+                $rootScope.eventId = res.id;
+                $scope.eventInfo = res;
                 ($scope.eventInfo.price === "0.00") ? $scope.eventInfo.price = "Free" : $scope.eventInfo.price = '$'+ $scope.eventInfo.price;
                 $scope.eventInfo.startDate = isoDateToTimeString(parseInt($scope.eventInfo.startTime));
                 $scope.eventInfo.endDate = isoDateToTimeString(parseInt($scope.eventInfo.endTime));
