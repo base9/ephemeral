@@ -1,6 +1,4 @@
 ///////////////////////Environment settings/////////////////////////
-// TODO: env settings in another file
-// load api keys from local file when in local dev environment.
 if(process.env.MODE !== 'prod'){
   require('../env_parameters.js');
 }
