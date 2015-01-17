@@ -1,4 +1,15 @@
 angular.module('radar')
+.filter('cost', function() {
+  return function(input) {
+    if (input === '100') {
+      return input + '+';
+    } else if (input === '0') {
+      return 'FREE';
+    } else {
+      return input;
+    }
+  }
+})
 .controller('MapController', [
   'MapFactory', 
   'MapSearchFactory', 
@@ -26,6 +37,70 @@ angular.module('radar')
 
     var map = Map.initialize();
 
+    this.activateDistance = false;
+    this.activatePopularity = false;
+    this.activateCost = false;
+    this.showCategory = false;
+    this.toggleDistance = function() {
+      this.activateDistance = !this.activateDistance;
+    };
+    this.togglePopularity = function() {
+      this.activatePopularity = !this.activatePopularity;
+    };
+    this.toggleCost = function() {
+      this.activateCost = !this.activateCost;
+    };
+    this.toggleCategory = function() {
+      this.showCategory = !this.showCategory;
+    };
+
+    //Allows the specify time filter to be shown
+    this.show = false;
+    this.triggerNow = false;
+    this.showTime = function(show) {
+      this.show = show;
+      this.triggerNow = true;
+    };
+
+    var categories = {'culture': false, 'fitness': false, 'entertainment': false, 'hobbies': false, 'drink': false, 'other': false};
+    this.addCategory = function(str) {
+      categories[str] = !categories[str];
+      console.log("CATEGORY LIST: ", categories);
+    };
+  
+    //Creates filters to be passed into event filter
+    this.filters = {distance: 1, popularity: 1, category: null, time: {now: false, startTime: null, endTime: null}, cost: 50, keyword: null};
+
+    this.filter = function() {
+      console.log("BEFORE FILTERS", this.filters);
+      if (!this.show && this.triggerNow) {
+        this.filters.time.now = true;
+      }
+      if (!this.activateDistance) {
+        this.filters.distance = null;
+      }
+      if (!this.activatePopularity) {
+        this.filters.popularity = null;
+      }
+      if (!this.activateCost) {
+        this.filters.cost = null;
+      }
+      if (this.filters.time.startTime && this.filters.time.endTime) {
+        var today = new Date().setHours(0, 0, 0, 0);
+        var offset = new Date().getTimezoneOffset() * 60000;
+        this.filters.time.startTime = new Date(today + Date.parse(this.filters.time.startTime) - offset);
+        this.filters.time.endTime = new Date(today + Date.parse(this.filters.time.endTime) - offset);
+      }
+      checkCategories(this);
+      console.log("AFTER FILTERS", this.filters);
+      Marker.filterMarkers(map, listOfEvents, this.filters);
+
+    };
+
+    this.reset = function() {
+      this.filters = {distance: 1, popularity: 1, category: null, time: {now: false, startTime: null, endTime: null}, cost: 50, keyword: null};
+    }
+
     function isoDateToTimeString(date) {
       var date = new Date(date);
       var hours = date.getHours();
@@ -37,6 +112,17 @@ angular.module('radar')
         hours = Math.abs(hours-12);
       }
       return hours+mins+ampm
+    }
+
+    function checkCategories(context) {
+      console.log("NOT BROKEN HERE", this.filters);
+      var result = [];
+      for (var key in categories) {
+        if (categories[key]) {
+          result.push(key);
+        }
+      }
+      context.filters.category = result;
     }
 
     $scope.closeModalAndGetDirections = function () {
@@ -97,36 +183,6 @@ angular.module('radar')
         }
       });
     }
-  
-    this.filters = {distance: 0, popularity: 0, time: {now: false, startTime: null, endTime: null}, cost: 0, keyword: null};
-
-    this.filter = function() {
-      console.log("FILTERS", this.filters);
-      if (!this.show) {
-        this.filters.time.now = true;
-      }
-      if (this.filters.distance === 0) {
-        this.filters.distance = null;
-      }
-      if (this.filters.popularity === 0) {
-        this.filters.popularity = null;
-      }
-      if (this.filters.time.startTime && this.filters.time.endTime) {
-        var today = new Date().setHours(0, 0, 0, 0);
-        var offset = new Date().getTimezoneOffset() * 60000;
-        console.log("TODAY: ", today, Date.parse(this.filters.time.startTime));
-        this.filters.time.startTime = today + Date.parse(this.filters.time.startTime) - offset;
-      }
-      Marker.filterMarkers(map, listOfEvents, this.filters);
-
-      this.filters = {distance: 0, popularity: 0, time: {now: false, startTime: null, endTime: null}, cost: 0, keyword: null};
-    };
-
-    this.show = false;
-
-    this.showTime = function(show) {
-      this.show = show;
-    }
 
     google.maps.event.addListener(map, 'zoom_changed', function() {
       reloadToEventChange();
@@ -137,7 +193,7 @@ angular.module('radar')
       clearTimeout(timeoutID);
       timeoutID = setTimeout(function() {
         reloadToEventChange();
-      }, 200)
+      }, 200);
     });
 
     var reloadToEventChange = function() {
@@ -146,7 +202,7 @@ angular.module('radar')
       console.log("BOUNDS: ", bounds);
       Http.getEvents(bounds, function(events) {
         console.log("EVENTS IN LISTENER: ", events);
-        events.sort(function(a,b) { return b.lat-a.lat; })
+        events.sort(function(a,b) { return b.lat-a.lat; });
         createMarkers(events);
       });
     };
