@@ -55,13 +55,13 @@
           <div class="list list-inset filterPane" ng-show="toggleFilter">
             <button class="button button-light" style="width:100%" ng-click="mapCtrl.toggleCategory()">Categories</button>
             <div ng-show="mapCtrl.showCategory" class="list">
-              <ion-checkbox ng-click="">Community and Culture</ion-checkbox>
-              <ion-checkbox>Fitness</ion-checkbox>
-              <ion-checkbox>Food and Drink</ion-checkbox>
-              <ion-checkbox>Music and Entertainment</ion-checkbox>
-              <ion-checkbox>Personal Interest</ion-checkbox>
-              <ion-checkbox>Travel and Outdoor</ion-checkbox>
-              <ion-checkbox>Other</ion-checkbox>
+              <ion-checkbox ng-click="mapCtrl.addCategory('culture')">Community and Culture</ion-checkbox>
+              <ion-checkbox ng-click="mapCtrl.addCategory('fitness')">Fitness</ion-checkbox>
+              <ion-checkbox ng-click="mapCtrl.addCategory('drink')">Food and Drink</ion-checkbox>
+              <ion-checkbox ng-click="mapCtrl.addCategory('entertainment')">Music and Entertainment</ion-checkbox>
+              <ion-checkbox ng-click="mapCtrl.addCategory('hobbies')">Personal Interest</ion-checkbox>
+              <ion-checkbox ng-click="mapCtrl.addCategory('outdoors')">Travel and Outdoor</ion-checkbox>
+              <ion-checkbox ng-click="mapCtrl.addCategory('other')">Other</ion-checkbox>
             </div>
 
 <!--             <label class="item item-input item-select">

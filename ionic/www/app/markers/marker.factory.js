@@ -34,8 +34,8 @@ angular.module('radar')
         events = filterPopularity(events, filters.popularity);
       }
       //filter.category is a string
-      if (filters.category) {
-        console.log("CAT FILT");
+      if (filters.category == true) {
+        console.log("CAT FILT", filters.category);
         events = filterCategory(events, filters.category);
       }
       //filter.distance is a number in miles
@@ -154,8 +154,11 @@ angular.module('radar')
   var filterCategory = function(events, category) {
     var results = [];
     for (var i = 0; i < events.length; i++) {
-      if (events[i].category === category) {
-        results.push(events[i]);
+      for (var j = 0; j < category.length; j++) {
+        if (events[i].category === category[j]) {
+          results.push(events[i]);
+          break;
+        }
       }
     }
     return results;

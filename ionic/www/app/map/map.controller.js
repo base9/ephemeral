@@ -40,6 +40,7 @@ angular.module('radar')
     this.activateDistance = false;
     this.activatePopularity = false;
     this.activateCost = false;
+    this.showCategory = false;
     this.toggleDistance = function() {
       this.activateDistance = !this.activateDistance;
     };
@@ -49,27 +50,25 @@ angular.module('radar')
     this.toggleCost = function() {
       this.activateCost = !this.activateCost;
     };
-
-    this.showCategory = false;
     this.toggleCategory = function() {
       this.showCategory = !this.showCategory;
     };
 
-    //
+    //Allows the specify time filter to be shown
     this.show = false;
     this.triggerNow = false;
     this.showTime = function(show) {
       this.show = show;
       this.triggerNow = true;
-      // if (!show) {
-      //   var element = angular.element('#Now');
-      //   element.removeClass('')
-      // } 
-      // if (show) {
-      //   var element = angular.element('#Specify');
-      // }
-    }
+    };
+
+    var categories = {'culture': false, 'fitness': false, 'entertainment': false, 'hobbies': false, 'drink': false, 'other': false};
+    this.addCategory = function(str) {
+      categories[str] = !categories[str];
+      console.log("CATEGORY LIST: ", categories);
+    };
   
+    //Creates filters to be passed into event filter
     this.filters = {distance: 1, popularity: 1, category: null, time: {now: false, startTime: null, endTime: null}, cost: 50, keyword: null};
 
     this.filter = function() {
@@ -92,9 +91,7 @@ angular.module('radar')
         this.filters.time.startTime = new Date(today + Date.parse(this.filters.time.startTime) - offset);
         this.filters.time.endTime = new Date(today + Date.parse(this.filters.time.endTime) - offset);
       }
-      if (this.filters.category) {
-        this.filters.category = categoryFilter(this.filters.category);
-      }
+      checkCategories(this);
       console.log("AFTER FILTERS", this.filters);
       Marker.filterMarkers(map, listOfEvents, this.filters);
 
@@ -115,6 +112,17 @@ angular.module('radar')
         hours = Math.abs(hours-12);
       }
       return hours+mins+ampm
+    }
+
+    function checkCategories(context) {
+      console.log("NOT BROKEN HERE", this.filters);
+      var result = [];
+      for (var key in categories) {
+        if (categories[key]) {
+          result.push(key);
+        }
+      }
+      context.filters.category = result;
     }
 
     $scope.closeModalAndGetDirections = function () {
