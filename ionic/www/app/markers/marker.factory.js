@@ -38,7 +38,7 @@ angular.module('radar')
       events = filterPopularity(events, filters.popularity);
     }
     //filter.category is a string
-    if (filters.category == true) {
+    if (filters.category.length) {
       console.log("CAT FILT", filters.category);
       events = filterCategory(events, filters.category);
     }
