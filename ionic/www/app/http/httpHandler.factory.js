@@ -67,7 +67,6 @@ angular.module('radar')
       data: postData
     })
       .success(function(data, status) {
-        console.log
         callback(data);
       })
       .error(function(data, status) {
