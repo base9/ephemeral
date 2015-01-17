@@ -261,7 +261,6 @@ angular.module('radar')
   $scope.liked = false;
   $scope.submitComment = function(comment) {
     Http.addComment({
-      user_id: 1,
       event_id: $rootScope.eventId,
       comment: comment
     }, function() {

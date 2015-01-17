@@ -140,7 +140,6 @@ angular.module('radar')
         method: 'POST',
         url: '/api/photos/addOne',
         data: {
-          user_id: 1,     //TODO: get actual user ID from auth
           event_id: eventId,
           url: 'https://s3-us-west-1.amazonaws.com/base9photos/' + photoFileName
         }
