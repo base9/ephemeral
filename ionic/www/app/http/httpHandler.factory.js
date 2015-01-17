@@ -50,11 +50,11 @@ angular.module('radar')
     geocoder = new google.maps.Geocoder();
     geocoder.geocode({ 'address': address }, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
+        debugger;
         var coords = {
           lat: results[0].geometry.location.k,
           lng: results[0].geometry.location.D
         }
-        console.log(coords);
         callback(coords);
       };
     })
@@ -65,23 +65,10 @@ angular.module('radar')
     $http({
       method: 'POST',
       url: '/api/events',
-      data: {
-        title: postData.title,
-        info: postData.info,
-        startTime: postData.startDateTime,
-        endTime: postData.endDateTime,
-        lat: postData.coords.lat,
-        lng: postData.coords.lng,
-        category: postData.category,
-        streetAddress1: postData.streetAddress1,
-        streetAddress2: postData.streetAddress2,
-        city: postData.city,
-        state: postData.state,
-        user_id: postData.userId,
-        photoFileName: postData.photoFileName
-      }
+      data: postData
     })
       .success(function(data, status) {
+        console.log
         callback(data);
       })
       .error(function(data, status) {
@@ -121,7 +108,7 @@ angular.module('radar')
   };
 
 
-  httpObject.uploadPhoto = function(photo, photoFileName){         
+  httpObject.uploadPhoto = function(photo, photoFileName, eventId){         
     console.log('uploading now');
 
     //TODO: fetch this stuff via HTTP request, instead of hardcoding here.
@@ -155,8 +142,8 @@ angular.module('radar')
         method: 'POST',
         url: '/api/photos/addOne',
         data: {
-          user_id: 1,     //TODO: get actual event ID from the server (response from posting the event)
-          event_id: 1,    //TODO: get actual user ID from auth
+          user_id: 1,     //TODO: get actual user ID from auth
+          event_id: eventId,
           url: 'https://s3-us-west-1.amazonaws.com/base9photos/' + photoFileName
         }
       });

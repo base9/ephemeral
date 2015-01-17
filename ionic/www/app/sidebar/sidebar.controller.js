@@ -98,12 +98,11 @@ angular.module('radar')
 /************* NEW EVENT MODAL **************/
 
   function getCurrentAddress() {
-    console.log("Getting address...");
     Map.findCurrentLocation(function(coords) {  
       var address = Http.getAddressForCoords(coords.lat, coords.lng, function(address) {
         address = address.split(',');
         $scope.newPostData.streetAddress1 = address[0];
-        $scope.newPostData.city = address[1];
+        $scope.newPostData.city = address[1].substring(1);
         $scope.newPostData.state = address[2].substring(1,3);
         $scope.$apply();
       });
@@ -159,7 +158,6 @@ angular.module('radar')
     time.setMonth($scope.dateTime[startEnd].month);
     time.setYear($scope.dateTime[startEnd].year);
 
-    console.log(time);
     return Date.parse(time);
   }
 
@@ -203,12 +201,8 @@ angular.module('radar')
         streetAddress2: '',
         city: '',
         state: '',
-        zipCode: '',
-        startDateTime: '',
-        endDateTime: '',
         category: '',
         price: 0,
-        coords: {lat: undefined, lng: undefined}
       };
 
     getDateTime();
@@ -234,33 +228,29 @@ angular.module('radar')
   }
 
   $scope.saveNewEvent = function() {
-    // TODO: Get userId from Auth, pass it into http call below
-    $scope.newPostData.userId = 1;
-
-    var photoFileName = makeHash(18) + '.jpg';
-    var address = ($scope.newPostData.streetAddress1+'+'+$scope.newPostData.streetAddress2+'+'+$scope.newPostData.city+'+'+$scope.newPostData.state+'+'+$scope.newPostData.zipCode).split(' ').join('+')
+    $scope.newPostData.startTime = combineDateTimeInputs('start');
+    $scope.newPostData.endTime = combineDateTimeInputs('end');
+    var address = ($scope.newPostData.streetAddress1+'+'+$scope.newPostData.city+'+'+$scope.newPostData.state).split(' ').join('+')
 
     Http.getCoordsForAddress(address, function(coords) {
-      $scope.newPostData.coords = coords;
-      $scope.newPostData.photoFileName = photoFileName;
-      $scope.newPostData.startTime = combineDateTimeInputs('start');
-      $scope.newPostData.endTime = combineDateTimeInputs('end');
-      $ionicModal.fromTemplateUrl('app/modals/postSuccess.html', {
-        scope: $scope,
-      }).then(function(modal) {
-        $scope.modal = modal;
-        $scope.openModal();
-      });
+      $scope.newPostData.lat = coords.lat;
+      $scope.newPostData.lng = coords.lng;
       Http.saveNewEvent($scope.newPostData, function(res) {
-        //TODO: Should be event id - Pass to photo for upload
+        // $ionicModal.fromTemplateUrl('app/modals/postSuccess.html', {
+        // scope: $scope,
+        // }).then(function(modal) {
+        //   $scope.modal = modal;
+        //   $scope.openModal();
+        // });
+        console.log("EVENT ID?: ", res)
+        if($rootScope.photoUploaded){
+          var photoFileName = makeHash(18) + '.jpg';
+          Http.uploadPhoto($scope.photoFile, photoFileName, res);
+        } else {
+          console.log('no photo attached, skipping photo upload protocol.')
+        }
       });
     });
-    //if photo exists: upload photo by calling HTTP funciton.
-    if($rootScope.photoUploaded){
-      Http.uploadPhoto($scope.photoFile, photoFileName);
-    } else {
-      console.log('no photo attached, skipping photo upload protocol.')
-    }
   };
 
   /************ EVENT INFO MODAL **************/
@@ -290,24 +280,19 @@ angular.module('radar')
   $scope.previewFile = function() {
     preview = document.getElementsByClassName('photoPreview');
     preview = preview[preview.length-1];
-    console.log("PREVIEW: ", preview)
     file = document.querySelector('input[type=file]').files[0];
-    console.log("FILE: ", file)
     $scope.photoFile = file;
     reader = new FileReader();
 
     reader.onloadend = function () {
       preview.src = reader.result;
-      console.log("LOADEND: ", preview.src)
     }
 
     if (file) {
-      console.log("FOUND FILE")
       $rootScope.photoUploaded = true;
       reader.readAsDataURL(file);
       $scope.$apply();
     } else {
-      console.log("ERROR! NO FILE!")
       preview.src = "";
     }
   }
