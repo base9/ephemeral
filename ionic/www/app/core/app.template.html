@@ -63,21 +63,6 @@
               <ion-checkbox ng-click="mapCtrl.addCategory('outdoors')">Travel and Outdoor</ion-checkbox>
               <ion-checkbox ng-click="mapCtrl.addCategory('other')">Other</ion-checkbox>
             </div>
-
-<!--             <label class="item item-input item-select">
-              <div class="input-label">
-                Category
-              </div>
-              <select ng-model="mapCtrl.filters.category">
-                <option>Community and Culture</option>
-                <option>Fitness</option>
-                <option>Food and Drink</option>
-                <option>Music and Entertainment</option>
-                <option>Personal Interest</option>
-                <option>Travel and Outdoor</option>
-                <option>Other</option>
-              </select>
-            </label> -->
             
             <div>Max Distance</div>
             <div class="item item-checkbox">
@@ -109,20 +94,6 @@
             <ion-checkbox id="Now" ng-click="mapCtrl.showTime(false)"> Now! </ion-checkbox>
             <ion-checkbox id="Specify" ng-click="mapCtrl.showTime(true)"> Specify Time </ion-checkbox>
 
-            <!-- <label class="item item-radio">
-              <input type="radio" name="group" ng-click="mapCtrl.showTime(false)">
-              <div class="item-content">
-                Now!
-              </div>
-              <i class="radio-icon ion-checkmark"></i>
-            </label>
-            <label class="item item-radio">
-              <input type="radio" name="group" ng-click="mapCtrl.showTime(true)">
-              <div class="item-content">
-                Specify time
-              </div>
-              <i class="radio-icon ion-checkmark"></i>
-            </label> -->
             <label ng-show="mapCtrl.show" class="item item-input">
             <!-- TODO: Fix time display to show only hours and minutes  -->
               <span class="input-label">Start Time</span>
