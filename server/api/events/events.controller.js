@@ -51,12 +51,22 @@ function getOne(req, res) {
 }
 
 function addOne(req, res) {
-  //POST
-  request( process.env.PARSER_SERVER_URL + '/api/events/')
-  .then(function(res){
-    console.log('got a response from parser; I should do something about that...')
+  request(
+    { method: 'POST',
+      uri: process.env.PARSER_SERVER_URL + 'api/events/',
+      form: req.body, 
+    })
+  .then(function (response) {
+    if(response[0].statusCode == 201){
+      console.log('parser reports event saved.');
+      res.status(201).end('event added.')
+    } else {
+      console.log('error: '+ response[0].statusCode);
+    }
   });
 }
+
+
 
 function addManySpoofs(req,res){
   res.status(200).end();
