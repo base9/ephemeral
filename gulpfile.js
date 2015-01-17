@@ -11,7 +11,6 @@ var path = {
   cssRoot: './ionic/www/css',
   server: './server/index.js',
   serverSideJs: './server/**/*.js',
-  client: 'ionic/www/**/*.js',
   test: './test/**/*.js',
   clientSideJs: './ionic/www/js/**/*.js'
 }
@@ -28,7 +27,7 @@ gulp.task('watch', function() {
 
   // Watch any files in dist/, reload on change
   livereload.listen();
-  gulp.watch(path.client).on('change', livereload.changed);
+  gulp.watch(path.clientSideJs).on('change', livereload.changed);
 
   //watch for any changes made to js files in client and server
   gulp.watch([path.clientSideJs, path.serverSideJs], ['lint']);
