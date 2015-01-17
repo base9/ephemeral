@@ -9,8 +9,8 @@
 		    <h4> {{eventInfo.info}} </h4>
 		  </span>
   	</span>
-  	<img ng-show="!liked" src="./img/thumbs_up_grey.png" class="likeButton" ng-click="liked=!liked; eventInfo.ratings = eventInfo.ratings+1" />
-  	<img ng-show="liked" src="./img/thumbs_up_green.png" class="likeButton" ng-click="liked=!liked; eventInfo.ratings = eventInfo.ratings-1";  />
+  	<img ng-show="!liked" src="./img/thumbs_up_grey.png" class="likeButton" ng-click="liked=!liked; eventInfo.ratings = eventInfo.ratings+1; updateRating('add')" />
+  	<img ng-show="liked" src="./img/thumbs_up_green.png" class="likeButton" ng-click="liked=!liked; eventInfo.ratings = eventInfo.ratings-1; updateRating('subtract')" />
 	  <h3 class="eventLikes"> {{eventInfo.ratings}} </h3>
   </div>
 

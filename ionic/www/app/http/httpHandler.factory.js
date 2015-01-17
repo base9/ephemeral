@@ -105,6 +105,23 @@ angular.module('radar')
       });
   };
 
+  httpObject.updateRating = function (addSubtract, eventId) {
+    return $http({
+      method: 'POST',
+      url: '/api/ratings',
+      data: {
+        addSubtract: addSubtract, 
+        event_id: eventId
+      }
+    })
+    .success(function(data, status) {
+        console.log("Rating updated")
+      })
+      .error(function(data, status) {
+        console.log("ERROR FOR API EVENTS");
+      });
+  };
+
 
   httpObject.uploadPhoto = function(photo, photoFileName, eventId){         
     console.log('uploading now to event: ', eventId);

@@ -269,6 +269,11 @@ angular.module('radar')
     })
   }
 
+  $scope.updateRating = function(addSubtract) {
+    console.log("UPDATING RATING...")
+    Http.updateRating(addSubtract, $rootScope.eventId);
+  }
+
 /*************  Input type="file" Custom Functionality ************/
 
   $scope.getFile = function(){
