@@ -90,7 +90,7 @@ angular.module('radar')
     });
   };
 
-  httpObject.addComment = function (commentData, callback) {
+  httpObject.addComment = function (commentData) {
     console.log("data: ", commentData)
     return $http({
       method: 'POST',
@@ -98,7 +98,7 @@ angular.module('radar')
       data: commentData
     })
     .success(function(data, status) {
-        callback;
+        console.log('Comment added')
       })
       .error(function(data, status) {
         console.log("ERROR FOR API EVENTS");
