@@ -50,7 +50,6 @@ angular.module('radar')
     geocoder = new google.maps.Geocoder();
     geocoder.geocode({ 'address': address }, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
-        debugger;
         var coords = {
           lat: results[0].geometry.location.k,
           lng: results[0].geometry.location.D
@@ -109,7 +108,7 @@ angular.module('radar')
 
 
   httpObject.uploadPhoto = function(photo, photoFileName, eventId){         
-    console.log('uploading now');
+    console.log('uploading now to event: ', eventId);
 
     //TODO: fetch this stuff via HTTP request, instead of hardcoding here.
     var uploadParameters = {

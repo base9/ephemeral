@@ -227,6 +227,11 @@ angular.module('radar')
       return text.join('');
   }
 
+  function uploadPhotoToServer(file, eventId) {
+    var photoFileName = makeHash(18) + '.jpg';
+    Http.uploadPhoto(file, photoFileName, eventId);
+  }
+
   $scope.saveNewEvent = function() {
     $scope.newPostData.startTime = combineDateTimeInputs('start');
     $scope.newPostData.endTime = combineDateTimeInputs('end');
@@ -244,8 +249,7 @@ angular.module('radar')
         // });
         console.log("EVENT ID?: ", res)
         if($rootScope.photoUploaded){
-          var photoFileName = makeHash(18) + '.jpg';
-          Http.uploadPhoto($scope.photoFile, photoFileName, res);
+          uploadPhotoToServer($scope.photoFile, res);
         } else {
           console.log('no photo attached, skipping photo upload protocol.')
         }
@@ -256,7 +260,7 @@ angular.module('radar')
   /************ EVENT INFO MODAL **************/
   $scope.liked = false;
   $scope.submitComment = function(comment, eventId) {
-  $scope.eventInfo.comments.unshift({comment: comment})
+    $scope.eventInfo.comments.unshift({comment: comment})
     Http.addComment({
       user_id: 1,
       eventId: eventId,
@@ -291,6 +295,7 @@ angular.module('radar')
     if (file) {
       $rootScope.photoUploaded = true;
       reader.readAsDataURL(file);
+      if ($rootScope.inEvent) { uploadPhotoToServer(file, $rootScope.eventId) }
       $scope.$apply();
     } else {
       preview.src = "";
