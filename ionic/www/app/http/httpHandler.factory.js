@@ -30,7 +30,7 @@ angular.module('radar')
       });
   };
 
-  httpObject.getAddressForCoords = function(lat, lng, callback) {
+  httpObject.reverseGeocode = function(lat, lng, callback) {
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(lat,lng);
     geocoder.geocode({'latLng': latlng}, function(results, status) {
@@ -46,7 +46,7 @@ angular.module('radar')
     });
   };
 
-  httpObject.getCoordsForAddress = function(address, callback) {
+  httpObject.geocode = function(address, callback) {
     geocoder = new google.maps.Geocoder();
     geocoder.geocode({ 'address': address }, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {

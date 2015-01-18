@@ -444,6 +444,8 @@ input, button, select, textarea {
     border-radius: 15px;
     background-color: rgba(30, 30, 30, 0.92);
     height: 100%; }
+  .eventInfoWindow .wholeModal {
+    height: 100%; }
   .eventInfoWindow .photoContainer {
     width: 120px;
     height: 120px;

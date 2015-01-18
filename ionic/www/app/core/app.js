@@ -11,20 +11,32 @@ angular.module('radar', [
     templateUrl: 'app/core/app.template.html'
   })
 })
-
-.directive('ngEnter', function () {
-  return function (scope, element, attrs) {
-    element.bind("keydown keypress", function (event) {
-      if(event.which === 13) {
-        scope.$apply(function (){
-          scope.$eval(attrs.ngEnter);
-        });
-        event.preventDefault();
-      }
-    });
+.service('SharedProperties', function () {
+  var event;
+  var listOfEvents;
+  var inEvent;
+  return {
+    getEvent: function () {
+      return event;
+    },
+    setEvent: function(value) {
+      event = value;
+      console.log("SET EVENT: ", value);
+    },
+    getListOfEvents: function () {
+      return listOfEvents;
+    },
+    setPhotoUploaded: function(value) {
+      listOfEvents = value;
+    },
+    getInEvent: function () {
+      return inEvent;
+    },
+    setInEvent: function(value) {
+      inEvent = value;
+    },
   };
 })
-
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default
