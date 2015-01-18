@@ -8,7 +8,8 @@ var mocha = require('gulp-mocha');
 var plumber = require('gulp-plumber');
 
 var path = {
-  sass: './ionic/scss/ionic.app.scss',
+  sassDir: './ionic/scss/**/*.scss',
+  sassSrc: './ionic/scss/ionic.app.scss',
   cssRoot: './ionic/www/css',
   server: './server/index.js',
   serverSideJs: './server/**/*.js',
@@ -17,7 +18,7 @@ var path = {
 }
 
 gulp.task('sass', function () {
-  return gulp.src(path.sass)
+  return gulp.src(path.sassSrc)
     .pipe(plumber())
     .pipe(sass())
     .pipe(plumber.stop())
@@ -26,7 +27,7 @@ gulp.task('sass', function () {
 
 gulp.task('watch', function() {
   // watch scss files
-  gulp.watch(path.sass, ['sass']);
+  gulp.watch(path.sassDir, ['sass']);
 
   // Watch any files in dist/, reload on change
   livereload.listen();
