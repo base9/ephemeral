@@ -12,7 +12,6 @@ module.exports = {
   getPopularity: getPopularity
 };
 
-
 function sendResponse(record, res){
   if(record){
     res.json(record);
@@ -20,8 +19,6 @@ function sendResponse(record, res){
     res.status(404).end();
   }
 }
-
-
 
 function formatAndTrimEventRecords(collection){
   var trimmed = collection.map(function(event){
@@ -38,7 +35,17 @@ function formatAndTrimEventRecords(collection){
     event.attributes.popularity = getPopularity(event.attributes.ratings);
     return event;
   });
-  return trimmed;
+  trimmed.sort(function(a, b) {
+    if (a.attributes.ratings > b.attributes.ratings) {
+      return -1;
+    } else if (a.attributes.ratings < b.attributes.ratings) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+  
+  return trimmed.slice(0, 50);
 }
 
 //accepts a rating integer and converts it to a scale of 1-5.

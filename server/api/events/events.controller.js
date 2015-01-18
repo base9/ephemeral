@@ -58,8 +58,6 @@ function addOne(req, res) {
   });
 }
 
-
-
 function addManySpoofs(req,res){
   res.status(200).end();
   var numSpoofs = req.query.number;
@@ -137,7 +135,6 @@ function getAddressFromCoords(coords) {
 
 /************** Kimono API functions ******************/
 
-
 function fetchBatchDataFromKimonoAPI(req, res) {
   request( process.env.PARSER_SERVER_URL + 'api/events/kimono')
   .then(function(response){
@@ -155,7 +152,6 @@ function fetchBatchDataFromKimonoAPI(req, res) {
   
 
 /************** Eventbrite API functions ******************/
-
 
 function fetchBatchDataFromEventbriteAPI(req, res){
   request( process.env.PARSER_SERVER_URL + 'api/events/eventbrite')
