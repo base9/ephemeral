@@ -1,0 +1,17 @@
+@import 'variables_and_mixins';
+
+/*********** OVERRIDE NAV-BAR **********/
+
+.bar.bar-positive {
+  border-color: rgb(60,60,60);
+  background-color: rgb(60,60,60);
+  // background-image: linear-gradient(0deg, #0c63ee, #0c63ee 50%, transparent 50%);
+  color: #fff;
+}
+
+.textInput {
+    background-color: $inputBgGray;
+    color: $inputFillText;
+
+  }
+
