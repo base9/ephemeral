@@ -20,6 +20,7 @@ angular.module('radar')
   '$ionicModal',
   '$scope',
   function(Shared, Map, Marker, Http, $ionicModal, $scope) {
+    $scope.isLoaded = false;
 
     var listOfEvents = {};
     $scope.eventInfo = {};
@@ -119,7 +120,6 @@ angular.module('radar')
 
     var createMarkers = function(events) {
       Marker.placeMarkers(map, events, function(markers) {
-        //store marker location and events inside scope for now
         listOfEvents.events = events;
         for (var i = 0; i < markers.length; i++) {
           var title = events[i].title;
@@ -142,6 +142,8 @@ angular.module('radar')
             };
           })(marker, event));
         }
+        // $scope.isLoaded = true;
+        $scope.fade = 'fade';
       });
     }
 

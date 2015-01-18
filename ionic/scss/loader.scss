@@ -1,0 +1,61 @@
+@import 'variables_and_mixins';
+
+/*********** LOADER *************/
+
+.loader {
+	height: 100%;
+	width: 100%;
+	background-color: black;
+	position: absolute;
+	z-index: 10;
+	text-align: center;
+}
+
+.text {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.text:before {
+	content: ''
+	display: inline-block;
+ 	vertical-align: middle;
+  margin-right: -0.25em;
+}
+
+.droid {
+	color: white;
+	font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-style: italic;
+}
+
+.logo {
+	color: rgb(254,209,54);
+	font-family: Arial, sans-serif;
+	font-weight: bold;
+}
+
+.fade {
+  -webkit-animation-name: fadeOut;
+  -webkit-animation-duration: 5000ms;
+  -webkit-animation-timing-function: linear;
+  @include animation-name(fadeOut);
+  @include animation-duration(5000ms);
+  @include animation-timing-function(linear);
+  }
+}
+
+@-webkit-keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@-moz-keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@-ms-keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}

@@ -1,5 +1,12 @@
-<ion-side-menus ng-controller="MenuController">
-  <div ng-controller="MapController as mapCtrl">
+<div ng-controller="MapController as mapCtrl">
+  <div class="loader" ng-class="fade" ng-show="!isLoaded">
+    <div class="text">
+      <h2 class="droid">everything is</h2>
+      <h1 class="logo">EPHEMERAL</h1>  
+      <h2 class="droid">even loading</h2>
+    </div>
+  </div>
+  <ion-side-menus ng-controller="MenuController">
     <ion-side-menu-content>
       <ion-nav-bar class="bar bar-positive" delegate-handle="navBar" align-title="center">
         <ion-nav-buttons side="right">
@@ -116,5 +123,5 @@
         </form>
       </ion-content>
     </ion-side-menu>
-  </div>
-</ion-side-menus>
+  </ion-side-menus>
+</div>

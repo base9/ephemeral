@@ -631,6 +631,32 @@ input, button, select, textarea {
 .rightMenu {
   background-color: black; }
 
+/*********** LOADER *************/
+.loader {
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  position: absolute;
+  z-index: 10;
+  text-align: center; }
+
+.text {
+  display: inline-block;
+  vertical-align: middle; }
+
+.text:before {
+  display: inline-block; }
+
+.droid {
+  color: white;
+  font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-style: italic; }
+
+.logo {
+  color: #fed136;
+  font-family: Arial, sans-serif;
+  font-weight: bold; }
+
 /*********** OVERRIDE NAV-BAR **********/
 .bar.bar-positive {
   border-color: #3c3c3c;

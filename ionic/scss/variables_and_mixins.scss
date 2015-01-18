@@ -73,3 +73,17 @@ $moneyGreen:        #038312;
       -ms-animation-timing-function: $timing;
           animation-timing-function: $timing;
 }
+
+@mixin opacity($opacity) {
+  -webkit-animation-timing-function: $opacity;
+     -moz-animation-timing-function: $opacity;
+      -ms-animation-timing-function: $opacity;
+          animation-timing-function: $opacity;
+}
+
+@mixin transition($transition) {
+  -webkit-animation-timing-function: $transition;
+     -moz-animation-timing-function: $transition;
+      -ms-animation-timing-function: $transition;
+          animation-timing-function: $transition;
+}
