@@ -1,11 +1,10 @@
 angular.module('radar')
-.factory('MarkerFactory', function($rootScope) {
+.factory('MarkerFactory', function() {
   var markerObj = {};
   var markers = [];
 
   //filters is an object with properties popularity, category, distance, and keyword
   markerObj.placeMarkers = function(map, events, callback) {
-
     for (var i = 0; i < markers.length; i++) {
       markers[i].setMap(null);
     };
@@ -18,7 +17,6 @@ angular.module('radar')
 
     // create new markers for all events
     createMarkers(map, events, markers);
-
     callback(markers);
   };
 

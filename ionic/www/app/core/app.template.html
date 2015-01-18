@@ -38,14 +38,14 @@
         <!-- Greeting - end -->
 
         <div class="button-bar logReg" ng-show="!loggedIn">
-          <a class="button" ng-click="login()">Login</a>
-          <a class="button" ng-click="register()">Register</a>
+          <a class="button" ng-click="openLogin()">Login</a>
+          <a class="button" ng-click="openRegister()">Register</a>
         </div>
         <div class="button-bar logReg" ng-show="loggedIn">
           <a class="button" ng-click="logout()">Logout</a>
         </div>
         <div class="button-bar">
-          <a class="button" ng-click="openNewEventModal()">Post Event</a>
+          <a class="button" ng-click="openPostEvent()">Post Event</a>
         </div>
         <div class="button-bar">
           <a class="button" ng-click="toggleFilter = !toggleFilter">Filters</a>
@@ -63,7 +63,6 @@
               <ion-checkbox ng-click="mapCtrl.addCategory('outdoors')">Travel and Outdoor</ion-checkbox>
               <ion-checkbox ng-click="mapCtrl.addCategory('other')">Other</ion-checkbox>
             </div>
-            
             <div>Max Distance</div>
             <div class="item item-checkbox">
               <label class="checkbox" ng-click="mapCtrl.toggleDistance()">

@@ -1,4 +1,5 @@
 angular.module('radar')
+
 .filter('cost', function() {
   return function(input) {
     if (input === '100') {
@@ -10,40 +11,23 @@ angular.module('radar')
     }
   }
 })
+
 .controller('MapController', [
+  'SharedProperties',
   'MapFactory', 
-  'MapSearchFactory', 
   'MarkerFactory', 
   'HttpHandler', 
   '$ionicModal',
   '$scope',
-  '$rootScope', 
-  function(Map, SearchBox, Marker, Http, $ionicModal, $scope, $rootScope) {
+  function(Shared, Map, Marker, Http, $ionicModal, $scope) {
 
     var listOfEvents = {};
     $scope.eventInfo = {};
+    var timeoutID;
   
     $scope.geoLocate = function(){
-      console.log("LOCATING.......");
       Map.geoCenter();
     };
-
-    $scope.openModal = function() {
-      $scope.modal.show();
-    };
-    $scope.closeModal = function() {
-      $scope.modal.hide();
-    };
-
-    $scope.$on('$destroy', function() {
-      $scope.modal.remove();
-    });
-    $scope.$on('modal.hidden', function() {
-      $rootScope.inEvent = false;
-    });
-    $scope.$on('modal.removed', function() {
-      $rootScope.inEvent = false;
-    });
 
     var map = Map.initialize();
 
@@ -111,19 +95,6 @@ angular.module('radar')
       this.filters = {distance: 1, popularity: 1, category: null, time: {now: false, startTime: null, endTime: null}, cost: 50, keyword: null};
     }
 
-    function isoDateToTimeString(date) {
-      var date = new Date(date);
-      var hours = date.getHours();
-      var mins = date.getMinutes();
-      var ampm;
-      (mins === 0) ? mins = ':00' : mins = ':' + mins;
-      (hours > 11) ? ampm = 'pm' : ampm = 'am';
-      if (hours > 12 || hours === 0) {
-        hours = Math.abs(hours-12);
-      }
-      return hours+mins+ampm
-    }
-
     function checkCategories(context) {
       console.log("NOT BROKEN HERE", this.filters);
       var result = [];
@@ -133,18 +104,6 @@ angular.module('radar')
         }
       }
       context.filters.category = result;
-    }
-
-    $scope.closeModalAndGetDirections = function () {
-      var event;
-      if (event = $scope.eventInfo) {
-        var pos = {
-          lat: event.lat,
-          lng: event.lng
-        };
-        Map.getDirections(pos);
-        $scope.closeModal();
-      }
     }
 
     Map.geoLocate(function(location, bounds) {
@@ -170,25 +129,15 @@ angular.module('radar')
           google.maps.event.addListener(marker, 'click', (function(marker, event) {
             return function() {
               Http.getOneEvent(event.id, function(res) {
-                $rootScope.inEvent = true;
-                $rootScope.photoUploaded = false;
-                $rootScope.eventId = res.id;
-                $scope.eventInfo = res;
-                ($scope.eventInfo.price === "0.00") ? $scope.eventInfo.price = "Free" : $scope.eventInfo.price = '$'+ $scope.eventInfo.price;
-                $scope.eventInfo.startDate = isoDateToTimeString(parseInt($scope.eventInfo.startTime));
-                $scope.eventInfo.endDate = isoDateToTimeString(parseInt($scope.eventInfo.endTime));
-                $scope.eventInfo.mainPhoto = $scope.eventInfo.photos[0] || 
-                  {url: './img/thumbnails/' + $scope.eventInfo.category + '.jpg'};
-                $scope.eventInfo.photos = $scope.eventInfo.photos.slice(1);
-                $scope.eventInfo.comments = $scope.eventInfo.comments.reverse();
-                if ($scope.eventInfo.city) { $scope.eventInfo.city += ',' }
-              });
-              $ionicModal.fromTemplateUrl('./app/modals/eventInfoModal.html', {
-                scope: $scope,
-              })
-              .then(function(modal) {
-                $scope.modal = modal;
-                $scope.openModal();
+                Shared.setEvent(res);
+                Shared.setInEvent(true);
+                $ionicModal.fromTemplateUrl('./app/eventInfo/eventInfo.html', {
+                  scope: $scope,
+                })
+                .then(function(modal) {
+                  $scope.modal = modal;
+                  $scope.openModal();
+                });
               });
             };
           })(marker, event));
@@ -200,7 +149,6 @@ angular.module('radar')
       reloadToEventChange();
     });
 
-    var timeoutID;
     google.maps.event.addListener(map, 'center_changed', function() {
       clearTimeout(timeoutID);
       timeoutID = setTimeout(function() {
@@ -218,5 +166,24 @@ angular.module('radar')
         createMarkers(events);
       });
     };
+
+/******************* MODAL FUNCTIONS *******************/
+
+    $scope.openModal = function() {
+      $scope.modal.show();
+    };
+    $scope.closeModal = function() {
+      $scope.modal.hide();
+    };
+
+    $scope.$on('$destroy', function() {
+      $scope.modal.remove();
+    });
+    $scope.$on('modal.hidden', function() {
+      Shared.setInEvent(false);
+    });
+    $scope.$on('modal.removed', function() {
+      Shared.setInEvent(false);
+    });
 
 }]);

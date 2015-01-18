@@ -12,9 +12,8 @@
 
   </head>
   <body ng-app="radar">
-    
     <!-- ui view -->
-    <div ui-view=""></div>
+      <div ui-view=""></div>
 
     <!-- Google Maps API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnemtHaxtZyoxOU0NYEPXNxJwIhG0DeCE&sensor=true&v=3.exp&libraries=places"></script>
@@ -30,13 +29,18 @@
 
     <!-- All app js -->
     <script src="app/core/app.js"></script>
-    <script src="app/map/map.factory.js"></script>
-    <script src="app/filters/search/mapSearch.factory.js"></script>
-    <script src="app/markers/marker.factory.js"></script>
+    <script src="app/auth/auth.controller.js"></script>
+    <script src="app/dateTime/dateTime.factory.js"></script>
+    <script src="app/eventInfo/eventInfo.controller.js"></script>
     <script src="app/http/httpHandler.factory.js"></script>
-    <script src="app/auth/signUp.controller.js"></script>
+    <script src="app/map/map.factory.js"></script>
     <script src="app/map/map.controller.js"></script>
+    <script src="app/map/mapStyle.js"></script>
+    <script src="app/markers/marker.factory.js"></script>
+    <script src="app/photos/photo.factory.js"></script>
+    <script src="app/postEvent/postEvent.controller.js"></script>
     <script src="app/sidebar/sidebar.controller.js"></script>
+
 
     <!-- Greensock -->
     <script src="lib/greensock-js/src/minified/TweenMax.min.js"></script>

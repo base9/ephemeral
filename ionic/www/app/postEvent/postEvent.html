@@ -1,5 +1,5 @@
 <ion-modal-view class="newEventModal">
-  <div class="wholeModal">
+  <div class="wholeModal" ng-controller="PostEventModalController">
     <img src="img/entertainment.jpg" class="bgImage" ng-show="newPostData.category==='entertainment'" />
     <img src="img/drink.jpg" class="bgImage" ng-show="newPostData.category==='drink'" />
     <img src="img/culture.jpg" class="bgImage" ng-show="newPostData.category==='culture'" />
@@ -141,8 +141,8 @@
         <button class="postEventButton" ng-click="saveNewEvent(); closeModal()">Post Event</button>
       </div>
     </div>
-  </div>
-  <div class="closeModal">
-    <button class="closeModalButton" ng-click="closeModal()"><p>X</p></button>
+    <div class="closeModal">
+      <button class="closeModalButton" ng-click="closeModal()"><p>X</p></button>
+    </div>
   </div>
 </ion-modal-view>
