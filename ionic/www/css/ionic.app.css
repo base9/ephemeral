@@ -664,10 +664,8 @@ input, button, select, textarea {
   color: #fed136;
   font-family: Arial, sans-serif;
   font-weight: bold;
-  font-size: 68px; }
-  .logo .dots {
-    font-size: 40px;
-    color: white; }
+  font-size: 68px;
+  text-shadow: 0px 0px 8px rgba(254, 209, 54, 0.6); }
 
 .fade {
   -webkit-animation-name: fadeOut;
@@ -692,17 +690,17 @@ input, button, select, textarea {
 
 @-moz-keyframes fadeOut {
   from {
-    -webkit-opacity: 1; }
+    -moz-opacity: 1; }
 
   to {
-    -webkit-opacity: 0; } }
+    -moz-opacity: 0; } }
 
 @-ms-keyframes fadeOut {
   from {
-    -webkit-opacity: 1; }
+    -ms-opacity: 1; }
 
   to {
-    -webkit-opacity: 0; } }
+    -ms-opacity: 0; } }
 
 /*********** OVERRIDE NAV-BAR **********/
 .bar.bar-positive {
