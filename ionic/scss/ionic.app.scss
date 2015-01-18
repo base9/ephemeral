@@ -1,4 +1,10 @@
+// all files should have a variables and mixins import
 @import 'variables_and_mixins';
+
+// import components
+@import 'header';
 @import 'markers';
 @import 'modals';
+
+// import overrides last
 @import 'overrides';

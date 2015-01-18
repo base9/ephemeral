@@ -1,3 +1,10 @@
+.title {
+  text-transform: uppercase;
+  font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, cursive;
+  color: #fed136;
+  font-weight: bold;
+  font-size: 20px; }
+
 /*********** MARKERS *************/
 .marker {
   height: 50px;
