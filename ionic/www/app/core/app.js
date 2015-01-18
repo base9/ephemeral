@@ -26,7 +26,7 @@ angular.module('radar', [
     getListOfEvents: function () {
       return listOfEvents;
     },
-    setPhotoUploaded: function(value) {
+    setListOfEvents: function(value) {
       listOfEvents = value;
     },
     getInEvent: function () {
