@@ -1,28 +1,114 @@
-/*
-To customize the look and feel of Ionic, you can override the variables
-in ionic's _variables.scss file.
+.title {
+  text-transform: uppercase;
+  font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, cursive;
+  color: #fed136;
+  font-weight: bold;
+  font-size: 20px; }
 
-For example, you might change some of the default colors:
+/*********** MARKERS *************/
+.marker {
+  height: 50px;
+  position: absolute;
+  cursor: pointer;
+  -webkit-filter: drop-shadow(3px 4px 6px rgba(0, 0, 0, 0.65));
+  filter: url(#drop-shadow);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
+  filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
+  top: 0px;
+  left: 0px; }
 
-$light:                           #fff !default;
-$stable:                          #f8f8f8 !default;
-$positive:                        #387ef5 !default;
-$calm:                            #11c1f3 !default;
-$balanced:                        #33cd5f !default;
-$energized:                       #ffc900 !default;
-$assertive:                       #ef473a !default;
-$royal:                           #886aea !default;
-$dark:                            #444 !default;
-*/
-/*********** OVERRIDE NAV-BAR **********/
-.bar.bar-positive {
-  border-color: #3c3c3c;
-  background-color: #3c3c3c;
-  color: #fff; }
+.marker.notHappeningMarker {
+  top: 0px;
+  left: 46px; }
 
-.textInput {
-  background-color: #c6c6c6;
-  color: #1e1e1e; }
+.happening, .happening2 {
+  position: absolute;
+  top: 0px;
+  left: -25px;
+  display: none;
+  z-index: -1; }
+  .happening.circle-animation, .happening2.circle-animation {
+    display: block;
+    -webkit-animation-name: grow;
+    -webkit-animation-duration: 1400ms;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-name: grow;
+    -moz-animation-name: grow;
+    -ms-animation-name: grow;
+    animation-name: grow;
+    -webkit-animation-duration: 1400ms;
+    -moz-animation-duration: 1400ms;
+    -ms-animation-duration: 1400ms;
+    animation-duration: 1400ms;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-iteration-count: infinite;
+    -ms-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-timing-function: linear;
+    -ms-animation-timing-function: linear;
+    animation-timing-function: linear; }
+
+.circle-animation-delay {
+  -webkit-animation-delay: -700ms;
+  -webkit-animation-delay: -700ms;
+  -moz-animation-delay: -700ms;
+  -ms-animation-delay: -700ms;
+  animation-delay: -700ms; }
+
+@-webkit-keyframes grow {
+  from {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+    opacity: 1; }
+
+  to {
+    -webkit-transform: scale(0.7);
+    -moz-transform: scale(0.7);
+    -ms-transform: scale(0.7);
+    transform: scale(0.7);
+    opacity: 0; } }
+
+@-moz-keyframes grow {
+  from {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+    opacity: 1; }
+
+  to {
+    -webkit-transform: scale(0.7);
+    -moz-transform: scale(0.7);
+    -ms-transform: scale(0.7);
+    transform: scale(0.7);
+    opacity: 0; } }
+
+@-ms-keyframes grow {
+  from {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+    opacity: 1; }
+
+  to {
+    -webkit-transform: scale(0.7);
+    -moz-transform: scale(0.7);
+    -ms-transform: scale(0.7);
+    transform: scale(0.7);
+    opacity: 0; } }
+
+.notHappening, .notHappening2 {
+  height: 0px; }
+
+.richmarker {
+  position: relative;
+  height: 50px;
+  width: 50px; }
 
 /*********** ALL MODALS **********/
 input, button, select, textarea {
@@ -480,108 +566,77 @@ input, button, select, textarea {
         background-color: #b7b7b7;
         color: #1e1e1e; }
 
-/*********** MARKERS *************/
-.marker {
-  height: 50px;
+/* MAP */
+.scroll {
+  height: 100%; }
+
+#map {
+  width: 100%;
+  height: 100%; }
+
+.controls {
+  margin-top: 16px;
+  border: 1px solid transparent;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  height: 32px;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); }
+
+.infoWindow {
+  width: 100%;
+  height: 300px; }
+
+/* NAVBAR */
+.searchBar {
+  margin-top: -5px;
+  border-bottom: 0px; }
+
+/* MENU */
+.rightMenu {
+  background-color: #323232; }
+
+.filter {
+  background-color: #323232;
+  color: white; }
+
+.filterPane {
+  background-color: dimGray;
+  /*height: 200px;*/
+  color: white; }
+
+/* MAP BUTTONS */
+#GeoButton {
   position: absolute;
-  cursor: pointer;
-  -webkit-filter: drop-shadow(3px 4px 6px rgba(0, 0, 0, 0.65));
-  filter: url(#drop-shadow);
-  -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
-  filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
-  top: 0px;
-  left: 0px; }
-
-.marker.notHappeningMarker {
-  top: 0px;
-  left: 46px; }
-
-.happening, .happening2 {
-  position: absolute;
-  top: 0px;
-  left: -25px;
-  display: none;
-  z-index: -1; }
-
-.happening.circle-animation, .happening2.circle-animation {
-  display: block;
-  -webkit-animation-name: grow;
-  -webkit-animation-duration: 1400ms;
-  -webkit-animation-iteration-count: infinite;
-  -webkit-animation-timing-function: linear;
-  -webkit-animation-name: grow;
-  -moz-animation-name: grow;
-  -ms-animation-name: grow;
-  animation-name: grow;
-  -webkit-animation-duration: 1400ms;
-  -moz-animation-duration: 1400ms;
-  -ms-animation-duration: 1400ms;
-  animation-duration: 1400ms;
-  -webkit-animation-iteration-count: infinite;
-  -moz-animation-iteration-count: infinite;
-  -ms-animation-iteration-count: infinite;
-  animation-iteration-count: infinite;
-  -webkit-animation-timing-function: linear;
-  -moz-animation-timing-function: linear;
-  -ms-animation-timing-function: linear;
-  animation-timing-function: linear; }
-
-.circle-animation-delay {
-  -webkit-animation-delay: -700ms;
-  -webkit-animation-delay: -700ms;
-  -moz-animation-delay: -700ms;
-  -ms-animation-delay: -700ms;
-  animation-delay: -700ms; }
-
-@-webkit-keyframes grow {
-  from {
-    -webkit-transform: scale(0);
-    -moz-transform: scale(0);
-    -ms-transform: scale(0);
-    transform: scale(0);
-    opacity: 1; }
-
-  to {
-    -webkit-transform: scale(0.7);
-    -moz-transform: scale(0.7);
-    -ms-transform: scale(0.7);
-    transform: scale(0.7);
-    opacity: 0; } }
-
-@-moz-keyframes grow {
-  from {
-    -webkit-transform: scale(0);
-    -moz-transform: scale(0);
-    -ms-transform: scale(0);
-    transform: scale(0);
-    opacity: 1; }
-
-  to {
-    -webkit-transform: scale(0.7);
-    -moz-transform: scale(0.7);
-    -ms-transform: scale(0.7);
-    transform: scale(0.7);
-    opacity: 0; } }
-
-@-ms-keyframes grow {
-  from {
-    -webkit-transform: scale(0);
-    -moz-transform: scale(0);
-    -ms-transform: scale(0);
-    transform: scale(0);
-    opacity: 1; }
-
-  to {
-    -webkit-transform: scale(0.7);
-    -moz-transform: scale(0.7);
-    -ms-transform: scale(0.7);
-    transform: scale(0.7);
-    opacity: 0; } }
-
-.notHappening, .notHappening2 {
-  height: 0px; }
-
-.richmarker {
-  position: relative;
+  z-index: 99;
+  left: 20px;
+  bottom: 30px;
+  width: 50px;
   height: 50px;
-  width: 50px; }
+  font-size: 30px;
+  color: DimGray; }
+
+/* FONTS */
+@font-face {
+  font-family: 'skinny';
+  src: url('../fonts/skinny.ttc'); }
+
+#type-selector label {
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 300; }
+
+/* MENUS */
+.rightMenu {
+  background-color: black; }
+
+/*********** OVERRIDE NAV-BAR **********/
+.bar.bar-positive {
+  border-color: #3c3c3c;
+  background-color: #3c3c3c;
+  color: #fff; }
+
+.textInput {
+  background-color: #c6c6c6;
+  color: #1e1e1e; }

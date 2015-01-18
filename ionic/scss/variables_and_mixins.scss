@@ -1,0 +1,75 @@
+// Variables
+$bgGray:            rgba(30,30,30,0.92);
+$textGray:          #b4b4b4;
+$inputBgGray:       #c6c6c6;
+$inputFillText:     rgb(30,30,30);
+$placeholderGray:   #555555;
+$inputRadius:       10px;
+$modalRadius:       15px;
+$buttonRadius:      4px;
+$moneyGreen:        #038312;
+
+// Mixins
+@mixin background($color1, $color2) { 
+  background: -webkit-gradient(linear, left top, left bottom, from($color1), to($color2));
+  background: -webkit-linear-gradient(top, $color1, $color2);
+  background: -moz-linear-gradient(top, $color1, $color2);
+  background: -ms-linear-gradient(top, $color1, $color2);
+  background: -o-linear-gradient(top, $color1, $color2);
+}
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+@mixin box-shadow($shadow) {
+  -webkit-box-shadow: $shadow;
+     -moz-box-shadow: $shadow;
+      -ms-box-shadow: $shadow;
+          box-shadow: $shadow;
+}
+
+@mixin transform($scale) {
+  -webkit-transform: $scale;
+     -moz-transform: $scale;
+      -ms-transform: $scale;
+          transform: $scale;
+}
+
+@mixin animation-name($name) {
+  -webkit-animation-name: $name;
+     -moz-animation-name: $name;
+      -ms-animation-name: $name;
+          animation-name: $name;
+}
+
+@mixin animation-duration($duration) {
+  -webkit-animation-duration: $duration;
+     -moz-animation-duration: $duration;
+      -ms-animation-duration: $duration;
+          animation-duration: $duration;
+}
+
+@mixin animation-delay($delay) {
+  -webkit-animation-delay: $delay;
+     -moz-animation-delay: $delay;
+      -ms-animation-delay: $delay;
+          animation-delay: $delay;
+}
+
+@mixin animation-iteration-count($count) {
+  -webkit-animation-iteration-count: $count;
+     -moz-animation-iteration-count: $count;
+      -ms-animation-iteration-count: $count;
+          animation-iteration-count: $count;
+}
+
+@mixin animation-timing-function($timing) {
+  -webkit-animation-timing-function: $timing;
+     -moz-animation-timing-function: $timing;
+      -ms-animation-timing-function: $timing;
+          animation-timing-function: $timing;
+}

@@ -1,0 +1,105 @@
+@import 'variables_and_mixins';
+
+/*********** MARKERS *************/
+
+.marker {
+  height: 50px;
+  position: absolute;
+  cursor: pointer;
+  -webkit-filter: drop-shadow(3px 4px 6px rgba(0,0,0,0.65));
+  filter: url(#drop-shadow);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
+  filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
+  top: 0px;
+  left: 0px;
+
+}
+
+.marker.notHappeningMarker {
+  top: 0px;
+  left: 46px;
+}
+
+.happening, .happening2 {
+  position: absolute;
+  top: 0px;
+  left: -25px;
+  display: none;
+  z-index: -1;
+
+  &.circle-animation {
+    display: block;
+    -webkit-animation-name: grow;
+    -webkit-animation-duration: 1400ms;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    @include animation-name(grow);
+    @include animation-duration(1400ms);
+    @include animation-iteration-count(infinite);
+    @include animation-timing-function(linear);
+  }
+}
+
+.circle-animation-delay {
+  -webkit-animation-delay: -700ms;
+  @include animation-delay(-700ms);
+}
+
+.popularity-1 {
+  
+}
+.popularity-2 {
+  
+}
+.popularity-3 {
+  
+}
+.popularity-4 {
+  
+}
+.popularity-5 {
+  
+}
+
+@-webkit-keyframes grow {
+    from { 
+      @include transform(scale(0));
+      opacity: 1; 
+    }
+    to { 
+      @include transform(scale(0.7)); 
+      opacity: 0;
+    }
+}
+
+@-moz-keyframes grow {
+    from { 
+      @include transform(scale(0));
+      opacity: 1; 
+    }
+    to { 
+      @include transform(scale(0.7)); 
+      opacity: 0;
+    }
+}
+
+@-ms-keyframes grow {
+    from { 
+      @include transform(scale(0));
+      opacity: 1; 
+    }
+    to { 
+      @include transform(scale(0.7)); 
+      opacity: 0;
+    }
+}
+
+.notHappening, .notHappening2 {
+  height: 0px;
+}
+
+.richmarker {
+  position: relative;
+  height: 50px;
+  width: 50px;    
+}
