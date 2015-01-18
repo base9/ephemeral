@@ -1,0 +1,64 @@
+@import 'variables_and_mixins';
+
+/*********** LOADER *************/
+
+.loader {
+	width: 100%;
+	height: 100%;
+	background-color: rgb(20,20,20);
+	position: absolute;
+	z-index: 10;
+	text-align: center;
+	display: table;
+}
+
+.text {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.droid {
+	color: white;
+	font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-style: italic;
+}
+
+.circlePath {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	left: 0;
+	top: 0;
+}
+
+.circle {
+	z-index: 15;
+}
+
+.logo {
+	color: rgb(254,209,54);
+	font-family: Arial, sans-serif;
+	font-weight: bold;
+	font-size: 68px;
+	text-shadow: 0px 0px 8px rgba(254,209,54,0.6);
+}
+
+
+.fade {
+  @include animation-name(fadeOut);
+  @include animation-duration(4000ms);
+  @include animation-timing-function(linear);
+}
+
+@-webkit-keyframes fadeOut {
+    from { -webkit-opacity: 1; }
+    to { -webkit-opacity: 0; }
+}
+@-moz-keyframes fadeOut {
+    from { -moz-opacity: 1; }
+    to { -moz-opacity: 0; }
+}
+@-ms-keyframes fadeOut {
+    from { -ms-opacity: 1; }
+    to { -ms-opacity: 0; }
+}
