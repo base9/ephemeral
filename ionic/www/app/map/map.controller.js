@@ -142,10 +142,7 @@ angular.module('radar')
             };
           })(marker, event));
         }
-        setTimeout(function() {
-          $scope.isLoaded = true;
-          $scope.$apply()
-        }, 4); 
+        setTimeout(function() {$scope.isLoaded = true;}, 3.9); 
         $scope.fade = 'fade';
       });
     }
