@@ -5,9 +5,10 @@ var livereload = require('gulp-livereload');
 var nodemon = require('gulp-nodemon');
 var jshint = require('gulp-jshint');
 var mocha = require('gulp-mocha');
+var plumber = require('gulp-plumber');
 
 var path = {
-  sass: './ionic/scss/*.scss',
+  sass: './ionic/scss/ionic.app.scss',
   cssRoot: './ionic/www/css',
   server: './server/index.js',
   serverSideJs: './server/**/*.js',
@@ -17,7 +18,9 @@ var path = {
 
 gulp.task('sass', function () {
   return gulp.src(path.sass)
+    .pipe(plumber())
     .pipe(sass())
+    .pipe(plumber.stop())
     .pipe(gulp.dest(path.cssRoot));
 });
 
