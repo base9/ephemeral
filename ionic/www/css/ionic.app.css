@@ -633,29 +633,41 @@ input, button, select, textarea {
 
 /*********** LOADER *************/
 .loader {
-  height: 100%;
   width: 100%;
+  height: 100%;
   background-color: black;
   position: absolute;
   z-index: 10;
-  text-align: center; }
+  text-align: center;
+  display: table; }
 
 .text {
-  display: inline-block;
+  display: table-cell;
   vertical-align: middle; }
-
-.text:before {
-  display: inline-block; }
 
 .droid {
   color: white;
   font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-style: italic; }
 
+.circlePath {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0; }
+
+.circle {
+  z-index: 15; }
+
 .logo {
   color: #fed136;
   font-family: Arial, sans-serif;
-  font-weight: bold; }
+  font-weight: bold;
+  font-size: 68px; }
+  .logo .dots {
+    font-size: 40px;
+    color: white; }
 
 /*********** OVERRIDE NAV-BAR **********/
 .bar.bar-positive {

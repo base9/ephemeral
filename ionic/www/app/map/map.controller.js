@@ -143,7 +143,7 @@ angular.module('radar')
           })(marker, event));
         }
         // $scope.isLoaded = true;
-        $scope.fade = 'fade';
+        // $scope.fade = 'fade';
       });
     }
 
