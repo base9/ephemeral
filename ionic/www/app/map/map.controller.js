@@ -142,8 +142,11 @@ angular.module('radar')
             };
           })(marker, event));
         }
-        // $scope.isLoaded = true;
-        // $scope.fade = 'fade';
+        setTimeout(function() {
+          $scope.isLoaded = true;
+          $scope.$apply()
+        }, 4); 
+        $scope.fade = 'fade';
       });
     }
 

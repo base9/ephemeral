@@ -48,27 +48,21 @@
 }
 
 
-// .fade {
-//   -webkit-animation-name: fadeOut;
-//   -webkit-animation-duration: 5000ms;
-//   -webkit-animation-timing-function: linear;
-//   @include animation-name(fadeOut);
-//   @include animation-duration(5000ms);
-//   @include animation-timing-function(linear);
-//   }
-// }
+.fade {
+  @include animation-name(fadeOut);
+  @include animation-duration(4000ms);
+  @include animation-timing-function(linear);
+}
 
-// @-webkit-keyframes fadeOut {
-//     from { -webkit-opacity: 1; }
-//     to { -webkit-opacity: 0; }
-// }
-
-// @-moz-keyframes fadeOut {
-//     from { -webkit-opacity: 1; }
-//     to { -webkit-opacity: 0; }
-// }
-
-// @-ms-keyframes fadeOut {
-//     from { -webkit-opacity: 1; }
-//     to { -webkit-opacity: 0; }
-// }
+@-webkit-keyframes fadeOut {
+    from { -webkit-opacity: 1; }
+    to { -webkit-opacity: 0; }
+}
+@-moz-keyframes fadeOut {
+    from { -webkit-opacity: 1; }
+    to { -webkit-opacity: 0; }
+}
+@-ms-keyframes fadeOut {
+    from { -webkit-opacity: 1; }
+    to { -webkit-opacity: 0; }
+}
