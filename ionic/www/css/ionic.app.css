@@ -13,9 +13,38 @@
   top: 0px;
   left: 0px; }
 
-.shadow {
-  filter: url('app/filters.svg#blur');
-  -webkit-filter: blur(5px); }
+.shadow.popularity-1 {
+  height: 0px; }
+.shadow.popularity-2 {
+  height: 50px;
+  top: 0px;
+  left: 0px; }
+.shadow.popularity-3 {
+  height: 55px;
+  top: 0px;
+  left: -2px; }
+.shadow.popularity-4 {
+  height: 60px;
+  top: -3px;
+  left: -5px; }
+.shadow.popularity-5 {
+  height: 71px;
+  top: -7px;
+  left: -10px; }
+.shadow.category-culture {
+  -webkit-filter: blur(4px) saturate(1) brightness(1.9) hue-rotate(65deg); }
+.shadow.category-entertainment {
+  -webkit-filter: blur(4px) saturate(0.8) brightness(1.5) hue-rotate(7deg); }
+.shadow.category-drink {
+  -webkit-filter: blur(4px) saturate(1) brightness(2.4) hue-rotate(238deg); }
+.shadow.category-outdoors {
+  -webkit-filter: blur(4px) saturate(1) brightness(1.9) hue-rotate(260deg); }
+.shadow.category-hobbies {
+  -webkit-filter: blur(4px) saturate(1) brightness(1.9) hue-rotate(190deg); }
+.shadow.category-fitness {
+  -webkit-filter: blur(4px) saturate(0.7) brightness(1) hue-rotate(135deg); }
+.shadow.category-other {
+  -webkit-filter: blur(4px) saturate(0) brightness(1.3); }
 
 .marker.notHappeningMarker {
   top: 0px;
