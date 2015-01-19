@@ -1,29 +1,27 @@
 
-![codeship](https://codeship.com/projects/59a737f0-1648-0132-c4e7-72c6c37b1f6e/status?branch=master)
+<img src="https://codeship.com/projects/59a737f0-1648-0132-c4e7-72c6c37b1f6e/status?branch=master" alt="Codeship Status for codeship/documentation" />
 
 
-## Ephemeral
 
+# Ephemeral
 Ephemeral is a responsive browser-based app for finding and posting local events.
 
 See the production site at [ephemeralmap.com](www.ephemeralmap.com)
 
-(screenshot 1)
-(screenshot 2)
+# Interface
+Users can scroll around the map in order to quickly see events that are happening now or very soon.  They can add comments, ratings, and photos to existing events, and can also very easily also post their own events which will then appear on the map for everyone to see.
 
-## Interface
+![screen2](http://brianscoles.com/img/portfolio/ephemeral/ss3.png)
 
-Users can scroll around the map, see events....
+![screen1](http://brianscoles.com/img/portfolio/ephemeral/ss2.png)
 
-
-## Explore the Repo
-
+# Explore the Repo
 Here's a quick overview of the app's architecture, with links to sample files.
 
 -  **Client app** is built with Ionic, Angular, and the Google Maps API.
-  -  [Root HTML file](linky)
-  -  [example controller](linky)
-  -  [another something to link to](linky) 
+  -  [Directory of main client files](https://github.com/base9/ephemeral/tree/master/ionic/www/app)
+  -  [Core App Initialization](https://github.com/base9/ephemeral/blob/master/ionic/www/app/core/app.js) 
+  -  [Example: Marker factory](https://github.com/base9/ephemeral/blob/master/ionic/www/app/markers/marker.factory.js)
 -  **Node Server** - runs on Express.
   -  [Main server.js](https://github.com/base9/ephemeral/blob/master/server/index.js)
   -  [API routes](https://github.com/base9/ephemeral/tree/master/server/api) 
@@ -37,8 +35,8 @@ Here's a quick overview of the app's architecture, with links to sample files.
   - [Test suite](https://github.com/base9/ephemeral/blob/master/test/serverSpec.js)
 
 
-## Related Repos
-Ephemeral relies on five other project repos, all authored in-house.
+# Related Repos
+Ehemeral relies on five other project repos, all authored in-house.
 
 -  [Lytics](https://github.com/base9/lytics): our very own server analytics suite.  Avaiable to anyone via `$ npm install lytics`.
 -  [Splash](https://github.com/base9/splash): our welcome page.  
@@ -48,12 +46,11 @@ Ephemeral relies on five other project repos, all authored in-house.
 
 
 
-## Contributing
-
+# Contributing
 We welcome feedback, suggestions, and pull requests!  Please review our [Contribution guidelines](https://github.com/base9/ephemeral/blob/master/CONTRIBUTING.md).
 
 
-## Dev setup instructions
+# Dev setup instructions
 So you want your own copy, eh?  Great!
 
 -  Clone down this repo and the [Parser](https://github.com/base9/parser) repo separately.
