@@ -762,6 +762,24 @@ input, button, select, textarea {
   to {
     -ms-opacity: 0; } }
 
+@media (max-width: 679px) {
+  .eventInfoWindow .details {
+    float: none;
+    width: auto;
+    text-align: left;
+    padding: 20px; }
+  .eventInfoWindow .photoComments {
+    float: none;
+    width: auto;
+    border-left: none;
+    border-top: 1px solid #b4b4b4; }
+    .eventInfoWindow .photoComments .commentsInputDisplay {
+      display: block;
+      width: auto; }
+    .eventInfoWindow .photoComments .commentsLabel {
+      width: auto; }
+ }
+
 /*********** OVERRIDE NAV-BAR **********/
 .bar.bar-positive {
   border-color: #3c3c3c;
