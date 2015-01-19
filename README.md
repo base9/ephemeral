@@ -26,7 +26,7 @@ Here's a quick overview of the app's architecture, with links to sample files.
   -  [Example: Events controller](server/api/events/events.controller.js)
   -  [Example: Authentication via Passport](server/config/passport.js)
 - **Databases** - our primary DB is PostgreSQL.
-  - [Schemas here](linky).  The DB instantiated with Knex and then wrapped with the Bookshelf ORM.  
+  - [Example schema/model: events](https://github.com/base9/ephemeral/blob/master/server/api/events/events.model.js).  The DB instantiated with Knex and then wrapped with the Bookshelf ORM.
   - Photo uploads and hosting handled via Amazon's S3.
 - **Build System** - we use Gulp.
   - [Gulpfile](gulpfile.js) for live reload, sass, linting, testing, etc.
