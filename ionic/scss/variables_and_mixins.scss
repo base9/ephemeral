@@ -74,6 +74,18 @@ $moneyGreen:        #038312;
           animation-timing-function: $timing;
 }
 
+ @mixin breakpoint($point) {
+  @if $point == desktop {
+    @media (min-width: 1170px) { @content ; }
+  }
+  @else if $point == tablet {
+    @media (min-width: 680px) { @content ; }
+  }
+  @else if $point == mobile {
+     @media (max-width: 679px)  { @content ; }
+
+  }
+}
 @mixin filter($filter) {
   -webkit-filter: $filter;
      -moz-filter: $filter;

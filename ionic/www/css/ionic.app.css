@@ -762,6 +762,11 @@ input, button, select, textarea {
   to {
     -ms-opacity: 0; } }
 
+@media (max-width: 679px) {
+  .the-mobile-shebang {
+    display: block; }
+ }
+
 /*********** OVERRIDE NAV-BAR **********/
 .bar.bar-positive {
   border-color: #3c3c3c;
