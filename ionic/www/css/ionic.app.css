@@ -347,7 +347,10 @@ input, button, select, textarea {
       height: 40px;
       font-size: 30px;
       line-height: 30px;
-      padding-top: 5px; }
+      padding-top: 5px;
+      font-family: 'Muli', sans-serif;
+      text-transform: none;
+      font-weight: normal; }
     .newEventModal .inputForm .info {
       height: 70px;
       font-size: 14px; }

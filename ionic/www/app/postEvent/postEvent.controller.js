@@ -58,6 +58,9 @@ angular.module('radar')
   	  $scope.newPostData.startTime = DateTime.combineDateTimeInputs($scope.dateTime, 'start');
   	  $scope.newPostData.endTime = DateTime.combineDateTimeInputs($scope.dateTime, 'end');
       if (!$scope.newPostData.price) { $scope.newPostData.price = 0; }
+      for (var data in $scope.newPostData) { 
+        if (!$scope.newPostData[data]) { $scope.newPostData[data] = ''; }
+      }
   	  var address = ($scope.newPostData.streetAddress1+'+'+$scope.newPostData.city+'+'+$scope.newPostData.state).split(' ').join('+')
 
   	  Http.geocode(address, function(coords) {
