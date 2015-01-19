@@ -75,13 +75,20 @@ angular.module('radar')
 /********************* HELPER FUNCTIONS *********************/
   
   var createMarkers = function(map, events, markers) {
-    var timeNow = Date.now();
+    var timeNow = new Date();
+    timeNow = timeNow.getHours()*100 + timeNow.getMinutes();
     var happeningNow = '';
     var eventCategory = '';
     var popular = '';
     var markup = '';
     var markerUrl = '';
     var ringUrl = '';
+    var startTime;
+    var startHours;
+    var startMinutes;
+    var endTime;
+    var endHours;
+    var endMinutes;
 
     // i < events.length
     for (var i = 0; i < events.length; i++) {
@@ -89,7 +96,12 @@ angular.module('radar')
       var position = new google.maps.LatLng(event.lat, event.lng);
 
       // add 'happening-now' class if event is happening right now
-      (event.startTime < timeNow && timeNow < event.endTime) ? happeningNow = 'happening' : happeningNow = 'notHappening';
+      startTime = new Date(parseInt(event.startTime));
+      startTime = startTime.getHours()*100 + startTime.getMinutes();
+      endTime = new Date(parseInt(event.endTime));
+      endTime = endTime.getHours()*100 + endTime.getMinutes();
+
+      (startTime < timeNow && timeNow < endTime) ? happeningNow = 'happening' : happeningNow = 'notHappening';
 
       // add category and popularity classes to marker
       eventCategory = 'category-' + event.category + ' ';
