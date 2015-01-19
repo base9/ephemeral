@@ -1,9 +1,7 @@
 
+# Ephemeral
 <img src="https://codeship.com/projects/59a737f0-1648-0132-c4e7-72c6c37b1f6e/status?branch=master" alt="Codeship Status for codeship/documentation" />
 
-
-
-# Ephemeral
 Ephemeral is a responsive browser-based app for finding and posting local events.
 
 See the production site at [ephemeralmap.com](www.ephemeralmap.com)
@@ -20,19 +18,20 @@ Here's a quick overview of the app's architecture, with links to sample files.
 
 -  **Client app** is built with Ionic, Angular, and the Google Maps API.
   -  [Directory of main client files](https://github.com/base9/ephemeral/tree/master/ionic/www/app)
-  -  [Core App Initialization](https://github.com/base9/ephemeral/blob/master/ionic/www/app/core/app.js) 
-  -  [Example: Marker factory](https://github.com/base9/ephemeral/blob/master/ionic/www/app/markers/marker.factory.js)
+  -  [Main app.js](ionic/www/app/core/app.js) 
+  -  [Example: Marker factory](ionic/www/app/markers/marker.factory.js)
 -  **Node Server** - runs on Express.
-  -  [Main server.js](https://github.com/base9/ephemeral/blob/master/server/index.js)
-  -  [API routes](https://github.com/base9/ephemeral/tree/master/server/api) 
-  -  [Authentication via Passport](https://github.com/base9/ephemeral/blob/master/server/config/passport.js)
+  -  [Directory of API routes](https://github.com/base9/ephemeral/tree/master/server/api) 
+  -  [Main server.js](server/index.js)
+  -  [Example: Events controller](server/api/events/events.controller.js)
+  -  [Example: Authentication via Passport](server/config/passport.js)
 - **Databases** - our primary DB is PostgreSQL.
   - [Schemas here](linky).  The DB instantiated with Knex and then wrapped with the Bookshelf ORM.  
   - Photo uploads and hosting handled via Amazon's S3.
 - **Build System** - we use Gulp.
-  - [Gulpfile](https://github.com/base9/ephemeral/blob/master/gulpfile.js) for live reload, sass, linting, testing, etc.
+  - [Gulpfile](gulpfile.js) for live reload, sass, linting, testing, etc.
 -  **Testing** - we use Mocha and Chai
-  - [Test suite](https://github.com/base9/ephemeral/blob/master/test/serverSpec.js)
+  - [Test suite](test/serverSpec.js)
 
 
 # Related Repos
@@ -47,7 +46,7 @@ Ehemeral relies on five other project repos, all authored in-house.
 
 
 # Contributing
-We welcome feedback, suggestions, and pull requests!  Please review our [Contribution guidelines](https://github.com/base9/ephemeral/blob/master/CONTRIBUTING.md).
+We welcome feedback, suggestions, and pull requests!  Please review our [Contribution guidelines](CONTRIBUTING.md).
 
 
 # Dev setup instructions
