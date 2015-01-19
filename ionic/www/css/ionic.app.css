@@ -54,10 +54,10 @@
   -ms-filter: blur(4px) saturate(1) brightness(2.4) hue-rotate(238deg);
   filter: blur(4px) saturate(1) brightness(2.4) hue-rotate(238deg); }
 .shadow.category-outdoors {
-  -webkit-filter: blur(4px) saturate(1) brightness(1.2) hue-rotate(260deg);
-  -moz-filter: blur(4px) saturate(1) brightness(1.2) hue-rotate(260deg);
-  -ms-filter: blur(4px) saturate(1) brightness(1.2) hue-rotate(260deg);
-  filter: blur(4px) saturate(1) brightness(1.2) hue-rotate(260deg); }
+  -webkit-filter: blur(4px) saturate(1) brightness(1.7) hue-rotate(260deg);
+  -moz-filter: blur(4px) saturate(1) brightness(1.7) hue-rotate(260deg);
+  -ms-filter: blur(4px) saturate(1) brightness(1.7) hue-rotate(260deg);
+  filter: blur(4px) saturate(1) brightness(1.7) hue-rotate(260deg); }
 .shadow.category-hobbies {
   -webkit-filter: blur(4px) saturate(1) brightness(1.9) hue-rotate(190deg);
   -moz-filter: blur(4px) saturate(1) brightness(1.9) hue-rotate(190deg);
