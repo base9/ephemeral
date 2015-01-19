@@ -10,12 +10,12 @@
   height: 50px;
   position: absolute;
   cursor: pointer;
-  -webkit-filter: drop-shadow(3px 4px 6px rgba(0, 0, 0, 0.65));
-  filter: url(#drop-shadow);
-  -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
-  filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
   top: 0px;
   left: 0px; }
+
+.shadow {
+  filter: url('app/filters.svg#blur');
+  -webkit-filter: blur(5px); }
 
 .marker.notHappeningMarker {
   top: 0px;
