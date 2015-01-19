@@ -18,7 +18,7 @@
 .shadow {
 
   &.popularity-1 {
-    height: 0px
+    height: 0px;
   }
   &.popularity-2 {
     height: 50px;
@@ -42,25 +42,25 @@
   }
 
   &.category-culture {
-    -webkit-filter: blur(4px) saturate(1) brightness(1.9) hue-rotate(65deg);
+    @include filter(blur(4px) saturate(0.6) brightness(1.2) hue-rotate(65deg));
   }
   &.category-entertainment {
-    -webkit-filter: blur(4px) saturate(0.8) brightness(1.5) hue-rotate(7deg)
+    @include filter(blur(4px) saturate(0.8) brightness(1.5) hue-rotate(7deg));
   }
   &.category-drink {
-    -webkit-filter: blur(4px) saturate(1) brightness(2.4) hue-rotate(238deg);
+    @include filter(blur(4px) saturate(1) brightness(2.4) hue-rotate(238deg));
   }
   &.category-outdoors {
-    -webkit-filter: blur(4px) saturate(1) brightness(1.9) hue-rotate(260deg);
+    @include filter(blur(4px) saturate(1) brightness(1.2) hue-rotate(260deg));
   }
   &.category-hobbies {
-    -webkit-filter: blur(4px) saturate(1) brightness(1.9) hue-rotate(190deg);
+    @include filter(blur(4px) saturate(1) brightness(1.9) hue-rotate(190deg));
   }
   &.category-fitness {
-    -webkit-filter: blur(4px) saturate(0.7) brightness(1) hue-rotate(135deg);
+    @include filter(blur(4px) saturate(0.7) brightness(1) hue-rotate(135deg));
   }
   &.category-other {
-    -webkit-filter: blur(4px) saturate(0) brightness(1.3);
+    @include filter(blur(4px) saturate(0) brightness(1.3));
   }
 }
 
