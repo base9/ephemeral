@@ -14,9 +14,6 @@
   -moz-filter: drop-shadow(2px 1px 2px rgba(0, 0, 0, 0.65));
   -ms-filter: drop-shadow(2px 1px 2px rgba(0, 0, 0, 0.65));
   filter: drop-shadow(2px 1px 2px rgba(0, 0, 0, 0.65));
-  filter: url(#drop-shadow);
-  -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
-  filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
   top: 0px;
   left: 0px; }
 
@@ -87,10 +84,6 @@
   .happening.circle-animation, .happening2.circle-animation {
     display: block;
     -webkit-animation-name: grow;
-    -webkit-animation-duration: 1400ms;
-    -webkit-animation-iteration-count: infinite;
-    -webkit-animation-timing-function: linear;
-    -webkit-animation-name: grow;
     -moz-animation-name: grow;
     -ms-animation-name: grow;
     animation-name: grow;
@@ -109,7 +102,6 @@
 
 .circle-animation-delay {
   -webkit-animation-delay: -700ms;
-  -webkit-animation-delay: -700ms;
   -moz-animation-delay: -700ms;
   -ms-animation-delay: -700ms;
   animation-delay: -700ms; }
@@ -120,14 +112,14 @@
     -moz-transform: scale(0);
     -ms-transform: scale(0);
     transform: scale(0);
-    opacity: 1; }
+    -webkit-opacity: 1; }
 
   to {
     -webkit-transform: scale(0.7);
     -moz-transform: scale(0.7);
     -ms-transform: scale(0.7);
     transform: scale(0.7);
-    opacity: 0; } }
+    -webkit-opacity: 0; } }
 
 @-moz-keyframes grow {
   from {
@@ -135,16 +127,31 @@
     -moz-transform: scale(0);
     -ms-transform: scale(0);
     transform: scale(0);
-    opacity: 1; }
+    -moz-opacity: 1; }
 
   to {
     -webkit-transform: scale(0.7);
     -moz-transform: scale(0.7);
     -ms-transform: scale(0.7);
     transform: scale(0.7);
-    opacity: 0; } }
+    -moz-opacity: 0; } }
 
 @-ms-keyframes grow {
+  from {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+    -ms-opacity: 1; }
+
+  to {
+    -webkit-transform: scale(0.7);
+    -moz-transform: scale(0.7);
+    -ms-transform: scale(0.7);
+    transform: scale(0.7);
+    -ms-opacity: 0; } }
+
+@keyframes grow {
   from {
     -webkit-transform: scale(0);
     -moz-transform: scale(0);

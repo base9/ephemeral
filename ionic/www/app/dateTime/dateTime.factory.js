@@ -5,26 +5,25 @@ angular.module('radar')
   var time;
   var startDate;
   var endDate;
-  var time;
   var startAMPM;
   var endAMPM;
 
   dateTimeObj.get24Hours = function(hours, ampm) {
-    if (ampm === "AM" && hours === "12") { return 0 };
-    return (ampm === "AM") ? hours : hours + 12;
-  }
+    if (ampm === "AM" && hours === "12") { return 0; }
+    return ampm === "AM" ? hours : hours + 12;
+  };
 
   dateTimeObj.getAMPM = function(hours) {
-    (hours > -1 && hours < 12) ? ampm = "AM" : ampm = "PM";
+    hours > -1 && hours < 12 ? ampm = "AM" : ampm = "PM";
     return ampm;
-  }
+  };
 
   dateTimeObj.getTwelveHours = function(hours) {
     if (hours > 12 || hours === 0) {
-      hours = Math.abs(hours-12)
+      hours = Math.abs(hours-12);
     }
     return hours;
-  }
+  };
 
   dateTimeObj.combineDateTimeInputs = function(obj, startEnd) {
     time = new Date();
@@ -35,7 +34,7 @@ angular.module('radar')
     time.setYear(obj[startEnd].year);
 
     return Date.parse(time);
-  }
+  };
 
   dateTimeObj.getDateTime = function() {
     startDate = new Date();
@@ -63,20 +62,20 @@ angular.module('radar')
         year: 2015
       }
     };   
-  }
+  };
 
   dateTimeObj.isoDateToTimeString = function(date) {
-    var date = new Date(date);
+    date = new Date(date);
     var hours = date.getHours();
     var mins = date.getMinutes();
     var ampm;
-    (mins === 0) ? mins = ':00' : mins = ':' + mins;
-    (hours > 11) ? ampm = 'pm' : ampm = 'am';
+    mins === 0 ? mins = ':00' : mins = ':' + mins;
+    hours > 11 ? ampm = 'pm' : ampm = 'am';
     if (hours > 12 || hours === 0) {
       hours = Math.abs(hours-12);
     }
-    return hours+mins+ampm
-  }
+    return hours+mins+ampm;
+  };
 
   return dateTimeObj;
 });

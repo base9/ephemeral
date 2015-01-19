@@ -4,12 +4,12 @@ angular.module('radar', [
   'angularFileUpload'
   ])
 .config(function($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/')
+  $urlRouterProvider.otherwise('/');
 
   $stateProvider.state('home', {
     url: '/',
     templateUrl: 'app/core/app.template.html'
-  })
+  });
 })
 .service('SharedProperties', function () {
   var event;

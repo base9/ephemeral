@@ -9,7 +9,7 @@ angular.module('radar')
     } else {
       return input;
     }
-  }
+  };
 })
 
 .controller('MapController', [
@@ -94,7 +94,7 @@ angular.module('radar')
 
     this.reset = function() {
       this.filters = {distance: 1, popularity: 1, category: null, time: {now: false, startTime: null, endTime: null}, cost: 50, keyword: null};
-    }
+    };
 
     function checkCategories(context) {
       console.log("NOT BROKEN HERE", this.filters);
@@ -113,7 +113,7 @@ angular.module('radar')
       console.log("LIST OF MARKERS: ", listOfEvents);
 
       Http.getEvents(listOfEvents.bounds, function(events) {
-        events.sort(function(a,b) { return b.lat-a.lat; })
+        events.sort(function(a,b) { return b.lat-a.lat; });
         createMarkers(events);
       });
     });
@@ -145,7 +145,7 @@ angular.module('radar')
         setTimeout(function() {$scope.isLoaded = true;}, 3.9); 
         $scope.fade = 'fade';
       });
-    }
+    };
 
     google.maps.event.addListener(map, 'zoom_changed', function() {
       reloadToEventChange();

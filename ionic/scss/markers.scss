@@ -7,12 +7,8 @@
   position: absolute;
   cursor: pointer;
   @include filter(drop-shadow(2px 1px 2px rgba(0, 0, 0, 0.65)));
-  filter: url(#drop-shadow);
-  -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
-  filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
   top: 0px;
   left: 0px;
-
 }
 
 .shadow {
@@ -78,10 +74,6 @@
 
   &.circle-animation {
     display: block;
-    -webkit-animation-name: grow;
-    -webkit-animation-duration: 1400ms;
-    -webkit-animation-iteration-count: infinite;
-    -webkit-animation-timing-function: linear;
     @include animation-name(grow);
     @include animation-duration(1400ms);
     @include animation-iteration-count(infinite);
@@ -90,33 +82,43 @@
 }
 
 .circle-animation-delay {
-  -webkit-animation-delay: -700ms;
   @include animation-delay(-700ms);
 }
 
 @-webkit-keyframes grow {
     from { 
       @include transform(scale(0));
-      opacity: 1; 
+      -webkit-opacity: 1; 
     }
     to { 
       @include transform(scale(0.7)); 
-      opacity: 0;
+      -webkit-opacity: 0;
     }
 }
 
 @-moz-keyframes grow {
     from { 
       @include transform(scale(0));
-      opacity: 1; 
+      -moz-opacity: 1; 
     }
     to { 
       @include transform(scale(0.7)); 
-      opacity: 0;
+      -moz-opacity: 0;
     }
 }
 
 @-ms-keyframes grow {
+    from { 
+      @include transform(scale(0));
+      -ms-opacity: 1; 
+    }
+    to { 
+      @include transform(scale(0.7)); 
+      -ms-opacity: 0;
+    }
+}
+
+@keyframes grow {
     from { 
       @include transform(scale(0));
       opacity: 1; 
