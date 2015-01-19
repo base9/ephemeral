@@ -101,7 +101,9 @@ angular.module('radar')
       endTime = new Date(parseInt(event.endTime));
       endTime = endTime.getHours()*100 + endTime.getMinutes();
 
-      (startTime < timeNow && timeNow < endTime) ? happeningNow = 'happening' : happeningNow = 'notHappening';
+      happeningNow = (startTime < timeNow && timeNow < endTime) 
+        ? 'happening' 
+        : 'notHappening';
 
       // add category and popularity classes to marker
       eventCategory = 'category-' + event.category + ' ';
@@ -117,12 +119,18 @@ angular.module('radar')
         '<div class="richmarker ' 
         + eventCategory
         + '">'
-        + '<img src="' + ringUrl + '" class="ring circle-animation '+ happeningNow + ' " /></div>'
-        + '<img src="' + ringUrl + '" class="ring circle-animation circle-animation-delay '+ happeningNow + '2 " /></div>'
-        + '<img src="img/markers/marker.svg" class="marker shadow ' + popularity + '' + eventCategory + '" />'
-        + '<img src="' + markerUrl + '" class="marker ' + popularity + '' + happeningNow + 'Marker" />'
+// <<<<<<< HEAD
+//         + '<img src="' + ringUrl + '" class="ring circle-animation '+ happeningNow + ' " /></div>'
+//         + '<img src="' + ringUrl + '" class="ring circle-animation circle-animation-delay '+ happeningNow + '2 " /></div>'
+//         + '<img src="' + markerUrl + '" class="marker ' + popularity + '' + happeningNow + 'Marker" />'
         // + '<filter id="drop-shadow"><feMorphology operator="dilate" radius="6" in="SourceAlpha" result="dilated"/><feGaussianBlur stdDeviation="3" in="dilated" result="blurred"/><feFlood flood-color="rgba(255,255,255,0.5)" in="blurred" result="flooded"/><feMerge><feMergeNode/><feMergeNode in="'+ markerUrl +'"/></feMerge></filter>'
-        + '</img></div>';
+        // + '</img></div>';
+// =======
+        + '<img src="' + ringUrl + '" class="ring circle-animation '+ happeningNow + ' " />'
+        + '<img src="' + ringUrl + '" class="ring circle-animation circle-animation-delay '+ happeningNow + '2 " />'
+        + '<img src="img/markers/marker.svg" class="marker shadow ' + popularity + '' + eventCategory + '" />'
+        + '<img src="' + markerUrl + '" class="marker ' + popularity + '' + 'Marker" /></div>';
+// >>>>>>> fix jumpping  markers
 
       markers.push(new RichMarker({
         map: map,

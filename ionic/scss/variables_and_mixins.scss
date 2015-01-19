@@ -74,7 +74,7 @@ $moneyGreen:        #038312;
           animation-timing-function: $timing;
 }
 
- @mixin breakpoint($point) {
+@mixin breakpoint($point) {
   @if $point == desktop {
     @media (min-width: 1170px) { @content ; }
   }
