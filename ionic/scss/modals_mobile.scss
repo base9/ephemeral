@@ -1,7 +1,31 @@
 @import 'variables_and_mixins';
 
 @include breakpoint(mobile) {
-  .the-mobile-shebang {
-    display: block;
+  .eventInfoWindow {
+
+    .details {
+      float: none;
+      width: auto;
+      text-align: left;
+      padding: 20px;
+    }
+
+    .photoComments {
+      float: none;
+      width: auto;
+      border-left: none;
+      border-top: 1px solid $textGray;
+
+      .commentsInputDisplay {
+        display: block;
+        width: auto;
+      }
+
+      .commentsLabel {
+        width: auto;
+      }
+    }
   }
+
+
 }

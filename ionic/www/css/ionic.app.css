@@ -763,8 +763,21 @@ input, button, select, textarea {
     -ms-opacity: 0; } }
 
 @media (max-width: 679px) {
-  .the-mobile-shebang {
-    display: block; }
+  .eventInfoWindow .details {
+    float: none;
+    width: auto;
+    text-align: left;
+    padding: 20px; }
+  .eventInfoWindow .photoComments {
+    float: none;
+    width: auto;
+    border-left: none;
+    border-top: 1px solid #b4b4b4; }
+    .eventInfoWindow .photoComments .commentsInputDisplay {
+      display: block;
+      width: auto; }
+    .eventInfoWindow .photoComments .commentsLabel {
+      width: auto; }
  }
 
 /*********** OVERRIDE NAV-BAR **********/
