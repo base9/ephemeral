@@ -10,6 +10,13 @@
   height: 50px;
   position: absolute;
   cursor: pointer;
+  -webkit-filter: drop-shadow(2px 1px 2px rgba(0, 0, 0, 0.65));
+  -moz-filter: drop-shadow(2px 1px 2px rgba(0, 0, 0, 0.65));
+  -ms-filter: drop-shadow(2px 1px 2px rgba(0, 0, 0, 0.65));
+  filter: drop-shadow(2px 1px 2px rgba(0, 0, 0, 0.65));
+  filter: url(#drop-shadow);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
+  filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
   top: 0px;
   left: 0px; }
 
