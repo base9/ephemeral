@@ -51,7 +51,7 @@ function addOne(req, res) {
   .then(function (response) {
     if(response[0].statusCode == 201){
       console.log('parser reports event saved.');
-      res.status(201).end(response[0].body)
+      res.status(201).end(response[0].body);
     } else {
       console.log('error: '+ response[0].statusCode);
     }
