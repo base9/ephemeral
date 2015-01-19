@@ -7,7 +7,7 @@ module.exports = {
 
 function updateRating(req, res) {
   var updateValue;
-  console.log ("RATING REQ.BODY: ", req.body)
+  console.log ("RATING REQ.BODY: ", req.body);
   req.body.addSubtract === 'subtract' ? updateValue = -1 : updateValue = 1;
   Event.where({id:req.body.event_id}).fetch()
     .then(function(record){

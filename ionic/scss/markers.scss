@@ -6,13 +6,62 @@
   height: 50px;
   position: absolute;
   cursor: pointer;
-  -webkit-filter: drop-shadow(3px 4px 6px rgba(0,0,0,0.65));
+  @include filter(drop-shadow(2px 1px 2px rgba(0, 0, 0, 0.65)));
   filter: url(#drop-shadow);
   -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
   filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
   top: 0px;
   left: 0px;
 
+}
+
+.shadow {
+
+  &.popularity-1 {
+    height: 0px;
+  }
+  &.popularity-2 {
+    height: 50px;
+    top: 0px;
+    left: 0px;
+  }
+  &.popularity-3 {
+   height: 55px;
+   top: 0px;
+   left: -2px;
+  }
+  &.popularity-4 {
+   height: 60px;
+   top: -3px;
+   left: -5px;
+  }
+  &.popularity-5 {
+   height: 71px;
+   top: -7px;
+   left: -10px;
+  }
+
+  &.category-culture {
+    @include filter(blur(4px) saturate(0.6) brightness(1.2) hue-rotate(65deg));
+  }
+  &.category-entertainment {
+    @include filter(blur(4px) saturate(0.8) brightness(1.5) hue-rotate(7deg));
+  }
+  &.category-drink {
+    @include filter(blur(4px) saturate(1) brightness(2.4) hue-rotate(238deg));
+  }
+  &.category-outdoors {
+    @include filter(blur(4px) saturate(1) brightness(1.7) hue-rotate(260deg));
+  }
+  &.category-hobbies {
+    @include filter(blur(4px) saturate(1) brightness(1.9) hue-rotate(190deg));
+  }
+  &.category-fitness {
+    @include filter(blur(4px) saturate(0.7) brightness(1) hue-rotate(135deg));
+  }
+  &.category-other {
+    @include filter(blur(4px) saturate(0) brightness(1.3));
+  }
 }
 
 .marker.notHappeningMarker {
@@ -43,22 +92,6 @@
 .circle-animation-delay {
   -webkit-animation-delay: -700ms;
   @include animation-delay(-700ms);
-}
-
-.popularity-1 {
-  
-}
-.popularity-2 {
-  
-}
-.popularity-3 {
-  
-}
-.popularity-4 {
-  
-}
-.popularity-5 {
-  
 }
 
 @-webkit-keyframes grow {
