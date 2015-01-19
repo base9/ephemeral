@@ -11,6 +11,8 @@ angular.module('radar')
 
   	var startHours;
   	$scope.newPostData = {};
+    $scope.newPostData.category = 'other';
+    $scope.newPostData.price = 0;
   	$scope.dateTime = DateTime.getDateTime();
     $rootScope.photoUploaded = false;
   	getCurrentAddress();
@@ -55,6 +57,7 @@ angular.module('radar')
   	$scope.saveNewEvent = function() {
   	  $scope.newPostData.startTime = DateTime.combineDateTimeInputs($scope.dateTime, 'start');
   	  $scope.newPostData.endTime = DateTime.combineDateTimeInputs($scope.dateTime, 'end');
+      if (!$scope.newPostData.price) { $scope.newPostData.price = 0; }
   	  var address = ($scope.newPostData.streetAddress1+'+'+$scope.newPostData.city+'+'+$scope.newPostData.state).split(' ').join('+')
 
   	  Http.geocode(address, function(coords) {
