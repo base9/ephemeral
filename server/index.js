@@ -47,9 +47,9 @@ console.log('app listening on port:' + (process.env.PORT || localPort[process.en
 
 ///////////////////////////////////////////////////////////////////////
 
-setTimeout(function(){
-  var eventSeed = require('./api/dummy/dummy.seed.js');
-},400);
+// setTimeout(function(){
+//   var eventSeed = require('./api/dummy/dummy.seed.js');
+// },400);
 
 ///////////////////////////////////////////////////////////////////////
 

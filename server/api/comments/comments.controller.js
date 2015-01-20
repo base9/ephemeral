@@ -1,6 +1,5 @@
 var Comment = require('./comments.model.js');
 
-
 module.exports = {
   addOne: addOne,
   addDummyComments: addDummyComments
