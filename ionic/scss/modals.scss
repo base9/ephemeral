@@ -469,14 +469,16 @@ input, button, select, textarea {
     .directions {
       border: 1px solid #b4b4b4;
       background: #00440b;
-      @include background(#00478f, #00226f);
+      @include background(#005dbd, #04339e);
       padding: 13.5px 26px;
       @include border-radius($buttonRadius + 5px);
       color: #e3e3e3;
-      font-size: 15px;
+      font-size: 16px;
       text-decoration: none;
       vertical-align: middle;
       margin-top: 39px;
+      color: white;
+      font-weight: bold;
     }
     .directions:active {
       @include background(#00162c, #001c5c);
@@ -488,12 +490,12 @@ input, button, select, textarea {
 
     .eventPrice {
       font-size: 19px;
-      color: green;
+      color: rgb(0,230,0);
       line-height: 37px;
     }
 
     .eventAddress {
-      font-size: 16px;
+      font-size: 17px;
       margin-bottom: -7px;
     }
   }
@@ -547,9 +549,10 @@ input, button, select, textarea {
           font-size: 12px;
           text-decoration: none;
           vertical-align: middle;
+          color: white
         }
         .submitComment:active {
-          background-color: #b7b7b7;
+          background-color: white;
           color: rgb(30,30,30);
         }
       }

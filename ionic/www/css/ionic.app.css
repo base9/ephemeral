@@ -222,7 +222,7 @@ input, button, select, textarea {
 
 .closeModal {
   position: absolute;
-  color: #b4b4b4;
+  color: white;
   top: 10px;
   right: 10px; }
   .closeModal .closeModalButton {
@@ -244,7 +244,7 @@ input, button, select, textarea {
   .postSuccess .message {
     position: absolute;
     font-size: 50px;
-    color: #b4b4b4;
+    color: white;
     font-family: 'Muli', sans-serif;
     top: calc(50% - 15px);
     left: calc(50% - 170px); }
@@ -270,7 +270,7 @@ input, button, select, textarea {
   text-align: center;
   font-family: 'Muli', sans-serif; }
   .loginForm .title, .registerForm .title {
-    color: #b4b4b4;
+    color: white;
     text-align: center;
     font-size: 40px;
     margin: 0 0 30px 0;
@@ -387,7 +387,7 @@ input, button, select, textarea {
     width: 100%; }
     .newEventModal .dateTime .startText, .newEventModal .dateTime .endText {
       display: inline-block;
-      color: #b4b4b4;
+      color: white;
       font-size: 17px; }
     .newEventModal .dateTime .starts, .newEventModal .dateTime .ends {
       margin-left: 10px; }
@@ -426,7 +426,7 @@ input, button, select, textarea {
     margin-left: 10px; }
     .newEventModal .categoryCost .categoryCostText {
       font-size: 17px;
-      color: #b4b4b4;
+      color: white;
       display: inline-block; }
     .newEventModal .categoryCost .category {
       margin-right: 15px; }
@@ -503,7 +503,7 @@ input, button, select, textarea {
     color: #555555;
     font-family: 'Muli', sans-serif; }
   .eventInfoWindow h1, .eventInfoWindow h2, .eventInfoWindow h3, .eventInfoWindow h4, .eventInfoWindow h5, .eventInfoWindow h6, .eventInfoWindow p {
-    color: #b4b4b4;
+    color: white;
     font-family: 'Muli', sans-serif; }
   .eventInfoWindow .background {
     padding: 20px 20px;
@@ -558,21 +558,23 @@ input, button, select, textarea {
     .eventInfoWindow .details .directions {
       border: 1px solid #b4b4b4;
       background: #00440b;
-      background: -webkit-gradient(linear, left top, left bottom, from(#00478f), to(#00226f));
-      background: -webkit-linear-gradient(top, #00478f, #00226f);
-      background: -moz-linear-gradient(top, #00478f, #00226f);
-      background: -ms-linear-gradient(top, #00478f, #00226f);
-      background: -o-linear-gradient(top, #00478f, #00226f);
+      background: -webkit-gradient(linear, left top, left bottom, from(#005dbd), to(#04339e));
+      background: -webkit-linear-gradient(top, #005dbd, #04339e);
+      background: -moz-linear-gradient(top, #005dbd, #04339e);
+      background: -ms-linear-gradient(top, #005dbd, #04339e);
+      background: -o-linear-gradient(top, #005dbd, #04339e);
       padding: 13.5px 26px;
       -webkit-border-radius: 9px;
       -moz-border-radius: 9px;
       -ms-border-radius: 9px;
       border-radius: 9px;
       color: #e3e3e3;
-      font-size: 15px;
+      font-size: 16px;
       text-decoration: none;
       vertical-align: middle;
-      margin-top: 39px; }
+      margin-top: 39px;
+      color: white;
+      font-weight: bold; }
     .eventInfoWindow .details .directions:active {
       background: -webkit-gradient(linear, left top, left bottom, from(#00162c), to(#001c5c));
       background: -webkit-linear-gradient(top, #00162c, #001c5c);
@@ -583,10 +585,10 @@ input, button, select, textarea {
       font-size: 18px; }
     .eventInfoWindow .details .eventPrice {
       font-size: 19px;
-      color: green;
+      color: #00e600;
       line-height: 37px; }
     .eventInfoWindow .details .eventAddress {
-      font-size: 16px;
+      font-size: 17px;
       margin-bottom: -7px; }
   .eventInfoWindow .photoComments {
     float: right;
@@ -630,9 +632,10 @@ input, button, select, textarea {
         color: #b7b7b7;
         font-size: 12px;
         text-decoration: none;
-        vertical-align: middle; }
+        vertical-align: middle;
+        color: white; }
       .eventInfoWindow .photoComments .commentsInputDisplay .commentsInput .submitComment:active {
-        background-color: #b7b7b7;
+        background-color: white;
         color: #1e1e1e; }
 
 /* MAP */
@@ -794,7 +797,7 @@ input, button, select, textarea {
     float: none;
     width: auto;
     border-left: none;
-    border-top: 1px solid #b4b4b4; }
+    border-top: 1px solid white; }
     .eventInfoWindow .photoComments .commentsInputDisplay {
       display: block;
       width: auto; }
