@@ -2,7 +2,7 @@
 	<div class="wholeModal" ng-controller="EventModalController">  
 		<div class="mainInfo">
 			<div class="photoContainer">
-		  	<img src="{{eventInfo.mainPhoto.url}}" class="mainPhoto"/>
+		  	<img ng-if="eventInfo.mainPhoto" src="{{eventInfo.mainPhoto.url}}" class="mainPhoto"/>
 		  </div>
 		  <span class="titleScroll">
 	  		<h2 class="eventTitle"> {{eventInfo.title}} </h2>

@@ -124,9 +124,6 @@ angular.module('radar')
 
 
   httpObject.uploadPhoto = function(photo, photoFileName, eventId){         
-    console.log('uploading now to event: ', eventId);
-
-    //TODO: fetch this stuff via HTTP request, instead of hardcoding here.
     var uploadParameters = {
       key: photoFileName,
       AWSAccessKeyId: 'AKIAIWPJUAIHVGA6VNSA',
