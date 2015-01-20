@@ -89,6 +89,7 @@ angular.module('radar')
       checkCategories(this);
       console.log("AFTER FILTERS", this.filters);
       Marker.filterMarkers(map, listOfEvents, this.filters);
+
     };
 
     this.reset = function() {
@@ -109,6 +110,7 @@ angular.module('radar')
     Map.geoLocate(function(location, bounds) {
       listOfEvents.location = {'lat': location.latitude, 'lng': location.longitude};
       listOfEvents.bounds = {ne: bounds.getNorthEast(), sw: bounds.getSouthWest()};
+      console.log("LIST OF MARKERS: ", listOfEvents);
 
       Http.getEvents(listOfEvents.bounds, function(events) {
         events.sort(function(a,b) { return b.lat-a.lat; });
@@ -122,7 +124,7 @@ angular.module('radar')
         $scope.fade = 'fade';
       } else {
         Marker.placeMarkers(map, events, function(markers) {
-          console.log("PLACING MARKERS");
+          listOfEvents.events = events;
           for (var i = 0; i < markers.length; i++) {
             var title = events[i].title;
             var marker = markers[i];
