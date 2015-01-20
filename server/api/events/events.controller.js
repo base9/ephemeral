@@ -1,4 +1,3 @@
-
 var Event = require('./events.model.js');
 var Bluebird = require('bluebird');
 var request = Bluebird.promisify(require('request'));
