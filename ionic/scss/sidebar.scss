@@ -1,0 +1,41 @@
+/* MENU */
+
+.rightMenu {
+  background-color: rgb(50,50,50);
+
+  .filter-toggle {
+    margin-left: 20px;
+  }
+
+  .slider-filter-label {
+    color: #444;
+    background: white;
+    height: 28px;
+    text-align: center;
+    padding-top: 8px;
+  }
+
+  .slider-filter-box {
+    border-top-width: 0px;
+  }
+
+  .filter {
+    background-color: rgb(50,50,50);
+    color: white;
+  }
+
+  .filterPane {
+    color: white;
+    margin: 0px;
+  }
+
+  .button.reset-button {
+    width: 50%;
+  }
+
+  .button.filter-button {
+    width: 50%;
+    margin-left: -4px;
+  }
+}
+
