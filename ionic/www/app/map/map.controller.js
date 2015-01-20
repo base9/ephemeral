@@ -89,7 +89,6 @@ angular.module('radar')
       checkCategories(this);
       console.log("AFTER FILTERS", this.filters);
       Marker.filterMarkers(map, listOfEvents, this.filters);
-
     };
 
     this.reset = function() {
@@ -110,7 +109,6 @@ angular.module('radar')
     Map.geoLocate(function(location, bounds) {
       listOfEvents.location = {'lat': location.latitude, 'lng': location.longitude};
       listOfEvents.bounds = {ne: bounds.getNorthEast(), sw: bounds.getSouthWest()};
-      console.log("LIST OF MARKERS: ", listOfEvents);
 
       Http.getEvents(listOfEvents.bounds, function(events) {
         events.sort(function(a,b) { return b.lat-a.lat; });
@@ -119,32 +117,37 @@ angular.module('radar')
     });
 
     var createMarkers = function(events) {
-      Marker.placeMarkers(map, events, function(markers) {
-        listOfEvents.events = events;
-        for (var i = 0; i < markers.length; i++) {
-          var title = events[i].title;
-          var marker = markers[i];
-          var event = events[i];
-          //must invoke function in order to grab current marker, title, and rating
-          google.maps.event.addListener(marker, 'click', (function(marker, event) {
-            return function() {
-              Http.getOneEvent(event.id, function(res) {
-                Shared.setEvent(res);
-                Shared.setInEvent(true);
-                $ionicModal.fromTemplateUrl('./app/eventInfo/eventInfo.html', {
-                  scope: $scope,
-                })
-                .then(function(modal) {
-                  $scope.modal = modal;
-                  $scope.openModal();
-                });
-              });
-            };
-          })(marker, event));
-        }
+      if (events.length === 0) {
         setTimeout(function() {$scope.isLoaded = true;}, 3.9); 
         $scope.fade = 'fade';
-      });
+      } else {
+        Marker.placeMarkers(map, events, function(markers) {
+          console.log("PLACING MARKERS");
+          for (var i = 0; i < markers.length; i++) {
+            var title = events[i].title;
+            var marker = markers[i];
+            var event = events[i];
+            //must invoke function in order to grab current marker, title, and rating
+            google.maps.event.addListener(marker, 'click', (function(marker, event) {
+              return function() {
+                Http.getOneEvent(event.id, function(res) {
+                  Shared.setEvent(res);
+                  Shared.setInEvent(true);
+                  $ionicModal.fromTemplateUrl('./app/eventInfo/eventInfo.html', {
+                    scope: $scope,
+                  })
+                  .then(function(modal) {
+                    $scope.modal = modal;
+                    $scope.openModal();
+                  });
+                });
+              };
+            })(marker, event));
+          }
+          setTimeout(function() {$scope.isLoaded = true;}, 3.9); 
+          $scope.fade = 'fade';
+        });
+      }
     };
 
     google.maps.event.addListener(map, 'zoom_changed', function() {
