@@ -273,7 +273,9 @@ input, button, select, textarea {
     color: #b4b4b4;
     text-align: center;
     font-size: 40px;
-    margin: 0 0 30px 0; }
+    margin: 0 0 30px 0;
+    font-family: 'Muli', sans-serif;
+    text-transform: none; }
   .loginForm .textInput, .registerForm .textInput {
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
