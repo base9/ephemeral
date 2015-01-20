@@ -2,8 +2,10 @@ var Event = require('../events/events.model.js');
 var Photo = require('../photos/photos.model.js');
 var Rating = require('../ratings/ratings.model.js');
 var Comment = require('../comments/comments.model.js');
+var User = require('../users/users.model.js');
 var S3_BUCKET_NAME = 'base9photos';
 
+setTimeout(addDummyUser, 200);
 
 setTimeout(addAllDummyEvents,300);
 
@@ -157,8 +159,25 @@ var dummies = [
         "state": "CA",
         "zipCode": null
     }
-]
+];
 
+
+function addDummyUser(){
+  User.where({name:'Steve Erwin'}).fetch()
+   .then(function (user) {
+    if(!user){  
+      var newUser = new User({    
+        name: 'Steve Erwin',    
+        email: 'steve@outbackadventures.com',
+        bio: 'global explorer and animal lover'
+      })
+      .save()
+      .then(function(user){
+        console.log('added dummy user');
+      });
+    }
+  });
+}
 
 function addAllDummyEvents(){
   dummies.forEach(function(dummy){
@@ -173,7 +192,6 @@ function addAllDummyEvents(){
 }
 
 function addDummyPhotosAndCommentsForPillowFight(){
-  console.log('trying to add dummy comments!');
   Event.where({title:'All-day Outdoor Pillowfight'}).fetch({withRelated: ['comments']})
     .then(function(event){
       if(!event || (event.relations && event.relations.comments.length)){
@@ -198,6 +216,10 @@ function addDummyPhotosAndCommentsForPillowFight(){
       setTimeout(function(){
         addDummyPhoto(eventId,'pillowdummy4');
       },400);
+      
+      setTimeout(function(){
+        addDummyPhoto(eventId,'pillowdummy5');
+      },500);
 
       new Comment({
         event_id: event.id,
