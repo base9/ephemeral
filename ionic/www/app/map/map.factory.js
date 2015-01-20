@@ -77,9 +77,9 @@ angular.module('radar')
           directionsDisplay.setOptions( { suppressMarkers: true } );
           directionsDisplay.setDirections(result);
         }
-      })
+      });
     }
-  }
+  };
 
   mapObj.geoCenter = function() {
     if (navigator.geolocation) {

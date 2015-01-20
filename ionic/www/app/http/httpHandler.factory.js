@@ -53,10 +53,10 @@ angular.module('radar')
         var coords = {
           lat: results[0].geometry.location.k,
           lng: results[0].geometry.location.D
-        }
+        };
         callback(coords);
-      };
-    })
+      }
+    });
   };
 
   httpObject.saveNewEvent = function(postData, callback) {
@@ -91,14 +91,14 @@ angular.module('radar')
   };
 
   httpObject.addComment = function (commentData) {
-    console.log("data: ", commentData)
+    console.log("data: ", commentData);
     return $http({
       method: 'POST',
       url: '/api/comments',
       data: commentData
     })
     .success(function(data, status) {
-        console.log('Comment added')
+        console.log('Comment added');
       })
       .error(function(data, status) {
         console.log("ERROR FOR API EVENTS");
@@ -115,7 +115,7 @@ angular.module('radar')
       }
     })
     .success(function(data, status) {
-        console.log("Rating updated")
+        console.log("Rating updated");
       })
       .error(function(data, status) {
         console.log("ERROR FOR API EVENTS");
@@ -124,9 +124,6 @@ angular.module('radar')
 
 
   httpObject.uploadPhoto = function(photo, photoFileName, eventId){         
-    console.log('uploading now to event: ', eventId);
-
-    //TODO: fetch this stuff via HTTP request, instead of hardcoding here.
     var uploadParameters = {
       key: photoFileName,
       AWSAccessKeyId: 'AKIAIWPJUAIHVGA6VNSA',
@@ -152,7 +149,7 @@ angular.module('radar')
       });
 
     function linkPhotoToEventRecord(photoFileName){
-      console.log('now apprising main server of photo upload.')
+      console.log('now apprising main server of photo upload.');
       $http({
         method: 'POST',
         url: '/api/photos/addOne',
@@ -163,7 +160,7 @@ angular.module('radar')
       });
     }
 
-  }
+  };
 
   return httpObject;
 }]);

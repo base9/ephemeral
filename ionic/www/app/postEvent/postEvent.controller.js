@@ -57,23 +57,16 @@ angular.module('radar')
   	$scope.saveNewEvent = function() {
   	  $scope.newPostData.startTime = DateTime.combineDateTimeInputs($scope.dateTime, 'start');
   	  $scope.newPostData.endTime = DateTime.combineDateTimeInputs($scope.dateTime, 'end');
-      if (!$scope.newPostData.price) { $scope.newPostData.price = 0; }
       for (var data in $scope.newPostData) { 
         if (!$scope.newPostData[data]) { $scope.newPostData[data] = ''; }
       }
+      if (!$scope.newPostData.price) { $scope.newPostData.price = 0; }
   	  var address = ($scope.newPostData.streetAddress1+'+'+$scope.newPostData.city+'+'+$scope.newPostData.state).split(' ').join('+')
 
   	  Http.geocode(address, function(coords) {
   	    $scope.newPostData.lat = coords.lat;
   	    $scope.newPostData.lng = coords.lng;
   	    Http.saveNewEvent($scope.newPostData, function(res) {
-  	      // $ionicModal.fromTemplateUrl('app/modals/postSuccess.html', {
-  	      // scope: $scope,
-  	      // }).then(function(modal) {
-  	      //   $scope.modal = modal;
-  	      //   $scope.openModal();
-  	      // });
-  	      console.log("EVENT ID?: ", res)
   	      if($rootScope.photoUploaded){
   	        Photo.uploadPhotoToServer($scope.photoFile, res);
   	      } else {
@@ -90,6 +83,7 @@ angular.module('radar')
   	}
 
   	$scope.previewFile = function() {
+      console.log("PREVIEWING PHOTO: ", Photo.previewFile())
   	  $scope.photoFile = Photo.previewFile()
       $rootScope.photoUploaded = true;
   	  $scope.$apply();

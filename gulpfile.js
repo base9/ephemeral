@@ -14,7 +14,7 @@ var path = {
   server: './server/index.js',
   serverSideJs: './server/**/*.js',
   test: './test/**/*.js',
-  clientSideJs: './ionic/www/js/**/*.js'
+  clientSideJs: './ionic/www/app/**/*.js'
 }
 
 gulp.task('sass', function () {

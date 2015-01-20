@@ -16,13 +16,13 @@ angular.module('radar')
     return text.join('');
   }
 
-  function uploadPhotoToServer(file, eventId) {
+  photoObj.uploadPhotoToServer = function(file, eventId) {
     var photoFileName = makeHash(18) + '.jpg';
     Http.uploadPhoto(file, photoFileName, eventId);
   }
 
   photoObj.getFile = function(){
-      document.getElementById("upfile").click();
+    document.getElementById("upfile").click();
   }
 
   photoObj.previewFile = function() {
@@ -37,7 +37,7 @@ angular.module('radar')
 
     if (file) {
       reader.readAsDataURL(file);
-      if (Shared.getInEvent()) { uploadPhotoToServer(file, Shared.getEvent().id) }
+      if (Shared.getInEvent()) { photoObj.uploadPhotoToServer(file, Shared.getEvent().id) }
       return file;
     } else {
       preview.src = "";
