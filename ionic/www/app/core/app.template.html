@@ -80,27 +80,27 @@
               <ion-checkbox ng-click="mapCtrl.addCategory('outdoors')">Travel and Outdoor</ion-checkbox>
               <ion-checkbox ng-click="mapCtrl.addCategory('other')">Other</ion-checkbox>
             </div>
-            <div>Max Distance</div>
-            <div class="item item-checkbox">
-              <label class="checkbox" ng-click="mapCtrl.toggleDistance()">
+            <div class="slider-filter-label">Max Distance</div>
+            <div class="item item-checkbox slider-filter-box">
+              <label class="checkbox filter-toggle" ng-click="mapCtrl.toggleDistance()">
                 <input type="checkbox">
               </label>
               <input type="range" name="distance" min="1" max="10" value="0" step="0.5" ng-model="mapCtrl.filters.distance">
                {{mapCtrl.filters.distance}}
             </div>       
 
-            <div>Min Popularity</div>
-            <div class="item item-checkbox">
-              <label class="checkbox" ng-click="mapCtrl.togglePopularity()">
+            <div class="slider-filter-label">Min Popularity</div>
+            <div class="item item-checkbox slider-filter-box">
+              <label class="checkbox filter-toggle" ng-click="mapCtrl.togglePopularity()">
                 <input type="checkbox">
               </label>
               <input type="range" name="distance" min="1" max="5" value="0" ng-model="mapCtrl.filters.popularity">
                {{mapCtrl.filters.popularity}}
             </div>
 
-            <div>Max Cost</div>
-            <div class="item item-checkbox">
-              <label class="checkbox" ng-click="mapCtrl.toggleCost()">
+            <div class="slider-filter-label">Max Cost</div>
+            <div class="item item-checkbox slider-filter-box">
+              <label class="checkbox filter-toggle" ng-click="mapCtrl.toggleCost()">
                 <input type="checkbox">
               </label>
               <input type="range" name="cost" min="0" max="100" value="50" ng-model="mapCtrl.filters.cost">
@@ -121,11 +121,11 @@
               <input type="time" ng-model="mapCtrl.filters.time.endTime">
             </label>
             
-            <button class="button" ng-click="mapCtrl.reset()">
+            <button class="button reset-button" ng-click="mapCtrl.reset()">
               Reset
             </button>
 
-            <button class="button" ng-click="mapCtrl.filter()">
+            <button class="button filter-button" ng-click="mapCtrl.filter()">
               Filter
             </button>
 

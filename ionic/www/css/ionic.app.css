@@ -663,19 +663,6 @@ input, button, select, textarea {
   border-bottom: 0px;
   width: 230px; }
 
-/* MENU */
-.rightMenu {
-  background-color: #323232; }
-
-.filter {
-  background-color: #323232;
-  color: white; }
-
-.filterPane {
-  background-color: dimGray;
-  /*height: 200px;*/
-  color: white; }
-
 /* MAP BUTTONS */
 #GeoButton {
   position: absolute;
@@ -700,6 +687,31 @@ input, button, select, textarea {
 /* MENUS */
 .rightMenu {
   background-color: black; }
+
+/* MENU */
+.rightMenu {
+  background-color: #323232; }
+  .rightMenu .filter-toggle {
+    margin-left: 20px; }
+  .rightMenu .slider-filter-label {
+    color: #444;
+    background: white;
+    height: 28px;
+    text-align: center;
+    padding-top: 8px; }
+  .rightMenu .slider-filter-box {
+    border-top-width: 0px; }
+  .rightMenu .filter {
+    background-color: #323232;
+    color: white; }
+  .rightMenu .filterPane {
+    color: white;
+    margin: 0px; }
+  .rightMenu .button.reset-button {
+    width: 50%; }
+  .rightMenu .button.filter-button {
+    width: 50%;
+    margin-left: -4px; }
 
 /*********** LOADER *************/
 .loader {
