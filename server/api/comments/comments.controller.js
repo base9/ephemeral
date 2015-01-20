@@ -1,5 +1,4 @@
 var Comment = require('./comments.model.js');
-var seed = require('./comments.seed.js');
 
 
 module.exports = {
