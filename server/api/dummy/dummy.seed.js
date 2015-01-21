@@ -147,7 +147,7 @@ var dummies = [
         "lng": "-122.3960102000",
         "title": "All-day Outdoor Pillowfight",
         "startTime": "1421680519000",
-        "endTime": "1421817319000",
+        "endTime": "1437448519000",
         "ratings": 95,
         "price": 0,
         "url": null,
