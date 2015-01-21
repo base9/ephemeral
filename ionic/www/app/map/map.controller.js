@@ -25,6 +25,8 @@ angular.module('radar')
     var listOfEvents = {};
     $scope.eventInfo = {};
     var timeoutID;
+
+    var vm = this;
   
     $scope.geoLocate = function(){
       Map.geoCenter();
@@ -32,79 +34,80 @@ angular.module('radar')
 
     var map = Map.initialize();
 
-    this.activateDistance = false;
-    this.activatePopularity = false;
-    this.activateCost = false;
-    this.showCategory = false;
-    this.toggleDistance = function() {
-      this.activateDistance = !this.activateDistance;
+    vm.activateDistance = false;
+    vm.activatePopularity = false;
+    vm.activateCost = false;
+    vm.showCategory = false;
+    vm.toggleDistance = function() {
+      vm.activateDistance = !vm.activateDistance;
     };
-    this.togglePopularity = function() {
-      this.activatePopularity = !this.activatePopularity;
+    vm.togglePopularity = function() {
+      vm.activatePopularity = !vm.activatePopularity;
     };
-    this.toggleCost = function() {
-      this.activateCost = !this.activateCost;
+    vm.toggleCost = function() {
+      vm.activateCost = !vm.activateCost;
     };
-    this.toggleCategory = function() {
-      this.showCategory = !this.showCategory;
+    vm.toggleCategory = function() {
+      vm.showCategory = !vm.showCategory;
     };
 
     //Allows the specify time filter to be shown
-    this.show = false;
-    this.triggerNow = false;
-    this.showTime = function(show) {
-      this.show = show;
-      this.triggerNow = true;
+    vm.show = false;
+    vm.triggerNow = false;
+    vm.showTime = function(show) {
+      vm.show = show;
+      vm.triggerNow = true;
     };
 
     var categories = {'culture': false, 'fitness': false, 'entertainment': false, 'hobbies': false, 'drink': false, 'other': false};
-    this.addCategory = function(str) {
+    vm.addCategory = function(str) {
       categories[str] = !categories[str];
       console.log("CATEGORY LIST: ", categories);
     };
   
     //Creates filters to be passed into event filter
-    this.filters = {distance: 1, popularity: 1, category: null, time: {now: false, startTime: null, endTime: null}, cost: 50, keyword: null};
+    vm.filters = {distance: null, popularity: null, category: null, time: {now: false, startTime: null, endTime: null}, cost: null, keyword: null};
 
-    this.filter = function() {
-      console.log("BEFORE FILTERS", this.filters);
-      if (!this.show && this.triggerNow) {
-        this.filters.time.now = true;
+    vm.filter = function() {
+      console.log("BEFORE FILTERS", vm.filters);
+      if (!vm.show && vm.triggerNow) {
+        vm.filters.time.now = true;
       }
-      if (!this.activateDistance) {
-        this.filters.distance = null;
+      if (!vm.activateDistance) {
+        vm.filters.distance = null;
       }
-      if (!this.activatePopularity) {
-        this.filters.popularity = null;
+      if (!vm.activatePopularity) {
+        vm.filters.popularity = null;
       }
-      if (!this.activateCost) {
-        this.filters.cost = null;
+      if (!vm.activateCost) {
+        vm.filters.cost = null;
       }
-      if (this.filters.time.startTime && this.filters.time.endTime) {
+      if (vm.filters.time.startTime && vm.filters.time.endTime) {
         var today = new Date().setHours(0, 0, 0, 0);
         var offset = new Date().getTimezoneOffset() * 60000;
-        this.filters.time.startTime = new Date(today + Date.parse(this.filters.time.startTime) - offset);
-        this.filters.time.endTime = new Date(today + Date.parse(this.filters.time.endTime) - offset);
+        vm.filters.time.startTime = new Date(today + Date.parse(vm.filters.time.startTime) - offset);
+        vm.filters.time.endTime = new Date(today + Date.parse(vm.filters.time.endTime) - offset);
       }
-      checkCategories(this);
-      console.log("AFTER FILTERS", this.filters);
-      Marker.filterMarkers(map, listOfEvents, this.filters);
+      checkCategories();
+      console.log("AFTER FILTERS", vm.filters);
+      Marker.filterMarkers(map, listOfEvents, vm.filters);
 
     };
 
-    this.reset = function() {
-      this.filters = {distance: 1, popularity: 1, category: null, time: {now: false, startTime: null, endTime: null}, cost: 50, keyword: null};
+    vm.reset = function() {
+      vm.filters = {distance: null, popularity: null, category: null, time: {now: false, startTime: null, endTime: null}, cost: null, keyword: null};
+      categories = {'culture': false, 'fitness': false, 'entertainment': false, 'hobbies': false, 'drink': false, 'other': false};
+      console.log("RESET FILTERS: ", vm.filters);
     };
 
-    function checkCategories(context) {
-      console.log("NOT BROKEN HERE", this.filters);
+    function checkCategories() {
       var result = [];
       for (var key in categories) {
         if (categories[key]) {
           result.push(key);
         }
       }
-      context.filters.category = result;
+      vm.filters.category = result;
     }
 
     Map.geoLocate(function(location, bounds) {
@@ -171,6 +174,7 @@ angular.module('radar')
         console.log("EVENTS IN LISTENER: ", events);
         events.sort(function(a,b) { return b.lat-a.lat; });
         createMarkers(events);
+        vm.filter();
       });
     };
 
